@@ -1,0 +1,53 @@
+class AppStrings {
+  static const String addToCart = "Add To Cart";
+  static const String buyAddedProducts = "Buy Added Products";
+  static const String totalItemCount = "Total Item Count:";
+  static const String profile = "Profile";
+  static const String dataTypeMismatch = "DataType Mismatch";
+  static const String noInternet = "No Internet";
+  static const String requestTimeOut = "Request Time Out";
+  static const String serverError = "Server Error";
+  static const String databaseError = "Database Error";
+  static const String invalidUrl = "Invalid Url";
+  static const String invalidUser = "Invalid User";
+  static const String errorOccured = "Error Occured";
+  static const String deleteMessage = "Delete Message";
+  static const String notValidMail = "Not Valid Mail";
+  static const String id = "Id";
+  static const String deleteForAll = "Delete for All";
+  static const String deleteForMe = "Delete for Me";
+  static const String forwarded = "Forwarded";
+  static const String multiForwarded = "M-For";
+  static const String oo = "00:00:00.000";
+  static const String accountCreation =
+      "Account Creation Failed, fill each and every thing correctly";
+  static const String passwordAndConfirm =
+      "Password and Confirm Password can't be same";
+  static const String login = "Login";
+  static const String forgetPassword = "Forget Password ?";
+  static const String yourName = "Name";
+  static const String enterMessage = "Enter Message";
+  static const String fullName = "Full Name";
+  static const String yourEmail = "Your Email";
+  static const String enterEmailAddress = "Enter Email Address";
+  static const String password = "Password";
+  static const String pass = "Password";
+  static const String errorDataType = "$error DataType";
+  static const String na = "N/A";
+  static const String errorLogin = "$error Login";
+  static const String error = "Error";
+  static const String signIn = "Log In";
+  static const String hello = "Hello!";
+  static const String createAnAccount = "Create an account to continue";
+  static const String emptyString = "";
+  static const String appName = "Unity";
+  static const String dontHaveAccount = "Don't have account? ";
+  static const String alreadyHaveAccount = "Already have account? ";
+  static const String noNetwork = "No Network ";
+  static const String signUp = "Sign Up";
+  static const String createAccount = "Create Account";
+  static const String confirmPassword = "Confirm Password";
+  static const String reEnterPassword = "Re-Enter Password";
+  static const String takingMoreTime = "Taking more time ";
+  static const String unableToFetchData = "Unable to fetch data ";
+}
