@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+
 import '../../global/global.dart';
 import '../../res/components/app_rounded_button.dart';
 import '../../utils/app_helper/app_color.dart';
@@ -27,7 +29,7 @@ class _IntroViewState extends State<IntroView> {
               setState(() {});
             },
             controller: PageController(
-                initialPage: 0, keepPage: false, viewportFraction: 1),
+              initialPage: 0, keepPage: false, viewportFraction: 1,),
             pageSnapping: true,
             reverse: false,
             allowImplicitScrolling: true,
@@ -40,49 +42,91 @@ class _IntroViewState extends State<IntroView> {
                   decoration: const BoxDecoration(
                     color: AppColors.white,
                   ),
-                  child: Column(
+                  child: Stack(
                     children: [
-                      sizedBox(hei: 50),
-                      Padding(
-                        padding: const EdgeInsets.all(28.0),
-                        child: Text(
-                          "Get Closer To EveryOne",
-                          style: AppStyle.blackNormal36,
+                      Column(
+                        children: [
+                          sizedBox(hei: 50),
+                          Padding(
+                            padding: const EdgeInsets.all(28.0),
+                            child: Text(
+                              "Get Closer To EveryOne",
+                              style: AppStyle.blackNormal36,
+                            ),
+                          ),
+                          Text(
+                            "Helps you to contact everyone with just easy way",
+                            style: AppStyle.blackNormal15,
+                          ),
+                          Image.asset(AppImages.introPeople),
+                        ],
+                      ),
+                      Positioned(
+                        top: 80,
+                        right: 30,
+                        child: AppRoundedButton(
+                          onTap: () {
+                            Navigator.pushNamedAndRemoveUntil(context,
+                                RouteName.loginView, (route) => false);
+                          },
+                          height: 60,
+                          width: 60,
+                          title: "Skip",
+                          textStyle:AppStyle.blueBold20,
+                          borderColor: AppColors.blueSplashScreen,
+                          buttonColor: AppColors.white,
+                          borderWidth: 2,
+                          textColor: AppColors.blueSplashScreen,
                         ),
                       ),
-                      Text(
-                        "Helps you to contact everyone with just easy way",
-                        style: AppStyle.blackNormal15,
-                      ),
-                      Image.asset(AppImages.introPeople),
                     ],
                   ),
                 ),
               ),
               Center(
                 child: Container(
-                  padding: EdgeInsets.only(top: 100),
+                  padding: EdgeInsets.only(top: 70),
                   height: double.infinity,
                   width: double.infinity,
                   decoration: const BoxDecoration(
                     color: AppColors.blueSplashScreen,
                   ),
-                  child: Column(
+                  child: Stack(
                     children: [
-                      LottieBuilder.asset(
-                        "assets/lottie/intro.json",
+                      Column(
+                        children: [
+                          LottieBuilder.asset(
+                            "assets/lottie/intro.json",
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(28.0),
+                            child: Text(
+                              "Chat with multiple people",
+                              style: AppStyle.whiteMedium22,
+                            ),
+                          ),
+                          Text(
+                            "Just like you playing multiple games same time",
+                            style: AppStyle.whiteMedium16,
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(28.0),
-                        child: Text(
-                          "Chat with multiple people",
-                          style: AppStyle.whiteMedium22,
+                      Positioned(
+                        right: 30,
+                        child: AppRoundedButton(
+                          onTap: () {
+                            Navigator.pushNamedAndRemoveUntil(context,
+                                RouteName.loginView, (route) => false);
+                          },
+                          height: 60,
+                          width: 60,
+                          title: "Skip",
+                          textStyle:AppStyle.whiteBold20,
+                          borderColor: AppColors.white,
+                          buttonColor: AppColors.transparent,
+                          borderWidth: 2,
                         ),
-                      ),
-                      Text(
-                        "Just like you playing multiple games same time",
-                        style: AppStyle.whiteMedium16,
-                        textAlign: TextAlign.center,
                       ),
                     ],
                   ),

@@ -9,41 +9,55 @@ class AppRoundedButton extends StatelessWidget {
   FocusNode? focusNode;
   Color? buttonColor = AppColors.blueSplashScreen;
   Color? textColor = AppColors.white;
-
+  double? height, width, borderWidth;
+  Color? borderColor;
+  TextStyle? textStyle;
+  bool isEnable;
   AppRoundedButton(
       {super.key,
-      this.buttonColor,
-      required this.onTap,
-      required this.title,
-      this.textColor,
-      this.focusNode,
-      this.loading = false});
+        this.buttonColor,
+        required this.onTap,
+        required this.title,
+        this.textColor,
+        this.focusNode,
+        this.width,
+        this.borderColor,
+        this.height,
+        this.isEnable = true,
+        this.textStyle,
+        this.borderWidth,
+        this.loading = false});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: (){
+        if(isEnable){
+          onTap();
+        }
+      },
       focusNode: focusNode,
       child: Container(
-        height: 60,
-        width: 200,
+        height:height?? 60,
+        width: width??200,
         decoration: BoxDecoration(
-          color: buttonColor,
-          borderRadius: BorderRadius.circular(20),
+            color: isEnable? buttonColor : AppColors.grey,
+            borderRadius: BorderRadius.circular(20),
+            border: borderColor!= null ? Border.all(color: borderColor!, width: borderWidth ?? 1) :Border.all()
         ),
         child: Center(
             child: loading
                 ? const CircularProgressIndicator(
-                    color: AppColors.white,
-                  )
+              color: AppColors.white,
+            )
                 : Text(
-                    title,
-                    style: TextStyle(
-                        color: textColor,
-                        fontSize: 20,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w400),
-                  )),
+              title,
+              style: textStyle ?? TextStyle(
+                  color: textColor,
+                  fontSize: 20,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w400),
+            )),
       ),
     );
   }

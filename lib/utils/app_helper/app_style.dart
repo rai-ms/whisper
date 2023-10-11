@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'app_color.dart';
 
 class AppStyle {
-  // Bold, 16, whiteBold
 
   static TextStyle? get whiteBold16 {
     return const TextStyle(
@@ -60,10 +59,10 @@ class AppStyle {
     );
   }
 
-  static TextStyle? get blackBold20 {
+  static TextStyle? get blackBold17 {
     return const TextStyle(
       color: AppColors.black,
-      fontSize: 20,
+      fontSize: 19,
       fontWeight: FontWeight.w700,
     );
   }
@@ -92,7 +91,7 @@ class AppStyle {
     );
   }
 
-  static TextStyle? get blackNormal20 {
+  static TextStyle? get blackNormal17 {
     return const TextStyle(
       color: AppColors.black,
       fontSize: 17,
@@ -178,6 +177,16 @@ class AppStyle {
       color: AppColors.blueSplashScreen,
       fontSize: 15,
       fontStyle: FontStyle.italic,
+      fontWeight: FontWeight.w700,
+    );
+  }
+
+  static TextStyle get blueItalicBoldUnderline15 {
+    return const TextStyle(
+      color: AppColors.blueSplashScreen,
+      fontSize: 15,
+      fontStyle: FontStyle.italic,
+      decoration: TextDecoration.underline,
       fontWeight: FontWeight.w700,
     );
   }

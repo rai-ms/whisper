@@ -80,7 +80,7 @@ class _LoginViewState extends State<LoginView> {
                       obscureText: provider.obsText,
                       decoration: InputDecoration(
                           prefixIcon: const Icon(
-                            Icons.password,
+                            Icons.lock_open,
                             color: AppColors.blueSplashScreen,
                           ),
                           suffixIcon: InkWell(
@@ -95,8 +95,8 @@ class _LoginViewState extends State<LoginView> {
                                   BorderRadius.all(Radius.circular(20)),
                               borderSide:
                                   BorderSide(width: 2, color: AppColors.black)),
-                          hintText: AppStrings.password,
-                          label: const Text(AppStrings.password),
+                          hintText: AppStrings.pass,
+                          label: const Text(AppStrings.pass),
                           constraints: const BoxConstraints(
                             maxWidth: 400,
                           ),

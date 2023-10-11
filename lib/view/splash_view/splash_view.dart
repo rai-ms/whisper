@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-
 import '../../global/global.dart';
 import '../../services/splashscreen_service.dart';
 import '../../utils/app_helper/app_color.dart';
-import '../../utils/app_helper/app_strings.dart';
-import '../../utils/app_helper/app_style.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});

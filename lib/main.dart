@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:whisper/utils/routes/navigate_route.dart';
+import 'package:whisper/utils/routes/route_name.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,6 +18,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+      onGenerateRoute: NavigateRoute.onGenerate,
+      initialRoute: RouteName.splashscreen,
+
     );
   }
 }

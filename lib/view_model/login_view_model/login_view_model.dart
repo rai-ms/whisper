@@ -1,4 +1,9 @@
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import '../../model/user_model.dart';
+import '../../repository/auth_repository.dart';
+import '../../res/components/custom_toast.dart';
+import '../../utils/app_helper/user_data/user_data.dart';
 
 class LoginViewModel extends ChangeNotifier {
   TextEditingController mailCont = TextEditingController();
@@ -16,7 +21,6 @@ class LoginViewModel extends ChangeNotifier {
     emailFocusNode.dispose();
     formkey.currentState!.dispose();
     buttonFocusNode.dispose();
-
     super.dispose();
   }
 
@@ -37,6 +41,28 @@ class LoginViewModel extends ChangeNotifier {
 
   login(BuildContext context) async {
     formkey.currentState!.save();
-    if (formkey.currentState!.validate()) {}
+    if (formkey.currentState!.validate()) {
+      setLoading(true);
+      await loginAPI(context);
+      setLoading(false);
+    }
+    // setLoading(false);
   }
+
+  final _myRepo = AuthRepository();
+  Future<void> loginAPI(BuildContext context)async {
+    dynamic data = {
+      "email": mailCont.text.toString().trim(),
+      "password": passCont.text.toString().trim()
+    };
+    _myRepo.loginAPI(data).then((value){
+      UserModel userModel = value as UserModel;
+      CustomToast(context: context, message: "Login Successful");
+      UserData.saveUser(userModel);
+      debugPrint("Token is ${userModel.token}");
+    }).onError((error, stackTrace){
+      CustomToast(context: context, message:"Error occur in API Call:"+ error.toString());
+    });
+  }
+
 }

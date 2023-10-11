@@ -1,7 +1,4 @@
 class AppStrings {
-  static const String addToCart = "Add To Cart";
-  static const String buyAddedProducts = "Buy Added Products";
-  static const String totalItemCount = "Total Item Count:";
   static const String profile = "Profile";
   static const String dataTypeMismatch = "DataType Mismatch";
   static const String noInternet = "No Internet";
@@ -11,16 +8,21 @@ class AppStrings {
   static const String invalidUrl = "Invalid Url";
   static const String invalidUser = "Invalid User";
   static const String errorOccured = "Error Occured";
+  static const String byRegistering = "By registering you are accepting ";
   static const String deleteMessage = "Delete Message";
+  static const String privacyPolicy = '“Privacy Policy”';
   static const String notValidMail = "Not Valid Mail";
   static const String id = "Id";
+  static const String and = ' and ';
+  static const String termsOfUse = '“Terms of Use”.';
+  static const String passwordNotMatched = "Password not matched";
   static const String deleteForAll = "Delete for All";
   static const String deleteForMe = "Delete for Me";
   static const String forwarded = "Forwarded";
   static const String multiForwarded = "M-For";
   static const String oo = "00:00:00.000";
   static const String accountCreation =
-      "Account Creation Failed, fill each and every thing correctly";
+      "Account Creation Failed, fill each and every details correctly";
   static const String passwordAndConfirm =
       "Password and Confirm Password can't be same";
   static const String login = "Login";
@@ -30,17 +32,16 @@ class AppStrings {
   static const String fullName = "Full Name";
   static const String yourEmail = "Your Email";
   static const String enterEmailAddress = "Enter Email Address";
-  static const String password = "Password";
   static const String pass = "Password";
   static const String errorDataType = "$error DataType";
   static const String na = "N/A";
   static const String errorLogin = "$error Login";
   static const String error = "Error";
-  static const String signIn = "Log In";
+  static const String logIn = "Log In";
   static const String hello = "Hello!";
   static const String createAnAccount = "Create an account to continue";
   static const String emptyString = "";
-  static const String appName = "Unity";
+  static const String appName = "InfoProfile";
   static const String dontHaveAccount = "Don't have account? ";
   static const String alreadyHaveAccount = "Already have account? ";
   static const String noNetwork = "No Network ";
@@ -50,4 +51,8 @@ class AppStrings {
   static const String reEnterPassword = "Re-Enter Password";
   static const String takingMoreTime = "Taking more time ";
   static const String unableToFetchData = "Unable to fetch data ";
+  static const String enterEmailAndPassword = "Enter email address and password to register yourself as a new user.";
+  static const String privacyPolicyDetails = '''**Privacy Policy**\nAt Appinventiv, we respect your privacy and are committed to protecting any personal information you provide to us. This Privacy Policy explains our practices regarding the collection, use, and disclosure of your personal data when you use our services or visit our website. \n**Information We Collect**\nWe may collect both personal and non-personal information from you when you use our website or services. Personal information includes your name, email address, phone number, and other identifying details. Non-personal information, such as your browser type, device type, and website usage data, is also collected automatically.\n**How We Use Your Information**\n\nWe use the information we collect to provide and improve our services. This includes:\n\n1. **Communication**: We use your contact information to respond to your inquiries, send important updates, and provide customer support.\n2. **Customization**: We may use your preferences and usage data to personalize your experience and show you relevant content.\n3. **Analytics**: Non-personal information helps us analyze how our website is used, track trends, and improve our services.\n4. **Legal Obligations**: We may use your data to comply with legal requirements and respond to legal requests.\n**Data Sharing**\n\nWe do not sell your personal information to third parties. However, we may share your information in the following circumstances:\n\n1. **Service Providers**: We share data with trusted service providers to help us operate, provide, and improve our services. They are bound by strict confidentiality agreements.\n2. **Legal Compliance**: We may disclose information if required by law or in response to legal requests.\n3. **Business Transfers**: In the event of a merger, acquisition, or sale of assets, your information may be transferred as part of the transaction.\n**Security**\n\nWe take data security seriously. We implement appropriate measures to protect your information against unauthorized access, disclosure, alteration, or destruction. However, no data transmission over the internet is entirely secure, and we cannot guarantee the absolute security of your data.\n**Your Choices**\nYou have the right to access, update, or delete your personal information. You can also opt out of receiving promotional emails. If you have any questions or requests regarding your data, please contact us using the information provided at the end of this policy.\n**Cookies and Tracking Technologies**\nOur website may use cookies and similar tracking technologies to enhance your browsing experience. You can control cookies through your browser settings. Please note that disabling cookies may affect certain features of our website.\n**Changes to this Policy**\nWe may update this Privacy Policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. Updated policies will be posted on our website, and the date of the latest revision will be indicated.\n**Contact Us**\n\nIf you have any questions, concerns, or requests related to this Privacy Policy, please feel free to contact us:\n\nAppinventiv\n\nashish.rai@appinventiv.com\n\nThank you for entrusting us with your personal information. Your privacy is important to us, and we are committed to protecting it.---\n\nFeel free to use and adapt this text for your own privacy policy. \n''';
+
+
 }
