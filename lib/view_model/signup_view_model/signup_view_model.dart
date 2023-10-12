@@ -21,7 +21,6 @@ class SignUpViewModel extends ChangeNotifier
   FocusNode confPassFocusNode = FocusNode();
   FocusNode loginButtonFocusNode = FocusNode();
   FocusNode checkBoxFocusNode = FocusNode();
-  static GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   bool isCheckCheckBox = false;
   bool obsText = false;
@@ -52,7 +51,6 @@ class SignUpViewModel extends ChangeNotifier
   void dispose() {
     emailCont.dispose();
     passCont.dispose();
-    scaffoldKey.currentState!.dispose();
     confPassCont.dispose();
     emailFocusNode.dispose();
     passFocusNode.dispose();

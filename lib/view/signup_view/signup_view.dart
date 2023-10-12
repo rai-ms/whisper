@@ -31,7 +31,6 @@ class _SignUpViewState extends State<SignUpView> {
         ChangeNotifierProvider(create: (context) => SignUpViewModel()),
       ],
       child: Scaffold(
-          key: SignUpViewModel.scaffoldKey,
           body: Center(
             child: SizedBox(
               height: getFullHeight(context),
