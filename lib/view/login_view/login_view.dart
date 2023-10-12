@@ -23,7 +23,8 @@ class _LoginViewState extends State<LoginView> {
       providers: [
         ChangeNotifierProvider(create: (context) => LoginViewModel()),
       ],
-      child: Scaffold(body: Center(
+      child: Scaffold(
+          body: Center(
         child: SingleChildScrollView(
           child: Consumer<LoginViewModel>(builder: (context, provider, child) {
             return Form(

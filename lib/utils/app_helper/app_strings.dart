@@ -47,8 +47,11 @@ class AppStrings {
   static const String noNetwork = "No Network ";
   static const String signUp = "Sign Up";
   static const String createAccount = "Create Account";
+  static const String yourMailIs = "Your mail is verified, click on the create account to fill the required fields";
   static const String confirmPassword = "Confirm Password";
   static const String reEnterPassword = "Re-Enter Password";
+  static const String verify =  "Verify";
+  static const String verifyYourMail = "Verify your Email in order to successfully register yourself on the app.";
   static const String takingMoreTime = "Taking more time ";
   static const String unableToFetchData = "Unable to fetch data ";
   static const String enterEmailAndPassword = "Enter email address and password to register yourself as a new user.";

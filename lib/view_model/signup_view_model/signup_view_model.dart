@@ -8,8 +8,10 @@ import '../../res/components/custom_toast.dart';
 import '../../utils/app_helper/app_color.dart';
 import '../../utils/app_helper/app_strings.dart';
 import '../../utils/utils.dart';
+import '../../view/signup_view/widgets/bottom_sheet.dart';
 
-class SignUpViewModel extends ChangeNotifier {
+class SignUpViewModel extends ChangeNotifier
+{
   TextEditingController emailCont = TextEditingController();
   TextEditingController passCont = TextEditingController();
   TextEditingController confPassCont = TextEditingController();
@@ -21,10 +23,16 @@ class SignUpViewModel extends ChangeNotifier {
   FocusNode checkBoxFocusNode = FocusNode();
   static GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-
   bool isCheckCheckBox = false;
   bool obsText = false;
+  bool _readOnly = false;
 
+  get readOnly => _readOnly;
+
+  toggleReadOnly(){
+    _readOnly = !_readOnly;
+    notifyListeners();
+  }
 
   passShowHide() {
     obsText = !obsText;
@@ -54,7 +62,7 @@ class SignUpViewModel extends ChangeNotifier {
     super.dispose();
   }
 
-  createAccount(BuildContext context) async {
+  createAccount(BuildContext context,Function function) async {
     setLoading(true);
     String passwordUser = passCont.text.toString().trim();
     String confPassUser = confPassCont.text.toString().trim();
@@ -66,7 +74,7 @@ class SignUpViewModel extends ChangeNotifier {
       setLoading(false);
     }
     else if (formKey.currentState!.validate() && confPassUser == passwordUser && isCheckCheckBox) {
-      signUp(context);
+      signUp(context, function);
       setLoading(false);
     }
     else {
@@ -127,31 +135,16 @@ class SignUpViewModel extends ChangeNotifier {
   }
 
   final _myRepo = SignUpRepository();
-  signUp(BuildContext context) {
-    _myRepo.registrationAPI(SignUpPayloadModel(password: passCont.text.toString().trim(), email: emailCont.text.toString().trim()))
+  signUp(BuildContext context, Function showBottomSheet) async {
+    await _myRepo.registrationAPI(SignUpPayloadModel(password: passCont.text.toString().trim(), email: emailCont.text.toString().trim()))
         .then((value){
       CustomToast(context: context, message: "SignUp Successfully Done $value");
       showBottomSheet();
       // setLoading(false);
 
     })
-        .onError((error, stackTrace) {
-      debugPrint("${AppStrings.errorOccured}:$error");
-    });
-
-  }
-
-
-  void showBottomSheet() {
-    scaffoldKey.currentState!.showBottomSheet((context) {
-      return Container(
-        height: 200, // Adjust the height as needed
-        color: AppColors.grey,
-        child: Center(
-          child: Text("Your content here"),
-        ),
-      );
+    .onError((error, stackTrace) {
+    debugPrint("${AppStrings.errorOccured}:$error");
     });
   }
-
 }
