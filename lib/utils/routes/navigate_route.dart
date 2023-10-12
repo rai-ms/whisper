@@ -23,7 +23,7 @@ class NavigateRoute {
       case RouteName.otpAuthView:
         Map<String, dynamic> mp = settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
-            builder: (context) => OTPAuthView(mail: mp["email"]));
+            builder: (context) => OTPAuthView(mail: mp["email"], password: mp['password'],));
       default:
         return MaterialPageRoute(
             builder: (context) => const Scaffold(

@@ -8,6 +8,7 @@ class AppStrings {
   static const String invalidUrl = "Invalid Url";
   static const String invalidUser = "Invalid User";
   static const String errorOccured = "Error Occured";
+  static const String resendOtp = "Resend OTP";
   static const String byRegistering = "By registering you are accepting ";
   static const String deleteMessage = "Delete Message";
   static const String privacyPolicy = '“Privacy Policy”';

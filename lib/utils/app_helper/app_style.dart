@@ -208,4 +208,14 @@ class AppStyle {
       fontWeight: FontWeight.w400,
     );
   }
+
+
+  static TextStyle get blackNormal25 {
+    return const TextStyle(
+      color: AppColors.black,
+      fontSize: 25,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w400,
+    );
+  }
 }

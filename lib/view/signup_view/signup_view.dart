@@ -21,7 +21,7 @@ class SignUpView extends StatefulWidget {
 
 class _SignUpViewState extends State<SignUpView> {
 
-  String email = "";
+  String email = "", pass = "";
 
   @override
   Widget build(BuildContext context) {
@@ -269,6 +269,7 @@ class _SignUpViewState extends State<SignUpView> {
                                         focusNode: provider.loginButtonFocusNode,
                                         onTap: () {
                                           email = provider.emailCont.text.toString().trim();
+                                          pass = provider.passCont.text.toString().trim();
                                           provider.createAccount(context, showBottomSheet);
                                         },
                                         title: AppStrings.createAccount,
@@ -293,6 +294,6 @@ class _SignUpViewState extends State<SignUpView> {
   }
 
   void showBottomSheet() {
-    showModalBottomSheet(context: context, builder: (context) => BottomSheetVerifyAccount(mail: email));
+    showModalBottomSheet(context: context, builder: (context) => BottomSheetVerifyAccount(mail: email, pass: pass,));
   }
 }

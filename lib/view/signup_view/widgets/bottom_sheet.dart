@@ -9,8 +9,9 @@ import '../../../utils/app_helper/app_image.dart';
 import '../../../utils/app_helper/app_strings.dart';
 
 class BottomSheetVerifyAccount extends StatefulWidget {
-  const BottomSheetVerifyAccount({super.key, required this.mail});
+  const BottomSheetVerifyAccount({super.key, required this.mail, required this.pass});
   final String mail;
+  final String pass;
   @override
   State<BottomSheetVerifyAccount> createState() => _BottomSheetVerifyAccountState();
 }
@@ -34,7 +35,7 @@ class _BottomSheetVerifyAccountState extends State<BottomSheetVerifyAccount> {
             sizedBox(hei: 15),
             AppRoundedButton(
               onTap: ()  {
-                  Navigator.pushReplacementNamed(context, RouteName.otpAuthView,arguments: {"email":widget.mail});
+                  Navigator.pushReplacementNamed(context, RouteName.otpAuthView,arguments: {"email":widget.mail, 'password':widget.pass});
               },
               title:  AppStrings.verify,
               textStyle:AppStyle.blueSplashBold20,
