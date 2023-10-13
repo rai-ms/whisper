@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whisper/view/home_view/widgets/HomePageAppBar.dart';
 import 'package:whisper/view/home_view/widgets/bottom_navigation.dart';
 
 class HomeView extends StatefulWidget {
@@ -11,10 +12,17 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text(
-        "Center of HomeView"
-      ),),
+    return Scaffold(
+      body: Center(
+        child: Column(
+          children: [
+            HomePageAppBar(),
+            Text(
+            "Center of HomeView"
+            ),
+          ],
+        ),
+      ),
       bottomNavigationBar: SafeArea(child: AppBottomNavigationBar()),
     );
   }
