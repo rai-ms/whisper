@@ -165,7 +165,7 @@ class _LoginViewState extends State<LoginView> {
                                   children: [
                                     InkWell(
                                       onTap:(){
-
+                                        Navigator.pushNamed(context, RouteName.forgetPasswordView);
                                       },
                                       child: Text(AppStrings.forgetPassword, style: AppStyle.blueItalicBold15,)),
                                   ],

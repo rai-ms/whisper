@@ -1,5 +1,5 @@
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:whisper/utils/routes/route_name.dart';
 import '../../model/user_model.dart';
 import '../../repository/auth_repository.dart';
 import '../../res/components/custom_toast.dart';
@@ -19,7 +19,7 @@ class LoginViewModel extends ChangeNotifier {
     passFocusNode.dispose();
     passCont.dispose();
     emailFocusNode.dispose();
-    formkey.currentState!.dispose();
+    // formkey.currentState!.dispose();
     buttonFocusNode.dispose();
     super.dispose();
   }
@@ -60,6 +60,7 @@ class LoginViewModel extends ChangeNotifier {
       CustomToast(context: context, message: "Login Successful");
       UserData.saveUser(userModel);
       debugPrint("Token is ${userModel.token}");
+      Navigator.pushNamedAndRemoveUntil(context, RouteName.homeView, (route)=> false);
     }).onError((error, stackTrace){
       CustomToast(context: context, message:"Error occur in API Call:"+ error.toString());
     });

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whisper/view/home_view/widgets/bottom_navigation.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -14,6 +15,7 @@ class _HomeViewState extends State<HomeView> {
       body: Center(child: Text(
         "Center of HomeView"
       ),),
+      bottomNavigationBar: SafeArea(child: AppBottomNavigationBar()),
     );
   }
 }

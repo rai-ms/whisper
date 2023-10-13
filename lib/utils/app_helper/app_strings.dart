@@ -15,6 +15,7 @@ class AppStrings {
   static const String notValidMail = "Not Valid Mail";
   static const String id = "Id";
   static const String and = ' and ';
+  static const String sendOTP = 'Send OTP';
   static const String termsOfUse = '“Terms of Use”.';
   static const String passwordNotMatched = "Password not matched";
   static const String deleteForAll = "Delete for All";
@@ -28,6 +29,7 @@ class AppStrings {
       "Password and Confirm Password can't be same";
   static const String login = "Login";
   static const String loginSubTitle = "Enter username/email and password to login or use social media accounts to login into the application.";
+  static const String enterEmailAssociated = "Enter the email associated with your account so that we can send an OTP to reset your password.";
   static const String forgetPassword = "Forget Password ?";
   static const String yourName = "Name";
   static const String enterMessage = "Enter Message";

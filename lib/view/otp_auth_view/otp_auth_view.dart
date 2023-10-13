@@ -60,7 +60,7 @@ class _OTPAuthViewState extends State<OTPAuthView> {
                   padding: const EdgeInsets.all(28.0),
                   child: Center(
                     child: Container(
-                      height: 300,
+                      height: 250,
                       decoration: BoxDecoration(
                         color: AppColors.white,
                         borderRadius: BorderRadius.circular(40),

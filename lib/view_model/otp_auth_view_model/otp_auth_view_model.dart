@@ -52,7 +52,13 @@ class OTPAuthViewModel extends ChangeNotifier
       isValidOTP = true;
       notifyListeners();
       cancelTimer();
+      if(isForgetPass){
+        // Navigator.pushNamed(context, routeName)
+      }
+      else
+      {
 
+      }
     }
   }
 
