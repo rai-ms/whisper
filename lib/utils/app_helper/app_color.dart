@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppColors {
   static const Color black = Colors.black;
   static const Color white = Colors.white;
+  static const Color red = Colors.red;
   static const Color transparent = Colors.transparent;
   static const Color blue = Color(0xFF05339E);
   static const Color blueSplashScreen = Color.fromARGB(255, 0, 50, 91);

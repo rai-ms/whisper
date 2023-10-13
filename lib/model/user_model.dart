@@ -9,7 +9,6 @@ class UserModel
   {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['token'] = token;
-
     return data;
   }
 }

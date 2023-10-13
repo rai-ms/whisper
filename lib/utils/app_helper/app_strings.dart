@@ -27,6 +27,7 @@ class AppStrings {
   static const String passwordAndConfirm =
       "Password and Confirm Password can't be same";
   static const String login = "Login";
+  static const String loginSubTitle = "Enter username/email and password to login or use social media accounts to login into the application.";
   static const String forgetPassword = "Forget Password ?";
   static const String yourName = "Name";
   static const String enterMessage = "Enter Message";
@@ -42,6 +43,7 @@ class AppStrings {
   static const String hello = "Hello!";
   static const String createAnAccount = "Create an account to continue";
   static const String emptyString = "";
+  static const String otpAuth = "OTP Authentication";
   static const String appName = "InfoProfile";
   static const String dontHaveAccount = "Don't have account? ";
   static const String alreadyHaveAccount = "Already have account? ";

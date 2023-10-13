@@ -49,3 +49,7 @@ double getFullHeight(BuildContext context) {
 double getFullWidth(BuildContext context) {
   return MediaQuery.of(context).size.width;
 }
+
+getViewPadding(BuildContext context){
+  return MediaQuery.of(context).viewPadding;
+}
