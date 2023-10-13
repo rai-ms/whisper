@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -57,42 +56,6 @@ class _OTPAuthViewState extends State<OTPAuthView> {
                     ],
                   ),
                 ),whiteContainerWidget: sizedBox(),),
-                // Column(
-                //   children: [
-                //     Expanded(
-                //       flex: 2,
-                //       child: Container(
-                //         width: getFullWidth(context),
-                //         decoration: const BoxDecoration(
-                //           color: AppColors.blueSplashScreen,
-                //         ),
-                //         child: Padding(
-                //           padding: const EdgeInsets.all(28.0),
-                //           child: Column(
-                //             children: [
-                //               sizedBox(hei: padTop),
-                //               SvgPicture.asset(AppImages.logoAndName),
-                //               sizedBox(hei: 20),
-                //               Row(
-                //                 children: [
-                //                   Text(AppStrings.otpAuth, style: AppStyle.whiteBold20,textAlign: TextAlign.start,),
-                //                 ],
-                //               ),
-                //               sizedBox(hei: 10),
-                //               Text("Please enter 4-digits code sent to your Email ${widget.mail}.", style: AppStyle.whiteMedium16,textAlign: TextAlign.start,),
-                //             ],
-                //           ),
-                //         ),
-                //       )
-                //     ),
-                //     Expanded(
-                //       flex: 3,
-                //       child: Container(
-                //
-                //       )
-                //     ),
-                //   ],
-                // ),
                 Padding(
                   padding: const EdgeInsets.all(28.0),
                   child: Center(
