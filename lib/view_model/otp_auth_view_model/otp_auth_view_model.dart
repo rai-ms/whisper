@@ -4,25 +4,31 @@ import 'package:flutter/material.dart';
 
 class OTPAuthViewModel extends ChangeNotifier
 {
-  int sec = 30;
+  int sec = 60;
   bool enableButton = false;
   Timer? timer;
+  bool _isValidOTP = true;
 
-  void startTimer()
-  {
+  bool get isValidOTP => _isValidOTP;
+
+  set isValidOTP(bool val) {
+    _isValidOTP = val;
+    notifyListeners();
+  }
+
+
+  void startTimer()  {
     Future.delayed(const Duration(seconds: 1));
     Timer.periodic(const Duration(seconds: 1), (timer) {
-      if(sec == 0 || sec <= 0){
+      if(sec == 0 || sec <= 0) {
         debugPrint(sec.toString());
         cancelTimer();
         enableButton = true;
-        notifyListeners();
-        sec = 30;
+        sec = 60;
       }
       else {
-        if(sec == 1){
+        if(sec <= 1){
           enableButton = true;
-          notifyListeners();
         }
         sec--;
       }
@@ -38,29 +44,27 @@ class OTPAuthViewModel extends ChangeNotifier
 
   String? otp;
 
-  void sendOTPForVerification() async {
+  /// Api Call
+  /// if Success and [isForgetPass] is true then will navigate to reset password otherwise navigate to Home Page with login
+  void sendOTPForVerification(bool isForgetPass) async {
     if(otp != null){
       debugPrint("OTP received: $otp");
-      // cancelTimer();
+      isValidOTP = true;
+      notifyListeners();
+      cancelTimer();
+
     }
   }
 
   void resendOTP(){
     enableButton = false;
-    sec = 30;
+    sec = 60;
     startTimer();
   }
 
-  // void cancelTimer() {
-  //   _sec = 30;
-  //   enableButton = true;
-  //   _timer?.cancel();
-  //   notifyListeners();
-  // }
-
   @override
   void dispose() {
-    // cancelTimer();
+    cancelTimer();
     super.dispose();
   }
 }

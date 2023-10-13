@@ -106,6 +106,13 @@ class AppStyle {
       fontWeight: FontWeight.w500,
     );
   }
+  static TextStyle? get redMedium12 {
+    return const TextStyle(
+      color: AppColors.red,
+      fontSize: 12,
+      fontWeight: FontWeight.w400,
+    );
+  }
 
   static TextStyle? get whiteMedium22 {
     return const TextStyle(

@@ -56,7 +56,7 @@ class SignUpViewModel extends ChangeNotifier
     passFocusNode.dispose();
     confPassFocusNode.dispose();
     loginButtonFocusNode.dispose();
-    formKey.currentState!.dispose();
+    // formKey.currentState!.dispose();
     super.dispose();
   }
 
