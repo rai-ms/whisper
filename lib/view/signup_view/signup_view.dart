@@ -88,7 +88,7 @@ class _SignUpViewState extends State<SignUpView> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                sizedBox(hei: 60),
+                                sizedBox(hei: getFullHeight(context)*.15),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 28.0),
                                   child: Container(

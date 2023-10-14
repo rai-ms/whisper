@@ -53,3 +53,9 @@ double getFullWidth(BuildContext context) {
 getViewPadding(BuildContext context){
   return MediaQuery.of(context).viewPadding;
 }
+
+GlobalKey<ScaffoldMessengerState> navigatorKeyNew =
+GlobalKey<ScaffoldMessengerState>();
+GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+GlobalKey<ScaffoldMessengerState> navigatorScaffoldKey =
+GlobalKey<ScaffoldMessengerState>();

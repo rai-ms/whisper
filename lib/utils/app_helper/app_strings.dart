@@ -1,5 +1,16 @@
 class AppStrings {
   static const String profile = "Profile";
+  static const String invalidName = "Invalid Name";
+  static const String invalidURL = "Invalid Url";
+  static const String invalidWebsite = "Invalid Website";
+  static const String enterMobileNumber = "Enter Phone number";
+  static const String provideWebsite = "Enter Website";
+  static const String invalidMobileNumber = "Invalid Phone number";
+  static const String provideURL = "Provide Url number";
+  static const String requiredText = "Text Required";
+  static const String passwordMustContain = "Password Contain AB..@..123..abc..";
+  static const String invalidEmail = "Invalid Mail";
+  static const String provideEmilId = "Email Required";
   static const String dataTypeMismatch = "DataType Mismatch";
   static const String noInternet = "No Internet";
   static const String requestTimeOut = "Request Time Out";
