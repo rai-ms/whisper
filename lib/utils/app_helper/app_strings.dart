@@ -54,6 +54,7 @@ class AppStrings {
   static const String error = "Error";
   static const String logIn = "Log In";
   static const String hello = "Hello!";
+  static const String errorLogout = "$error Logout";
   static const String createAnAccount = "Create an account to continue";
   static const String emptyString = "";
   static const String otpAuth = "OTP Authentication";
@@ -62,6 +63,7 @@ class AppStrings {
   static const String alreadyHaveAccount = "Already have account? ";
   static const String noNetwork = "No Network ";
   static const String signUp = "Sign Up";
+  static const String logoutSuccess = "Log-Out Success";
   static const String createAccount = "Create Account";
   static const String yourMailIs = "Your mail is verified, click on the create account to fill the required fields";
   static const String confirmPassword = "Confirm Password";

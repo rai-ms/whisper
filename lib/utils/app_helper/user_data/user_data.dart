@@ -19,10 +19,18 @@ class UserData
     return true;
   }
 
-  static void removeUser() async
+  static Future<bool> removeUser() async
   {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.remove('token');
-    preferences.clear();
+    try{
+      await preferences.remove('token').then((value) async {
+        await preferences.clear().then((value) {
+          return true;
+        });
+      });
+      return true;
+    } catch (e){
+      return false;
+    }
   }
 }

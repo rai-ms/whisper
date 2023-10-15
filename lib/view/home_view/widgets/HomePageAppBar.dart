@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:whisper/global/global.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
 import 'package:whisper/utils/app_helper/app_style.dart';
+import 'package:whisper/view_model/home_view_view_model/app_bar_view_model.dart';
 
 class HomePageAppBar extends StatefulWidget {
   const HomePageAppBar({super.key});
@@ -16,21 +18,35 @@ class _HomePageAppBarState extends State<HomePageAppBar> {
   Widget build(BuildContext context) {
     return Container(
       width: getFullWidth(context),
-      height: 100,
       decoration: const BoxDecoration(
         color: AppColors.blueSplashScreen
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children:
-        [
-          InkWell(
-            onTap: (){
-
-            },
-            child: const Icon(Icons.arrow_back_ios_new, color: AppColors.white,)),
-          Text("AppBar", style: AppStyle.whiteBold20,),
-        ],
+      child: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            sizedBox(hei: 15),
+            Consumer<AppBarViewModel>(
+              builder: (context, provider, child) {
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children:
+                  [
+                    sizedBox(wid: 20),
+                    InkWell(
+                      onTap: (){
+                        provider.logoutUser(context);
+                      },
+                      child: const Icon(Icons.exit_to_app, color: AppColors.white,)),
+                    sizedBox(wid: 30),
+                    Text("AppBar", style: AppStyle.whiteBold20,),
+                  ],
+                );
+              }
+            ),
+            sizedBox(hei: 15),
+          ],
+        ),
       ),
     );
   }
