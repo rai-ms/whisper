@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:whisper/res/components/custom_toast.dart';
 import 'package:whisper/utils/app_helper/app_strings.dart';
-import 'package:whisper/utils/app_helper/user_data/user_data.dart';
 import 'package:whisper/utils/routes/route_name.dart';
+
+import '../../utils/app_helper/user_data_prefrence/user_data.dart';
 
 class AppBarViewModel extends ChangeNotifier
 {

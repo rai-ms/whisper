@@ -3,14 +3,13 @@ class Like {
   final String likedBy;
   final String postedBy;
   final String createdAt;
-  final int likeType;
+   // final int likeType;
 
   Like({
     required this.id,
     required this.likedBy,
     required this.postedBy,
     required this.createdAt,
-    this.likeType = 0, // Default value of 0
   });
 
   factory Like.fromJson(Map<String, dynamic> json) {
@@ -19,7 +18,6 @@ class Like {
       likedBy: json['likedBy'] as String,
       postedBy: json['postedBy'] as String,
       createdAt: json['createdAt'] as String,
-      likeType: json['likeType'] as int,
     );
   }
 
@@ -29,7 +27,6 @@ class Like {
     data['likedBy'] = likedBy;
     data['postedBy'] = postedBy;
     data['createdAt'] = createdAt;
-    data['likeType'] = likeType;
     return data;
   }
 }

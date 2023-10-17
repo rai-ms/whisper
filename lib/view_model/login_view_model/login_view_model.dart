@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:whisper/utils/app_helper/user_data_prefrence/user_data.dart';
 import 'package:whisper/utils/routes/route_name.dart';
 import '../../model/user_model.dart';
 import '../../repository/auth_repository.dart';
 import '../../res/components/custom_toast.dart';
-import '../../utils/app_helper/user_data/user_data.dart';
 
 class LoginViewModel extends ChangeNotifier {
   TextEditingController mailCont = TextEditingController();

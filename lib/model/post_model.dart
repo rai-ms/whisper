@@ -1,9 +1,11 @@
-import 'package:whisper/model/share.dart';
-import 'comment.dart';
-import 'event.dart';
 import 'like.dart';
+import 'comment.dart';
+import 'share.dart';
 
 class Post {
+
+  final String? id;
+
   // Description of the post
   final String? postDescription;
 
@@ -14,61 +16,59 @@ class Post {
   final String postedAt;
 
   // No of Likes
-  final List<Like> likes;
+  final List<Like>? likes;
 
   // No of comments
-  final List<Comment> comments;
+  final List<Comment>? comments;
 
   // No of Shares
-  final List<Share> shares;
+  final List<Share>? shares;
+
+  final String postedBy;
 
   // Location of the post, It will be optional
-  final String? postLocation;
+  // final String? postLocation;
 
   // Id's of persons who are tagged on the post
-  final List<String> tag;
+  // final List<String>? tag;
 
   // Feeling of the post
-  final String feeling;
-
-  // Is this post an event
-  final Event? event;
+  // final String? feeling;
 
   // List of User Id's who reported the post
-  final List<String> report;
+  final List<String>? report;
+
 
   Post({
+    this.id,
     this.postDescription,
     this.image,
+    required this.postedBy,
     required this.postedAt,
-    this.likes = const [],
-    this.comments = const [],
-    this.shares = const [],
-    this.postLocation,
-    this.tag = const [],
-    this.feeling = '',
-    this.event,
-    this.report = const [],
+    this.likes,
+    this.comments,
+    this.shares,
+    this.report,
   });
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
+      'postedBy': postedBy,
       'postDescription': postDescription,
       'image': image,
       'postedAt': postedAt,
-      'likes': likes.map((like) => like.toJson()).toList(),
-      'comments': comments.map((comment) => comment.toMap()).toList(),
-      'shares': shares.map((share) => share.toMap()).toList(),
-      'postLocation': postLocation,
-      'tag': tag,
-      'feeling': feeling,
-      'event': event?.toMap(),
+      'likes': likes?.map((like) => like.toJson()).toList(),
+      'comments': comments?.map((comment) => comment.toMap()).toList(),
+      'shares': shares?.map((share) => share.toMap()).toList(),
       'report': report,
     };
   }
 
   factory Post.fromMap(Map<String, dynamic> map) {
     return Post(
+      id: map['id'],
+      postedBy: map['postedBy'],
       postDescription: map['postDescription'],
       image: map['image'],
       postedAt: map['postedAt'],
@@ -81,10 +81,6 @@ class Post {
       shares: (map['shares'] as List<dynamic>)
           .map((share) => Share.fromMap(share as Map<String, dynamic>))
           .toList(),
-      postLocation: map['postLocation'],
-      tag: (map['tag'] as List<dynamic>).map((tag) => tag.toString()).toList(),
-      feeling: map['feeling'],
-      event: Event.fromMap(map['event'] as Map<String, dynamic>),
       report: (map['report'] as List<dynamic>).map((r) => r.toString()).toList(),
     );
   }

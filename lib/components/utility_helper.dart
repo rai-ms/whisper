@@ -5,20 +5,20 @@ import '../global/global.dart';
 import '../utils/app_helper/app_image.dart';
 
 class UtilityHelper {
-  static void toastMessage(message) {
-    var snackBar = SnackBar(
-        elevation: 7.0,
-        behavior: SnackBarBehavior.floating,
-        duration: const Duration(milliseconds: 1500),
-        backgroundColor: Colors.black,
-        content: Container(
-            margin: const EdgeInsets.symmetric(vertical: 10),
-            child: Text(
-              message,
-              style: const TextStyle(color: Colors.white),
-            )));
-    navigatorScaffoldKey.currentState?.showSnackBar(snackBar);
-  }
+  // static void toastMessage(message) {
+  //   var snackBar = SnackBar(
+  //       elevation: 7.0,
+  //       behavior: SnackBarBehavior.floating,
+  //       duration: const Duration(milliseconds: 1500),
+  //       backgroundColor: Colors.black,
+  //       content: Container(
+  //           margin: const EdgeInsets.symmetric(vertical: 10),
+  //           child: Text(
+  //             message,
+  //             style: const TextStyle(color: Colors.white),
+  //           )));
+  //   navigatorScaffoldKey.currentState?.showSnackBar(snackBar);
+  // }
 
 // Check Internet
   static Future<bool> isInternet() async {

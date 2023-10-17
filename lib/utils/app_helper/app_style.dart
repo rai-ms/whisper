@@ -171,10 +171,18 @@ class AppStyle {
     );
   }
 
+  static TextStyle get blueNormal16 {
+    return const TextStyle(
+      color: AppColors.blue,
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
+    );
+  }
+
   static TextStyle get blackSmall12 {
     return const TextStyle(
       color: AppColors.black,
-      fontSize: 12,
+      fontSize: 10,
       fontWeight: FontWeight.w400,
     );
   }
@@ -211,6 +219,14 @@ class AppStyle {
     return const TextStyle(
       color: AppColors.black,
       fontSize: 15,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w400,
+    );
+  }
+  static TextStyle get blackNormal13 {
+    return const TextStyle(
+      color: AppColors.black,
+      fontSize: 11,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w400,
     );

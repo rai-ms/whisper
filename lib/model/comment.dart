@@ -1,4 +1,10 @@
+import 'package:whisper/model/post_model.dart';
+import 'package:whisper/model/share.dart';
+import 'event.dart';
+import 'like.dart';
+
 class Comment {
+
   // Comment Id
   final String id;
 
@@ -18,7 +24,7 @@ class Comment {
   final List<Comment> reply;
 
   // Id of user who is replied, by default it will be empty
-  final String? repliedBy;
+  final String? repliedOn;
 
   // List of User Id's who are reported on this comment
   final List<String>? report;
@@ -33,7 +39,7 @@ class Comment {
     required this.createdAt,
     required this.content,
     required this.reply,
-    this.repliedBy,
+    this.repliedOn,
     this.report,
     this.block = 0,
   });
@@ -46,7 +52,7 @@ class Comment {
       'createdAt': createdAt,
       'content': content,
       'reply': reply.map((r) => r.toMap()).toList(),
-      'repliedBy': repliedBy,
+      'repliedOn': repliedOn,
       'report': report,
       'block': block,
     };
@@ -62,184 +68,9 @@ class Comment {
       reply: (map['reply'] as List<dynamic>)
           .map((r) => Comment.fromMap(r as Map<String, dynamic>))
           .toList(),
-      repliedBy: map['repliedBy'],
+      repliedOn: map['repliedOn'],
       report: (map['report'] as List<dynamic>).map((r) => r.toString()).toList(),
       block: map['block'] ?? 0,
     );
   }
 }
-
-final List<Comment> dummyComments = [
-  Comment(
-    id: '1',
-    commentBy: 'UserA',
-    postedBy: 'UserB',
-    createdAt: '2023-08-01',
-    content: "This is a great post!",
-    reply: [],
-  ),
-  Comment(
-    id: '2',
-    commentBy: 'UserC',
-    postedBy: 'UserA',
-    createdAt: '2023-08-02',
-    content: "I agree, it's an awesome post.",
-    reply: [],
-  ),
-  Comment(
-    id: '3',
-    commentBy: 'UserB',
-    postedBy: 'UserC',
-    createdAt: '2023-08-03',
-    content: "Thanks for the kind words!",
-    reply: [],
-  ),
-  Comment(
-    id: '4',
-    commentBy: 'UserD',
-    postedBy: 'UserA',
-    createdAt: '2023-08-04',
-    content: "This post needs more attention!",
-    reply: [],
-  ),
-  Comment(
-    id: '5',
-    commentBy: 'UserE',
-    postedBy: 'UserD',
-    createdAt: '2023-08-05',
-    content: "I've shared it with my friends.",
-    reply: [],
-  ),
-  Comment(
-    id: '6',
-    commentBy: 'UserF',
-    postedBy: 'UserA',
-    createdAt: '2023-08-06',
-    content: "Great discussion here!",
-    reply: [],
-  ),
-  Comment(
-    id: '7',
-    commentBy: 'UserB',
-    postedBy: 'UserF',
-    createdAt: '2023-08-07',
-    content: "I learned a lot from this post.",
-    reply: [],
-  ),
-  Comment(
-    id: '8',
-    commentBy: 'UserC',
-    postedBy: 'UserA',
-    createdAt: '2023-08-08',
-    content: "This is one of the best posts I've seen.",
-    reply: [],
-  ),
-  Comment(
-    id: '9',
-    commentBy: 'UserG',
-    postedBy: 'UserA',
-    createdAt: '2023-08-09',
-    content: "I'm a fan of your work!",
-    reply: [],
-  ),
-  Comment(
-    id: '10',
-    commentBy: 'UserD',
-    postedBy: 'UserA',
-    createdAt: '2023-08-10',
-    content: "Keep up the good work!",
-    reply: [
-      Comment(
-        id: '10-1',
-        commentBy: 'UserH',
-        postedBy: 'UserD',
-        createdAt: '2023-08-10T12:30:00',
-        content: "Thank you!",
-        repliedBy: 'UserA',
-        reply: [],
-      ),
-      Comment(
-        id: '10-2',
-        commentBy: 'UserI',
-        postedBy: 'UserD',
-        createdAt: '2023-08-10T12:45:00',
-        content: "You're an inspiration.",
-        repliedBy: 'UserA',
-        reply: [],
-      ),
-      Comment(
-        id: '10-3',
-        commentBy: 'UserJ',
-        postedBy: 'UserD',
-        createdAt: '2023-08-10T13:00:00',
-        content: "I'm a big fan of your work!",
-        repliedBy: 'UserA',
-        reply: [],
-      ),
-      Comment(
-        id: '10-4',
-        commentBy: 'UserK',
-        postedBy: 'UserD',
-        createdAt: '2023-08-10T14:15:00',
-        content: "Can you share your creative process?",
-        repliedBy: 'UserA',
-        reply: [],
-      ),
-      Comment(
-        id: '10-5',
-        commentBy: 'UserL',
-        postedBy: 'UserD',
-        createdAt: '2023-08-10T15:30:00',
-        content: "I'd love to learn from you.",
-        repliedBy: 'UserA',
-        reply: [],
-      ),
-      Comment(
-        id: '10-6',
-        commentBy: 'UserM',
-        postedBy: 'UserD',
-        createdAt: '2023-08-10T16:45:00',
-        content: "You're a role model for many.",
-        repliedBy: 'UserA',
-        reply: [],
-      ),
-      Comment(
-        id: '10-7',
-        commentBy: 'UserN',
-        postedBy: 'UserD',
-        createdAt: '2023-08-10T18:00:00',
-        content: "I admire your dedication.",
-        repliedBy: 'UserA',
-        reply: [],
-      ),
-      Comment(
-        id: '10-8',
-        commentBy: 'UserO',
-        postedBy: 'UserD',
-        createdAt: '2023-08-10T19:15:00',
-        content: "Your work inspires me.",
-        repliedBy: 'UserA',
-        reply: [],
-      ),
-      Comment(
-        id: '10-9',
-        commentBy: 'UserP',
-        postedBy: 'UserD',
-        createdAt: '2023-08-10T20:30:00',
-        content: "Can I connect with you on social media?",
-        repliedBy: 'UserA',
-        reply: [],
-      ),
-      Comment(
-        id: '10-10',
-        commentBy: 'UserQ',
-        postedBy: 'UserD',
-        createdAt: '2023-08-10T21:45:00',
-        content: "You're doing amazing work!",
-        repliedBy: 'UserA',
-        reply: [],
-      ),
-    ],
-  ),
-
-];

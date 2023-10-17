@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:whisper/model/user_model.dart';
-import 'package:whisper/utils/app_helper/user_data/user_data.dart';
+import '../utils/app_helper/user_data_prefrence/user_data.dart';
 import '../utils/routes/route_name.dart';
 
 class SplashScreenServices {

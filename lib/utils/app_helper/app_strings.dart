@@ -47,6 +47,8 @@ class AppStrings {
   static const String fullName = "Full Name";
   static const String yourEmail = "Your Email";
   static const String enterEmailAddress = "Enter Email Address";
+  static const String writeComment = "Write a Comment";
+  static const String comment = "Comment";
   static const String pass = "Password";
   static const String errorDataType = "$error DataType";
   static const String na = "N/A";
