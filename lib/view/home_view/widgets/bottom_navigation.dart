@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:whisper/components/utility_helper.dart';
+import 'package:whisper/global/global.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
 import 'package:whisper/utils/routes/route_name.dart';
 import 'package:whisper/view_model/global_provider/global_provider.dart';
@@ -15,7 +16,6 @@ class AppBottomNavigationBar extends StatefulWidget {
 class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
   double? selectedSize = 35;
   double? unSelectedSize = 25;
-  int index = 0;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,30 +33,21 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
               [
                 InkWell(
                     onTap: (){
-                      if(index != 0){
-                        index = 0;
-                        provider.page = index;
-                        setState((){});
+                      if(pageViewNumber != 0){
+                        provider.setPage(0);
                       }
                     },
-                    child: Icon(FontAwesomeIcons.houseUser, color: AppColors.blueSplashScreen,size: index == 0? selectedSize : unSelectedSize,)),
+                    child: Icon(FontAwesomeIcons.houseUser, color: AppColors.blueSplashScreen,size: pageViewNumber == 0? selectedSize : unSelectedSize,)),
                 InkWell(
                     onTap: (){
-                      if(index != 1){
-                        index = 1;
-                        provider.page = index;
-                        setState((){});
+                      if(pageViewNumber != 1){
+                        provider.setPage(1);
                       }
                     },
-                    child: Icon(FontAwesomeIcons.heart, color: AppColors.blueSplashScreen,size: index == 1? selectedSize : unSelectedSize,)),
+                    child: Icon(FontAwesomeIcons.heart, color: AppColors.blueSplashScreen,size: pageViewNumber == 1? selectedSize : unSelectedSize,)),
                 InkWell(
                     onTap: (){
-                      if(index != 2){
-                        index = 2;
-                        provider.page = index;
-                        setState((){});
                         Navigator.pushNamed(context, RouteName.addPostView);
-                      }
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -67,22 +58,20 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
                     )),
                 InkWell(
                     onTap: (){
-                      if(index != 3){
-                        index = 3;
-                        provider.page = index;
-                        setState((){});
+                      if(pageViewNumber != 2){
+                        provider.setPage(2);
                       }
+                      // debugPrint("Tapped on index 2");
                     },
-                    child: Icon(Icons.search, color: AppColors.blueSplashScreen,size: index == 3? selectedSize : unSelectedSize,)),
+                    child: Icon(Icons.search, color: AppColors.blueSplashScreen,size: pageViewNumber == 2? selectedSize : unSelectedSize,)),
                 InkWell(
                     onTap: (){
-                      if(index != 4){
-                        index = 4;
-                        provider.page = index;
-                        setState((){});
+                      if(pageViewNumber != 3){
+                        provider.setPage(3);
                       }
+                      // debugPrint("Tapped on index 3");
                     },
-                    child: ClipOval(child: UtilityHelper.image("https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60", height: index == 4? (selectedSize!+10.0) : unSelectedSize! + 5))),
+                    child: ClipOval(child: UtilityHelper.image("https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60", height: pageViewNumber == 3? (selectedSize!+10.0) : unSelectedSize! + 5))),
               ],
             );
           }

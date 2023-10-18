@@ -9,28 +9,28 @@ import '../../model/post_model.dart';
 
 class AppGlobalProvider extends ChangeNotifier
 {
+
+  final PageStorageBucket pageStorageBucket = PageStorageBucket();
+
   // Page 0 = HomePage
   // Page 1 = Notification Page
-  // Page 2 = Post Add page
-  // Page 3 = Search User
-  // Page 4 = User Profile Page
-  int _page = 0;
-  int get page => _page;
+  // Page 2 = Search User
+  // Page 3 = User Profile Page
 
-  set page (val){
-    _page = val;
+  PageController pageController = PageController(
+    initialPage: 0, keepPage: false, viewportFraction: 1,);
+
+   setPage (val) {
+    pageViewNumber = val;
+    pageController.animateToPage(val, duration: const Duration(milliseconds: 200), curve: Curves.ease);
     notifyListeners();
   }
 
-  List<Widget> views = [const PostView(), const NotificationView(), const AddPostView(), const SearchUser(), const ProfileView(),];
-
-  getView(){
-    return views[page];
-  }
+  List<Widget> views = [const PostView(), const NotificationView(), const SearchUser(), const ProfileView(),];
 
   List<Post> postList = [];
 
-  getAllPost(){
+  getAllPost() {
     if(postList.isNotEmpty) return postList;
     return generateDummyPosts();
   }
@@ -38,4 +38,5 @@ class AppGlobalProvider extends ChangeNotifier
   getUserProfile(String id) async {
 
   }
+
 }

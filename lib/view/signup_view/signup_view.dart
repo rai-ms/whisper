@@ -221,7 +221,7 @@ class _SignUpViewState extends State<SignUpView> {
                                               flex: 4,
                                               child: InkWell(
                                                 onTap: (){
-                                                  showDialog(context: context, builder: (context) => Dialog(child: AppDialog(context: context, dialogWidget: SingleChildScrollView(
+                                                  showDialog(context: context, builder: (context) => Dialog(child: AppDialog(dialogWidget: SingleChildScrollView(
                                                     child: Column(
                                                       mainAxisAlignment: MainAxisAlignment.center,
                                                       crossAxisAlignment: CrossAxisAlignment.center,

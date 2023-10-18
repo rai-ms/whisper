@@ -40,7 +40,6 @@ class _UserRowPostState extends State<UserRowPost> {
                 context: context,
                 builder: (context) => Dialog(
                   child: AppDialog(
-                    context:  context,
                     dialogWidget: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(

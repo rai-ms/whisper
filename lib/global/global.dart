@@ -313,3 +313,5 @@ UserInfo userInfo = UserInfo(
   name: name,
   id: id,
 );
+
+int pageViewNumber = 0;

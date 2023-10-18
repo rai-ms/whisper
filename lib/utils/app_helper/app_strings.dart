@@ -52,6 +52,7 @@ class AppStrings {
   static const String pass = "Password";
   static const String errorDataType = "$error DataType";
   static const String na = "N/A";
+  static const String notification = "Notification";
   static const String errorLogin = "$error Login";
   static const String error = "Error";
   static const String logIn = "Log In";

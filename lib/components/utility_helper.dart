@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import '../global/global.dart';
+import 'package:whisper/utils/app_helper/app_color.dart';
 import '../utils/app_helper/app_image.dart';
 
 class UtilityHelper {
@@ -41,6 +41,7 @@ class UtilityHelper {
       imageUrl: img,
       height: height,
       width: width,
+      placeholder: (context, url) => Center( child: Container(decoration: const BoxDecoration(color: AppColors.grey),),),
       memCacheHeight: cachedExtent ? 250 : null,
       memCacheWidth: cachedExtent ? 250 : null,
       fit: fit ?? BoxFit.contain,

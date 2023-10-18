@@ -25,6 +25,7 @@ class _PostViewState extends State<PostView> {
           builder: (context, provider, child) {
             postList = provider.getAllPost();
             return ListView.builder(
+              key: const PageStorageKey<String>('notificationPath'),
               itemBuilder: (context, index) {
                 return PostCard(post: postList[index]);
               },

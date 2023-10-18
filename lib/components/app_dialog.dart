@@ -3,9 +3,8 @@ import '../utils/app_helper/app_color.dart';
 
 class AppDialog extends StatefulWidget {
   const AppDialog(
-      {super.key, required this.dialogWidget, required this.context});
+      {super.key, required this.dialogWidget});
   final Widget dialogWidget;
-  final BuildContext context;
   @override
   State<AppDialog> createState() => _AppDialogState();
 }
