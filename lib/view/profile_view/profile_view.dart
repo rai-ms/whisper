@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:whisper/global/global.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
 import 'package:whisper/utils/app_helper/app_style.dart';
+import 'package:whisper/view/profile_view/widgets/freinds_list.dart';
+import 'package:whisper/view/profile_view/widgets/posts_photos_friends.dart';
 import 'package:whisper/view/profile_view/widgets/profile_top_view.dart';
+import 'package:whisper/view_model/personal_profile_view_model/personal_profile_view_model.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -14,7 +18,9 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return MultiProvider(providers: [
+      ChangeNotifierProvider(create: (context) => PersonalProfileViewModel()),
+    ] ,child: SingleChildScrollView(
       key: const PageStorageKey<String>('personalProfileViewPath'),
       child: Column(
         children:
@@ -40,36 +46,36 @@ class _ProfileViewState extends State<ProfileView> {
                       Expanded(
                         flex:4,
                         child: Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: AppColors.blueSplashScreen,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
-                          children: [
-                            sizedBox(wid: 5),
-                            const Icon(Icons.add, color: AppColors.white),
-                            Text("Add To Story", style: AppStyle.whiteBold16,),
-                          ],
-                        ),
-                      ),),
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: AppColors.blueSplashScreen,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            children: [
+                              sizedBox(wid: 5),
+                              const Icon(Icons.add, color: AppColors.white),
+                              Text("Add To Story", style: AppStyle.whiteBold16,),
+                            ],
+                          ),
+                        ),),
                       sizedBox(wid: 10),
                       Expanded(
                         flex: 4,
                         child: Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: AppColors.grey,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
-                          children: [
-                            sizedBox(wid: 5),
-                            const Icon(Icons.edit, color: AppColors.white),
-                            Text("Edit Profile", style: AppStyle.whiteBold16,),
-                          ],
-                        ),
-                      ),),
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: AppColors.grey,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            children: [
+                              sizedBox(wid: 5),
+                              const Icon(Icons.edit, color: AppColors.white),
+                              Text("Edit Profile", style: AppStyle.whiteBold16,),
+                            ],
+                          ),
+                        ),),
                       sizedBox(wid: 10),
                       Expanded(
                         flex: 2,
@@ -136,9 +142,10 @@ class _ProfileViewState extends State<ProfileView> {
             color: AppColors.grey,
           ),
           sizedBox(hei: 10),
+          const PostPhotosFriends(),
 
         ],
       ),
-    );
+    ),);
   }
 }

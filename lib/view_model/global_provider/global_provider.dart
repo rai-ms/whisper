@@ -11,6 +11,7 @@ class AppGlobalProvider extends ChangeNotifier
 {
 
   final PageStorageBucket pageStorageBucket = PageStorageBucket();
+  final PageStorageBucket profileStorageBucket = PageStorageBucket();
 
   // Page 0 = HomePage
   // Page 1 = Notification Page

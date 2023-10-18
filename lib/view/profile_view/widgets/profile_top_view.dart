@@ -18,7 +18,7 @@ class ProfileTopView extends StatelessWidget {
             SizedBox(
               width: getFullWidth(context),
               height: getFullHeight(context) * .255,
-              child: UtilityHelper.image("https://scontent.fdel72-1.fna.fbcdn.net/v/t1.6435-9/184701903_2953147051628508_9163443761182680284_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=300f58&_nc_ohc=NvdnVSdGmdQAX8cpxFQ&_nc_ht=scontent.fdel72-1.fna&oh=00_AfCBxF27sYwjpgwzHa0dXrXH2PyTWuupASxs11p41PPV4A&oe=65570AD2", fit: BoxFit.fitWidth)
+              child: UtilityHelper.image("https://images.unsplash.com/photo-1610252305328-a87676353dc7?auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDB8fG5hdHVyYWwlMjBiYWNrZ3JvdW5kfGVufDB8fDB8fHww&w=800", fit: BoxFit.fitWidth)
               ,
             ),
             Padding(
