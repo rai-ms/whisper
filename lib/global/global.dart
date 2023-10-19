@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../data/app_exceptions/app_exception.dart';
 import '../model/comment.dart';
-import '../model/user_info.dart';
+import '../model/user.dart';
 import '../model/like.dart';
 import '../model/post_model.dart';
 import '../utils/app_helper/app_strings.dart';
@@ -307,11 +307,5 @@ String image = "https://media.licdn.com/dms/image/C4E03AQEXPYjYIiM28Q/profile-di
 String name = "Ashish Rai";
 String id = "sdfvwasdfafsvrjt";
 String postTime = "12/12/2012 at 12:12";
-
-UserInfo userInfo = UserInfo(
-  image: image,
-  name: name,
-  id: id,
-);
 
 int pageViewNumber = 0;

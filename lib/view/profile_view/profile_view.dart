@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:whisper/global/global.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
 import 'package:whisper/utils/app_helper/app_style.dart';
-import 'package:whisper/view/profile_view/widgets/freinds_list.dart';
 import 'package:whisper/view/profile_view/widgets/posts_photos_friends.dart';
 import 'package:whisper/view/profile_view/widgets/profile_top_view.dart';
 import 'package:whisper/view_model/personal_profile_view_model/personal_profile_view_model.dart';
@@ -110,7 +109,7 @@ class _ProfileViewState extends State<ProfileView> {
                 children: [
                   Row(
                     children: [
-                      Icon(FontAwesomeIcons.home, color: AppColors.grey,),
+                      const Icon(FontAwesomeIcons.house, color: AppColors.grey,),
                       sizedBox(wid: 10),
                       Text("Lives in Ballia", style: AppStyle.blackMedium16,),
                     ],
@@ -118,7 +117,7 @@ class _ProfileViewState extends State<ProfileView> {
                   sizedBox(hei: 10),
                   Row(
                     children: [
-                      Icon(FontAwesomeIcons.clock, color: AppColors.grey,),
+                      const Icon(FontAwesomeIcons.clock, color: AppColors.grey,),
                       sizedBox(wid: 10),
                       Text("Joined on July 2023", style: AppStyle.blackMedium16,),
                     ],
@@ -126,7 +125,7 @@ class _ProfileViewState extends State<ProfileView> {
                   sizedBox(hei: 10),
                   Row(
                     children: [
-                      Icon(Icons.more_horiz, color: AppColors.grey,),
+                      const Icon(Icons.more_horiz, color: AppColors.grey,),
                       sizedBox(wid: 10),
                       Text("See your About Info", style: AppStyle.blackMedium16,),
                     ],

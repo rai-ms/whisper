@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-
 import '../../utils/app_helper/app_strings.dart';
 import '../app_exceptions/app_exception.dart';
 import 'base_api_service.dart';
@@ -24,14 +23,30 @@ class NetworkApiServices extends BaseApiServices {
 
   @override
   Future postAPI(String url, dynamic data) async {
+    debugPrint("$data");
     dynamic responseJSON;
     try {
       final response = await http
-          .post(Uri.parse(url), body: data)
+          .post(Uri.parse(url), body: jsonEncode(data),)
           .timeout(const Duration(seconds: 10));
       responseJSON = returnResponse(response);
     } catch(e) {
-      debugPrint("Error Occurs in api call, might be due to internet connection, wrong url, wrong credential");
+      debugPrint("$e");
+    }
+    return responseJSON;
+  }
+
+  @override
+  Future postAPIWithHeader(String url, dynamic data, dynamic header) async {
+    dynamic responseJSON;
+    try {
+      final response = await http
+          .post(Uri.parse(url), body: jsonEncode(data), headers: header)
+          .timeout(const Duration(seconds: 10));
+      responseJSON = returnResponse(response);
+      // debugPrint(responseJSON.toString());
+    } catch(e) {
+      debugPrint("Error: $e");
     }
     return responseJSON;
   }
@@ -42,6 +57,8 @@ class NetworkApiServices extends BaseApiServices {
         return jsonDecode(response.body);
       case 400:
         throw InvalidUrl(AppStrings.invalidUrl);
+      case 500:
+        throw InternalServerException(AppStrings.errorServer);
       default:
         throw FetchDataException(AppStrings.unableToFetchData);
     }

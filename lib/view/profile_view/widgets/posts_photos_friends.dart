@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:whisper/view/profile_view/widgets/personal_posts_model.dart';
 import 'package:whisper/view/profile_view/widgets/photos_list.dart';
 import 'package:whisper/view/profile_view/widgets/post_list.dart';
 import 'package:whisper/view_model/personal_profile_view_model/personal_profile_view_model.dart';
@@ -9,7 +7,7 @@ import '../../../global/global.dart';
 import '../../../utils/app_helper/app_color.dart';
 import '../../../utils/app_helper/app_style.dart';
 import '../../../view_model/global_provider/global_provider.dart';
-import 'freinds_list.dart';
+import 'friends_list.dart';
 
 class PostPhotosFriends extends StatefulWidget {
   const PostPhotosFriends({super.key});

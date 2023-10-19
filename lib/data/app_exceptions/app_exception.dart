@@ -65,3 +65,10 @@ class UnableToLogin extends AppException {
     AppException(message, AppStrings.errorLogin);
   }
 }
+class InternalServerException extends AppException {
+  InternalServerException([String? message]) {
+    AppException(message, AppStrings.errorLogin);
+  }
+}
+
+

@@ -5,7 +5,6 @@ import 'package:whisper/global/global.dart';
 import 'package:whisper/utils/app_helper/app_image.dart';
 import 'package:whisper/utils/app_helper/app_style.dart';
 import 'package:whisper/view_model/forget_password_view_model/forget_password_view_model.dart';
-
 import '../../components/background_app.dart';
 import '../../res/components/app_rounded_button.dart';
 import '../../utils/app_helper/app_color.dart';

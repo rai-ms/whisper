@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:whisper/repository/login_repo/login_repo.dart';
 import 'package:whisper/utils/app_helper/user_data_prefrence/user_data.dart';
 import 'package:whisper/utils/routes/route_name.dart';
+import '../../model/user.dart';
 import '../../model/user_model.dart';
 import '../../repository/auth_repository.dart';
 import '../../res/components/custom_toast.dart';
@@ -12,7 +14,6 @@ class LoginViewModel extends ChangeNotifier {
   FocusNode passFocusNode = FocusNode();
   FocusNode buttonFocusNode = FocusNode();
   GlobalKey<FormState> formkey = GlobalKey();
-
   @override
   void dispose() {
     mailCont.dispose();
@@ -42,27 +43,25 @@ class LoginViewModel extends ChangeNotifier {
   login(BuildContext context) async {
     formkey.currentState!.save();
     if (formkey.currentState!.validate()) {
-      setLoading(true);
       await loginAPI(context);
-      setLoading(false);
     }
-    // setLoading(false);
   }
 
-  final _myRepo = AuthRepository();
+  final myLoginRepo = LoginRepository();
   Future<void> loginAPI(BuildContext context)async {
+    setLoading(true);
     dynamic data = {
       "email": mailCont.text.toString().trim(),
       "password": passCont.text.toString().trim()
     };
-    _myRepo.loginAPI(data).then((value){
-      UserModel userModel = value as UserModel;
+    myLoginRepo.loginAPI(data).then((User? user){
       CustomToast(context: context, message: "Login Successful");
-      UserData.saveUser(userModel);
-      debugPrint("Token is ${userModel.token}");
-      Navigator.pushNamedAndRemoveUntil(context, RouteName.homeView, (route)=> false);
+      setLoading(false);
+      Navigator.pushNamedAndRemoveUntil(context, RouteName.homeView, (route) => false);
     }).onError((error, stackTrace){
-      CustomToast(context: context, message:"Error occur in API Call:"+ error.toString());
+      debugPrint("Error is $error");
+      // CustomToast(context: context, message:"Error occur in API Call $error");
+      setLoading(false);
     });
   }
 

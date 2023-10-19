@@ -23,12 +23,12 @@ class _UserRowPostState extends State<UserRowPost> {
         children: [
           Row(
             children: [
-              ClipOval(child: UtilityHelper.image(userInfo.image, height: 40, width: 40, fit: BoxFit.fill)),
+              ClipOval(child: UtilityHelper.image("https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500", height: 40, width: 40, fit: BoxFit.fill)),
               sizedBox(wid: 10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(userInfo.name, style: AppStyle.blackMedium16,),
+                  Text("Ashish Rai", style: AppStyle.blackMedium16,),
                   Text(postTime, style: AppStyle.blackSmall12,),
                 ],
               ),

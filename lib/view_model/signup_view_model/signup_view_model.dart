@@ -13,10 +13,12 @@ import '../../view/signup_view/widgets/bottom_sheet.dart';
 class SignUpViewModel extends ChangeNotifier
 {
   TextEditingController emailCont = TextEditingController();
+  TextEditingController usernameCont = TextEditingController();
   TextEditingController passCont = TextEditingController();
   TextEditingController confPassCont = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey();
   FocusNode emailFocusNode = FocusNode();
+  FocusNode usernameFocusNode = FocusNode();
   FocusNode passFocusNode = FocusNode();
   FocusNode confPassFocusNode = FocusNode();
   FocusNode loginButtonFocusNode = FocusNode();
@@ -53,7 +55,9 @@ class SignUpViewModel extends ChangeNotifier
     passCont.dispose();
     confPassCont.dispose();
     emailFocusNode.dispose();
+    usernameCont.dispose();
     passFocusNode.dispose();
+    usernameFocusNode.dispose();
     confPassFocusNode.dispose();
     loginButtonFocusNode.dispose();
     // formKey.currentState!.dispose();
@@ -72,7 +76,7 @@ class SignUpViewModel extends ChangeNotifier
       setLoading(false);
     }
     else if (formKey.currentState!.validate() && confPassUser == passwordUser && isCheckCheckBox) {
-      signUp(context, function);
+      await signUp(context, function);
       setLoading(false);
     }
     else {
@@ -133,16 +137,18 @@ class SignUpViewModel extends ChangeNotifier
   }
 
   final _myRepo = SignUpRepository();
-  signUp(BuildContext context, Function showBottomSheet) async {
-    await _myRepo.registrationAPI(SignUpPayloadModel(password: passCont.text.toString().trim(), email: emailCont.text.toString().trim()))
+
+  Future<void> signUp(BuildContext context, Function showBottomSheet) async {
+    await _myRepo.registrationAPI(SignUpPayloadModel(password: passCont.text.toString().trim(), email: emailCont.text.toString().trim(), username: usernameCont.text.toString().trim()))
         .then((value){
       CustomToast(context: context, message: "SignUp Successfully Done $value");
       showBottomSheet();
       // setLoading(false);
-
     })
     .onError((error, stackTrace) {
     debugPrint("${AppStrings.errorOccured}:$error");
     });
+    // CustomToast(context: context, message: "SignUp Successfully Done");
+    // showBottomSheet();
   }
 }

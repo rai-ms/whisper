@@ -5,6 +5,7 @@ class AppStrings {
   static const String invalidWebsite = "Invalid Website";
   static const String enterMobileNumber = "Enter Phone number";
   static const String provideWebsite = "Enter Website";
+  static const String provideUsername = "Enter username";
   static const String invalidMobileNumber = "Invalid Phone number";
   static const String provideURL = "Provide Url number";
   static const String requiredText = "Text Required";
@@ -54,6 +55,7 @@ class AppStrings {
   static const String na = "N/A";
   static const String notification = "Notification";
   static const String errorLogin = "$error Login";
+  static const String errorServer = "$error Server";
   static const String error = "Error";
   static const String logIn = "Log In";
   static const String hello = "Hello!";

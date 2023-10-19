@@ -1,11 +1,11 @@
 class AppUrl
 {
-  static const baseUrl = 'https://reqres.in';
-  static const loginEndPoint = '$baseUrl/api/login';
-  static const registerEndPoint = '$baseUrl/api/register';
-  static const getUserEndPoint = '$baseUrl/api/users?delay=3';
-  static const forgetPasswordEmailEndPoint = '$baseUrl/api/users?delay=3';
-  static const otpForgetPasswordEndPoint = '$baseUrl/api/users?delay=3';
-  static const resetPasswordWithOTPEndPoint = '$baseUrl/api/users?delay=3';
-  static const signupOTPEndPoint = '$baseUrl/api/users?delay=3';
+  static const baseUrl = 'https://harshitsocial.appskeeper.in/api/v1/user';
+  static const signupCredEndPoint = "$baseUrl/signup";
+  static const verifyUserSignup = "$baseUrl/verifyUser";
+  static const loginEndPoint = '$baseUrl/login';
+  static const forgetPasswordEmailEndPoint = '$baseUrl/forgot-password';
+  static const verifyOTPForgetPasswordEmailEndPoint = '$baseUrl/verifyOTP';
+  static const resetPasswordForgetPasswordEmailEndPoint = '$baseUrl/reset-password';
+  static const signupOTPEndPoint = '$baseUrl/send-otp';
 }

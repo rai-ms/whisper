@@ -12,30 +12,23 @@ class AuthRepository
     try{
       res = _baseAPIServices.postAPI(AppUrl.loginEndPoint, data);
       Map<String, dynamic> apiAns = await res;
-      return UserModel.fromJSON(apiAns);
+      // return UserModel.fromJSON(apiAns);
+      return apiAns;
     }
     catch(e){
       rethrow;
     }
   }
 
-  Future<dynamic> registrationAPI(dynamic data) async
-  {
-    dynamic  res;
-    try{
-      res =  _baseAPIServices.postAPI(AppUrl.registerEndPoint, data);
-    }
-    catch (e){ rethrow;}
-  }
 
-  Future<dynamic> userDataGetAPI() async
-  {
-    dynamic res;
-    try{
-      res = _baseAPIServices.getAPI(AppUrl.getUserEndPoint);
-      return res;
-    }
-    catch (e){rethrow;}
-  }
+  // Future<dynamic> userDataGetAPI() async
+  // {
+  //   dynamic res;
+  //   try{
+  //     res = _baseAPIServices.getAPI(AppUrl.getUserEndPoint);
+  //     return res;
+  //   }
+  //   catch (e){rethrow;}
+  // }
 }
 

@@ -103,6 +103,34 @@ class _SignUpViewState extends State<SignUpView> {
                                         sizedBox(hei: 20),
                                         TextFormField(
                                           textInputAction: TextInputAction.next,
+                                          controller: provider.usernameCont,
+                                          readOnly: provider.readOnly,
+                                          focusNode: provider.usernameFocusNode,
+                                          validator: (_){ return null;},
+                                          onFieldSubmitted: (_) {
+                                            Utils.changeFocus(context, provider.usernameFocusNode,
+                                                provider.emailFocusNode);
+                                          },
+                                          decoration: const InputDecoration(
+                                              prefixIcon: Icon(
+                                                Icons.person,
+                                                color: AppColors.blueSplashScreen,
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                  BorderRadius.all(Radius.circular(20)),
+                                                  borderSide:
+                                                  BorderSide(width: 2, color: AppColors.black)),
+                                              hintText: AppStrings.provideUsername,
+                                              label: Text(AppStrings.provideUsername),
+                                              constraints: BoxConstraints(
+                                                maxWidth: 400,
+                                              ),
+                                              hoverColor: AppColors.blueAccent),
+                                        ),
+                                        sizedBox(hei: 20),
+                                        TextFormField(
+                                          textInputAction: TextInputAction.next,
                                           controller: provider.emailCont,
                                           readOnly: provider.readOnly,
                                           focusNode: provider.emailFocusNode,

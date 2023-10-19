@@ -35,7 +35,7 @@ class _BottomSheetVerifyAccountState extends State<BottomSheetVerifyAccount> {
             sizedBox(hei: 15),
             AppRoundedButton(
               onTap: ()  {
-                  Navigator.pushReplacementNamed(context, RouteName.otpAuthView,arguments: {"email":widget.mail, 'password':widget.pass});
+                  Navigator.pushReplacementNamed(context, RouteName.otpAuthView,arguments: {"mail":widget.mail, 'password':widget.pass});
               },
               title:  AppStrings.verify,
               textStyle:AppStyle.blueSplashBold20,

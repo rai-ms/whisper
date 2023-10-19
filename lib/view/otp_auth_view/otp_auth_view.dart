@@ -12,11 +12,12 @@ import '../../components/background_app.dart';
 import '../../view_model/otp_auth_view_model/otp_auth_view_model.dart';
 
 class OTPAuthView extends StatefulWidget {
-  const OTPAuthView({super.key, required this.mail, required this.password, this.isForgetPass = false});
+  const OTPAuthView({super.key, required this.mail, required this.password, this.isForgetPass = false, this.token = ""});
 
   final String mail;
   final String password;
   final bool isForgetPass;
+  final String token;
 
   @override
   State<OTPAuthView> createState() => _OTPAuthViewState();
@@ -52,7 +53,7 @@ class _OTPAuthViewState extends State<OTPAuthView> {
                         ],
                       ),
                       sizedBox(hei: 10),
-                      Text("Please enter 4-digits code sent to your Email ${widget.mail}.", style: AppStyle.whiteMedium16,textAlign: TextAlign.start,),
+                      Text("Please enter 4-digits code sent to your Email ${widget.mail}", style: AppStyle.whiteMedium16,textAlign: TextAlign.start,),
                     ],
                   ),
                 ),whiteContainerWidget: sizedBox(),),
@@ -91,11 +92,14 @@ class _OTPAuthViewState extends State<OTPAuthView> {
                                       fieldWidth: 60,
                                       onCodeChanged: (String code)  {
                                         provider.isValidOTP = code.length == 4;
-                                        debugPrint(code);
+                                        // if(widget.isForgetPass){
+                                        //
+                                        // }
                                       },
                                       onSubmit: (String verificationCode){
                                         provider.otp = verificationCode;
-                                        provider.sendOTPForVerification(widget.isForgetPass);
+                                        // debugPrint("Value of forgetPass is ${widget.isForgetPass}");
+                                        provider.sendOTPForVerification(email: widget.mail, isForgetPass: widget.isForgetPass, context: context);
                                       }, // end onSubmit
                                     ),
                                     Text(provider.isValidOTP? AppStrings.emptyString : "Enter a Valid OTP", style: AppStyle.redMedium12,),
@@ -113,6 +117,7 @@ class _OTPAuthViewState extends State<OTPAuthView> {
                                   loadingWidget: Text("Resend OTP \n${provider.sec} seconds", textAlign: TextAlign.center,),
                                   onTap: (){
                                     provider.resendOTP();
+                                    // provider.sendOTPForVerification(widget.isForgetPass, widget.mail);
                                   },
                                   title: AppStrings.resendOtp);
                               }
