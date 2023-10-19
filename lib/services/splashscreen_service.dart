@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import '../model/user.dart';
 import '../utils/app_helper/user_data_prefrence/user_data.dart';
 import '../utils/routes/route_name.dart';
 
 class SplashScreenServices {
   static checkAuthentication(BuildContext context) async {
-    User? user = await UserData.getUser();
+    String? user = await UserData.getUserAccessToken();
     // debugPrint(user!.accessToken);
     await Future.delayed(const Duration(seconds: 3));
     if(user == "null" || user == null){

@@ -36,12 +36,12 @@ class UtilityHelper {
     }
   }
 
-  static CachedNetworkImage image(img, {double? height, double? width,String? placeHolderImage,File? file,BoxFit? fit, bool cachedExtent = true}) {
+  static CachedNetworkImage image(img, {double? height, double? width,String? placeHolderImage,File? file,BoxFit? fit, bool cachedExtent = true, Widget Function(BuildContext, String)? placeholder}) {
     return CachedNetworkImage(
       imageUrl: img,
       height: height,
       width: width,
-      placeholder: (context, url) => Center( child: Container(decoration: const BoxDecoration(color: AppColors.grey),),),
+      placeholder: placeholder ?? (context, url) => Center( child: Container(decoration: const BoxDecoration(color: AppColors.grey),),),
       memCacheHeight: cachedExtent ? 250 : null,
       memCacheWidth: cachedExtent ? 250 : null,
       fit: fit ?? BoxFit.contain,

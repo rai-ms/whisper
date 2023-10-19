@@ -3,7 +3,6 @@ import 'package:whisper/global/global.dart';
 import 'package:whisper/model/post_model.dart';
 import 'package:whisper/view/post_view/widgets/user_model_post.dart';
 import '../../../components/utility_helper.dart';
-import 'description_text.dart';
 import 'expandable_text.dart';
 import 'like_comment_share_bar.dart';
 

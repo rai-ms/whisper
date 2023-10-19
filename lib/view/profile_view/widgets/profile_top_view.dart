@@ -1,9 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:whisper/components/app_dialog.dart';
 import 'package:whisper/components/utility_helper.dart';
 import 'package:whisper/global/global.dart';
-
 import '../../../utils/app_helper/app_color.dart';
 
 class ProfileTopView extends StatelessWidget {
@@ -11,6 +9,7 @@ class ProfileTopView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget dp = UtilityHelper.image("https://scontent.fdel72-1.fna.fbcdn.net/v/t39.30808-6/355482789_3551846318425242_4960182591060623934_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=XnnVIAFitkUAX_luQ-r&_nc_ht=scontent.fdel72-1.fna&oh=00_AfBOBvAf8MrWfdpbU1NSzWArdT4TUuEa7jMdk6awI1ZGhw&oe=65345EA0",);
     return Column(
       children: [
         Stack(
@@ -31,7 +30,15 @@ class ProfileTopView extends StatelessWidget {
                 ),
                 child: Stack(
                   children: [
-                    ClipOval(child: UtilityHelper.image("https://scontent.fdel72-1.fna.fbcdn.net/v/t39.30808-6/355482789_3551846318425242_4960182591060623934_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=XnnVIAFitkUAX_luQ-r&_nc_ht=scontent.fdel72-1.fna&oh=00_AfBOBvAf8MrWfdpbU1NSzWArdT4TUuEa7jMdk6awI1ZGhw&oe=65345EA0")),
+                    InkWell(onTap:(){
+                      showDialog(context: context, builder: (context){
+                        return Dialog(
+                          child: AppDialog(
+                              dialogWidget:dp,
+                          ),
+                        );
+                      });
+                    },child: ClipOval(child: dp)),
                     Align(
                       alignment: Alignment.bottomRight,
                       child: Container(

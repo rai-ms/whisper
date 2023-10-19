@@ -9,14 +9,14 @@ import '../../../utils/app_helper/app_style.dart';
 import '../../../view_model/global_provider/global_provider.dart';
 import 'friends_list.dart';
 
-class PostPhotosFriends extends StatefulWidget {
-  const PostPhotosFriends({super.key});
+class PostFollowerFollowing extends StatefulWidget {
+  const PostFollowerFollowing({super.key});
 
   @override
-  State<PostPhotosFriends> createState() => _PostPhotosFriendsState();
+  State<PostFollowerFollowing> createState() => _PostFollowerFollowingState();
 }
 
-class _PostPhotosFriendsState extends State<PostPhotosFriends> {
+class _PostFollowerFollowingState extends State<PostFollowerFollowing> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -55,7 +55,7 @@ class _PostPhotosFriendsState extends State<PostPhotosFriends> {
                               color: provider.index == 1? AppColors.grey : null,
                               borderRadius: BorderRadius.circular(20)
                           ),
-                          child: Center(child: Text("Photos", style: AppStyle.blueNormal20,)),
+                          child: Center(child: Text("Follower", style: AppStyle.blueNormal20,)),
                         ),
                       ),
                     ),
@@ -71,7 +71,7 @@ class _PostPhotosFriendsState extends State<PostPhotosFriends> {
                               color: provider.index == 2? AppColors.grey : null,
                               borderRadius: BorderRadius.circular(20)
                           ),
-                          child: Center(child: Text("Friends", style: AppStyle.blueNormal20,)),
+                          child: Center(child: Text("Following", style: AppStyle.blueNormal20,)),
                         ),
                       ),
                     ),

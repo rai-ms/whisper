@@ -37,14 +37,14 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
                         provider.setPage(0);
                       }
                     },
-                    child: Icon(FontAwesomeIcons.houseUser, color: AppColors.blueSplashScreen,size: pageViewNumber == 0? selectedSize : unSelectedSize,)),
+                    child: Icon(FontAwesomeIcons.houseUser, color: pageViewNumber != 0? AppColors.blueSplashScreen : AppColors.red,size: pageViewNumber == 0? selectedSize : unSelectedSize,)),
                 InkWell(
                     onTap: (){
                       if(pageViewNumber != 1){
                         provider.setPage(1);
                       }
                     },
-                    child: Icon(FontAwesomeIcons.heart, color: AppColors.blueSplashScreen,size: pageViewNumber == 1? selectedSize : unSelectedSize,)),
+                    child: Icon(pageViewNumber != 1? FontAwesomeIcons.heart : FontAwesomeIcons.solidHeart, color: pageViewNumber != 1? AppColors.blueSplashScreen : AppColors.red,size: pageViewNumber == 1? selectedSize : unSelectedSize,)),
                 InkWell(
                     onTap: (){
                         Navigator.pushNamed(context, RouteName.addPostView);
@@ -63,7 +63,7 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
                       }
                       // debugPrint("Tapped on index 2");
                     },
-                    child: Icon(Icons.search, color: AppColors.blueSplashScreen,size: pageViewNumber == 2? selectedSize : unSelectedSize,)),
+                    child: Icon(Icons.search, color: pageViewNumber != 2? AppColors.blueSplashScreen : AppColors.red,size: pageViewNumber == 2? selectedSize : unSelectedSize,)),
                 InkWell(
                     onTap: (){
                       if(pageViewNumber != 3){
@@ -71,7 +71,12 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
                       }
                       // debugPrint("Tapped on index 3");
                     },
-                    child: ClipOval(child: UtilityHelper.image("https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60", height: pageViewNumber == 3? (selectedSize!+10.0) : unSelectedSize! + 5))),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: AppColors.blueSplashScreen, width:  pageViewNumber == 3?3:0),
+                        borderRadius: BorderRadius.circular(100)
+                      ),
+                      child: ClipOval(child: UtilityHelper.image("https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60", height: pageViewNumber == 3? (selectedSize!+10.0) : unSelectedSize! + 5)))),
               ],
             );
           }

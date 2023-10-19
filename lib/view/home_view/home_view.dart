@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:whisper/components/app_dialog.dart';
 import 'package:whisper/global/global.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
-import 'package:whisper/utils/app_helper/app_style.dart';
+import 'package:whisper/utils/app_helper/user_data_prefrence/user_data.dart';
 import 'package:whisper/view/home_view/widgets/HomePageAppBar.dart';
 import 'package:whisper/view/home_view/widgets/bottom_navigation.dart';
 import 'package:whisper/view/post_view/post_view.dart';
@@ -35,6 +34,13 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
 
   fetchAllDummyPost(){
     postList = generateDummyPosts();
+    UserData.getUserAccessToken().then((value){
+      debugPrint("User Data Fetched Success $value");
+    }).onError((error, stackTrace){
+      debugPrint("User Data Fetched Failed $error");
+    });
+
+
   }
 
   @override
