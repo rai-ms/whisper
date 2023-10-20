@@ -1,8 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-
 import '../../global/global.dart';
 import '../../res/components/app_rounded_button.dart';
 import '../../utils/app_helper/app_color.dart';
@@ -50,7 +48,7 @@ class _IntroViewState extends State<IntroView> {
                           Padding(
                             padding: const EdgeInsets.all(28.0),
                             child: Text(
-                              "Get Closer To EveryOne",
+                              "Let's crack",
                               style: AppStyle.blackNormal36,
                             ),
                           ),

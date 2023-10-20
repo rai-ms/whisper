@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -161,11 +160,20 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                                                                   ),
                                                                   Expanded(
                                                                     flex: 10,
-                                                                    child: InkWell(
-                                                                        onTap:(){
-                                                                          _showCommentPopupMenu(context);
-                                                                        },
-                                                                        child: const Icon(Icons.more_vert)),
+                                                                    child: PopupMenuButton(icon: const Icon(Icons.more_vert), itemBuilder: (BuildContext context) { return [
+                                                                      const PopupMenuItem(
+                                                                        value: "report",
+                                                                        child: Text("Report comment"),
+                                                                      ),
+                                                                      const PopupMenuItem(
+                                                                        value: "share",
+                                                                        child: Text("edit comment"),
+                                                                      ),
+                                                                      const PopupMenuItem(
+                                                                        value: "delete",
+                                                                        child: Text("delete comment"),
+                                                                      ),
+                                                                    ]; },),
                                                                   ),
                                                                 ],
                                                               ),
@@ -372,33 +380,6 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
         ],
       ),
     ),);
-  }
-
-  void _showCommentPopupMenu(BuildContext context) {
-    final RenderBox overlay =
-    Overlay.of(context)!.context.findRenderObject() as RenderBox;
-
-    showMenu(
-      context: context,
-      position: RelativeRect.fromRect(
-        const Rect.fromLTWH(400, 500, 10, 10),
-        Offset.zero & overlay.size,
-      ),
-      items: [
-        const PopupMenuItem(
-          child: Text("Report comment"),
-          value: "report",
-        ),
-        const PopupMenuItem(
-          child: Text("edit comment"),
-          value: "share",
-        ),
-        const PopupMenuItem(
-          child: Text("delete comment"),
-          value: "delete",
-        ),
-      ],
-    ).then<void>((_) {});
   }
 
   void showLikeBottomSheet(){

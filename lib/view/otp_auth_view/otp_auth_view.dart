@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:whisper/components/app_text_form_field.dart';
 import 'package:whisper/global/global.dart';
 import 'package:whisper/res/components/app_rounded_button.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
@@ -92,14 +93,11 @@ class _OTPAuthViewState extends State<OTPAuthView> {
                                       fieldWidth: 60,
                                       onCodeChanged: (String code)  {
                                         provider.isValidOTP = code.length == 4;
-                                        // if(widget.isForgetPass){
-                                        //
-                                        // }
                                       },
                                       onSubmit: (String verificationCode){
                                         provider.otp = verificationCode;
                                         // debugPrint("Value of forgetPass is ${widget.isForgetPass}");
-                                        provider.sendOTPForVerification(email: widget.mail, isForgetPass: widget.isForgetPass, context: context);
+                                        provider.sendOTPForVerification(email: widget.mail, isForgetPass: widget.isForgetPass, context: context,);
                                       }, // end onSubmit
                                     ),
                                     Text(provider.isValidOTP? AppStrings.emptyString : "Enter a Valid OTP", style: AppStyle.redMedium12,),
@@ -112,17 +110,15 @@ class _OTPAuthViewState extends State<OTPAuthView> {
                               builder: (context, provider, child){
                                 provider.startTimer();
                                 return AppRoundedButton(
-                                  isEnable: provider.enableButton,
-                                  loading: !provider.enableButton,
-                                  loadingWidget: Text("Resend OTP \n${provider.sec} seconds", textAlign: TextAlign.center,),
+                                  isEnable: !provider.enableButton,
+                                  // loading: !provider.enableButton,
+                                  // loadingWidget: Text("Resend OTP \n${provider.sec} seconds", textAlign: TextAlign.center,),
                                   onTap: (){
-                                    provider.resendOTP();
-                                    // provider.sendOTPForVerification(widget.isForgetPass, widget.mail);
+                                    provider.resendOTP(widget.mail);
                                   },
                                   title: AppStrings.resendOtp);
                               }
                             ),
-
                           ],
                         ),
                       ),

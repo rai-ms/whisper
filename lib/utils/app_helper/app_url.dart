@@ -7,5 +7,6 @@ class AppUrl
   static const forgetPasswordEmailEndPoint = '$baseUrl/forgot-password';
   static const verifyOTPForgetPasswordEmailEndPoint = '$baseUrl/verifyOTP';
   static const resetPasswordForgetPasswordEmailEndPoint = '$baseUrl/reset-password';
+  static const resendOtpForgetPasswordEmailEndPoint = '$baseUrl/send-otp';
   static const signupOTPEndPoint = '$baseUrl/send-otp';
 }

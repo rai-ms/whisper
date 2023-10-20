@@ -3,9 +3,7 @@ import '../../utils/app_helper/app_strings.dart';
 class AppException implements Exception {
   final String? _message;
   final String? _prefix;
-
   AppException([this._message, this._prefix]);
-
   @override
   String toString() {
     return "$_prefix $_message";
@@ -13,62 +11,42 @@ class AppException implements Exception {
 }
 
 class InternetException extends AppException {
-  InternetException([String? message]) {
-    AppException(message, AppStrings.noInternet);
-  }
+  InternetException([String? message]): super(message, AppStrings.noInternet);
 }
 
 class RequestTimeOut extends AppException {
-  RequestTimeOut([String? message]) {
-    AppException(message, AppStrings.requestTimeOut);
-  }
+  RequestTimeOut([String? message]) : super(message, AppStrings.requestTimeOut);
 }
 
 class ServerException extends AppException {
-  ServerException([String? message]) {
-    AppException(message, AppStrings.serverError);
-  }
+  ServerException([String? message]) : super(message, AppStrings.serverError);
 }
 
 class DatabaseException extends AppException {
-  DatabaseException([String? message]) {
-    AppException(message, AppStrings.databaseError);
-  }
+  DatabaseException([String? message]) : super (message, AppStrings.databaseError);
 }
 
 class InvalidUrl extends AppException {
-  InvalidUrl([String? message]) {
-    AppException(message, AppStrings.invalidUrl);
-  }
+  InvalidUrl([String? message]) : super(message, AppStrings.invalidUrl);
 }
 
 class UnauthorizedAccessException extends AppException {
-  UnauthorizedAccessException([String? message]) {
-    AppException(message, AppStrings.invalidUser);
-  }
+  UnauthorizedAccessException([String? message]) : super(message, AppStrings.invalidUser);
 }
 
 class FetchDataException extends AppException {
-  FetchDataException([String? message]) {
-    AppException(message, AppStrings.errorOccured);
-  }
+  FetchDataException([String? message]): super(message, AppStrings.errorOccured);
 }
 
 class UnableToConvert extends AppException {
-  UnableToConvert([String? message]) {
-    AppException(message, AppStrings.errorDataType);
-  }
+  UnableToConvert([String? message]) : super (message, AppStrings.errorDataType);
 }
 
 class UnableToLogin extends AppException {
-  UnableToLogin([String? message]) {
-    AppException(message, AppStrings.errorLogin);
-  }
+  UnableToLogin([String? message]) : super (message, AppStrings.errorLogin);
 }
 class InternalServerException extends AppException {
-  InternalServerException([String? message]) {
-    AppException(message, AppStrings.errorLogin);
-  }
+  InternalServerException([String? message]) : super(message, AppStrings.errorLogin);
 }
 
 

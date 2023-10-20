@@ -37,26 +37,33 @@ class NetworkApiServices extends BaseApiServices {
   }
 
   @override
-  Future postAPIWithHeader(String url, dynamic data, dynamic header) async {
+  Future postAPIWithHeader(String url, dynamic data, Map<String, String> header) async {
     dynamic responseJSON;
     try {
       final response = await http
           .post(Uri.parse(url), body: jsonEncode(data), headers: header)
           .timeout(const Duration(seconds: 10));
+      debugPrint("JSON Status Code: ${response.statusCode}");
       responseJSON = returnResponse(response);
-      // debugPrint(responseJSON.toString());
+      // debugPrint("JSON Return: $responseJSON");
     } catch(e) {
       debugPrint("Error: $e");
     }
+    debugPrint("Going to return Response :$responseJSON");
     return responseJSON;
   }
 
   dynamic returnResponse(http.Response response) {
     switch (response.statusCode) {
       case 200:
-        return jsonDecode(response.body);
+        debugPrint("Status code is --- 200 ---");
+        var res = jsonDecode(response.body);
+        debugPrint("Response type is --- ${res['type']} ---");
+        return res;
       case 400:
         throw InvalidUrl(AppStrings.invalidUrl);
+      case 429:
+        throw InternalServerException(AppStrings.errorServer);
       case 500:
         throw InternalServerException(AppStrings.errorServer);
       default:

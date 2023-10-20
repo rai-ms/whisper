@@ -1,5 +1,4 @@
 import 'dart:convert'; // Import the dart:convert library to work with JSON.
-
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../model/user.dart';
@@ -29,7 +28,6 @@ class UserData {
     final String? userDataString = preferences.getString('email');
     return userDataString;
   }
-
 
   static Future<bool> saveUser(User user) async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();

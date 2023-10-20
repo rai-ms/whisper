@@ -39,7 +39,8 @@ class LoginRepository {
   Future<String?> forgetPasswordLoginAPI(dynamic data) async {
     await _baseAPIServices.postAPIWithHeader(AppUrl.forgetPasswordEmailEndPoint, data, header).then((value){
       debugPrint("Forget Password OTP sent success $value");
-      return value;
+      debugPrint("Forget Password OTP sent success ${value['statusCode']}");
+      return value['statusCode'].toString();
     }).onError((error, stackTrace){
       debugPrint("Data Received with error occur: $error");
       throw UnableToConvert();
@@ -47,24 +48,40 @@ class LoginRepository {
     return null;
   }
 
-  Future<String?> forgetPasswordVerifyOTPLoginAPI(dynamic data) async {
+  Future<Map<String, dynamic>?> forgetPasswordVerifyOTPLoginAPI(dynamic data) async {
+    Map<String, dynamic>? res;
     await _baseAPIServices.postAPIWithHeader(AppUrl.verifyOTPForgetPasswordEmailEndPoint, data, header).then((value){
       debugPrint("Verify OTP sent success $value");
-      return value;
+      res =  value;
     }).onError((error, stackTrace){
       debugPrint("Verify OTP forget password error occur: $error");
       throw UnableToConvert();
     });
-    return null;
+    return res;
   }
 
-  Future<String?> resetPasswordForgetPasswordLoginAPI(dynamic data) async {
-    await _baseAPIServices.postAPIWithHeader(AppUrl.resetPasswordForgetPasswordEmailEndPoint, data, header).then((value){
+  Future<dynamic> resetPasswordForgetPasswordLoginAPI({required String token, required String pass}) async {
+
+    Map<String, dynamic> body = {'newPassword':pass};
+
+    Map<String, String> resetHeader = {'Content-Type':'application/json', 'Authorization':token,};
+
+    debugPrint("$resetHeader is the header and body is $body");
+    await _baseAPIServices.postAPIWithHeader(AppUrl.resetPasswordForgetPasswordEmailEndPoint, body, resetHeader).then((value){
       debugPrint("Reset Password success $value");
       return value;
     }).onError((error, stackTrace){
       debugPrint("Reset Password error occur: $error");
       throw UnableToConvert();
+    });
+    return null;
+  }
+
+  Future<String?> resendPassword(dynamic data) async {
+    await _baseAPIServices.postAPIWithHeader(AppUrl.resendOtpForgetPasswordEmailEndPoint, data, header).then((value){
+      debugPrint("Resend OTP Success $value");
+    }).onError((error, stackTrace){
+      debugPrint("Resend OTP Failed $error");
     });
     return null;
   }

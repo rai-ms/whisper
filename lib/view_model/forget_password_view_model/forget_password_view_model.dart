@@ -12,7 +12,6 @@ class ForgetPasswordViewModel extends ChangeNotifier
 
   final LoginRepository _repo = LoginRepository();
   sendOTPForForgetPassword(BuildContext context) async {
-
     if(formkey.currentState!.validate()){
       loading = true;
       notifyListeners();
@@ -23,7 +22,8 @@ class ForgetPasswordViewModel extends ChangeNotifier
           debugPrint("OTP Sent Success $value");
           Navigator.pushNamed(context, RouteName.otpAuthView, arguments: {'mail':mailCont.text.toString().trim(), 'password': "", 'isForgetPass' : true});
         }).onError((error, stackTrace){
-
+            debugPrint("Error in Forget Password: $error");
+            return;
         });
         loading = false;
         notifyListeners();
