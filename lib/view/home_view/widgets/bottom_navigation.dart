@@ -20,7 +20,7 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-          color: AppColors.white,
+          color: Theme.of(context).primaryColorLight,
           borderRadius: BorderRadius.circular(50),
           border: Border.all(width: 1, color: AppColors.blueSplashScreen),
           shape: BoxShape.rectangle

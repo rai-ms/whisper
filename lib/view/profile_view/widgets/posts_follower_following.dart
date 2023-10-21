@@ -4,7 +4,6 @@ import 'package:whisper/view/profile_view/widgets/photos_list.dart';
 import 'package:whisper/view/profile_view/widgets/post_list.dart';
 import 'package:whisper/view_model/personal_profile_view_model/personal_profile_view_model.dart';
 import '../../../global/global.dart';
-import '../../../utils/app_helper/app_color.dart';
 import '../../../utils/app_helper/app_style.dart';
 import '../../../view_model/global_provider/global_provider.dart';
 import 'friends_list.dart';
@@ -36,10 +35,10 @@ class _PostFollowerFollowingState extends State<PostFollowerFollowing> {
                         child: Container(
                           height: 40,
                           decoration: BoxDecoration(
-                              color: provider.index == 0? AppColors.grey : null,
+                              color: provider.index == 0? Theme.of(context).dividerColor : null,
                               borderRadius: BorderRadius.circular(20)
                           ),
-                          child: Center(child: Text("Posts", style: AppStyle.blueNormal20,)),
+                          child: Center(child: Text("Posts", style: AppStyle.primaryColorDarkMedium20(context),)),
                         ),
                       ),
                     ),
@@ -52,10 +51,10 @@ class _PostFollowerFollowingState extends State<PostFollowerFollowing> {
                         child: Container(
                           height: 40,
                           decoration: BoxDecoration(
-                              color: provider.index == 1? AppColors.grey : null,
+                              color: provider.index == 1? Theme.of(context).dividerColor  : null,
                               borderRadius: BorderRadius.circular(20)
                           ),
-                          child: Center(child: Text("Follower", style: AppStyle.blueNormal20,)),
+                          child: Center(child: Text("Follower", style: AppStyle.primaryColorDarkMedium20(context),)),
                         ),
                       ),
                     ),
@@ -68,10 +67,10 @@ class _PostFollowerFollowingState extends State<PostFollowerFollowing> {
                         child: Container(
                           height: 40,
                           decoration: BoxDecoration(
-                              color: provider.index == 2? AppColors.grey : null,
+                              color: provider.index == 2? Theme.of(context).dividerColor  : null,
                               borderRadius: BorderRadius.circular(20)
                           ),
-                          child: Center(child: Text("Following", style: AppStyle.blueNormal20,)),
+                          child: Center(child: Text("Following", style: AppStyle.primaryColorDarkMedium20(context),)),
                         ),
                       ),
                     ),
@@ -80,8 +79,8 @@ class _PostFollowerFollowingState extends State<PostFollowerFollowing> {
                 ),
                 SizedBox(
                   height: 500,
-                  width:getFullWidth(context),// Make sure this height is within the parent's constraints.
-                  child:  provider.index == 0? const PostList():  provider.index == 1 ? const FriendsList() : const PhotosList(),
+                  width: getFullWidth(context),// Make sure this height is within the parent's constraints.
+                  child: provider.index == 0? const PostList() : provider.index == 1 ? const FriendsList() : const PhotosList(),
                 )
               ],
             );

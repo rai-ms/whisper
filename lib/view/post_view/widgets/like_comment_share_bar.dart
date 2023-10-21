@@ -61,7 +61,7 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                   children: [
                     Icon(!isLiked ? FontAwesomeIcons.thumbsUp :FontAwesomeIcons.solidThumbsUp , color: AppColors.blueSplashScreen,),
                     sizedBox(wid: 5),
-                    Text(!isLiked ?widget.likes!.length.toString():( widget.likes!.length+ 1).toString()),
+                    Text(!isLiked ?widget.likes!.length.toString():( widget.likes!.length+ 1).toString(), style: AppStyle.blackNormal15,),
                   ],
                 ),
               );
@@ -72,12 +72,15 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
               return InkWell(
                   onTap:(){
                     showModalBottomSheet(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))
+                      ),
                       isScrollControlled: true,
                       useSafeArea: true,
                       context: context,
                       builder: (context) => Container(
                         decoration: BoxDecoration(
-                          color: AppColors.white,
+                          color: Theme.of(context).cardColor,
                           borderRadius: BorderRadius.circular(30),
                         ),
                           constraints: BoxConstraints(
@@ -285,7 +288,7 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                     children: [
                       const Icon(FontAwesomeIcons.commentDots, color: AppColors.blueSplashScreen,),
                       sizedBox(wid: 5),
-                      Text(widget.comments!.length.toString())
+                      Text(widget.comments!.length.toString(), style: AppStyle.blackNormal15,)
                     ],
                   ));
             }

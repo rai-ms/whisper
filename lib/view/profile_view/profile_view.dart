@@ -58,7 +58,7 @@ class _ProfileViewState extends State<ProfileView> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           const SizedBox(width: 10,),
-                          Text( "$username", style: AppStyle.blackBold24,),
+                          Text( "$username", style: AppStyle.primaryColorDarkMedium(context),),
                         ],
                       );
                     }
@@ -71,7 +71,7 @@ class _ProfileViewState extends State<ProfileView> {
                             ),
                             Text(
                               "Ashish Rai",
-                              style: AppStyle.blackBold24,
+                              style: AppStyle.primaryColorDarkMedium(context),
                             ),
                           ],
                         );
@@ -145,7 +145,7 @@ class _ProfileViewState extends State<ProfileView> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const SizedBox(width: 10,),
-                Text("Details", style: AppStyle.blackBold24,),
+                Text("Details", style: AppStyle.primaryColorDarkMedium25(context),),
               ],
             ),
             sizedBox(hei: 10),
@@ -159,7 +159,7 @@ class _ProfileViewState extends State<ProfileView> {
                       children: [
                         const Icon(FontAwesomeIcons.house, color: AppColors.grey,),
                         sizedBox(wid: 10),
-                        Text("Lives in Ballia", style: AppStyle.blackMedium16,),
+                        Text("Lives in Ballia", style: AppStyle.primaryColorDarkMedium(context),),
                       ],
                     ),
                     sizedBox(hei: 10),
@@ -177,7 +177,7 @@ class _ProfileViewState extends State<ProfileView> {
                               }
                               else if(data.hasData){
                                 String? joinDate = data.data;
-                                return Text("Joined on ${joinDate!.substring(0, 10)}", style: AppStyle.blackMedium16,);
+                                return Text("Joined on ${joinDate!.substring(0, 10)}", style: AppStyle.primaryColorDarkMedium(context),);
                               }
                               return Text("${data.data}");
 
@@ -191,7 +191,7 @@ class _ProfileViewState extends State<ProfileView> {
                       children: [
                         const Icon(Icons.more_horiz, color: AppColors.grey,),
                         sizedBox(wid: 10),
-                        Text("See your About Info", style: AppStyle.blackMedium16,),
+                        Text("See your About Info", style: AppStyle.primaryColorDarkMedium(context),),
                       ],
                     ),
                   ],
@@ -199,10 +199,14 @@ class _ProfileViewState extends State<ProfileView> {
               ],
             ),
             sizedBox(hei: 10),
-            Container(
-              width: getFullWidth(context),
-              height: 20,
-              color: AppColors.grey,
+            // Container(
+            //   width: getFullWidth(context),
+            //   height: 20,
+            //   color: AppColors.grey,
+            // ),
+            Divider(
+              thickness: 20,
+              color: Theme.of(context).dividerColor,
             ),
             sizedBox(hei: 10),
             const PostFollowerFollowing(),

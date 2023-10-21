@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
           primaryColorDark: AppColors.white,
           cardColor: AppColors.lightBlack,
           canvasColor: AppColors.grey,
+          dividerColor: Colors.grey.shade800,
           appBarTheme: AppBarTheme(
             color: Theme.of(context).primaryColor,
           ),
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.light,
           primaryColor:  AppColors.blueSplashScreen,
           cardColor: Colors.grey.shade50,
+          dividerColor: Colors.grey.shade300,
           canvasColor: Colors.grey,
           primaryColorDark: AppColors.black,
           primaryColorLight: Colors.white,
