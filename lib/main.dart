@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:whisper/utils/app_helper/app_color.dart';
+import 'package:whisper/utils/app_helper/user_data_preferences/user_data.dart';
 import 'package:whisper/utils/routes/navigate_route.dart';
 import 'package:whisper/utils/routes/route_name.dart';
 import 'package:whisper/view_model/global_provider/global_provider.dart';
 import 'package:whisper/view_model/home_view_view_model/post_card_comment_view_model.dart';
 import 'package:whisper/view_model/home_view_view_model/share_post_view_model.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await UserData().init();
   runApp(const MyApp());
 }
 
@@ -23,14 +27,34 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context)=> PostShareViewModel()),
       ],
       child: MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      onGenerateRoute: NavigateRoute.onGenerate,
-      initialRoute: RouteName.splashscreen,
+        title: 'Flutter Demo',
+        darkTheme: ThemeData(
+          brightness: Brightness.dark,
+          primaryColor: AppColors.lightBlack,
+          primaryColorLight: AppColors.lightBlack,
+          primaryColorDark: AppColors.white,
+          cardColor: AppColors.lightBlack,
+          canvasColor: AppColors.grey,
+          appBarTheme: AppBarTheme(
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          useMaterial3: true,
+          brightness: Brightness.light,
+          primaryColor:  AppColors.blueSplashScreen,
+          cardColor: Colors.grey.shade50,
+          canvasColor: Colors.grey,
+          primaryColorDark: AppColors.black,
+          primaryColorLight: Colors.white,
+          appBarTheme: AppBarTheme(
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        themeMode: ThemeMode.system,
+        onGenerateRoute: NavigateRoute.onGenerate,
+        initialRoute: RouteName.splashscreen,
     ),);
   }
 }

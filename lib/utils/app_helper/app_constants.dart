@@ -1,7 +1,7 @@
 class AppConstants {
 //Api constants
-  final int statusCode = 201;
-  final int statusCode2001 = 200;
+  final int statusCode201 = 201;
+  final int statusCode200 = 200;
   static const login = 'login Successfully';
   static const logout = 'logout Successfully';
 
@@ -16,7 +16,7 @@ class AppConstants {
 
 // for checking null value
   bool checkStatusCode(status) {
-    if (status == statusCode || status == statusCode2001) {
+    if (status == statusCode201 || status == statusCode200) {
       return true;
     } else {
       return false;

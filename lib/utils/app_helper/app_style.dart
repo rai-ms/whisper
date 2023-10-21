@@ -106,6 +106,7 @@ class AppStyle {
       fontWeight: FontWeight.w500,
     );
   }
+
   static TextStyle? get redMedium12 {
     return const TextStyle(
       color: AppColors.red,
@@ -134,6 +135,24 @@ class AppStyle {
     return const TextStyle(
       color: AppColors.white,
       fontSize: 16,
+      fontWeight: FontWeight.w400,
+    );
+  }
+
+  static TextStyle? primaryColorDarkMedium(BuildContext context)
+  {
+    return TextStyle(
+      color: Theme.of(context).primaryColorDark,
+      fontSize: 15,
+      fontWeight: FontWeight.w400,
+    );
+  }
+
+  static TextStyle? primaryColorDarkMedium14(BuildContext context)
+  {
+    return TextStyle(
+      color: Theme.of(context).primaryColorDark,
+      fontSize: 12,
       fontWeight: FontWeight.w400,
     );
   }
@@ -231,6 +250,7 @@ class AppStyle {
       fontWeight: FontWeight.w400,
     );
   }
+
   static TextStyle get blackNormal13 {
     return const TextStyle(
       color: AppColors.black,
@@ -239,7 +259,6 @@ class AppStyle {
       fontWeight: FontWeight.w400,
     );
   }
-
 
   static TextStyle get blackNormal25 {
     return const TextStyle(

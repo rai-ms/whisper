@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whisper/global/global.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
-import 'package:whisper/utils/app_helper/user_data_prefrence/user_data.dart';
+import 'package:whisper/utils/app_helper/user_data_preferences/user_data.dart';
 import 'package:whisper/view/home_view/widgets/HomePageAppBar.dart';
 import 'package:whisper/view/home_view/widgets/bottom_navigation.dart';
 import 'package:whisper/view/post_view/post_view.dart';
@@ -54,7 +54,7 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
         body: Center(
           child: Container(
             height: getFullHeight(context),
-            color: AppColors.white,
+            color: Theme.of(context).primaryColorLight,
             child: Column(
               children: [
                 const HomePageAppBar(),
@@ -85,18 +85,6 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                   //   return provider.getView();
                   // }),
                 ),
-                // Expanded(
-                //   flex: 77,
-                //   child: Container(
-                //     color: AppColors.white,
-                //     child: ListView.builder(
-                //       itemBuilder: (context, index) {
-                //         return PostCard(post: postList[index]);
-                //       },
-                //       itemCount: postList.length,
-                //     ),
-                //   ),
-                // ),
                 const Expanded(
                     flex: 8,
                     child: AppBottomNavigationBar()),

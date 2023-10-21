@@ -18,8 +18,8 @@ class _HomePageAppBarState extends State<HomePageAppBar> {
     return Container(
       height: 100,
       width: getFullWidth(context),
-      decoration: const BoxDecoration(
-        color: AppColors.blueSplashScreen
+      decoration: BoxDecoration(
+        color: Theme.of(context).primaryColor
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

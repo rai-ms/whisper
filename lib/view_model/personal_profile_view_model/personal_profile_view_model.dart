@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:whisper/utils/app_helper/user_data_prefrence/user_data.dart';
+import 'package:whisper/utils/app_helper/user_data_preferences/user_data.dart';
 
 class PersonalProfileViewModel extends ChangeNotifier
 {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whisper/utils/app_helper/app_style.dart';
 
 class ExpandableText extends StatefulWidget {
   ExpandableText({super.key, required this.text, this.isExpanded = false});
@@ -28,13 +29,12 @@ class _ExpandableTextState extends State<ExpandableText>
                   ? const BoxConstraints()
                   : const BoxConstraints(maxHeight: 30.0),
               child: Text(
-
                 widget.text,
                 softWrap: true,
                 overflow: TextOverflow.fade,
+                style: AppStyle.primaryColorDarkMedium14(context),
               ))),
         ),
-
       ]);
   }
 }

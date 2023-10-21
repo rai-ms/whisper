@@ -4,7 +4,7 @@ import '../../data/network/base_api_service.dart';
 import '../../data/network/network_api_services.dart';
 import '../../model/user.dart';
 import '../../utils/app_helper/app_url.dart';
-import '../../utils/app_helper/user_data_prefrence/user_data.dart';
+import '../../utils/app_helper/user_data_preferences/user_data.dart';
 
 class LoginRepository {
 
@@ -23,9 +23,7 @@ class LoginRepository {
        User user = User.fromJson(apiAns['data']);
        UserData.saveUser(user).then((value){
          debugPrint("Data Saved in App Local");
-       }).onError((error, stackTrace){
-         debugPrint("Unable to Save data in App Local");
-       });
+       }).onError((error, stackTrace){debugPrint("Unable to Save data in App Local");});
        debugPrint("${UserData.getUserAccessToken()}");
        return user;
      }).onError((error, stackTrace){
@@ -64,7 +62,7 @@ class LoginRepository {
 
     Map<String, dynamic> body = {'newPassword':pass};
 
-    Map<String, String> resetHeader = {'Content-Type':'application/json', 'Authorization':token,};
+    Map<String, String> resetHeader = {'Content-Type':'application/json; charset=UTF-8', 'Authorization':token,};
 
     debugPrint("$resetHeader is the header and body is $body");
     await _baseAPIServices.postAPIWithHeader(AppUrl.resetPasswordForgetPasswordEmailEndPoint, body, resetHeader).then((value){

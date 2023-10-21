@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 
 class PostCardCommentViewModel extends ChangeNotifier
 {
-  GlobalKey<FormState> formkey = GlobalKey();
   var commentCont = TextEditingController();
   FocusNode commentFocus = FocusNode();
   bool loading = false;

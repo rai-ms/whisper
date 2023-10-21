@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 
 class DeBouncer {
@@ -7,6 +6,7 @@ class DeBouncer {
   VoidCallback? action;
   Timer? _timer;
 
+  /// It takes time in milliseconds after which the method need to be execute
   DeBouncer({required this.milliseconds});
 
   void run(VoidCallback action) {

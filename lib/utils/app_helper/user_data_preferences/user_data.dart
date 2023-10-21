@@ -5,37 +5,47 @@ import '../../../model/user.dart';
 
 class UserData {
 
+  static late UserData userdata;
+  static SharedPreferences? _preferences;
+
+  UserData._internal() {
+    init();
+  }
+
+  factory UserData() {
+    userdata = UserData._internal();
+    return userdata;
+  }
+
+  Future<void> init() async {
+    _preferences = await SharedPreferences.getInstance();
+  }
+
   static Future<String?> getUserAccessToken() async {
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
-    final String? userDataString = preferences.getString('userData');
+    final String? userDataString = _preferences?.getString('userData');
     return userDataString;
   }
 
   static Future<String?> getUserUsername() async {
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
-    final String? userDataString = preferences.getString('username');
+    final String? userDataString = _preferences?.getString('username');
     return userDataString;
   }
 
   static Future<String?> getUserCreatedAt() async {
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
-    final String? userDataString = preferences.getString('createdAt');
+    final String? userDataString = _preferences?.getString('createdAt');
     return userDataString;
   }
 
   static Future<String?> getUserEmail() async {
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
-    final String? userDataString = preferences.getString('email');
+    final String? userDataString = _preferences?.getString('email');
     return userDataString;
   }
 
   static Future<bool> saveUser(User user) async {
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
     final Map<String, dynamic> userDataMap = user.toJson();
     final String userDataString = json.encode(userDataMap);
     // debugPrint("$userDataMap <- This data is going to store into this-> $userDataString");
-
-    await preferences.setString('userData', user.accessToken).then((value){
+    await _preferences?.setString('userData', user.accessToken).then((value){
       debugPrint("Data saved: $value");
       return true;
     }).onError((error, stackTrace){
@@ -43,7 +53,7 @@ class UserData {
       return false;
     });
 
-    await preferences.setString('username', user.username).then((value){
+    await _preferences?.setString('username', user.username).then((value){
       debugPrint("Username Data saved: $value");
       return true;
     }).onError((error, stackTrace){
@@ -52,7 +62,7 @@ class UserData {
     });
 
 
-    await preferences.setString('createdAt', user.createdAt).then((value){
+    await _preferences?.setString('createdAt', user.createdAt).then((value){
       debugPrint("createdAt Data saved: $value");
       return true;
     }).onError((error, stackTrace){
@@ -61,7 +71,7 @@ class UserData {
     });
 
 
-    await preferences.setString('email', user.email).then((value){
+    await _preferences?.setString('email', user.email).then((value){
       debugPrint("email Data saved: $value");
       return true;
     }).onError((error, stackTrace){
@@ -72,12 +82,17 @@ class UserData {
   }
 
   static Future<bool> removeUser() async {
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
     bool remove = true;
-    remove &= await preferences.remove('userData');
-    remove &= await preferences.remove('username');
-    remove &= await preferences.remove('email');
-    remove &= await preferences.remove('createdAt');
+    await _preferences?.remove('userData').then((value){
+      remove &= true;
+    }).onError((error, stackTrace) {
+      remove &= false;
+    });
+    await _preferences?.remove('username').then((value) {
+      remove &= true;
+    }).onError((error, stackTrace){remove &= false;});
+    await _preferences?.remove('email').then((value) {remove &= true;}).onError((error, stackTrace) {remove &= true;});
+    await _preferences?.remove('createdAt').then((value) {remove &= true;}).onError((error, stackTrace) {remove &= true;});
     return remove;
   }
 }

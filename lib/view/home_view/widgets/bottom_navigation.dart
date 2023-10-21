@@ -76,7 +76,7 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
                         border: Border.all(color: AppColors.blueSplashScreen, width:  pageViewNumber == 3?3:0),
                         borderRadius: BorderRadius.circular(100)
                       ),
-                      child: ClipOval(child: UtilityHelper.image("https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60", height: pageViewNumber == 3? (selectedSize!+10.0) : unSelectedSize! + 5)))),
+                      child: ClipOval(child: UtilityHelper.image("https://scontent.fdel72-1.fna.fbcdn.net/v/t39.30808-6/355482789_3551846318425242_4960182591060623934_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=XnnVIAFitkUAX_luQ-r&_nc_ht=scontent.fdel72-1.fna&oh=00_AfBOBvAf8MrWfdpbU1NSzWArdT4TUuEa7jMdk6awI1ZGhw&oe=65345EA0", height: pageViewNumber == 3? (selectedSize!+10.0) : unSelectedSize! + 5)))),
               ],
             );
           }

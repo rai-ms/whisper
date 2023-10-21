@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../utils/app_helper/user_data_prefrence/user_data.dart';
+import '../utils/app_helper/user_data_preferences/user_data.dart';
 import '../utils/routes/route_name.dart';
 
 class SplashScreenServices {

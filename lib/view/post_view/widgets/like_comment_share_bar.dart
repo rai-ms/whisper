@@ -37,8 +37,9 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
       padding: const EdgeInsets.only(top: 10),
       width: getFullWidth(context),
       decoration: BoxDecoration(
+        color: Colors.grey.shade50,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [BoxShadow(color: Colors.grey.shade100)],
+        // boxShadow: const [BoxShadow(color: AppColors.grey, blurRadius: 5,spreadRadius: 0)],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

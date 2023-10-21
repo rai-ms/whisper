@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whisper/view/post_view/widgets/post_card.dart';
 import 'package:whisper/view_model/global_provider/global_provider.dart';
@@ -20,7 +21,7 @@ class _PostViewState extends State<PostView> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        color: AppColors.white,
+        color: Theme.of(context).primaryColorLight,
         child: Consumer<AppGlobalProvider>(
           builder: (context, provider, child) {
             postList = provider.getAllPost();

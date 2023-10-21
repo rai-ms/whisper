@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:whisper/repository/login_repo/login_repo.dart';
-import 'package:whisper/utils/app_helper/user_data_prefrence/user_data.dart';
 import 'package:whisper/utils/routes/route_name.dart';
 import '../../model/user.dart';
-import '../../model/user_model.dart';
-import '../../repository/auth_repository.dart';
 import '../../res/components/custom_toast.dart';
 
 class LoginViewModel extends ChangeNotifier {
@@ -48,7 +45,8 @@ class LoginViewModel extends ChangeNotifier {
   }
 
   final myLoginRepo = LoginRepository();
-  Future<void> loginAPI(BuildContext context)async {
+
+  Future<void> loginAPI(BuildContext context) async {
     setLoading(true);
     dynamic data = {
       "email": mailCont.text.toString().trim(),
@@ -63,6 +61,7 @@ class LoginViewModel extends ChangeNotifier {
       // CustomToast(context: context, message:"Error occur in API Call $error");
       setLoading(false);
     });
+    setLoading(false);
   }
 
 }

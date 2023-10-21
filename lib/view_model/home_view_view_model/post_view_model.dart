@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import '../../global/global.dart';
 import '../../repository/home_repo/get_my_posts_repo.dart';
 
 class PostViewModel extends ChangeNotifier
