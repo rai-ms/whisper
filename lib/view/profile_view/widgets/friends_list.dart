@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../utils/app_helper/app_keys.dart';
+
 class FriendsList extends StatefulWidget {
   const FriendsList({super.key});
 
@@ -14,7 +16,7 @@ class _FriendsListState extends State<FriendsList> {
     return SizedBox(
       height: 500,
       child: ListView.builder(
-        key: const PageStorageKey<String>('friendsListPath'),
+        key: const PageStorageKey<String>(StoragePathKey.friendsListPath),
         itemBuilder: (BuildContext context, int index)
         {
           return ListTile(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
+import 'package:whisper/utils/app_helper/app_style.dart';
 import 'package:whisper/utils/app_helper/user_data_preferences/user_data.dart';
 import 'package:whisper/utils/routes/navigate_route.dart';
 import 'package:whisper/utils/routes/route_name.dart';
@@ -17,7 +18,6 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -36,8 +36,9 @@ class MyApp extends StatelessWidget {
           cardColor: AppColors.lightBlack,
           canvasColor: AppColors.grey,
           dividerColor: Colors.grey.shade800,
-          appBarTheme: AppBarTheme(
-            color: Theme.of(context).primaryColor,
+          appBarTheme: const AppBarTheme(
+            color: AppColors.lightBlack,
+            centerTitle: true
           ),
         ),
         debugShowCheckedModeBanner: false,
@@ -51,7 +52,11 @@ class MyApp extends StatelessWidget {
           primaryColorDark: AppColors.black,
           primaryColorLight: Colors.white,
           appBarTheme: AppBarTheme(
-            color: Theme.of(context).primaryColor,
+            centerTitle: true,
+            titleTextStyle: AppStyle.whiteMedium22,
+            backgroundColor: AppColors.blueSplashScreen,
+            shadowColor: AppColors.grey,
+            foregroundColor: AppColors.white
           ),
         ),
         themeMode: ThemeMode.system,

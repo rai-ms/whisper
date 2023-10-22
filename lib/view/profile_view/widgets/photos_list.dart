@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
+import '../../../utils/app_helper/app_keys.dart';
+
 class PhotosList extends StatefulWidget {
   const PhotosList({super.key});
 
@@ -11,7 +13,7 @@ class _PhotosListState extends State<PhotosList> {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      key: const PageStorageKey<String>('photosListPath'),
+      key: const PageStorageKey<String>(StoragePathKey.photosListPath),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         crossAxisSpacing: 2.0, // Add spacing as needed.

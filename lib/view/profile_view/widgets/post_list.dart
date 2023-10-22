@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
+import '../../../utils/app_helper/app_keys.dart';
+
 class PostList extends StatefulWidget {
   const PostList({super.key});
 
@@ -11,7 +13,7 @@ class _PostListState extends State<PostList> {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      key: const PageStorageKey<String>('postListPath'),
+      key: const PageStorageKey<String>(StoragePathKey.postListPath),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         crossAxisSpacing: 2.0, // Add spacing as needed.

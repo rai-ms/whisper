@@ -12,14 +12,22 @@ class AppGlobalProvider extends ChangeNotifier
 
   final PageStorageBucket pageStorageBucket = PageStorageBucket();
   final PageStorageBucket profileStorageBucket = PageStorageBucket();
+  // final ScrollController postPageController = ScrollController();
 
   // Page 0 = HomePage
   // Page 1 = Notification Page
   // Page 2 = Search User
   // Page 3 = User Profile Page
 
-  PageController pageController = PageController(
-    initialPage: 0, keepPage: false, viewportFraction: 1,);
+  PageController pageController = PageController(initialPage: 0, keepPage: false, viewportFraction: 1,);
+
+  // void scrollListner(){
+  //   postPageController.addListener(() {
+  //     if(postPageController.position.pixels - postPageController.position.maxScrollExtent <= 700){
+  //       debugPrint("Reload Called");
+  //     }
+  //   });
+  // }
 
    setPage (val) {
     pageViewNumber = val;

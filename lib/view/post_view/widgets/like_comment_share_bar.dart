@@ -37,8 +37,11 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
       padding: const EdgeInsets.only(top: 10),
       width: getFullWidth(context),
       decoration: BoxDecoration(
-        color: Colors.grey.shade50,
+        color: Theme.of(context).primaryColorLight,
         borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(color: Theme.of(context).primaryColorDark, blurRadius: 5,spreadRadius: 0)
+        ]
         // boxShadow: const [BoxShadow(color: AppColors.grey, blurRadius: 5,spreadRadius: 0)],
       ),
       child: Row(
@@ -59,9 +62,9 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                 onHover: (bool isHoverOn){},
                 child: Row(
                   children: [
-                    Icon(!isLiked ? FontAwesomeIcons.thumbsUp :FontAwesomeIcons.solidThumbsUp , color: AppColors.blueSplashScreen,),
+                    Icon(!isLiked ? FontAwesomeIcons.thumbsUp :FontAwesomeIcons.solidThumbsUp, color: Theme.of(context).primaryColorDark,),
                     sizedBox(wid: 5),
-                    Text(!isLiked ?widget.likes!.length.toString():( widget.likes!.length+ 1).toString(), style: AppStyle.blackNormal15,),
+                    Text(!isLiked ?widget.likes!.length.toString():( widget.likes!.length+ 1).toString(),),
                   ],
                 ),
               );
@@ -286,9 +289,9 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                   },
                   child: Row(
                     children: [
-                      const Icon(FontAwesomeIcons.commentDots, color: AppColors.blueSplashScreen,),
+                      Icon(FontAwesomeIcons.commentDots, color: Theme.of(context).primaryColorDark,),
                       sizedBox(wid: 5),
-                      Text(widget.comments!.length.toString(), style: AppStyle.blackNormal15,)
+                      Text(widget.comments!.length.toString(),)
                     ],
                   ));
             }
@@ -301,6 +304,9 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                     bool isEmptyList = widget.share?.isEmpty ?? false;
                     int length = widget.share?.length ?? 0;
                     showModalBottomSheet(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)
+                        ),
                         isScrollControlled: true,
                         useSafeArea: true,
                         context: context,
@@ -368,12 +374,10 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                         )
                     );
                   } ,
-                  onLongPress: (){
-
-                  },
+                  onLongPress: (){},
                   child: Row(
                     children: [
-                      const Icon(FontAwesomeIcons.share, color: AppColors.blueSplashScreen,),
+                      Icon(FontAwesomeIcons.share, color: Theme.of(context).primaryColorDark,),
                       sizedBox(wid: 5),
                       if(widget.share != null) Text(widget.share!.length.toString()),
                       if(widget.share == null) const Text("0"),
@@ -388,6 +392,9 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
 
   void showLikeBottomSheet(){
     showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30)
+        ),
         isScrollControlled: true,
         useSafeArea: true,
         context: context,

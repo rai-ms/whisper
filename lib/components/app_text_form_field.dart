@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../utils/app_helper/app_color.dart';
 
 class AppTextFormField extends StatelessWidget {
-  const AppTextFormField({super.key, this.cont, this.focusNode, this.onFieldSubmitted, this.validator, this.hintText, this.label, this.onChanged, this.textInputType, this.obscureText = true, this.style, this.prefixIcon, this.hintStyle, this.isCollapsed = false, this.labelText, this.suffixIcon});
+  const AppTextFormField({super.key, this.cont, this.focusNode, this.onFieldSubmitted, this.validator, this.hintText, this.label, this.onChanged, this.enableBorderColor, this.disableBorderColor,this.textInputType, this.contentPadding,this.obscureText = true, this.style, this.prefixIcon, this.hintStyle, this.isCollapsed = false, this.enable, this.labelText, this.suffixIcon});
   final TextEditingController? cont;
   final FocusNode? focusNode;
   final String? Function (String?)? validator;
@@ -18,6 +18,10 @@ class AppTextFormField extends StatelessWidget {
   final Widget? suffixIcon;
   final String? labelText;
   final bool isCollapsed;
+  final bool? enable;
+  final double? contentPadding;
+  final Color? disableBorderColor, enableBorderColor;
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -27,19 +31,22 @@ class AppTextFormField extends StatelessWidget {
       onChanged: onChanged,
       textInputAction: TextInputAction.next,
       controller: cont,
+      enabled: enable,
       focusNode: focusNode,
       validator: validator ?? (_){ return null;},
       onFieldSubmitted: onFieldSubmitted,
       decoration: InputDecoration(
         suffixIcon: suffixIcon,
-        contentPadding: EdgeInsets.zero,
+        contentPadding: contentPadding == null ? EdgeInsets.zero : EdgeInsets.all(contentPadding!),
         labelText: labelText,
         hintStyle: hintStyle,
-        isCollapsed:isCollapsed ,
+        isCollapsed: isCollapsed,
         prefixIcon: prefixIcon?? const Icon(Icons.person,color: AppColors.blueSplashScreen,),
-        border: const OutlineInputBorder( borderRadius: BorderRadius.all(Radius.circular(20)), borderSide: BorderSide(width: 2, color: AppColors.black)),
+        border: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(20),), borderSide: BorderSide(width: 2, color: enableBorderColor ?? AppColors.black),),
         hintText: hintText,
+        disabledBorder: OutlineInputBorder(borderRadius: const BorderRadius.all( Radius.circular(20),), borderSide: BorderSide(width: 2, color: disableBorderColor ?? AppColors.black),),
         label:label,
+        enabledBorder: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(20),), borderSide: BorderSide(width: 2, color: enableBorderColor ?? AppColors.black),),
         constraints: const BoxConstraints(
           maxWidth: 400,
         ),

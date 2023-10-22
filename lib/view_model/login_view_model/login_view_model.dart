@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:whisper/repository/login_repo/login_repo.dart';
+import 'package:whisper/utils/debouncer/deBouncer.dart';
 import 'package:whisper/utils/routes/route_name.dart';
 import '../../model/user.dart';
 import '../../res/components/custom_toast.dart';
@@ -36,11 +37,12 @@ class LoginViewModel extends ChangeNotifier {
     _loading = val;
     notifyListeners();
   }
-
+  final debouncer = DeBouncer(milliseconds: 1000,);
   login(BuildContext context) async {
     formkey.currentState!.save();
     if (formkey.currentState!.validate()) {
-      await loginAPI(context);
+      debouncer.run(() async{await loginAPI(context);});
+
     }
   }
 
@@ -54,12 +56,10 @@ class LoginViewModel extends ChangeNotifier {
     };
     myLoginRepo.loginAPI(data).then((User? user){
       CustomToast(context: context, message: "Login Successful");
-      setLoading(false);
       Navigator.pushNamedAndRemoveUntil(context, RouteName.homeView, (route) => false);
     }).onError((error, stackTrace){
       debugPrint("Error is $error");
-      // CustomToast(context: context, message:"Error occur in API Call $error");
-      setLoading(false);
+      CustomToast(context: context, message:"Error occur in API Call $error");
     });
     setLoading(false);
   }

@@ -25,7 +25,7 @@ class ProfileTopView extends StatelessWidget {
               child: Container(
                 width: getFullWidth(context) * .45,
                 decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.blueSplashScreen, width: 5),
+                  border: Border.all(color: Theme.of(context).primaryColorDark, width: 5),
                   borderRadius: BorderRadius.circular(1000)
                 ),
                 child: Stack(
@@ -49,7 +49,7 @@ class ProfileTopView extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: AppColors.grey,
                           borderRadius: BorderRadius.circular(100),
-                          border: Border.all(color: AppColors.blueSplashScreen, width: 5),
+                          border: Border.all(color: Theme.of(context).primaryColorDark, width: 5),
                         ),
                         child: const Icon(Icons.camera_alt_outlined, size: 30,color: AppColors.black,)),
                     ),

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:whisper/components/utility_helper.dart';
 import 'package:whisper/global/global.dart';
 import 'package:whisper/utils/app_helper/app_strings.dart';
 import 'package:whisper/utils/app_helper/app_style.dart';
+
+import '../../utils/app_helper/app_keys.dart';
 
 class NotificationView extends StatefulWidget {
   const NotificationView({super.key});
@@ -17,7 +18,7 @@ class _NotificationViewState extends State<NotificationView> {
       child: Column(
         children: [
           Expanded(
-            flex: 5,
+            flex: 4,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -26,16 +27,37 @@ class _NotificationViewState extends State<NotificationView> {
             ),
           ),
           sizedBox(hei: 10),
+          // CustomPaint(
+          //   painter: CurvePainter(),
+          //   child: Container(
+          //     height: 50,
+          //   ),
+          // ),
+
+          // ClipPath(
+          //   clipper: CustomTriangleClipper(),
+          //   child:  Container(
+          //     width: getFullWidth(context),
+          //     height: 100,
+          //     color: AppColors.blueSplashScreen, // Customize with the desired color
+          //   ),
+          // ),
+
           Expanded(
             flex: 90,
-            child: ListView.builder(itemBuilder: (context, index){
-              return ListTile(
-                title: const Text("Notification Content which contains Like, Share, Follow, Comment messages"),
-                leading: ClipRRect(
-                  child: UtilityHelper.image("https://cdn-icons-png.flaticon.com/512/25/25231.png")),
+            child: ListView.builder(
+              key: const PageStorageKey<String>(StoragePathKey.notificationPath),
+              itemBuilder: (context, index){
+              return const ListTile(
+                title: Text("Notification Content which contains Like, Share, Follow, Comment messages"),
+                // leading: ,
+                // leading: ClipRRect(
+                //   child: UtilityHelper.image("https://cdn-icons-png.flaticon.com/512/25/25231.png")),
               );
             }, itemCount:30,),
           ),
+
+          /// This widget will be used while loading the data so that user won't know that data is loading
           //   Expanded(
           //     flex: 90,
           //     child: ListView.builder(itemBuilder: (context, index){

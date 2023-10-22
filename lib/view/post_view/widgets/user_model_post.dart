@@ -55,7 +55,7 @@ class _UserRowPostState extends State<UserRowPost> {
               )
             );
           },
-          child: const Icon(Icons.more_vert),
+          child: Icon(Icons.more_vert, color: Theme.of(context).primaryColorDark,),
         )
       ],
     );

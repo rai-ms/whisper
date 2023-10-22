@@ -77,6 +77,7 @@ class _PostFollowerFollowingState extends State<PostFollowerFollowing> {
                     sizedBox(wid: 6),
                   ],
                 ),
+                const SizedBox(height: 10,),
                 SizedBox(
                   height: 500,
                   width: getFullWidth(context),// Make sure this height is within the parent's constraints.

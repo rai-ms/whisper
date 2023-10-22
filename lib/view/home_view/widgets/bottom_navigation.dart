@@ -18,11 +18,11 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
   double? unSelectedSize = 25;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Container (
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColorLight,
           borderRadius: BorderRadius.circular(50),
-          border: Border.all(width: 1, color: AppColors.blueSplashScreen),
+          border: Border.all(width: 1, color: Theme.of(context).primaryColorDark),
           shape: BoxShape.rectangle
         ),
         child: Consumer<AppGlobalProvider>(
@@ -37,14 +37,14 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
                         provider.setPage(0);
                       }
                     },
-                    child: Icon(FontAwesomeIcons.houseUser, color: pageViewNumber != 0? AppColors.blueSplashScreen : AppColors.red,size: pageViewNumber == 0? selectedSize : unSelectedSize,)),
+                    child: Icon(FontAwesomeIcons.houseUser, color: pageViewNumber != 0? Theme.of(context).primaryColorDark: AppColors.red,size: pageViewNumber == 0? selectedSize : unSelectedSize,)),
                 InkWell(
                     onTap: (){
                       if(pageViewNumber != 1){
                         provider.setPage(1);
                       }
                     },
-                    child: Icon(pageViewNumber != 1? FontAwesomeIcons.heart : FontAwesomeIcons.solidHeart, color: pageViewNumber != 1? AppColors.blueSplashScreen : AppColors.red,size: pageViewNumber == 1? selectedSize : unSelectedSize,)),
+                    child: Icon(pageViewNumber != 1? FontAwesomeIcons.heart : FontAwesomeIcons.solidHeart, color: pageViewNumber != 1? Theme.of(context).primaryColorDark : AppColors.red,size: pageViewNumber == 1? selectedSize : unSelectedSize,)),
                 InkWell(
                     onTap: (){
                         Navigator.pushNamed(context, RouteName.addPostView);
@@ -63,7 +63,7 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
                       }
                       // debugPrint("Tapped on index 2");
                     },
-                    child: Icon(Icons.search, color: pageViewNumber != 2? AppColors.blueSplashScreen : AppColors.red,size: pageViewNumber == 2? selectedSize : unSelectedSize,)),
+                    child: Icon(Icons.search, color: pageViewNumber != 2? Theme.of(context).primaryColorDark : AppColors.red,size: pageViewNumber == 2? selectedSize : unSelectedSize,)),
                 InkWell(
                     onTap: (){
                       if(pageViewNumber != 3){
@@ -73,7 +73,7 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        border: Border.all(color: AppColors.blueSplashScreen, width:  pageViewNumber == 3?3:0),
+                        border: Border.all(color: Theme.of(context).primaryColorDark, width:  3),
                         borderRadius: BorderRadius.circular(100)
                       ),
                       child: ClipOval(child: UtilityHelper.image("https://scontent.fdel72-1.fna.fbcdn.net/v/t39.30808-6/355482789_3551846318425242_4960182591060623934_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=XnnVIAFitkUAX_luQ-r&_nc_ht=scontent.fdel72-1.fna&oh=00_AfBOBvAf8MrWfdpbU1NSzWArdT4TUuEa7jMdk6awI1ZGhw&oe=65345EA0", height: pageViewNumber == 3? (selectedSize!+10.0) : unSelectedSize! + 5)))),
@@ -84,6 +84,8 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
       );
   }
 }
+
+
 
 class NotchClipper extends CustomClipper<Path> {
   @override

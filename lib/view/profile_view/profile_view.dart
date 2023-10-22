@@ -199,11 +199,6 @@ class _ProfileViewState extends State<ProfileView> {
               ],
             ),
             sizedBox(hei: 10),
-            // Container(
-            //   width: getFullWidth(context),
-            //   height: 20,
-            //   color: AppColors.grey,
-            // ),
             Divider(
               thickness: 20,
               color: Theme.of(context).dividerColor,
