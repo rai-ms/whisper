@@ -37,8 +37,7 @@ class AppRoundedButton extends StatelessWidget
   bool isEnable;
 
   /// Custom App Button used for multipurpose in the app
-  AppRoundedButton(
-    {
+  AppRoundedButton({
       super.key,
       this.buttonColor,
       required this.onTap,

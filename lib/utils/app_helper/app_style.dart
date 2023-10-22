@@ -175,6 +175,15 @@ class AppStyle {
     );
   }
 
+  static TextStyle? primaryColorDarkMedium16(BuildContext context)
+  {
+    return TextStyle(
+      color: Theme.of(context).primaryColorDark,
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+    );
+  }
+
   // Bold, 14, grey Medium
   static TextStyle? get greyMedium14 {
     return const TextStyle(

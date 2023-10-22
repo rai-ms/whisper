@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:whisper/utils/routes/route_name.dart';
 import 'package:whisper/view/forget_password_view/forget_password_view.dart';
+import 'package:whisper/view/settings_view/settings_view.dart';
 import '../../view/add_post_view/add_post_view.dart';
 import '../../view/home_view/home_view.dart';
 import '../../view/intro_view/intro_view.dart';
@@ -15,6 +16,8 @@ class NavigateRoute {
     switch (settings.name) {
       case RouteName.splashscreen:
         return MaterialPageRoute(builder: (context) => const SplashView());
+      case RouteName.settingsView:
+        return MaterialPageRoute(builder: (context) => const SettingsView());
       case RouteName.homeView:
         return MaterialPageRoute(builder: (context) => const HomeView());
       case RouteName.forgetPasswordView:

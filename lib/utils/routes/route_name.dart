@@ -7,5 +7,6 @@ class RouteName {
   static const String forgetPasswordView = "/forgetPassword";
   static const String otpAuthView = "/otpAuthView";
   static const String profileView = "/profileView";
+  static const String settingsView = "/settingsView";
   static const String addPostView = "/addPostView";
 }

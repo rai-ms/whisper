@@ -26,8 +26,7 @@ class _IntroViewState extends State<IntroView> {
               pos = index;
               setState(() {});
             },
-            controller: PageController(
-              initialPage: 0, keepPage: false, viewportFraction: 1,),
+            controller: PageController( initialPage: 0, keepPage: false, viewportFraction: 1,),
             pageSnapping: true,
             reverse: false,
             allowImplicitScrolling: true,
@@ -83,7 +82,7 @@ class _IntroViewState extends State<IntroView> {
               ),
               Center(
                 child: Container(
-                  padding: EdgeInsets.only(top: 70),
+                  padding: const EdgeInsets.only(top: 70),
                   height: double.infinity,
                   width: double.infinity,
                   decoration: const BoxDecoration(

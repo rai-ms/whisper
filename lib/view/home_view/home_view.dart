@@ -50,6 +50,7 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
 
   @override
   Widget build(BuildContext context) {
+    var ht = getFullHeight(context);
     super.build(context);
     return MultiProvider(
       providers: [
@@ -74,7 +75,7 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                             border: Border.all(color: AppColors.white, width:  3),
                             borderRadius: BorderRadius.circular(100)
                         ),
-                        child: ClipOval(child: UtilityHelper.image("https://scontent.fdel72-1.fna.fbcdn.net/v/t39.30808-6/355482789_3551846318425242_4960182591060623934_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=XnnVIAFitkUAX_luQ-r&_nc_ht=scontent.fdel72-1.fna&oh=00_AfBOBvAf8MrWfdpbU1NSzWArdT4TUuEa7jMdk6awI1ZGhw&oe=65345EA0",))));
+                        child: ClipOval(child: UtilityHelper.image(dp,))));
                   }
                 ),
               ),
@@ -90,21 +91,31 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
               ))),
               sizedBox(wid: 5),
               Expanded(flex: 10,child: InkWell(onTap: (){
-                Navigator.pushNamed(context, RouteName.addPostView);
-              },child: const Icon(FontAwesomeIcons.images, ))),
+                if(pageViewNumber != 3) {
+                    Navigator.pushNamed(context, RouteName.addPostView);
+                 }
+                else
+                {
+                  Navigator.pushNamed(context, RouteName.settingsView);
+                }
+                  },child: Consumer<AppGlobalProvider>(
+                builder: (context, pr, ch) {
+                  return Icon(pageViewNumber != 3? FontAwesomeIcons.images: FontAwesomeIcons.gear, );
+                }
+              ))),
               // sizedBox(wid: 20),
             ],
           ),
         ),
         body: Center(
           child: Container(
-            height: getFullHeight(context),
+            height: ht,
             color: Theme.of(context).primaryColorLight,
             child: Column(
               children: [
                 // const HomePageAppBar(),
                 Expanded(
-                  flex: 77,
+                  flex: 11,
                   child: Consumer<AppGlobalProvider>(
                       builder: (context, provider, child) {
                         return PageStorage(
@@ -126,17 +137,15 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                         );
                       }
                   ),
-                  // Consumer<AppGlobalProvider>(builder: (context, provider, child){
-                  //   return provider.getView();
-                  // }),
                 ),
-                const Expanded(
-                    flex: 8,
-                    child: AppBottomNavigationBar()),
+                const Flexible(
+                  flex: 1,
+                  child: AppBottomNavigationBar()),
               ],
             ),
           ),
         ),
+        // bottomNavigationBar: const AppBottomNavigationBar(),
       ),
     );
   }

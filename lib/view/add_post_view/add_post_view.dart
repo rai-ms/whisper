@@ -34,11 +34,18 @@ class _AddPostViewState extends State<AddPostView> {
             ),
           ),
         ),
-        body: const Center(child: Column(
-          children: [
-            Text("Add Post"),
-          ],
-        ),),
+        body: const Center(
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

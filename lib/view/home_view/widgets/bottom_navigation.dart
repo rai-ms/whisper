@@ -19,6 +19,7 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Container (
+        padding: EdgeInsets.only(top: 10),
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColorLight,
           borderRadius: BorderRadius.circular(50),
@@ -50,6 +51,7 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
                         Navigator.pushNamed(context, RouteName.addPostView);
                     },
                     child: Container(
+                      height: 50,
                       decoration: BoxDecoration(
                         color: AppColors.blueSplashScreen,
                         borderRadius: BorderRadius.circular(10)
@@ -76,7 +78,7 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
                         border: Border.all(color: Theme.of(context).primaryColorDark, width:  3),
                         borderRadius: BorderRadius.circular(100)
                       ),
-                      child: ClipOval(child: UtilityHelper.image("https://scontent.fdel72-1.fna.fbcdn.net/v/t39.30808-6/355482789_3551846318425242_4960182591060623934_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=XnnVIAFitkUAX_luQ-r&_nc_ht=scontent.fdel72-1.fna&oh=00_AfBOBvAf8MrWfdpbU1NSzWArdT4TUuEa7jMdk6awI1ZGhw&oe=65345EA0", height: pageViewNumber == 3? (selectedSize!+10.0) : unSelectedSize! + 5)))),
+                      child: ClipOval(child: UtilityHelper.image(dp, height: pageViewNumber == 3? (selectedSize!+10.0) : unSelectedSize! + 5)))),
               ],
             );
           }

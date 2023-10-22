@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import '../global/global.dart';
 import '../utils/app_helper/app_color.dart';
 
@@ -16,8 +17,8 @@ class AppBackGroundTwoContainer extends StatelessWidget {
             flex: 2,
             child: Container(
               width: getFullWidth(context),
-              decoration: const BoxDecoration(
-                color: AppColors.blueSplashScreen,
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
               ),
               child: Padding(
                 padding: const EdgeInsets.all(28.0),

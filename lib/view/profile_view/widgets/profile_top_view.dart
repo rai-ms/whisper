@@ -9,7 +9,7 @@ class ProfileTopView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget dp = UtilityHelper.image("https://scontent.fdel72-1.fna.fbcdn.net/v/t39.30808-6/355482789_3551846318425242_4960182591060623934_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=XnnVIAFitkUAX_luQ-r&_nc_ht=scontent.fdel72-1.fna&oh=00_AfBOBvAf8MrWfdpbU1NSzWArdT4TUuEa7jMdk6awI1ZGhw&oe=65345EA0",);
+    Widget dpImage = UtilityHelper.image(dp,);
     return Column(
       children: [
         Stack(
@@ -37,11 +37,11 @@ class ProfileTopView extends StatelessWidget {
                             borderRadius: BorderRadius.circular(30)
                           ),
                           child: AppDialog(
-                              dialogWidget:dp,
+                              dialogWidget:dpImage,
                           ),
                         );
                       });
-                    },child: ClipOval(child: dp)),
+                    },child: ClipOval(child: dpImage)),
                     Align(
                       alignment: Alignment.bottomRight,
                       child: Container(
