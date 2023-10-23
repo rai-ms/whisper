@@ -56,6 +56,7 @@ class AppStrings {
   static const String notification = "Notification";
   static const String errorLogin = "$error Login";
   static const String errorServer = "$error Server";
+  static const String apiCallError = "$error during api Call:";
   static const String error = "Error";
   static const String logIn = "Log In";
   static const String hello = "Hello!";

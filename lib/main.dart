@@ -8,6 +8,7 @@ import 'package:whisper/utils/routes/route_name.dart';
 import 'package:whisper/view_model/global_provider/global_provider.dart';
 import 'package:whisper/view_model/home_view_view_model/post_card_comment_view_model.dart';
 import 'package:whisper/view_model/home_view_view_model/share_post_view_model.dart';
+import 'package:whisper/view_model/personal_profile_view_model/get_profile_data_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => AppGlobalProvider()),
         ChangeNotifierProvider(create: (context)=> PostCardCommentViewModel()),
         ChangeNotifierProvider(create: (context)=> PostShareViewModel()),
+        ChangeNotifierProvider(create: (context)=> GetProfileData()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

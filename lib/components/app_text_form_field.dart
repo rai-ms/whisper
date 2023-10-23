@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../utils/app_helper/app_color.dart';
 
 class AppTextFormField extends StatelessWidget {
-  const AppTextFormField({super.key, this.cont, this.focusNode, this.onFieldSubmitted, this.validator, this.hintText, this.label, this.onChanged, this.enableBorderColor, this.disableBorderColor,this.textInputType, this.contentPadding,this.obscureText = true, this.style, this.prefixIcon, this.hintStyle, this.isCollapsed = false, this.enable, this.labelText, this.suffixIcon});
+  const AppTextFormField({super.key, this.cont, this.isPrefixIconExist = true, this.focusNode, this.onFieldSubmitted, this.validator, this.maxLines = 1, this.hintText, this.label, this.onChanged, this.enableBorderColor, this.disableBorderColor,this.textInputType, this.contentPadding,this.obscureText = true, this.style, this.prefixIcon, this.hintStyle, this.isCollapsed = false, this.enable, this.labelText, this.suffixIcon});
   final TextEditingController? cont;
   final FocusNode? focusNode;
   final String? Function (String?)? validator;
@@ -14,10 +14,12 @@ class AppTextFormField extends StatelessWidget {
   final bool obscureText;
   final TextStyle? style;
   final TextStyle? hintStyle;
+  final int? maxLines;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final String? labelText;
   final bool isCollapsed;
+  final bool isPrefixIconExist;
   final bool? enable;
   final double? contentPadding;
   final Color? disableBorderColor, enableBorderColor;
@@ -31,6 +33,7 @@ class AppTextFormField extends StatelessWidget {
       onChanged: onChanged,
       textInputAction: TextInputAction.next,
       controller: cont,
+      maxLines: maxLines,
       enabled: enable,
       focusNode: focusNode,
       validator: validator ?? (_){ return null;},
@@ -41,7 +44,7 @@ class AppTextFormField extends StatelessWidget {
         labelText: labelText,
         hintStyle: hintStyle,
         isCollapsed: isCollapsed,
-        prefixIcon: prefixIcon?? const Icon(Icons.person,color: AppColors.blueSplashScreen,),
+        prefixIcon: !isPrefixIconExist ? null : prefixIcon ?? const Icon(Icons.person,color: AppColors.blueSplashScreen,),
         border: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(20),), borderSide: BorderSide(width: 2, color: enableBorderColor ?? AppColors.black),),
         hintText: hintText,
         disabledBorder: OutlineInputBorder(borderRadius: const BorderRadius.all( Radius.circular(20),), borderSide: BorderSide(width: 2, color: disableBorderColor ?? AppColors.black),),
@@ -50,7 +53,8 @@ class AppTextFormField extends StatelessWidget {
         constraints: const BoxConstraints(
           maxWidth: 400,
         ),
-        hoverColor: AppColors.blueAccent),
+        hoverColor: AppColors.blueAccent,
+      ),
     );
   }
 }

@@ -5,7 +5,8 @@ import '../utils/routes/route_name.dart';
 class SplashScreenServices {
   static checkAuthentication(BuildContext context) async {
     String? user = await UserData.getUserAccessToken();
-    // debugPrint(user!.accessToken);
+    String? id = await UserData.getUserId();
+    debugPrint("UserId: $id");
     await Future.delayed(const Duration(seconds: 3));
     if(user == "null" || user == null){
       if(context.mounted){

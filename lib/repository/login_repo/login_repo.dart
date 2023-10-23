@@ -17,14 +17,14 @@ class LoginRepository {
 
   Future<User?> loginAPI(dynamic data) async {
      await _baseAPIServices.postAPIWithHeader(AppUrl.loginEndPoint, data, header).then((value){
-       debugPrint("$value is the api response");
+       // debugPrint("$value is the api response");
        Map<String,dynamic> apiAns = value;
        debugPrint("$apiAns is the api response");
        User user = User.fromJson(apiAns['data']);
        UserData.saveUser(user).then((value){
-         debugPrint("Data Saved in App Local");
+         // debugPrint("Data Saved in App Local");
        }).onError((error, stackTrace){debugPrint("Unable to Save data in App Local");});
-       debugPrint("${UserData.getUserAccessToken()}");
+       // debugPrint("${UserData.getUserAccessToken()}");
        return user;
      }).onError((error, stackTrace){
         debugPrint("Data Received with error occur: $error");

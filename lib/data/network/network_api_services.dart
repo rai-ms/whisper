@@ -54,20 +54,20 @@ class NetworkApiServices extends BaseApiServices {
   }
 
   dynamic returnResponse(http.Response response) {
+    var res = jsonDecode(response.body);
     switch (response.statusCode) {
       case 200:
         debugPrint("Status code is --- 200 ---");
-        var res = jsonDecode(response.body);
         debugPrint("Response type is --- ${res['type']} ---");
         return res;
       case 400:
-        throw InvalidUrl(AppStrings.invalidUrl);
+        throw InvalidUrl(res['type']);
       case 429:
-        throw InternalServerException(AppStrings.errorServer);
+        throw InternalServerException(res['type']);
       case 500:
-        throw InternalServerException(AppStrings.errorServer);
+        throw InternalServerException(res['type']);
       default:
-        throw FetchDataException(AppStrings.unableToFetchData);
+        throw FetchDataException(res['type']);
     }
   }
 }

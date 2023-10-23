@@ -41,6 +41,11 @@ class UserData {
     return userDataString;
   }
 
+  static Future<String?> getUserId() async {
+    final String? userDataString = _preferences?.getString('_id');
+    return userDataString;
+  }
+
   static Future<bool> saveUser(User user) async {
     final Map<String, dynamic> userDataMap = user.toJson();
     final String userDataString = json.encode(userDataMap);
@@ -78,6 +83,16 @@ class UserData {
       debugPrint("Unable to save email data Error: $error");
       return false;
     });
+
+    await _preferences?.setString('_id', user.id).then((value){
+      debugPrint("id Data saved: $value");
+
+      return true;
+    }).onError((error, stackTrace){
+      debugPrint("Unable to save email data Error: $error");
+      return false;
+    });
+
     return false;
   }
 
@@ -88,6 +103,9 @@ class UserData {
     }).onError((error, stackTrace) {
       remove &= false;
     });
+    await _preferences?.remove('_id').then((value) {
+      remove &= true;
+    }).onError((error, stackTrace){remove &= false;});
     await _preferences?.remove('username').then((value) {
       remove &= true;
     }).onError((error, stackTrace){remove &= false;});

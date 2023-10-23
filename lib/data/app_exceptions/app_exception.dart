@@ -22,6 +22,10 @@ class ServerException extends AppException {
   ServerException([String? message]) : super(message, AppStrings.serverError);
 }
 
+class AppError extends AppException {
+  AppError([String? message]) : super(message,AppStrings.apiCallError);
+}
+
 class DatabaseException extends AppException {
   DatabaseException([String? message]) : super (message, AppStrings.databaseError);
 }
@@ -48,5 +52,4 @@ class UnableToLogin extends AppException {
 class InternalServerException extends AppException {
   InternalServerException([String? message]) : super(message, AppStrings.errorLogin);
 }
-
 
