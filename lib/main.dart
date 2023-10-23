@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
         darkTheme: ThemeData(
           brightness: Brightness.dark,
           primaryColor: AppColors.lightBlack,
@@ -43,7 +44,6 @@ class MyApp extends StatelessWidget {
             centerTitle: true
           ),
         ),
-        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           useMaterial3: true,
           brightness: Brightness.light,

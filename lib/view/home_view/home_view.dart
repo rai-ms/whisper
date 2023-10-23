@@ -5,16 +5,15 @@ import 'package:whisper/global/global.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
 import 'package:whisper/utils/app_helper/user_data_preferences/user_data.dart';
 import 'package:whisper/utils/routes/route_name.dart';
-import 'package:whisper/view/home_view/widgets/HomePageAppBar.dart';
 import 'package:whisper/view/home_view/widgets/bottom_navigation.dart';
 import 'package:whisper/view/post_view/post_view.dart';
 import 'package:whisper/view_model/home_view_view_model/app_bar_view_model.dart';
-import 'package:whisper/view_model/home_view_view_model/post_view_model.dart';
 import '../../components/app_text_form_field.dart';
 import '../../components/utility_helper.dart';
-import '../../model/post_model.dart';
+import '../../model/response.dart';
 import '../../utils/app_helper/app_style.dart';
 import '../../view_model/global_provider/global_provider.dart';
+import '../../view_model/post_view_model/post_view_model.dart';
 import '../notification_view/notification_view.dart';
 import '../profile_view/profile_view.dart';
 import '../search_user_view/search_user_view.dart';
@@ -32,13 +31,11 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
 
   @override
   void initState() {
-    fetchAllDummyPost();
     super.initState();
-
   }
 
   fetchAllDummyPost(){
-    postList = generateDummyPosts();
+    // postList = generateDummyPosts();
     UserData.getUserAccessToken().then((value){
       debugPrint("User Data Fetched Success $value");
     }).onError((error, stackTrace){
@@ -113,7 +110,6 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
             color: Theme.of(context).primaryColorLight,
             child: Column(
               children: [
-                // const HomePageAppBar(),
                 Expanded(
                   flex: 11,
                   child: Consumer<AppGlobalProvider>(
@@ -128,10 +124,10 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                             allowImplicitScrolling: false,
                             physics: const NeverScrollableScrollPhysics(),
                             children: const [
-                              PostView(),
-                              NotificationView(),
-                              SearchUser(),
-                              ProfileView(),
+                              PostView(key: PageStorageKey('page0'),),
+                              NotificationView(key: PageStorageKey('page1'),),
+                              SearchUser(key: PageStorageKey('page2'),),
+                              ProfileView(key:PageStorageKey('page3')),
                             ],
                           ),
                         );

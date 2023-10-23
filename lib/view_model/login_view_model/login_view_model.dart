@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:whisper/repository/login_repo/login_repo.dart';
-import 'package:whisper/utils/debouncer/deBouncer.dart';
+import 'package:whisper/utils/deBouncer/deBouncer.dart';
 import 'package:whisper/utils/routes/route_name.dart';
 import '../../model/user.dart';
 import '../../res/components/custom_toast.dart';
@@ -11,14 +11,15 @@ class LoginViewModel extends ChangeNotifier {
   FocusNode emailFocusNode = FocusNode();
   FocusNode passFocusNode = FocusNode();
   FocusNode buttonFocusNode = FocusNode();
-  GlobalKey<FormState> formkey = GlobalKey();
+  GlobalKey<FormState> formKey = GlobalKey();
+
   @override
   void dispose() {
     mailCont.dispose();
     passFocusNode.dispose();
     passCont.dispose();
     emailFocusNode.dispose();
-    // formkey.currentState!.dispose();
+    // formKey.currentState!.dispose();
     buttonFocusNode.dispose();
     super.dispose();
   }
@@ -37,11 +38,13 @@ class LoginViewModel extends ChangeNotifier {
     _loading = val;
     notifyListeners();
   }
-  final debouncer = DeBouncer(milliseconds: 1000,);
+
+  final deBouncer = DeBouncer(milliseconds: 1000,);
+
   login(BuildContext context) async {
-    formkey.currentState!.save();
-    if (formkey.currentState!.validate()) {
-      debouncer.run(() async{await loginAPI(context);});
+    formKey.currentState!.save();
+    if (formKey.currentState!.validate()) {
+      deBouncer.run(() async{await loginAPI(context);});
 
     }
   }

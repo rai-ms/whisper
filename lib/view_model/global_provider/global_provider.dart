@@ -6,6 +6,7 @@ import 'package:whisper/view/profile_view/profile_view.dart';
 import 'package:whisper/view/search_user_view/search_user_view.dart';
 import '../../global/global.dart';
 import '../../model/post_model.dart';
+import '../../model/response.dart';
 
 class AppGlobalProvider extends ChangeNotifier
 {
@@ -39,10 +40,10 @@ class AppGlobalProvider extends ChangeNotifier
 
   List<Post> postList = [];
 
-  getAllPost() {
-    if(postList.isNotEmpty) return postList;
-    return generateDummyPosts();
-  }
+  // getAllPost() {
+  //   if(postList.isNotEmpty) return postList;
+  //   return generateDummyPosts();
+  // }
 
   getUserProfile(String id) async {
 

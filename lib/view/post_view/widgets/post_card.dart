@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:whisper/global/global.dart';
-import 'package:whisper/model/post_model.dart';
+import 'package:whisper/model/feed_response_model.dart';
 import 'package:whisper/view/post_view/widgets/user_model_post.dart';
 import '../../../components/utility_helper.dart';
-import '../../../utils/app_helper/app_color.dart';
 import 'expandable_text.dart';
 import 'like_comment_share_bar.dart';
 
 class PostCard extends StatefulWidget {
-  const PostCard({super.key, required this.post});
-  final Post post;
+  const PostCard({super.key, required this.post, required this.userData});
+  final FeedUserPost post;
+  final FeedUserData userData;
   @override
   State<PostCard> createState() => _PostCardState();
 }
@@ -35,15 +35,15 @@ class _PostCardState extends State<PostCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 sizedBox(hei: 10),
-                const UserRowPost(),
+                UserRowPost(postedBy: widget.userData.username, postId: widget.post.id),
                 sizedBox(hei: 12),
-                UtilityHelper.image(widget.post.image!, width: getFullWidth(context)),
+                UtilityHelper.image(widget.post.url, width: getFullWidth(context)),
                 sizedBox(hei: 10),
                 // DescriptionTextWidget(text: widget.post.postDescription.toString(),),
                 ExpandableText(
-                  text: widget.post.postDescription.toString(),),
+                  text: widget.post.caption.toString(),),
                 sizedBox(hei: 10),
-                CommentLikeShareBar(comments: widget.post.comments, likes: widget.post.likes,share: widget.post.shares,),
+                // CommentLikeShareBar(comments: widget.post., likes: widget.post.likes,share: widget.post.shares,),
                 sizedBox(hei: 10),
               ],
             ),

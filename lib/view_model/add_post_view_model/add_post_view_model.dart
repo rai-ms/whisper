@@ -90,7 +90,7 @@ class AddPostViewModel extends ChangeNotifier
     String caption = postContentCont.text.toString().trim();
     bool isCaption = caption.isNotEmpty;
     if(isPicked){
-      await postRepo.createPost(PostPayload(url: _imgUrl, caption : isCaption? caption :null)).then((PostResponse? postResponse){
+      await postRepo.createPost(PostPayload(url: _imgUrl, caption : isCaption? caption :null)).then((UploadPostResponse? postResponse){
         if(postResponse!.statusCode == 200){
           CustomToast(message: "Post Uploaded Successfully", context: context);
           postContentCont.clear();

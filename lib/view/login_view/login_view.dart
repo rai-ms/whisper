@@ -76,7 +76,7 @@ class _LoginViewState extends State<LoginView> {
                       sizedBox(hei: getFullHeight(context)*.3),
                       Consumer<LoginViewModel>(builder: (context, provider, child) {
                         return Form(
-                          key: provider.formkey,
+                          key: provider.formKey,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: Container(

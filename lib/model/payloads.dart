@@ -1,5 +1,4 @@
-class PostPayload
-{
+class PostPayload {
   String? caption;
   String url;
   String mediaType;
@@ -17,11 +16,11 @@ class PostPayload
 
 class LoginPayload
 {
-  String mail, password;
-  LoginPayload({required this.mail, required this.password});
+  String email, password;
+  LoginPayload({required this.email, required this.password});
   Map<String, dynamic> toJson() {
     return {
-      'mail': mail,
+      'email': email,
       'password': password,
     };
   }

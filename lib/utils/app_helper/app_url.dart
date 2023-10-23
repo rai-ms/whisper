@@ -10,4 +10,6 @@ class AppUrl
   static const resendOtpForgetPasswordEmailEndPoint = '$baseUrl/send-otp';
   static const signupOTPEndPoint = '$baseUrl/send-otp';
   static const createPostEndPoint = '$baseUrl/createPost';
+  static const getMyPostEndPoint = '$baseUrl/getMyPost';
+  static const getMyFeedEndPoint = '$baseUrl/userFeed';
 }

@@ -8,10 +8,10 @@ import 'base_api_service.dart';
 
 class NetworkApiServices extends BaseApiServices {
   @override
-  Future getAPI(String url) async {
+  Future getAPI(String url, [Map<String, String>? header]) async {
     http.Response res;
     try {
-      res = await http.get(Uri.parse(url));
+      res = await http.get(Uri.parse(url), headers: header);
       debugPrint("Response is Successfully returning");
       return returnResponse(res);
     } on SocketException {
