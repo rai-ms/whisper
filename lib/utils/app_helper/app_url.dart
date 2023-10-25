@@ -16,4 +16,9 @@ class AppUrl
   static const getMyProfileEndPoint = '$baseUrl/userProfile';
   static const listCommentsEndPoint = '$baseUrl/listComments';
   static const createCommentEndPoint = '$baseUrl/createComment?postId=';
+  static const userSearchEndPoint = '$baseUrl/userSearch';
+  static const getFollowersEndPoint = 'https://harshitsocial.appskeeper.in/api/v1/user/getFollowers?userId=';
+  static const getFollowingEndPoint = '$baseUrl/getFollowing';
+  static const unfollowUserEndPoint = '$baseUrl/unfollowUser';
+  static const followUserEndPoint = '$baseUrl/followUser';
 }

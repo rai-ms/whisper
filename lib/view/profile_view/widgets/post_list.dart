@@ -14,6 +14,7 @@ class PostList extends StatefulWidget {
 class _PostListState extends State<PostList> with AutomaticKeepAliveClientMixin{
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return GridView.builder(
       key: const PageStorageKey<String>(StoragePathKey.postListPath),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

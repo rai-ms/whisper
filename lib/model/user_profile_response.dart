@@ -1,24 +1,24 @@
-class UserProfileDataResponse {
+class APIResponseUserModel {
   final int statusCode;
   final String type;
-  final List<UserProfile> userProfiles;
+  final List<UserProfile> data;
 
-  UserProfileDataResponse({
+  APIResponseUserModel({
     required this.statusCode,
     required this.type,
-    required this.userProfiles,
+    required this.data,
   });
 
-  factory UserProfileDataResponse.fromJson(Map<String, dynamic> json) {
-    final List<dynamic> userProfileList = json['UserPofile']; // Correct the typo
-    final List<UserProfile> userProfiles = userProfileList
-        .map((profileJson) => UserProfile.fromJson(profileJson))
-        .toList();
+  factory APIResponseUserModel.fromJson(Map<String, dynamic> json) {
+    final List<dynamic> userProfileList = json['data']['UserPofile'];
+    final List<UserProfile> data = userProfileList.map((userProfileJson) {
+      return UserProfile.fromJson(userProfileJson);
+    }).toList();
 
-    return UserProfileDataResponse(
+    return APIResponseUserModel(
       statusCode: json['statusCode'],
       type: json['type'],
-      userProfiles: userProfiles,
+      data: data,
     );
   }
 }
@@ -30,6 +30,8 @@ class UserProfile {
   final int followingCount;
   final int postCount;
   final List<UserPost> userPosts;
+  final bool isFollowing;
+  final bool isFollower;
 
   UserProfile({
     required this.username,
@@ -38,13 +40,15 @@ class UserProfile {
     required this.followingCount,
     required this.postCount,
     required this.userPosts,
+    required this.isFollowing,
+    required this.isFollower,
   });
 
   factory UserProfile.fromJson(Map<String, dynamic> json) {
     final List<dynamic> userPostsList = json['UserPosts'];
-    final List<UserPost> userPosts = userPostsList
-        .map((postJson) => UserPost.fromJson(postJson))
-        .toList();
+    final List<UserPost> userPosts = userPostsList.map((userPostJson) {
+      return UserPost.fromJson(userPostJson);
+    }).toList();
 
     return UserProfile(
       username: json['username'],
@@ -53,6 +57,8 @@ class UserProfile {
       followingCount: json['followingCount'],
       postCount: json['postCount'],
       userPosts: userPosts,
+      isFollowing: json['isFollowing'],
+      isFollower: json['isFollower'],
     );
   }
 }
@@ -65,6 +71,7 @@ class UserPost {
   final String caption;
   final int likeCount;
   final int commentCount;
+  final String createdAt;
 
   UserPost({
     required this.id,
@@ -74,6 +81,7 @@ class UserPost {
     required this.caption,
     required this.likeCount,
     required this.commentCount,
+    required this.createdAt,
   });
 
   factory UserPost.fromJson(Map<String, dynamic> json) {
@@ -85,6 +93,8 @@ class UserPost {
       caption: json['caption'],
       likeCount: json['likeCount'],
       commentCount: json['commentCount'],
+      createdAt: json['createdAt'],
     );
   }
 }
+

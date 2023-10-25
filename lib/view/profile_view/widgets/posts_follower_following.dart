@@ -16,12 +16,13 @@ import 'friends_list.dart';
 class PostFollowerFollowing extends StatefulWidget {
   const PostFollowerFollowing({super.key});
 
+
   @override
   State<PostFollowerFollowing> createState() => _PostFollowerFollowingState();
 }
 
 class _PostFollowerFollowingState extends State<PostFollowerFollowing> {
-  UserProfileDataResponse? response;
+  APIResponseUserModel? response;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -84,34 +85,39 @@ class _PostFollowerFollowingState extends State<PostFollowerFollowing> {
                   ],
                 ),
                 const SizedBox(height: 10,),
-                FutureBuilder<UserProfileDataResponse?>(
+                if(provider.index == 0) FutureBuilder<APIResponseUserModel?>(
                   key: const PageStorageKey<String>(StoragePathKey.postListPathFuture) ,
                   future: provider2.getProfile(),
-                  builder: (context,AsyncSnapshot<UserProfileDataResponse?> snapshot) {
-                    if(!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting){
+                  builder: (context,AsyncSnapshot<APIResponseUserModel?> snapshot) {
+                    if(snapshot.connectionState == ConnectionState.waiting){
                       return Container(
                         height: 500,
                         width: getFullWidth(context),
                         color: AppColors.grey,
                       );
+                      // return const Center(child: CircularProgressIndicator());
                     }
                     else if(snapshot.hasError){
+                      debugPrint("${snapshot.error} is the error");
                       return const Center(child: Text(AppStrings.errorOccured),);
                     }
                     else if(snapshot.hasData){
                       response = snapshot.data;
-                      debugPrint(response!.userProfiles[0].userPosts.length.toString());
+                      // debugPrint(response!.data![0].userPosts.length.toString());
                       return SizedBox(
                         height: 500,
                         width: getFullWidth(context),// Make sure this height is within the parent's constraints.
-                        child: provider.index == 0?  PostList(postList: response!.userProfiles[0].userPosts,) : provider.index == 1 ? const FriendsList() : const PhotosList(),
+                        child: PostList(postList: response!.data![0].userPosts,)
+
                       );
                     }
                     else {
                       return const Center(child: Text(AppStrings.errorOccured),);
                     }
                   }
-                )
+                ),
+                if(provider.index == 1) const Followers(),
+                if(provider.index == 2) const Following(),
               ],
             );
           }

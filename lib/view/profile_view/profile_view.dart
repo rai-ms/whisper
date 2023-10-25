@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:whisper/global/global.dart';
+import 'package:whisper/model/user_profile_response.dart';
+import 'package:whisper/repository/profile_repo/profile_repo.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
 import 'package:whisper/utils/app_helper/app_style.dart';
 import 'package:whisper/view/profile_view/widgets/posts_follower_following.dart';
@@ -20,6 +22,7 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClientMixin{
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => PersonalProfileViewModel()),
@@ -33,55 +36,55 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
           [
             const ProfileTopView(),
             Consumer<GetProfileData>(
-              builder: (context, provider, child) {
-                return FutureBuilder<String?>(
-                  future: provider.getUsername(),
-                  builder: (context,AsyncSnapshot<String?> data) {
-                    String? username = data.data;
-                    if(data.connectionState == ConnectionState.waiting){
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const SizedBox(width: 10,),
-                          Container(width: 100, height: 60, color: AppColors.grey,)
-                        ],
-                      );
-                    }
-                    else if(data.hasError){
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const SizedBox(width: 10,),
-                          Text("Unable to load!", style: AppStyle.blackBold24,),
-                        ],
-                      );
-                    }
-                    else if(data.hasData){
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const SizedBox(width: 10,),
-                          Text( "$username", style: AppStyle.primaryColorDarkMedium(context),),
-                        ],
-                      );
-                    }
-                    else {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              "Ashish Rai",
-                              style: AppStyle.primaryColorDarkMedium(context),
-                            ),
-                          ],
-                        );
+                builder: (context, provider, child) {
+                  return FutureBuilder<String?>(
+                      future: provider.getUsername(),
+                      builder: (context,AsyncSnapshot<String?> data) {
+                        String? username = data.data;
+                        if(data.connectionState == ConnectionState.waiting){
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const SizedBox(width: 10,),
+                              Container(width: 100, height: 60, color: AppColors.grey,)
+                            ],
+                          );
+                        }
+                        else if(data.hasError){
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const SizedBox(width: 10,),
+                              Text("Unable to load!", style: AppStyle.blackBold24,),
+                            ],
+                          );
+                        }
+                        else if(data.hasData){
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const SizedBox(width: 10,),
+                              Text( "$username", style: AppStyle.primaryColorDarkMedium(context),),
+                            ],
+                          );
+                        }
+                        else {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                "Ashish Rai",
+                                style: AppStyle.primaryColorDarkMedium(context),
+                              ),
+                            ],
+                          );
+                        }
                       }
-                    }
-                );
-              }
+                  );
+                }
             ),
             const SizedBox(height: 5,),
             Container(
@@ -171,21 +174,21 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                         const Icon(FontAwesomeIcons.clock, color: AppColors.grey,),
                         sizedBox(wid: 10),
                         Consumer<GetProfileData>(
-                          builder: (context, provider, child) {
-                            return FutureBuilder<String?>(
-                              future: provider.getJoinedDate(),
-                              builder: (context, data){
-                              if(!data.hasData || data.connectionState == ConnectionState.waiting){
-                                return Container(height: 50, width: 100, color: AppColors.grey,);
-                              }
-                              else if(data.hasData){
-                                String? joinDate = data.data;
-                                return Text("Joined on ${joinDate!.substring(0, 10)}", style: AppStyle.primaryColorDarkMedium(context),);
-                              }
-                              return Text("${data.data}");
+                            builder: (context, provider, child) {
+                              return FutureBuilder<String?>(
+                                  future: provider.getJoinedDate(),
+                                  builder: (context, data){
+                                    if(!data.hasData || data.connectionState == ConnectionState.waiting){
+                                      return Container(height: 50, width: 100, color: AppColors.grey,);
+                                    }
+                                    else if(data.hasData){
+                                      String? joinDate = data.data;
+                                      return Text("Joined on ${joinDate!.substring(0, 10)}", style: AppStyle.primaryColorDarkMedium(context),);
+                                    }
+                                    return Text("${data.data}");
 
-                            });
-                          }
+                                  });
+                            }
                         ),
                       ],
                     ),
@@ -208,7 +211,6 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
             ),
             sizedBox(hei: 10),
             const PostFollowerFollowing(),
-
           ],
         ),
       ),

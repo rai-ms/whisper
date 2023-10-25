@@ -13,7 +13,7 @@ import '../../../view_model/home_view_view_model/post_card_comment_view_model.da
 import '../../../view_model/home_view_view_model/post_card_like_view_model.dart';
 
 class CommentLikeShareBar extends StatefulWidget {
-  CommentLikeShareBar({super.key, this.comments, this.likes, this.share, required this.postId});
+  const CommentLikeShareBar({super.key, this.comments, this.likes, this.share, required this.postId});
   final String postId;
   final List<APIResponseComment>? comments;
   final List<Like>? likes;
@@ -26,7 +26,6 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
 
   bool isLiked = false;
   int likeCount = 1;
-
   int empty = 0;
 
   @override
@@ -61,14 +60,14 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
           //         debugPrint(widget.likes![0].toJson().toString());
           //       } ,
           //       onLongPress: (){
-          //         provider.showLikeBottomSheet(showLikeBottomSheet);
+          //         // provider.showLikeBottomSheet(showLikeBottomSheet);
           //       },
           //       onHover: (bool isHoverOn){},
           //       child: Row(
           //         children: [
           //           Icon(!isLiked ? FontAwesomeIcons.thumbsUp :FontAwesomeIcons.solidThumbsUp, color: Theme.of(context).primaryColorDark,),
           //           sizedBox(wid: 5),
-          //           Text(!isLiked ?widget.likes!.length.toString():( widget.likes!.length+ 1).toString(),),
+          //           if(widget.likes != null) Text(!isLiked ?widget.likes!.length.toString():( widget.likes!.length+ 1).toString(),),
           //         ],
           //       ),
           //     );

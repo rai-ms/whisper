@@ -2,16 +2,17 @@ import 'package:flutter/cupertino.dart';
 
 import '../../../utils/app_helper/app_keys.dart';
 
-class PhotosList extends StatefulWidget {
-  const PhotosList({super.key});
+class Following extends StatefulWidget {
+  const Following({super.key});
 
   @override
-  State<PhotosList> createState() => _PhotosListState();
+  State<Following> createState() => _FollowingState();
 }
 
-class _PhotosListState extends State<PhotosList> {
+class _FollowingState extends State<Following> with AutomaticKeepAliveClientMixin{
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return GridView.builder(
       key: const PageStorageKey<String>(StoragePathKey.photosListPath),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -30,4 +31,7 @@ class _PhotosListState extends State<PhotosList> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

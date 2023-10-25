@@ -19,71 +19,75 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
   double? unSelectedSize = 25;
   @override
   Widget build(BuildContext context) {
+
     return Container (
-        padding: const EdgeInsets.only(top: 10),
+        padding: const EdgeInsets.only(top: 10,),
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColorLight,
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.only(topRight: Radius.circular(40),topLeft: Radius.circular(40)),
           border: Border.all(width: 1, color: Theme.of(context).primaryColorDark),
           shape: BoxShape.rectangle
         ),
-        child: Consumer<AppGlobalProvider>(
-          builder: (context, provider, child) {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children:
-              [
-                InkWell(
-                    onTap: (){
-                      if(pageViewNumber != 0){
-                        provider.setPage(0);
-                      }
-                    },
-                    child: Icon(FontAwesomeIcons.houseUser, color: pageViewNumber != 0? Theme.of(context).primaryColorDark: AppColors.red,size: pageViewNumber == 0? selectedSize : unSelectedSize,)),
-                InkWell(
-                    onTap: (){
-                      if(pageViewNumber != 1){
-                        provider.setPage(1);
-                      }
-                    },
-                    child: Icon(pageViewNumber != 1? FontAwesomeIcons.heart : FontAwesomeIcons.solidHeart, color: pageViewNumber != 1? Theme.of(context).primaryColorDark : AppColors.red,size: pageViewNumber == 1? selectedSize : unSelectedSize,)),
-                InkWell(
-                    onTap: (){
-                        Navigator.pushNamed(context, RouteName.addPostView);
-                    },
-                    child: Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: AppColors.blueSplashScreen,
-                        borderRadius: BorderRadius.circular(10)
-                      ),
-                      child: Icon(Icons.add, color: AppColors.white,size:selectedSize! + 10,),
-                    )),
-                InkWell(
-                    onTap: (){
-                      if(pageViewNumber != 2){
-                        provider.setPage(2);
-                      }
-                      // debugPrint("Tapped on index 2");
-                    },
-                    child: Icon(Icons.search, color: pageViewNumber != 2? Theme.of(context).primaryColorDark : AppColors.red,size: pageViewNumber == 2? selectedSize : unSelectedSize,)),
-                InkWell(
-                    onTap: (){
-                      if(pageViewNumber != 3){
-                        provider.setPage(3);
-                      }
-                      // debugPrint("Tapped on index 3");
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Theme.of(context).primaryColorDark, width:  3),
-                        borderRadius: BorderRadius.circular(100)
-                      ),
-                      // child: ClipOval(child: CachedNetworkImage(imageUrl: dp, height: 30,width: 30,),),),),
-                      child: ClipOval(child: UtilityHelper.image(dp, height: pageViewNumber == 3? (selectedSize!+10.0) : unSelectedSize! + 5)))),
-              ],
-            );
-          }
+        child: Padding(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewPadding.bottom/ 4),
+          child: Consumer<AppGlobalProvider>(
+            builder: (context, provider, child) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children:
+                [
+                  InkWell(
+                      onTap: (){
+                        if(pageViewNumber != 0){
+                          provider.setPage(0);
+                        }
+                      },
+                      child: Icon(FontAwesomeIcons.houseUser, color: pageViewNumber != 0? Theme.of(context).primaryColorDark: AppColors.red,size: pageViewNumber == 0? selectedSize : unSelectedSize,)),
+                  InkWell(
+                      onTap: (){
+                        if(pageViewNumber != 1){
+                          provider.setPage(1);
+                        }
+                      },
+                      child: Icon(pageViewNumber != 1? FontAwesomeIcons.heart : FontAwesomeIcons.solidHeart, color: pageViewNumber != 1? Theme.of(context).primaryColorDark : AppColors.red,size: pageViewNumber == 1? selectedSize : unSelectedSize,)),
+                  InkWell(
+                      onTap: (){
+                          Navigator.pushNamed(context, RouteName.addPostView);
+                      },
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: AppColors.blueSplashScreen,
+                          borderRadius: BorderRadius.circular(10)
+                        ),
+                        child: Icon(Icons.add, color: AppColors.white,size:selectedSize! + 10,),
+                      )),
+                  InkWell(
+                      onTap: (){
+                        if(pageViewNumber != 2){
+                          provider.setPage(2);
+                        }
+                        // debugPrint("Tapped on index 2");
+                      },
+                      child: Icon(Icons.search, color: pageViewNumber != 2? Theme.of(context).primaryColorDark : AppColors.red,size: pageViewNumber == 2? selectedSize : unSelectedSize,)),
+                  InkWell(
+                      onTap: (){
+                        if(pageViewNumber != 3){
+                          provider.setPage(3);
+                        }
+                        // debugPrint("Tapped on index 3");
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Theme.of(context).primaryColorDark, width:  3),
+                          borderRadius: BorderRadius.circular(100)
+                        ),
+                        // child: ClipOval(child: CachedNetworkImage(imageUrl: dp, height: 30,width: 30,),),),),
+                        child: ClipOval(child: UtilityHelper.image(dp, height: pageViewNumber == 3? (selectedSize!+10.0) : unSelectedSize! + 5)))),
+                ],
+              );
+            }
+          ),
         ),
       );
   }
