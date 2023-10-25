@@ -67,7 +67,7 @@ class SearchUserPayload
   String? username;
   String? email;
 
-  SearchUserPayload({required this.email, required this.username});
+  SearchUserPayload({this.email, this.username});
 
   Map<String, dynamic> toJsonEmail() {
     return {

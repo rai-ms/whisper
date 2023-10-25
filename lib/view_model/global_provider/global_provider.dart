@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:whisper/utils/deBouncer/deBouncer.dart';
 import 'package:whisper/view/add_post_view/add_post_view.dart';
 import 'package:whisper/view/notification_view/notification_view.dart';
 import 'package:whisper/view/post_view/post_view.dart';
@@ -7,9 +8,16 @@ import 'package:whisper/view/search_user_view/search_user_view.dart';
 import '../../global/global.dart';
 import '../../model/post_model.dart';
 import '../../model/response.dart';
+import '../../model/search_user.dart';
+import '../../repository/search_repo/search_repo.dart';
 
 class AppGlobalProvider extends ChangeNotifier
 {
+  static TextEditingController controller = TextEditingController();
+  static DeBouncer deBouncer = DeBouncer(milliseconds: 200);
+  static onChanged(String val) async {
+    deBouncer.run(() async { await searchUser(username: val).then((value){});});
+  }
 
   final PageStorageBucket pageStorageBucket = PageStorageBucket();
   final PageStorageBucket profileStorageBucket = PageStorageBucket();
@@ -47,6 +55,24 @@ class AppGlobalProvider extends ChangeNotifier
 
   getUserProfile(String id) async {
 
+  }
+  static SearchResponseUserData? searchResponseUserData;
+  static final SearchRepository searchRepository = SearchRepository();
+  static Future searchUser({required String username}) async {
+    await searchRepository.searchUser(SearchUserPayload(username: username)).then((value) {
+      // debugPrint("Response received in view model email is:${value!.data.email}");
+      // debugPrint("Response received in view model username is:${value!.data.username}");
+      searchResponseUserData = value;
+    }).onError((error, stackTrace){
+      debugPrint("Error in Search user View Model :$error");
+    });
+  }
+
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller?.dispose();
   }
 
 }

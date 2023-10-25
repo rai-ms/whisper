@@ -66,7 +66,7 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                 }
               },child: Consumer<AppGlobalProvider>(
                 builder: (context, provider, child) {
-                  return AppTextFormField(enableBorderColor: AppColors.white, enable: pageViewNumber == 2 ? true : false, prefixIcon: Icon(pageViewNumber == 2? FontAwesomeIcons.magnifyingGlass : null, color: AppColors.white,),disableBorderColor: AppColors.white, hintText: pageViewNumber != 2? "What's in your mind??" : "Search User", hintStyle: AppStyle.greyRegular20,);
+                  return AppTextFormField(cont: AppGlobalProvider.controller,style: AppStyle.whiteMedium16, onChanged: AppGlobalProvider.onChanged, enableBorderColor: AppColors.white, enable: pageViewNumber == 2 ? true : false, prefixIcon: Icon(pageViewNumber == 2? FontAwesomeIcons.magnifyingGlass : null, color: AppColors.white,),disableBorderColor: AppColors.white, hintText: pageViewNumber != 2? "What's in your mind??" : "Search User", hintStyle: AppStyle.greyRegular20,obscureText: false,);
                 }
               ))),
               sizedBox(wid: 5),
