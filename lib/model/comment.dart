@@ -1,8 +1,3 @@
-import 'package:whisper/model/post_model.dart';
-import 'package:whisper/model/share.dart';
-import 'event.dart';
-import 'like.dart';
-
 // class Comment {
 //
 //   // Comment Id
@@ -87,25 +82,35 @@ class CommentPayload {
 class APIResponseCommentModel {
   final int statusCode;
   final String type;
-  final List<APIResponseComment> comments;
+  final Data? data; // Make 'data' nullable
 
   APIResponseCommentModel({
     required this.statusCode,
     required this.type,
-    required this.comments,
+    this.data, // Mark 'data' as nullable
   });
 
   factory APIResponseCommentModel.fromJson(Map<String, dynamic> json) {
-    final List<dynamic> commentsList = json['Comments'];
-    final List<APIResponseComment> comments = commentsList.map((commentJson) {
-      return APIResponseComment.fromJson(commentJson);
-    }).toList();
-
     return APIResponseCommentModel(
       statusCode: json['statusCode'],
       type: json['type'],
-      comments: comments,
+      data: Data.fromJson(json['data']),
     );
+  }
+}
+
+class Data {
+  final List<APIResponseComment>? comments; // Make 'comments' nullable
+
+  Data({this.comments}); // Mark 'comments' as nullable
+
+  factory Data.fromJson(Map<String, dynamic> json) {
+    final List<dynamic>? commentsList = json['Comments']; // Make 'commentsList' nullable
+    final List<APIResponseComment>? comments = commentsList?.map((commentJson) {
+      return APIResponseComment.fromJson(commentJson);
+    }).toList();
+
+    return Data(comments: comments);
   }
 }
 
@@ -145,3 +150,4 @@ class APIResponseUser {
     );
   }
 }
+

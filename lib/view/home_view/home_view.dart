@@ -117,14 +117,14 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                       }
                   ),
                 ),
-                const Flexible(
-                  flex: 1,
-                  child: AppBottomNavigationBar()),
+                // const Flexible(
+                //   flex: 1,
+                //   child: AppBottomNavigationBar()),
               ],
             ),
           ),
         ),
-        // bottomNavigationBar: const AppBottomNavigationBar(),
+        bottomNavigationBar: const AppBottomNavigationBar(),
       ),
     );
   }

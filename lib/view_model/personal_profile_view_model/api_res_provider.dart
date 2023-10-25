@@ -8,6 +8,7 @@ import '../../repository/profile_repo/profile_repo.dart';
 class PostViewApiResponseProvider extends ChangeNotifier{
 
   final ProfileRepository profileRepo = ProfileRepository();
+
   Future<UserProfileDataResponse?> getProfile({String? id}) async {
     UserProfileDataResponse? res;
     await profileRepo.getProfile(id: id).then((UserProfileDataResponse? userProfileDataResponse){
@@ -18,6 +19,7 @@ class PostViewApiResponseProvider extends ChangeNotifier{
     });
     return res;
   }
+
   static final PostRepository postRepository = PostRepository();
 
   static Future<APIResponseCommentModel?> getCommentsList(String id) async {
@@ -30,4 +32,9 @@ class PostViewApiResponseProvider extends ChangeNotifier{
     });
     return res;
   }
+
+  static Future getLikesList(String id) async {
+
+  }
+
 }

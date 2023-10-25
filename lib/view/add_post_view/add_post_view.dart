@@ -21,9 +21,8 @@ class _AddPostViewState extends State<AddPostView> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-          ChangeNotifierProvider(create: (context) => AddPostViewModel(),
-          ),
-  ],
+        ChangeNotifierProvider(create: (context) => AddPostViewModel(),),
+      ],
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Create Post"),

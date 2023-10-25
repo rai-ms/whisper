@@ -110,7 +110,6 @@ class AddPostViewModel extends ChangeNotifier
 
   @override
   void dispose() {
-    // TODO: implement dispose
     postContentCont.dispose();
     postContentFocusNode.dispose();
     super.dispose();

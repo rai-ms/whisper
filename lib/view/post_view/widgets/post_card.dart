@@ -56,11 +56,11 @@ class _PostCardState extends State<PostCard> {
                           future: PostViewApiResponseProvider.getCommentsList(widget.post.id),
                           builder: (context, snapshot) {
                             if(snapshot.hasData){
-                              debugPrint("${snapshot.data!.comments.length}");
-                              return CommentLikeShareBar(comments: snapshot.data!.comments,);
+                              // debugPrint("${snapshot.data!.comments.length}");
+                              return CommentLikeShareBar(comments: snapshot.data!.data!.comments, postId: widget.post.id,);
                             }
                             else if(snapshot.connectionState == ConnectionState.waiting){
-                              return const CommentLikeShareBar();
+                              return CommentLikeShareBar(postId: "",);
                             }
                             else if(snapshot.hasError){
                               return const Text("Error while loading");

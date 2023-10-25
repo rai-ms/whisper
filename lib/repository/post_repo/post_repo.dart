@@ -81,6 +81,7 @@ class PostRepository {
     header['Authorization'] = token!;
     await _baseAPIServices.getAPI("${AppUrl.listCommentsEndPoint}?postId=$id", header).then((value) {
       response = value;
+      // debugPrint(value.toString());
     }).onError((error, stackTrace){
       throw AppError(error.toString());
     });
@@ -90,10 +91,11 @@ class PostRepository {
   Future createComment(String postId, CommentPayload model) async {
     debugPrint("Going to comment on $postId");
     String? token = await UserData.getUserAccessToken();
-    header['Authorization'] = "Bearer "+token!;
-    // debugPrint("$header is the header");
-    await _baseAPIServices.postAPIWithHeader("${AppUrl.createPostEndPoint}?postId=$postId", model.toMap(), header).then((value){
-      // debugPrint("Comment Added! $value");
+    // header['Authorization'] = "Bearer "+token!;
+    header['Authorization'] = token!;
+    debugPrint("$header is the header, model is ${model.toMap()}");
+    await _baseAPIServices.postAPIWithHeader("https://harshitsocial.appskeeper.in/api/v1/user/createComment?postId=$postId", model.toMap(), header).then((value){
+      debugPrint("Comment Added! $value");
     }).onError((error, stackTrace){
       throw AppError("Error is:$error");
     });

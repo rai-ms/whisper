@@ -15,5 +15,5 @@ class AppUrl
   static const getMyFeedEndPoint = '$baseUrl/userFeed';
   static const getMyProfileEndPoint = '$baseUrl/userProfile';
   static const listCommentsEndPoint = '$baseUrl/listComments';
-  static const createCommentEndPoint = '$baseUrl/createComment';
+  static const createCommentEndPoint = '$baseUrl/createComment?postId=';
 }

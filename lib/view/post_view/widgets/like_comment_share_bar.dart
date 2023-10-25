@@ -11,11 +11,10 @@ import '../../../model/share.dart';
 import '../../../utils/app_helper/app_strings.dart';
 import '../../../view_model/home_view_view_model/post_card_comment_view_model.dart';
 import '../../../view_model/home_view_view_model/post_card_like_view_model.dart';
-import '../../../view_model/home_view_view_model/share_post_view_model.dart';
 
 class CommentLikeShareBar extends StatefulWidget {
-  const CommentLikeShareBar({super.key, this.comments, this.likes, this.share});
-
+  CommentLikeShareBar({super.key, this.comments, this.likes, this.share, required this.postId});
+  final String postId;
   final List<APIResponseComment>? comments;
   final List<Like>? likes;
   final List<Share>? share;
@@ -34,8 +33,9 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
   Widget build(BuildContext context) {
     // debugPrint("${widget.comments!.length ?? empty} length of comments on this post");
     return MultiProvider(providers: [
-      ChangeNotifierProvider(create: (context)=> LikeViewModel() ),
-    ], child: Container(
+        ChangeNotifierProvider(create: (context)=> LikeViewModel() ),
+      ],
+      child: Container(
       height: 60,
       padding: const EdgeInsets.only(top: 10),
       width: getFullWidth(context),
@@ -104,7 +104,7 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                                   child: ListView(
                                     shrinkWrap: true,
                                     children: [
-                                      ...List.generate(widget.comments!.length, (index){
+                                      if(widget.comments != null) ...List.generate(widget.comments!.length, (index){
                                         return Column(
                                           children: [
                                             Consumer<PostCardCommentViewModel>(
@@ -163,7 +163,7 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                                                                         // InkWell(
                                                                         //   onTap:()
                                                                         //   {
-                                                                        //       provider.gotoReply(context, widget.comments![index].content);
+                                                                        //       provider.gotoReply(context, widget.comments![index].comment);
                                                                         //   },
                                                                         //   child: Text("Reply", style: AppStyle.blueNormal16,)),
                                                                       ],
@@ -249,8 +249,8 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                                                 controller: provider.commentCont,
                                                 focusNode: provider.commentFocus,
                                                 textAlign: TextAlign.start,
-                                                onFieldSubmitted: (_) {
-                                                  provider.sendComment();
+                                                onFieldSubmitted: (_) async {
+                                                  await provider.sendComment(postID:  widget.postId, context: context);
                                                 },
                                                 decoration: const InputDecoration(
                                                     prefixIcon: Icon(
@@ -272,12 +272,17 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                                             ],
                                           ),
                                         ),
-                                        const Expanded(
+                                        Expanded(
                                           flex: 2,
-                                          child: CircleAvatar(
-                                            radius: 30,
-                                            backgroundColor: AppColors.black,
-                                            child: Icon(FontAwesomeIcons.baseballBatBall, color: AppColors.white,),
+                                          child: InkWell(
+                                            onTap:() async {
+                                             await provider.sendComment(postID:  widget.postId, context: context);
+                                            },
+                                            child: const CircleAvatar(
+                                              radius: 30,
+                                              backgroundColor: AppColors.black,
+                                              child: Icon(FontAwesomeIcons.baseballBatBall, color: AppColors.white,),
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -295,7 +300,7 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                     children: [
                       Icon(FontAwesomeIcons.commentDots, color: Theme.of(context).primaryColorDark,),
                       sizedBox(wid: 5),
-                      if(widget.comments != null)Text(widget.comments!.length.toString(),)
+                      widget.comments != null ? Text(widget.comments!.length.toString(),) : const Text("0")
                     ],
                   ));
             }
