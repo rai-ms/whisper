@@ -84,4 +84,24 @@ class LoginRepository {
     return null;
   }
 
+  Future<bool?> logoutUser() async {
+    bool? res;
+    await UserData.getUserAccessToken().then((token) async {
+      debugPrint("Token received for logout: $token");
+      header['Authorization'] = token!;
+      await _baseAPIServices.postAPIWithHeader(AppUrl.logoutEndPoint, {}, header).then((value){
+        debugPrint("logout Success");
+        res = true;
+      }).onError((error, stackTrace){
+        debugPrint("Data Received with error occur: $error");
+        res = false;
+        throw AppError(error.toString());
+      });
+    }).onError((error, stackTrace){
+      res = false;
+      throw AppError(error.toString());
+    });
+    return res;
+  }
+
 }

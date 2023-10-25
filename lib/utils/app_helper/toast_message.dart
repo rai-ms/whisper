@@ -6,4 +6,5 @@ class ToastMsg {
   static const String provideRequiredInfo = 'Please provide required information';
   static const String password = 'Password changed successfully';
   static const String passwordValidation = 'Password must be same';
+  static const String commentAdded = 'Comment Added';
 }

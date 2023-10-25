@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:whisper/global/global.dart';
-import 'package:whisper/model/payloads.dart';
+import 'package:whisper/model/login_payload.dart';
 import 'package:whisper/repository/post_repo/post_repo.dart';
 import 'package:whisper/res/components/custom_toast.dart';
 

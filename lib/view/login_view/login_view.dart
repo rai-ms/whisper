@@ -42,7 +42,7 @@ class _LoginViewState extends State<LoginView> {
                         Center(child: SvgPicture.asset(AppImages.logoAndName)),
                         Text(AppStrings.login, style: AppStyle.whiteBold30,),
                         sizedBox(hei: 10),
-                        Text(AppStrings.loginSubTitle, style: AppStyle.primaryColorDarkMedium16(context),),
+                        Text(AppStrings.loginSubTitle, style: AppStyle.whiteMedium16,),
                       ],
                     ),
                     whiteContainerWidget: Column(
@@ -121,7 +121,7 @@ class _LoginViewState extends State<LoginView> {
                                           borderSide:
                                           BorderSide(width: 2, color: AppColors.black)),
                                       hintText: AppStrings.enterEmailAddress,
-                                      hintStyle: AppStyle.blackMedium16,
+                                      hintStyle: AppStyle.primaryColorDarkMedium16(context),
                                       label: const Text(AppStrings.yourEmail),
                                       constraints: const BoxConstraints(
                                         maxWidth: 400,
@@ -151,7 +151,7 @@ class _LoginViewState extends State<LoginView> {
                                     obscureText: provider.obsText,
                                     decoration: InputDecoration(
                                       labelStyle: AppStyle.primaryColorDarkMedium16(context),
-                                      hintStyle: AppStyle.blackMedium16,
+                                      hintStyle: AppStyle.primaryColorDarkMedium16(context),
                                       prefixIcon: Icon(
                                         Icons.lock_open,
                                         color: Theme.of(context).primaryColorDark,

@@ -13,7 +13,7 @@ class NotificationView extends StatefulWidget {
 class _NotificationViewState extends State<NotificationView> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(
+    return Center(
       child: Column(
         children: [
           Expanded(
@@ -78,7 +78,7 @@ class _NotificationViewState extends State<NotificationView> {
           // ),
         ],
       ),
-    ),);
+    );
   }
 
   // Widget placeHolder(BuildContext context, String url){

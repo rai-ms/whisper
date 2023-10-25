@@ -5,6 +5,7 @@ class StoragePathKey {
   static const String friendsListPath = "friendsListPath";
   static const String photosListPath = "photosListPath";
   static const String postListPath = "postListPath";
+  static const String postListPathFuture = "postListPath";
 }
 
 class AppKeys {

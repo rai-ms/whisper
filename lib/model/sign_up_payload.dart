@@ -3,15 +3,13 @@ class SignUpPayloadModel
   String email;
   String password;
   String username;
+  String name;
 
-  SignUpPayloadModel({required this.email, required this.password, required this.username});
-
-  // factory SignUpPayloadModel.fromJSON(Map<String, dynamic> mp){
-  //   return SignUpPayloadModel(email: mp['email'], password: mp['pass'], username: mp['username']);
-  // }
+  SignUpPayloadModel({required this.email, required this.password, required this.username, required this.name});
 
   Map<String, dynamic> toMap() {
     return {
+      'name':name,
       'email': email,
       'password': password,
       'username':username

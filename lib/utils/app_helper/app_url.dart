@@ -4,6 +4,7 @@ class AppUrl
   static const signupCredEndPoint = "$baseUrl/signup";
   static const verifyUserSignup = "$baseUrl/verifyUser";
   static const loginEndPoint = '$baseUrl/login';
+  static const logoutEndPoint = '$baseUrl/logout';
   static const forgetPasswordEmailEndPoint = '$baseUrl/forgot-password';
   static const verifyOTPForgetPasswordEmailEndPoint = '$baseUrl/verifyOTP';
   static const resetPasswordForgetPasswordEmailEndPoint = '$baseUrl/reset-password';
@@ -12,4 +13,7 @@ class AppUrl
   static const createPostEndPoint = '$baseUrl/createPost';
   static const getMyPostEndPoint = '$baseUrl/getMyPost';
   static const getMyFeedEndPoint = '$baseUrl/userFeed';
+  static const getMyProfileEndPoint = '$baseUrl/userProfile';
+  static const listCommentsEndPoint = '$baseUrl/listComments';
+  static const createCommentEndPoint = '$baseUrl/createComment';
 }

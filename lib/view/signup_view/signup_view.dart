@@ -44,7 +44,7 @@ class _SignUpViewState extends State<SignUpView> {
                       child: AppBackGroundTwoContainer(blueContainerWidget: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          sizedBox(hei: paddingTop + 10),
+                          sizedBox(hei: paddingTop - 20),
                           SvgPicture.asset(AppImages.logoAndName),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 18.0),
@@ -55,8 +55,9 @@ class _SignUpViewState extends State<SignUpView> {
                                   AppStrings.signUp,
                                   style: AppStyle.whiteBold30,
                                 ),
+                                sizedBox(hei: 5),
                                 Text(
-                                  AppStrings.enterEmailAndPassword,
+                                  AppStrings.subtitleSignup,
                                   style: AppStyle.whiteMedium16,
                                 ),
                               ],
@@ -78,17 +79,49 @@ class _SignUpViewState extends State<SignUpView> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                sizedBox(hei: getFullHeight(context)*.25),
+                                sizedBox(hei: getFullHeight(context)*.23),
                                 Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                                   decoration: BoxDecoration(
-                                    color: AppColors.white,
+                                    color: Theme.of(context).primaryColorLight,
                                     borderRadius: BorderRadius.circular(40),
-                                    border: Border.all(color: AppColors.black, width: 0.15),
-                                  ),
+                                    border: Border.all(color: AppColors.black, width: 0.15),boxShadow:  [
+                                    BoxShadow(color: Theme.of(context).canvasColor, blurRadius: 2,spreadRadius: 1),
+                                  ],),
                                   child: Column(
                                     children: [
-                                      sizedBox(hei: 20),
+                                      sizedBox(hei: 15),
+                                      TextFormField(
+                                        textInputAction: TextInputAction.next,
+                                        controller: provider.nameCont,
+                                        readOnly: provider.readOnly,
+                                        focusNode: provider.nameFocusNode,
+                                        validator: (_){ return null;},
+                                        onFieldSubmitted: (_) {
+                                          Utils.changeFocus(context, provider.nameFocusNode,
+                                              provider.usernameFocusNode);
+                                        },
+                                        decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.zero,
+                                          prefixIcon: Icon(
+                                            Icons.person,
+                                            color: Theme.of(context).primaryColorDark,
+                                          ),
+                                          border: const OutlineInputBorder(
+                                              borderRadius:
+                                              BorderRadius.all(Radius.circular(20)),
+                                              borderSide:
+                                              BorderSide(width: 2, color: AppColors.black)),
+                                          hintText: AppStrings.provideName,
+                                          hintStyle: AppStyle.primaryColorDarkMedium16(context),
+                                          labelStyle: AppStyle.primaryColorDarkMedium16(context),
+                                          label: const Text(AppStrings.provideName),
+                                          constraints: const BoxConstraints(
+                                            maxWidth: 400,
+                                          ),
+                                          hoverColor: AppColors.blueAccent),
+                                      ),
+                                      sizedBox(hei: 15),
                                       TextFormField(
                                         textInputAction: TextInputAction.next,
                                         controller: provider.usernameCont,
@@ -99,24 +132,27 @@ class _SignUpViewState extends State<SignUpView> {
                                           Utils.changeFocus(context, provider.usernameFocusNode,
                                               provider.emailFocusNode);
                                         },
-                                        decoration: const InputDecoration(
-                                            prefixIcon: Icon(
-                                              Icons.person,
-                                              color: AppColors.blueSplashScreen,
-                                            ),
-                                            border: OutlineInputBorder(
-                                                borderRadius:
-                                                BorderRadius.all(Radius.circular(20)),
-                                                borderSide:
-                                                BorderSide(width: 2, color: AppColors.black)),
-                                            hintText: AppStrings.provideUsername,
-                                            label: Text(AppStrings.provideUsername),
-                                            constraints: BoxConstraints(
-                                              maxWidth: 400,
-                                            ),
-                                            hoverColor: AppColors.blueAccent),
+                                        decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.zero,
+                                          prefixIcon: Icon(
+                                            Icons.person,
+                                            color: Theme.of(context).primaryColorDark,
+                                          ),
+                                          border: const OutlineInputBorder(
+                                              borderRadius:
+                                              BorderRadius.all(Radius.circular(20)),
+                                              borderSide:
+                                              BorderSide(width: 2, color: AppColors.black)),
+                                          hintStyle: AppStyle.primaryColorDarkMedium16(context),
+                                          labelStyle: AppStyle.primaryColorDarkMedium16(context),
+                                          hintText: AppStrings.provideUsername,
+                                          label: const Text(AppStrings.username),
+                                          constraints: const BoxConstraints(
+                                            maxWidth: 400,
+                                          ),
+                                          hoverColor: AppColors.blueAccent),
                                       ),
-                                      sizedBox(hei: 20),
+                                      sizedBox(hei: 15),
                                       TextFormField(
                                         textInputAction: TextInputAction.next,
                                         controller: provider.emailCont,
@@ -127,24 +163,27 @@ class _SignUpViewState extends State<SignUpView> {
                                           Utils.changeFocus(context, provider.emailFocusNode,
                                               provider.passFocusNode);
                                         },
-                                        decoration: const InputDecoration(
+                                        decoration: InputDecoration(
+                                            contentPadding: EdgeInsets.zero,
+                                            hintStyle: AppStyle.primaryColorDarkMedium16(context),
+                                            labelStyle: AppStyle.primaryColorDarkMedium16(context),
                                             prefixIcon: Icon(
                                               Icons.email_outlined,
-                                              color: AppColors.blueSplashScreen,
+                                              color: Theme.of(context).primaryColorDark,
                                             ),
-                                            border: OutlineInputBorder(
+                                            border: const OutlineInputBorder(
                                                 borderRadius:
                                                 BorderRadius.all(Radius.circular(20)),
                                                 borderSide:
                                                 BorderSide(width: 2, color: AppColors.black)),
                                             hintText: AppStrings.enterEmailAddress,
-                                            label: Text(AppStrings.yourEmail),
+                                            label: const Text(AppStrings.yourEmail),
                                             constraints: BoxConstraints(
                                               maxWidth: 400,
                                             ),
                                             hoverColor: AppColors.blueAccent),
                                       ),
-                                      sizedBox(hei: 20),
+                                      sizedBox(hei: 15),
                                       TextFormField(
                                         textInputAction: TextInputAction.next,
                                         controller: provider.passCont,
@@ -158,9 +197,12 @@ class _SignUpViewState extends State<SignUpView> {
                                         obscuringCharacter: "*",
                                         obscureText: provider.obsText,
                                         decoration: InputDecoration(
-                                            prefixIcon: const Icon(
+                                            contentPadding: EdgeInsets.zero,
+                                            hintStyle: AppStyle.primaryColorDarkMedium16(context),
+                                            labelStyle: AppStyle.primaryColorDarkMedium16(context),
+                                            prefixIcon: Icon(
                                               Icons.lock_open,
-                                              color: AppColors.blueSplashScreen,
+                                              color: Theme.of(context).primaryColorDark,
                                             ),
                                             suffixIcon: InkWell(
                                                 onTap: () {
@@ -181,7 +223,7 @@ class _SignUpViewState extends State<SignUpView> {
                                             ),
                                             hoverColor: AppColors.blueAccent),
                                       ),
-                                      sizedBox(hei: 20),
+                                      sizedBox(hei: 15),
                                       TextFormField(
                                         textInputAction: TextInputAction.done,
                                         controller: provider.confPassCont,
@@ -195,9 +237,12 @@ class _SignUpViewState extends State<SignUpView> {
                                         obscuringCharacter: "*",
                                         obscureText: provider.obsText,
                                         decoration: InputDecoration(
-                                            prefixIcon: const Icon(
+                                            contentPadding: EdgeInsets.zero,
+                                            hintStyle: AppStyle.primaryColorDarkMedium16(context),
+                                            labelStyle: AppStyle.primaryColorDarkMedium16(context),
+                                            prefixIcon: Icon(
                                               Icons.lock_open,
-                                              color: AppColors.blueSplashScreen,
+                                              color: Theme.of(context).primaryColorDark,
                                             ),
                                             suffixIcon: InkWell(
                                                 onTap: () {
@@ -218,7 +263,7 @@ class _SignUpViewState extends State<SignUpView> {
                                             ),
                                             hoverColor: AppColors.blueAccent),
                                       ),
-                                      sizedBox(hei: 20),
+                                      sizedBox(hei: 15),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: [
@@ -254,10 +299,10 @@ class _SignUpViewState extends State<SignUpView> {
                                                   text: TextSpan(
                                                       style: AppStyle.blackNormal17,
                                                       children: [
-                                                        const TextSpan(text: AppStrings.byRegistering),
-                                                        TextSpan(text:AppStrings.privacyPolicy , style: AppStyle.blackBold17),
-                                                        const TextSpan(text: AppStrings.and ),
-                                                        TextSpan(text: AppStrings.termsOfUse, style: AppStyle.blackBold17),
+                                                        TextSpan(text: AppStrings.byRegistering, style: AppStyle.primaryColorDarkMedium(context)),
+                                                        TextSpan(text:AppStrings.privacyPolicy , style: AppStyle.primaryColorDarkBold20(context)),
+                                                        TextSpan(text: AppStrings.and, style: AppStyle.primaryColorDarkMedium(context) ),
+                                                        TextSpan(text: AppStrings.termsOfUse, style: AppStyle.primaryColorDarkBold20(context)),
                                                       ]
                                                   )
                                               ),
@@ -265,8 +310,10 @@ class _SignUpViewState extends State<SignUpView> {
                                           )
                                         ],
                                       ),
-                                      sizedBox(hei: 20),
+                                      sizedBox(hei: 10),
                                       AppRoundedButton(
+                                        height: 50,
+                                        width: 170,
                                         isEnable: provider.isCheckCheckBox,
                                         loading: provider.loading,
                                         focusNode: provider.loginButtonFocusNode,
@@ -282,7 +329,7 @@ class _SignUpViewState extends State<SignUpView> {
                                     ],
                                   ),
                                 ),
-                                sizedBox(hei: getFullHeight(context)*.02),
+                                sizedBox(hei: 10),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [

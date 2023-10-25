@@ -5,20 +5,20 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../model/sign_up_payload.dart';
 import '../../repository/signup_repo/signup_repository.dart';
 import '../../res/components/custom_toast.dart';
-import '../../utils/app_helper/app_color.dart';
 import '../../utils/app_helper/app_strings.dart';
 import '../../utils/utils.dart';
-import '../../view/signup_view/widgets/bottom_sheet.dart';
 
 class SignUpViewModel extends ChangeNotifier
 {
   TextEditingController emailCont = TextEditingController();
   TextEditingController usernameCont = TextEditingController();
+  TextEditingController nameCont = TextEditingController();
   TextEditingController passCont = TextEditingController();
   TextEditingController confPassCont = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey();
   FocusNode emailFocusNode = FocusNode();
   FocusNode usernameFocusNode = FocusNode();
+  FocusNode nameFocusNode = FocusNode();
   FocusNode passFocusNode = FocusNode();
   FocusNode confPassFocusNode = FocusNode();
   FocusNode loginButtonFocusNode = FocusNode();
@@ -139,7 +139,7 @@ class SignUpViewModel extends ChangeNotifier
   final _myRepo = SignUpRepository();
 
   Future<void> signUp(BuildContext context, Function showBottomSheet) async {
-    await _myRepo.registrationAPI(SignUpPayloadModel(password: passCont.text.toString().trim(), email: emailCont.text.toString().trim(), username: usernameCont.text.toString().trim()))
+    await _myRepo.registrationAPI(SignUpPayloadModel(password: passCont.text.toString().trim(), email: emailCont.text.toString().trim().toLowerCase(), username: usernameCont.text.toString().trim().toLowerCase(), name: nameCont.text.toString().trim()))
         .then((value){
       CustomToast(context: context, message: "SignUp Successfully Done $value");
       showBottomSheet();

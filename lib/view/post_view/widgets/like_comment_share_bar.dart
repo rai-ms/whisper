@@ -3,9 +3,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:whisper/components/utility_helper.dart';
 import 'package:whisper/global/global.dart';
+import 'package:whisper/model/comment.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
 import 'package:whisper/utils/app_helper/app_style.dart';
-import '../../../model/comment.dart';
 import '../../../model/like.dart';
 import '../../../model/share.dart';
 import '../../../utils/app_helper/app_strings.dart';
@@ -16,7 +16,7 @@ import '../../../view_model/home_view_view_model/share_post_view_model.dart';
 class CommentLikeShareBar extends StatefulWidget {
   const CommentLikeShareBar({super.key, this.comments, this.likes, this.share});
 
-  final List<Comment>? comments;
+  final List<APIResponseComment>? comments;
   final List<Like>? likes;
   final List<Share>? share;
   @override
@@ -28,8 +28,11 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
   bool isLiked = false;
   int likeCount = 1;
 
+  int empty = 0;
+
   @override
   Widget build(BuildContext context) {
+    // debugPrint("${widget.comments!.length ?? empty} length of comments on this post");
     return MultiProvider(providers: [
       ChangeNotifierProvider(create: (context)=> LikeViewModel() ),
     ], child: Container(
@@ -47,29 +50,30 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Consumer<LikeViewModel>(
-            builder: (context, provider, child) {
-              return InkWell(
-                onTap:(){
-                  isLiked = !isLiked;
-                  provider.notifyListeners();
-                  likeCount = widget.likes!.length;
-                  debugPrint(widget.likes![0].toJson().toString());
-                } ,
-                onLongPress: (){
-                  provider.showLikeBottomSheet(showLikeBottomSheet);
-                },
-                onHover: (bool isHoverOn){},
-                child: Row(
-                  children: [
-                    Icon(!isLiked ? FontAwesomeIcons.thumbsUp :FontAwesomeIcons.solidThumbsUp, color: Theme.of(context).primaryColorDark,),
-                    sizedBox(wid: 5),
-                    Text(!isLiked ?widget.likes!.length.toString():( widget.likes!.length+ 1).toString(),),
-                  ],
-                ),
-              );
-            }
-          ),
+          Icon(FontAwesomeIcons.thumbsUp, color: Theme.of(context).primaryColorDark,),
+          // Consumer<LikeViewModel>(
+          //   builder: (context, provider, child) {
+          //     return InkWell(
+          //       onTap:(){
+          //         isLiked = !isLiked;
+          //         provider.notifyListeners();
+          //         likeCount = widget.likes!.length;
+          //         debugPrint(widget.likes![0].toJson().toString());
+          //       } ,
+          //       onLongPress: (){
+          //         provider.showLikeBottomSheet(showLikeBottomSheet);
+          //       },
+          //       onHover: (bool isHoverOn){},
+          //       child: Row(
+          //         children: [
+          //           Icon(!isLiked ? FontAwesomeIcons.thumbsUp :FontAwesomeIcons.solidThumbsUp, color: Theme.of(context).primaryColorDark,),
+          //           sizedBox(wid: 5),
+          //           Text(!isLiked ?widget.likes!.length.toString():( widget.likes!.length+ 1).toString(),),
+          //         ],
+          //       ),
+          //     );
+          //   }
+          // ),
           Consumer<PostCardCommentViewModel>(
             builder: (context, child, provider) {
               return InkWell(
@@ -108,7 +112,7 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                                                 return ListTile(
                                                   title: Row(
                                                     children: [
-                                                      Expanded(flex: 10, child: ClipOval(child: UtilityHelper.image("https://scontent.fdel72-1.fna.fbcdn.net/v/t39.30808-6/355482789_3551846318425242_4960182591060623934_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=AnRkGOVWizoAX-O4dEW&_nc_ht=scontent.fdel72-1.fna&oh=00_AfDmo8PgOQL52u6ewobm5mrTzYq-aIdjC4_LjLOfup1SnA&oe=65326460", height: 40, width: 40),)),
+                                                      Expanded(flex: 10, child: ClipOval(child: UtilityHelper.image(dp, height: 40, width: 40),)),
                                                       sizedBox(wid: 5),
                                                       Expanded(
                                                         flex: 90,
@@ -135,7 +139,7 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                                                                       children: [
                                                                         Padding(
                                                                           padding: const EdgeInsets.only(left: 8.0),
-                                                                          child: Text(widget.comments![index].commentBy),
+                                                                          child: Text(widget.comments![index].user.username),
                                                                         ),
                                                                         Container(
                                                                           constraints: const BoxConstraints(
@@ -152,7 +156,7 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                                             mainAxisAlignment: MainAxisAlignment.center,
                                                                             children: [
-                                                                              Text(widget.comments![index].content, style: AppStyle.blackNormal13,),
+                                                                              Text(widget.comments![index].comment, style: AppStyle.blackNormal13,),
                                                                             ],
                                                                           )),
                                                                         sizedBox(hei: 4),
@@ -185,7 +189,7 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                                                                 ],
                                                               ),
                                                             ),
-                                                            Text(widget.comments![index].createdAt),
+                                                            Text(widget.comments![index].user.email),
                                                           ],
                                                         ),
                                                       )
@@ -291,100 +295,101 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                     children: [
                       Icon(FontAwesomeIcons.commentDots, color: Theme.of(context).primaryColorDark,),
                       sizedBox(wid: 5),
-                      Text(widget.comments!.length.toString(),)
+                      if(widget.comments != null)Text(widget.comments!.length.toString(),)
                     ],
                   ));
             }
           ),
-          Consumer<PostShareViewModel>(
-            builder: (context, child, provider) {
-              // debugPrint(shareCount.toString());
-              return InkWell(
-                  onTap:(){
-                    bool isEmptyList = widget.share?.isEmpty ?? false;
-                    int length = widget.share?.length ?? 0;
-                    showModalBottomSheet(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30)
-                        ),
-                        isScrollControlled: true,
-                        useSafeArea: true,
-                        context: context,
-                        builder: (context) => ConstrainedBox(
-                          constraints: BoxConstraints(
-                            minHeight: 400,
-                            maxHeight: getFullHeight(context) * .9,
-                          ),
-                          child: SingleChildScrollView(
-                            reverse: true,
-                            child: Column(
-                              children: [
-                                sizedBox(hei: 20),
-                                SizedBox(
-                                  height: 400,
-                                  child: ListView(
-                                    shrinkWrap: true,
-                                    children: [
-                                      ...List.generate(length, (index){
-                                        return Column(
-                                          children: [
-                                            Consumer<PostShareViewModel>(
-                                                builder: (context, provider, child) {
-                                                  return ListTile(
-                                                    title: Row(
-                                                      children: [
-                                                        Expanded(flex: 10, child: ClipOval(child: UtilityHelper.image("https://scontent.fdel72-1.fna.fbcdn.net/v/t39.30808-6/355482789_3551846318425242_4960182591060623934_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=AnRkGOVWizoAX-O4dEW&_nc_ht=scontent.fdel72-1.fna&oh=00_AfDmo8PgOQL52u6ewobm5mrTzYq-aIdjC4_LjLOfup1SnA&oe=65326460", height: 40, width: 40),)),
-                                                      ],
-                                                    ),
-                                                    // subtitle: Padding(
-                                                    //   padding: const EdgeInsets.only(left: 25.0, top: 20),
-                                                    //   child: Column(
-                                                    //     children:
-                                                    //     [
-                                                    //       if(widget.comments![index].reply.isNotEmpty) ...List.generate(widget.comments![index].reply.length, (i){
-                                                    //         return ListTile(
-                                                    //           title: Row(
-                                                    //             crossAxisAlignment: CrossAxisAlignment.start,
-                                                    //             children: [
-                                                    //               ClipOval(child: UtilityHelper.image("https://scontent.fdel72-1.fna.fbcdn.net/v/t39.30808-6/355482789_3551846318425242_4960182591060623934_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=AnRkGOVWizoAX-O4dEW&_nc_ht=scontent.fdel72-1.fna&oh=00_AfDmo8PgOQL52u6ewobm5mrTzYq-aIdjC4_LjLOfup1SnA&oe=65326460", height: 40, width: 40),),
-                                                    //               sizedBox(wid: 5),
-                                                    //               Text(widget.comments![index].reply[i].content),
-                                                    //               const Expanded(child: SizedBox()),
-                                                    //               const Icon(Icons.more_vert),
-                                                    //             ],
-                                                    //           ),
-                                                    //         );
-                                                    //       })
-                                                    //     ],
-                                                    //   ),
-                                                    // ),
-                                                  );
-                                                }
-                                            ),
-                                          ],
-                                        );
-                                      }),
-                                      if(isEmptyList) Text("No Shares Found")
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                    );
-                  } ,
-                  onLongPress: (){},
-                  child: Row(
-                    children: [
-                      Icon(FontAwesomeIcons.share, color: Theme.of(context).primaryColorDark,),
-                      sizedBox(wid: 5),
-                      if(widget.share != null) Text(widget.share!.length.toString()),
-                      if(widget.share == null) const Text("0"),
-                    ],
-                  ));
-            }
-          ),
+          Icon(FontAwesomeIcons.share, color: Theme.of(context).primaryColorDark,),
+          // Consumer<PostShareViewModel>(
+          //   builder: (context, child, provider) {
+          //     // debugPrint(shareCount.toString());
+          //     return InkWell(
+          //         onTap:(){
+          //           bool isEmptyList = widget.share?.isEmpty ?? false;
+          //           int length = widget.share?.length ?? 0;
+          //           showModalBottomSheet(
+          //               shape: RoundedRectangleBorder(
+          //                 borderRadius: BorderRadius.circular(30)
+          //               ),
+          //               isScrollControlled: true,
+          //               useSafeArea: true,
+          //               context: context,
+          //               builder: (context) => ConstrainedBox(
+          //                 constraints: BoxConstraints(
+          //                   minHeight: 400,
+          //                   maxHeight: getFullHeight(context) * .9,
+          //                 ),
+          //                 child: SingleChildScrollView(
+          //                   reverse: true,
+          //                   child: Column(
+          //                     children: [
+          //                       sizedBox(hei: 20),
+          //                       SizedBox(
+          //                         height: 400,
+          //                         child: ListView(
+          //                           shrinkWrap: true,
+          //                           children: [
+          //                             ...List.generate(length, (index){
+          //                               return Column(
+          //                                 children: [
+          //                                   Consumer<PostShareViewModel>(
+          //                                       builder: (context, provider, child) {
+          //                                         return ListTile(
+          //                                           title: Row(
+          //                                             children: [
+          //                                               Expanded(flex: 10, child: ClipOval(child: UtilityHelper.image("https://scontent.fdel72-1.fna.fbcdn.net/v/t39.30808-6/355482789_3551846318425242_4960182591060623934_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=AnRkGOVWizoAX-O4dEW&_nc_ht=scontent.fdel72-1.fna&oh=00_AfDmo8PgOQL52u6ewobm5mrTzYq-aIdjC4_LjLOfup1SnA&oe=65326460", height: 40, width: 40),)),
+          //                                             ],
+          //                                           ),
+          //                                           // subtitle: Padding(
+          //                                           //   padding: const EdgeInsets.only(left: 25.0, top: 20),
+          //                                           //   child: Column(
+          //                                           //     children:
+          //                                           //     [
+          //                                           //       if(widget.comments![index].reply.isNotEmpty) ...List.generate(widget.comments![index].reply.length, (i){
+          //                                           //         return ListTile(
+          //                                           //           title: Row(
+          //                                           //             crossAxisAlignment: CrossAxisAlignment.start,
+          //                                           //             children: [
+          //                                           //               ClipOval(child: UtilityHelper.image("https://scontent.fdel72-1.fna.fbcdn.net/v/t39.30808-6/355482789_3551846318425242_4960182591060623934_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=AnRkGOVWizoAX-O4dEW&_nc_ht=scontent.fdel72-1.fna&oh=00_AfDmo8PgOQL52u6ewobm5mrTzYq-aIdjC4_LjLOfup1SnA&oe=65326460", height: 40, width: 40),),
+          //                                           //               sizedBox(wid: 5),
+          //                                           //               Text(widget.comments![index].reply[i].content),
+          //                                           //               const Expanded(child: SizedBox()),
+          //                                           //               const Icon(Icons.more_vert),
+          //                                           //             ],
+          //                                           //           ),
+          //                                           //         );
+          //                                           //       })
+          //                                           //     ],
+          //                                           //   ),
+          //                                           // ),
+          //                                         );
+          //                                       }
+          //                                   ),
+          //                                 ],
+          //                               );
+          //                             }),
+          //                             if(isEmptyList) Text("No Shares Found")
+          //                           ],
+          //                         ),
+          //                       ),
+          //                     ],
+          //                   ),
+          //                 ),
+          //               )
+          //           );
+          //         } ,
+          //         onLongPress: (){},
+          //         child: Row(
+          //           children: [
+          //             Icon(FontAwesomeIcons.share, color: Theme.of(context).primaryColorDark,),
+          //             sizedBox(wid: 5),
+          //             if(widget.share != null) Text(widget.share!.length.toString()),
+          //             if(widget.share == null) const Text("0"),
+          //           ],
+          //         ));
+          //   }
+          // ),
         ],
       ),
     ),);

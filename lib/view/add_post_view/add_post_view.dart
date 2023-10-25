@@ -7,7 +7,7 @@ import 'package:whisper/global/global.dart';
 import 'package:whisper/res/components/app_rounded_button.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
 import 'package:whisper/view_model/add_post_view_model/add_post_view_model.dart';
-import 'package:whisper/view_model/personal_profile_view_model/get_profile_data_provider.dart';
+import 'package:whisper/view_model/global_provider/get_profile_data_provider.dart';
 
 class AddPostView extends StatefulWidget {
   const AddPostView({super.key});

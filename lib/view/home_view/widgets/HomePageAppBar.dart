@@ -4,6 +4,7 @@ import 'package:whisper/global/global.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
 import 'package:whisper/utils/app_helper/app_style.dart';
 import 'package:whisper/view_model/home_view_view_model/app_bar_view_model.dart';
+import 'package:whisper/view_model/settings_view_model/settings_view_model.dart';
 
 class HomePageAppBar extends StatefulWidget {
   const HomePageAppBar({super.key});
@@ -25,7 +26,7 @@ class _HomePageAppBarState extends State<HomePageAppBar> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           sizedBox(hei: 60),
-          Consumer<AppBarViewModel>(
+          Consumer<SettingsViewModel>(
             builder: (context, provider, child) {
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.end,

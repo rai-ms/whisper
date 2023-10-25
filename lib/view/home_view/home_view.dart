@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:whisper/global/global.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
-import 'package:whisper/utils/app_helper/user_data_preferences/user_data.dart';
 import 'package:whisper/utils/routes/route_name.dart';
 import 'package:whisper/view/home_view/widgets/bottom_navigation.dart';
 import 'package:whisper/view/post_view/post_view.dart';
@@ -28,22 +27,6 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin {
 
   List<Post> postList = [];
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  fetchAllDummyPost(){
-    // postList = generateDummyPosts();
-    UserData.getUserAccessToken().then((value){
-      debugPrint("User Data Fetched Success $value");
-    }).onError((error, stackTrace){
-      debugPrint("User Data Fetched Failed $error");
-    });
-
-
-  }
 
   @override
   Widget build(BuildContext context) {

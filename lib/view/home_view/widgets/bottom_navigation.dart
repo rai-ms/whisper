@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -78,6 +79,7 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
                         border: Border.all(color: Theme.of(context).primaryColorDark, width:  3),
                         borderRadius: BorderRadius.circular(100)
                       ),
+                      // child: ClipOval(child: CachedNetworkImage(imageUrl: dp, height: 30,width: 30,),),),),
                       child: ClipOval(child: UtilityHelper.image(dp, height: pageViewNumber == 3? (selectedSize!+10.0) : unSelectedSize! + 5)))),
               ],
             );

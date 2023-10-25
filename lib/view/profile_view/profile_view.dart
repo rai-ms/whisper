@@ -7,7 +7,9 @@ import 'package:whisper/utils/app_helper/app_style.dart';
 import 'package:whisper/view/profile_view/widgets/posts_follower_following.dart';
 import 'package:whisper/view/profile_view/widgets/profile_top_view.dart';
 import 'package:whisper/view_model/personal_profile_view_model/personal_profile_view_model.dart';
-import '../../view_model/personal_profile_view_model/get_profile_data_provider.dart';
+import '../../utils/app_helper/app_keys.dart';
+import '../../view_model/global_provider/get_profile_data_provider.dart';
+import '../../view_model/personal_profile_view_model/api_res_provider.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -15,13 +17,14 @@ class ProfileView extends StatefulWidget {
   State<ProfileView> createState() => _ProfileViewState();
 }
 
-class _ProfileViewState extends State<ProfileView> {
+class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClientMixin{
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => PersonalProfileViewModel()),
         ChangeNotifierProvider(create: (context) => GetProfileData()),
+        ChangeNotifierProvider(create: (context) => PostViewApiResponseProvider()),
       ] ,
       child: SingleChildScrollView(
         key: const PageStorageKey<String>('personalProfileViewPath'),
@@ -170,8 +173,8 @@ class _ProfileViewState extends State<ProfileView> {
                         Consumer<GetProfileData>(
                           builder: (context, provider, child) {
                             return FutureBuilder<String?>(
-                                future: provider.getJoinedDate(),
-                                builder: (context, data){
+                              future: provider.getJoinedDate(),
+                              builder: (context, data){
                               if(!data.hasData || data.connectionState == ConnectionState.waiting){
                                 return Container(height: 50, width: 100, color: AppColors.grey,);
                               }
@@ -211,4 +214,7 @@ class _ProfileViewState extends State<ProfileView> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
