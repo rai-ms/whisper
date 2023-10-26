@@ -10,6 +10,7 @@ import '../../view/otp_auth_view/otp_auth_view.dart';
 import '../../view/profile_view/profile_view.dart';
 import '../../view/signup_view/signup_view.dart';
 import '../../view/splash_view/splash_view.dart';
+import '../../view/third_user_profile_view/third_user_profile_view.dart';
 
 class NavigateRoute {
   static Route<dynamic> onGenerate(RouteSettings settings) {
@@ -36,6 +37,10 @@ class NavigateRoute {
         Map<String, dynamic> mp = settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
             builder: (context) => OTPAuthView(mail: mp["mail"], password: mp['password'],isForgetPass:mp['isForgetPass'] ?? false));
+      case RouteName.thirdUserProfileView:
+        Map<String, dynamic> mp = settings.arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+            builder: (context) => ThirdUserProfileView(id: mp['id'],));
       default:
         return MaterialPageRoute(
             builder: (context) => const Scaffold(

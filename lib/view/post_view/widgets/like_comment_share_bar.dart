@@ -170,7 +170,8 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                                                                   ),
                                                                   Expanded(
                                                                     flex: 10,
-                                                                    child: PopupMenuButton(icon: const Icon(Icons.more_vert), itemBuilder: (BuildContext context) { return [
+                                                                    child: PopupMenuButton(icon: const Icon(Icons.more_vert), itemBuilder: (BuildContext context) {
+                                                                      return [
                                                                       const PopupMenuItem(
                                                                         value: "report",
                                                                         child: Text("Report comment"),

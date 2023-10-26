@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:whisper/view_model/global_provider/global_provider.dart';
 import 'package:whisper/view_model/home_view_view_model/app_bar_view_model.dart';
@@ -20,7 +21,12 @@ class _SettingsViewState extends State<SettingsView> {
       ChangeNotifierProvider(create: (context) => AppBarViewModel()),
       ChangeNotifierProvider(create: (context) => SettingsViewModel()),
     ],
-    child: const Scaffold(
+    child: Scaffold(
+      appBar: AppBar(
+        leading: InkWell(onTap: (){
+          Navigator.pop(context);
+        },child: Icon(FontAwesomeIcons.arrowLeft),),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

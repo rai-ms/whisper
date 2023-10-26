@@ -13,6 +13,7 @@ class _FollowingState extends State<Following> with AutomaticKeepAliveClientMixi
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
     return GridView.builder(
       key: const PageStorageKey<String>(StoragePathKey.photosListPath),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

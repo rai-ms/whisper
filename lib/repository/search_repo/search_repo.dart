@@ -23,9 +23,9 @@ class SearchRepository {
     header['Authorization'] = token!;
     await _baseAPIServices.postAPIWithHeader(AppUrl.userSearchEndPoint, payload.toJsonUsername(), header).then((value) {
       res = SearchResponseUserData.fromJson(value);
-      debugPrint("Search Response is $value");
+      // debugPrint("Search Response is $value");
     }).onError((error, stackTrace) {
-      debugPrint("Error in Search User $error");
+      // debugPrint("Error in Search User $error");
       throw AppError("Error $error");
     });
     return res;

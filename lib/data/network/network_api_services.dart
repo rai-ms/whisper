@@ -12,7 +12,7 @@ class NetworkApiServices extends BaseApiServices {
     http.Response res;
     try {
       res = await http.get(Uri.parse(url), headers: header);
-      debugPrint("Response is Successfully returning");
+      // debugPrint("Response is Successfully returning");
       return returnResponse(res);
     } on SocketException {
       throw InternetException(AppStrings.noNetwork);
@@ -23,7 +23,7 @@ class NetworkApiServices extends BaseApiServices {
 
   @override
   Future postAPI(String url, dynamic data) async {
-    debugPrint("$data");
+    // debugPrint("$data");
     dynamic responseJSON;
     try {
       final response = await http
@@ -31,7 +31,7 @@ class NetworkApiServices extends BaseApiServices {
           .timeout(const Duration(seconds: 10));
       responseJSON = returnResponse(response);
     } catch(e) {
-      debugPrint("$e");
+      // debugPrint("$e");
     }
     return responseJSON;
   }
@@ -43,13 +43,13 @@ class NetworkApiServices extends BaseApiServices {
       final response = await http
           .post(Uri.parse(url), body: jsonEncode(data), headers: header)
           .timeout(const Duration(seconds: 10));
-      debugPrint("JSON Status Code: ${response.statusCode}");
+      // debugPrint("JSON Status Code: ${response.statusCode}");
       responseJSON = returnResponse(response);
       // debugPrint("JSON Return: $responseJSON");
     } catch(e) {
-      debugPrint("Error: $e");
+      // debugPrint("Error: $e");
     }
-    debugPrint("Going to return Response :$responseJSON");
+    // debugPrint("Going to return Response :$responseJSON");
     return responseJSON;
   }
 
@@ -57,8 +57,8 @@ class NetworkApiServices extends BaseApiServices {
     var res = jsonDecode(response.body);
     switch (response.statusCode) {
       case 200:
-        debugPrint("Status code is --- 200 ---");
-        debugPrint("Response type is --- ${res['type']} ---");
+        // debugPrint("Status code is --- 200 ---");
+        // debugPrint("Response type is --- ${res['type']} ---");
         return res;
       case 400:
         throw InvalidUrl(res['type']);

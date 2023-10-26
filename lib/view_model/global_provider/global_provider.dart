@@ -18,6 +18,17 @@ class AppGlobalProvider extends ChangeNotifier
   static onChanged(String val) async {
     deBouncer.run(() async { await searchUser(username: val).then((value){});});
   }
+  static SearchResponseUserData? searchResponseUserData;
+  static final SearchRepository searchRepository = SearchRepository();
+  static Future searchUser({required String username}) async {
+    await searchRepository.searchUser(SearchUserPayload(username: username)).then((value) {
+      // debugPrint("Response received in view model email is:${value!.data.email}");
+      // debugPrint("Response received in view model username is:${value!.data.username}");
+      searchResponseUserData = value;
+    }).onError((error, stackTrace){
+      debugPrint("Error in Search user View Model :$error");
+    });
+  }
 
   final PageStorageBucket pageStorageBucket = PageStorageBucket();
   final PageStorageBucket profileStorageBucket = PageStorageBucket();
@@ -56,17 +67,7 @@ class AppGlobalProvider extends ChangeNotifier
   getUserProfile(String id) async {
 
   }
-  static SearchResponseUserData? searchResponseUserData;
-  static final SearchRepository searchRepository = SearchRepository();
-  static Future searchUser({required String username}) async {
-    await searchRepository.searchUser(SearchUserPayload(username: username)).then((value) {
-      // debugPrint("Response received in view model email is:${value!.data.email}");
-      // debugPrint("Response received in view model username is:${value!.data.username}");
-      searchResponseUserData = value;
-    }).onError((error, stackTrace){
-      debugPrint("Error in Search user View Model :$error");
-    });
-  }
+
 
 
   @override

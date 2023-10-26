@@ -20,5 +20,5 @@ class AppUrl
   static const getFollowersEndPoint = 'https://harshitsocial.appskeeper.in/api/v1/user/getFollowers?userId=';
   static const getFollowingEndPoint = '$baseUrl/getFollowing';
   static const unfollowUserEndPoint = '$baseUrl/unfollowUser';
-  static const followUserEndPoint = '$baseUrl/followUser';
+  static const followUserEndPoint = 'https://harshitsocial.appskeeper.in/api/v1/user/followUser?followingId=';
 }

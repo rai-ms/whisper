@@ -16,37 +16,31 @@ class HomePageAppBar extends StatefulWidget {
 class _HomePageAppBarState extends State<HomePageAppBar> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 100,
-      width: getFullWidth(context),
-      decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          sizedBox(hei: 60),
-          Consumer<SettingsViewModel>(
-            builder: (context, provider, child) {
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children:
-                [
-                  sizedBox(wid: 20),
-                  InkWell(
-                    onTap: (){
-                      provider.logoutUser(context);
-                    },
-                    child: const Icon(Icons.exit_to_app, color: AppColors.white,)),
-                  sizedBox(wid: 30),
-                  Text("AppBar", style: AppStyle.whiteBold20,),
-                ],
-              );
-            }
-          ),
-          sizedBox(hei: 10),
-        ],
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        sizedBox(hei: 60),
+        Consumer<SettingsViewModel>(
+          builder: (context, provider, child) {
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children:
+              [
+                sizedBox(wid: 20),
+                InkWell(
+                  onTap: (){
+                    provider.logoutUser(context);
+                  },
+                  child: Icon(Icons.exit_to_app, color: Theme.of(context).primaryColor,)),
+                sizedBox(wid: 30),
+                const Text("Logout")
+              ],
+            );
+          }
+        ),
+        sizedBox(hei: 10),
+      ],
     );
   }
 }

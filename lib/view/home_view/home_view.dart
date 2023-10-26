@@ -61,12 +61,11 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
               ),
               sizedBox(wid: 5),
               Expanded(flex: 80,child: InkWell(onTap: (){
-                if(pageViewNumber != 2 ){
+
                   Navigator.pushNamed(context, RouteName.addPostView);
-                }
               },child: Consumer<AppGlobalProvider>(
                 builder: (context, provider, child) {
-                  return AppTextFormField(cont: AppGlobalProvider.controller,style: AppStyle.whiteMedium16, onChanged: AppGlobalProvider.onChanged, enableBorderColor: AppColors.white, enable: pageViewNumber == 2 ? true : false, prefixIcon: Icon(pageViewNumber == 2? FontAwesomeIcons.magnifyingGlass : null, color: AppColors.white,),disableBorderColor: AppColors.white, hintText: pageViewNumber != 2? "What's in your mind??" : "Search User", hintStyle: AppStyle.greyRegular20,obscureText: false,);
+                  return AppTextFormField(cont: AppGlobalProvider.controller,style: AppStyle.whiteMedium16, onChanged: AppGlobalProvider.onChanged, enableBorderColor: AppColors.white, enable: false, prefixIcon: const Icon( null, color: AppColors.white,),disableBorderColor: AppColors.white, hintText: "What's in your mind??", hintStyle: AppStyle.greyRegular20,obscureText: false,);
                 }
               ))),
               sizedBox(wid: 5),

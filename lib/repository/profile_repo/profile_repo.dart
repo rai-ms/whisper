@@ -99,15 +99,12 @@ class ProfileRepository {
     };
 
     String? token = await UserData.getUserAccessToken();
-
     header['Authorization'] = token!;
-
-    await _baseAPIServices.getAPI("${AppUrl.followUserEndPoint}?followingId=$followingId", header).then((value) {
-      debugPrint("Follow user Data fetched $value");
-      debugPrint(value.toString());
+    await _baseAPIServices.getAPI("${AppUrl.followUserEndPoint}$followingId", header).then((value) {
+      debugPrint("Follow user Data fetched ====================== $value ============================");
       apiRes = value;
     }).onError((error, stackTrace){
-      debugPrint("Error in profile fetch $error");
+      debugPrint("Error in follow user $error");
       throw AppError("Error----->$error");
     });
     // debugPrint("Status code of profile res is: ${res!.statusCode}");

@@ -117,7 +117,7 @@ class _PostFollowerFollowingState extends State<PostFollowerFollowing> {
                   }
                 ),
                 if(provider.index == 1) const Followers(),
-                if(provider.index == 2) const Following(),
+                if(provider.index == 4) const Following(),
               ],
             );
           }
