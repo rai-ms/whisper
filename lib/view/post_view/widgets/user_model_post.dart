@@ -36,27 +36,21 @@ class _UserRowPostState extends State<UserRowPost> {
             ),
           ],
         ),
-        InkWell(
-          onTap: (){
-            showDialog(
-              context: context,
-              builder: (context) => Dialog(
-                child: AppDialog(
-                  dialogWidget: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children:
-                      [
-                        Text("Do You Want to report on this post", style: AppStyle.whiteBold20,textAlign: TextAlign.center,),
-                      ],
-                    ),
-                  ),
-                ),
-              )
-            );
-          },
-          child: Icon(Icons.more_vert, color: Theme.of(context).primaryColorDark,),
-        )
+        PopupMenuButton(icon: const Icon(Icons.more_vert), itemBuilder: (BuildContext context) {
+          return [
+            const PopupMenuItem(
+              value: "report",
+              child: Text("Report Post"),
+            ),
+            // const PopupMenuItem(
+            //   value: "share",
+            //   child: Text("edit comment"),
+            // ),
+            // const PopupMenuItem(
+            //   value: "delete",
+            //   child: Text("delete comment"),
+            // ),
+          ]; },)
       ],
     );
   }

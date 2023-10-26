@@ -63,7 +63,7 @@ class _SearchUserState extends State<SearchUser> {
                     //   return const Center(child: CircularProgressIndicator());
                     // }
                     else if(pr1.searchResponseUserData == null){
-                      return const Text("Search User");
+                      return const Text("---Search User---");
                     }
                     else {
                       return const Text("Data Fetch with error");

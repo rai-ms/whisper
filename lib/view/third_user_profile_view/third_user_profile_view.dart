@@ -5,8 +5,6 @@ import 'package:whisper/components/utility_helper.dart';
 import 'package:whisper/global/global.dart';
 import 'package:whisper/res/components/app_rounded_button.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
-import 'package:whisper/utils/app_helper/app_strings.dart';
-import 'package:whisper/utils/routes/route_name.dart';
 import 'package:whisper/view_model/search_user/search_user_view_model.dart';
 
 class ThirdUserProfileView extends StatefulWidget {
@@ -20,7 +18,7 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("=======================id is ${widget.id} ========================");
+    // debugPrint("=======================id is ${widget.id} ========================");
     return MultiProvider(providers: [ChangeNotifierProvider(create: (context) => SearchUserViewModel())],
       child: Scaffold(
         appBar: AppBar(
@@ -42,7 +40,7 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                               Expanded(flex: 3, child: ClipOval(child: UtilityHelper.image(dp))),
                               Expanded(flex: 4,child: Text(snapshot.data!.data[0].username)),
                               snapshot.data!.data[0].isFollower == true? Expanded(flex: 3,child: AppRoundedButton(onTap: (){}, title: "Unfollow")) : Expanded(flex: 3,
-                                child: AppRoundedButton(onTap: () async {
+                                child: AppRoundedButton(height: 50, onTap: () async {
                                   pr.followUser(widget.id);
                                 }, title: "Follow"),
                               ),
@@ -54,15 +52,19 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                     else if(pr.apiResponseUserModel == null){
                       return Column(
                         children: [
+                          sizedBox(hei: 20),
                           SizedBox(
-                            height: 150,
+                            height: 100,
                             child: Row(
                               children: [
+                                sizedBox(wid: 10),
                                 Expanded(flex: 3, child: ClipOval(child: Container(color: AppColors.grey,))),
+                                sizedBox(wid: 20),
                                 Expanded(flex: 4,child: Container(decoration: BoxDecoration(
                                   color: AppColors.grey,
-                                  borderRadius: BorderRadius.circular(10)
+                                  borderRadius: BorderRadius.circular(20)
                                 ),)),
+                                sizedBox(wid: 10),
                               ],
                             ),
                           ),

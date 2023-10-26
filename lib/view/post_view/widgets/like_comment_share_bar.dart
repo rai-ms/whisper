@@ -176,14 +176,14 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                                                                         value: "report",
                                                                         child: Text("Report comment"),
                                                                       ),
-                                                                      const PopupMenuItem(
-                                                                        value: "share",
-                                                                        child: Text("edit comment"),
-                                                                      ),
-                                                                      const PopupMenuItem(
-                                                                        value: "delete",
-                                                                        child: Text("delete comment"),
-                                                                      ),
+                                                                      // const PopupMenuItem(
+                                                                      //   value: "share",
+                                                                      //   child: Text("edit comment"),
+                                                                      // ),
+                                                                      // const PopupMenuItem(
+                                                                      //   value: "delete",
+                                                                      //   child: Text("delete comment"),
+                                                                      // ),
                                                                     ]; },),
                                                                   ),
                                                                 ],

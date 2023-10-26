@@ -12,12 +12,16 @@ class NetworkApiServices extends BaseApiServices {
     http.Response res;
     try {
       res = await http.get(Uri.parse(url), headers: header);
-      // debugPrint("Response is Successfully returning");
+      // debugPrint("Response is Successfully returning ${jsonDecode(res.body)}");
       return returnResponse(res);
     } on SocketException {
       throw InternetException(AppStrings.noNetwork);
     } on RequestTimeOut {
       throw RequestTimeOut(AppStrings.takingMoreTime);
+    }
+    catch(e){
+      debugPrint("Unknown Error Found $e");
+      throw AppError(e.toString());
     }
   }
 

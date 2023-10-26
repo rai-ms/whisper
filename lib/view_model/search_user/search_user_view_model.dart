@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:whisper/data/app_exceptions/app_exception.dart';
 import 'package:whisper/model/search_user.dart';
 import 'package:whisper/model/user_profile_response.dart';
 import 'package:whisper/repository/profile_repo/profile_repo.dart';
@@ -39,14 +40,15 @@ class SearchUserViewModel extends ChangeNotifier
     final ProfileRepository profileRepository = ProfileRepository();
     APIResponseUserModel? apiResponseUserModel;
     Future<APIResponseUserModel?> getProfile(String id) async {
-        debugPrint("Fetching userid: $id");
+        // debugPrint("Fetching userid: $id");
         ProfileRepository.getProfile(id: id).then((value){
             apiResponseUserModel = value;
-            debugPrint("Fetched userid: $id");
+            // debugPrint("Fetched userid: $id");
             notifyListeners();
             // debugPrint("${res!.data[0].username}");
         }).onError((error, stackTrace){
             debugPrint("Error in fetch profile search user view model $error");
+            throw AppError(error.toString());
         });
         return apiResponseUserModel;
     }
