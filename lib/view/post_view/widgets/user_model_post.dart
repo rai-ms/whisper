@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:whisper/components/utility_helper.dart';
 import 'package:whisper/global/global.dart';
-import 'package:whisper/utils/app_helper/app_color.dart';
 import 'package:whisper/utils/app_helper/app_style.dart';
-import '../../../components/app_dialog.dart';
+
+import '../../../view_model/post_view_model/post_view_model.dart';
 
 class UserRowPost extends StatefulWidget {
   const UserRowPost({super.key, this.postedByUserImage, this.postDate, this.postedBy, this.postId});
@@ -30,27 +31,34 @@ class _UserRowPostState extends State<UserRowPost> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.postedBy ?? "Ashish Rai",style: AppStyle.primaryColorDarkMedium(context),),
-                Text(widget.postDate ??  postTime,style: AppStyle.primaryColorDarkMedium14(context),),
+                Text(widget.postedBy ?? "", style: AppStyle.primaryColorDarkMedium(context),),
+                Text(widget.postDate ?? postTime, style: AppStyle.primaryColorDarkMedium14(context),),
               ],
             ),
           ],
         ),
-        PopupMenuButton(icon: const Icon(Icons.more_vert), itemBuilder: (BuildContext context) {
-          return [
-            const PopupMenuItem(
-              value: "report",
-              child: Text("Report Post"),
-            ),
-            // const PopupMenuItem(
-            //   value: "share",
-            //   child: Text("edit comment"),
-            // ),
-            // const PopupMenuItem(
-            //   value: "delete",
-            //   child: Text("delete comment"),
-            // ),
-          ]; },)
+        Consumer<PostViewModel>(
+          builder: (context, pr, ch) {
+            return PopupMenuButton(icon: const Icon(Icons.more_vert), itemBuilder: (BuildContext context) {
+              return [
+                PopupMenuItem(
+                  value: "report",
+                  child: const Text("Report Post"),
+                  onTap: (){
+                    pr.reportPost(widget.postId!);
+                  },
+                ),
+                // const PopupMenuItem(
+                //   value: "share",
+                //   child: Text("edit comment"),
+                // ),
+                // const PopupMenuItem(
+                //   value: "delete",
+                //   child: Text("delete comment"),
+                // ),
+              ]; },);
+          }
+        )
       ],
     );
   }

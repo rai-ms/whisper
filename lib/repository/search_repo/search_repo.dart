@@ -7,6 +7,7 @@ import '../../data/network/network_api_services.dart';
 import '../../model/search_user.dart';
 
 class SearchRepository {
+
   final BaseApiServices _baseAPIServices = NetworkApiServices();
 
   Map<String, String> header = {
@@ -21,9 +22,9 @@ class SearchRepository {
       token = value;
     }).onError((error, stackTrace){});
     header['Authorization'] = token!;
-    await _baseAPIServices.postAPIWithHeader(AppUrl.userSearchEndPoint, payload.toJsonUsername(), header).then((value) {
+    await _baseAPIServices.getAPI("${AppUrl.userSearchEndPoint}?${payload.username}", header).then((value) {
+      debugPrint("Search Response is $value");
       res = SearchResponseUserData.fromJson(value);
-      // debugPrint("Search Response is $value");
     }).onError((error, stackTrace) {
       // debugPrint("Error in Search User $error");
       throw AppError("Error $error");

@@ -6,6 +6,7 @@ import 'package:whisper/global/global.dart';
 import 'package:whisper/model/comment.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
 import 'package:whisper/utils/app_helper/app_style.dart';
+import '../../../model/feed_response_model.dart';
 import '../../../model/like.dart';
 import '../../../model/share.dart';
 import '../../../utils/app_helper/app_strings.dart';
@@ -13,11 +14,13 @@ import '../../../view_model/home_view_view_model/post_card_comment_view_model.da
 import '../../../view_model/home_view_view_model/post_card_like_view_model.dart';
 
 class CommentLikeShareBar extends StatefulWidget {
-  const CommentLikeShareBar({super.key, this.comments, this.likes, this.share, required this.postId});
+  const CommentLikeShareBar({super.key, this.comments, this.likes, this.share, required this.postId, this.post});
   final String postId;
   final List<APIResponseComment>? comments;
   final List<Like>? likes;
   final List<Share>? share;
+  final FeedUserPost? post;
+
   @override
   State<CommentLikeShareBar> createState() => _CommentLikeShareBarState();
 }
@@ -49,32 +52,37 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Icon(FontAwesomeIcons.thumbsUp, color: Theme.of(context).primaryColorDark,),
-          // Consumer<LikeViewModel>(
-          //   builder: (context, provider, child) {
-          //     return InkWell(
-          //       onTap:(){
-          //         isLiked = !isLiked;
-          //         provider.notifyListeners();
-          //         likeCount = widget.likes!.length;
-          //         debugPrint(widget.likes![0].toJson().toString());
-          //       } ,
-          //       onLongPress: (){
-          //         // provider.showLikeBottomSheet(showLikeBottomSheet);
-          //       },
-          //       onHover: (bool isHoverOn){},
-          //       child: Row(
-          //         children: [
-          //           Icon(!isLiked ? FontAwesomeIcons.thumbsUp :FontAwesomeIcons.solidThumbsUp, color: Theme.of(context).primaryColorDark,),
-          //           sizedBox(wid: 5),
-          //           if(widget.likes != null) Text(!isLiked ?widget.likes!.length.toString():( widget.likes!.length+ 1).toString(),),
-          //         ],
-          //       ),
-          //     );
-          //   }
-          // ),
+          // Icon(FontAwesomeIcons.thumbsUp, color: Theme.of(context).primaryColorDark,),
+          Consumer<LikeViewModel>(
+            builder: (context, provider, child) {
+              return InkWell(
+                onTap:(){
+                  // isLiked = !isLiked;
+                  provider.likePost(widget.postId, widget.post!.isLiked);
+                } ,
+                onLongPress: (){
+                  // provider.showLikeBottomSheet(showLikeBottomSheet);
+                },
+                child: Row(
+                  children: [
+                    if(widget.post != null) Column(
+                      children: [
+                        Icon(!widget.post!.isLiked? FontAwesomeIcons.thumbsUp :FontAwesomeIcons.solidThumbsUp, color: Theme.of(context).primaryColorDark,),
+                        if(widget.post != null) Text(widget.post!.isLiked?"You ${(widget.post!.likeCount - 1 == 0)? "Only" : "and ${widget.post!.likeCount - 1}"}" : widget.post!.likeCount.toString(), style: AppStyle.primaryColorDarkMedium14(context),),
+                      ],
+                    ),
+                    if(widget.post == null) Icon(!isLiked ? FontAwesomeIcons.thumbsUp :FontAwesomeIcons.solidThumbsUp, color: Theme.of(context).primaryColorDark,),
+                    sizedBox(wid: 2),
+
+                    sizedBox(wid: 5),
+                    if(widget.likes != null) Text(!isLiked ?widget.likes!.length.toString():( widget.likes!.length+ 1).toString(), style: AppStyle.primaryColorDarkMedium14(context),),
+                  ],
+                ),
+              );
+            }
+          ),
           Consumer<PostCardCommentViewModel>(
-            builder: (context, child, provider) {
+            builder: (context,provider23, child,) {
               return InkWell(
                   onTap:(){
                     showModalBottomSheet(
@@ -155,7 +163,7 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                                             mainAxisAlignment: MainAxisAlignment.center,
                                                                             children: [
-                                                                              Text(widget.comments![index].comment, style: AppStyle.blackNormal13,),
+                                                                              Text(widget.comments![index].comment, style: AppStyle.blackMedium16,),
                                                                             ],
                                                                           )),
                                                                         sizedBox(hei: 4),
@@ -296,7 +304,7 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                       )
                     );
                   },
-                  child: Row(
+                  child: Column(
                     children: [
                       Icon(FontAwesomeIcons.commentDots, color: Theme.of(context).primaryColorDark,),
                       sizedBox(wid: 5),
@@ -305,7 +313,12 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                   ));
             }
           ),
-          Icon(FontAwesomeIcons.share, color: Theme.of(context).primaryColorDark,),
+          Column(
+            children: [
+              Icon(FontAwesomeIcons.share, color: Theme.of(context).primaryColorDark,),
+              const Text("0")
+            ],
+          ),
           // Consumer<PostShareViewModel>(
           //   builder: (context, child, provider) {
           //     // debugPrint(shareCount.toString());

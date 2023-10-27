@@ -1,7 +1,7 @@
 class SearchResponseUserData {
   final int statusCode;
   final String type;
-  final SearchResponseUserDataDetails data;
+  final List<SearchResponseUser> data;
 
   SearchResponseUserData({
     required this.statusCode,
@@ -10,73 +10,52 @@ class SearchResponseUserData {
   });
 
   factory SearchResponseUserData.fromJson(Map<String, dynamic> json) {
+    final List<dynamic> dataList = json['data'];
+    final List<SearchResponseUser> data = dataList.map((userDataJson) {
+      return SearchResponseUser.fromJson(userDataJson);
+    }).toList();
+
     return SearchResponseUserData(
       statusCode: json['statusCode'],
       type: json['type'],
-      data: SearchResponseUserDataDetails.fromJson(json['data']),
+      data: data,
     );
   }
 }
 
-class SearchResponseUserDataDetails {
+class SearchResponseUser {
   final String id;
   final String username;
   final String email;
   final String password;
-  final int accountVerify;
-  final int followerCount;
-  final int followingCount;
-  final int postCount;
-  final String createdAt;
-  final String updatedAt;
-  final int v;
 
-  SearchResponseUserDataDetails({
+  SearchResponseUser({
     required this.id,
     required this.username,
     required this.email,
     required this.password,
-    required this.accountVerify,
-    required this.followerCount,
-    required this.followingCount,
-    required this.postCount,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.v,
   });
 
-  factory SearchResponseUserDataDetails.fromJson(Map<String, dynamic> json) {
-    return SearchResponseUserDataDetails(
+  factory SearchResponseUser.fromJson(Map<String, dynamic> json) {
+    return SearchResponseUser(
       id: json['_id'],
       username: json['username'],
       email: json['email'],
       password: json['password'],
-      accountVerify: json['accountVerify'],
-      followerCount: json['followerCount'],
-      followingCount: json['followingCount'],
-      postCount: json['postCount'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
-      v: json['__v'],
     );
   }
 }
 
+
 class SearchUserPayload
 {
   String? username;
-  String? email;
 
-  SearchUserPayload({this.email, this.username});
+  SearchUserPayload({this.username});
 
-  Map<String, dynamic> toJsonEmail() {
-    return {
-      'email': email
-    };
-  }
   Map<String, dynamic> toJsonUsername() {
     return {
-      'username': username
+      'name': username
     };
   }
 }

@@ -45,42 +45,44 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
               Expanded(
                 flex: 10,
                 child: Consumer<AppGlobalProvider>(
-                  builder: (context, provider, child) {
-                    return InkWell(onTap: (){
-                      if(pageViewNumber != 3){
-                        provider.setPage(3);
-                      }
-                    },child: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.white, width:  3),
-                            borderRadius: BorderRadius.circular(100)
-                        ),
-                        child: ClipOval(child: UtilityHelper.image(dp,))));
-                  }
+                    builder: (context, provider, child) {
+                      return InkWell(onTap: (){
+                        if(pageViewNumber != 3){
+                          provider.setPage(3);
+                        }
+                      },child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: AppColors.white, width:  3),
+                              borderRadius: BorderRadius.circular(100)
+                          ),
+                          child: ClipOval(child: UtilityHelper.image(dp,))));
+                    }
                 ),
               ),
               sizedBox(wid: 5),
-              Expanded(flex: 80,child: InkWell(onTap: (){
-
-                  Navigator.pushNamed(context, RouteName.addPostView);
-              },child: Consumer<AppGlobalProvider>(
-                builder: (context, provider, child) {
-                  return AppTextFormField(cont: AppGlobalProvider.controller,style: AppStyle.whiteMedium16, onChanged: AppGlobalProvider.onChanged, enableBorderColor: AppColors.white, enable: false, prefixIcon: const Icon( null, color: AppColors.white,),disableBorderColor: AppColors.white, hintText: "What's in your mind??", hintStyle: AppStyle.greyRegular20,obscureText: false,);
-                }
+              Expanded(flex: 80,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, RouteName.addPostView);
+                  },
+                  child: Consumer<AppGlobalProvider>(
+                    builder: (context, provider, child) {
+                      return AppTextFormField(cont: AppGlobalProvider.controller,style: AppStyle.whiteMedium16, onChanged: AppGlobalProvider.onChanged, enableBorderColor: AppColors.white, enable: false, prefixIcon: const Icon( null, color: AppColors.white,),disableBorderColor: AppColors.white, hintText: "What's in your mind??", hintStyle: AppStyle.greyRegular20,obscureText: false,);
+                  }
               ))),
               sizedBox(wid: 5),
               Expanded(flex: 10,child: InkWell(onTap: (){
                 if(pageViewNumber != 3) {
-                    Navigator.pushNamed(context, RouteName.addPostView);
-                 }
+                  Navigator.pushNamed(context, RouteName.addPostView);
+                }
                 else
                 {
                   Navigator.pushNamed(context, RouteName.settingsView);
                 }
-                  },child: Consumer<AppGlobalProvider>(
-                builder: (context, pr, ch) {
-                  return Icon(pageViewNumber != 3? FontAwesomeIcons.images: FontAwesomeIcons.gear, );
-                }
+              },child: Consumer<AppGlobalProvider>(
+                  builder: (context, pr, ch) {
+                    return Icon(pageViewNumber != 3? FontAwesomeIcons.images: FontAwesomeIcons.gear, );
+                  }
               ))),
               // sizedBox(wid: 20),
             ],
@@ -116,14 +118,14 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                       }
                   ),
                 ),
-                // const Flexible(
-                //   flex: 1,
-                //   child: AppBottomNavigationBar()),
+                const Flexible(
+                  flex: 1,
+                  child: AppBottomNavigationBar()),
               ],
             ),
           ),
         ),
-        bottomNavigationBar: const AppBottomNavigationBar(),
+        // bottomNavigationBar: const AppBottomNavigationBar(),
       ),
     );
   }

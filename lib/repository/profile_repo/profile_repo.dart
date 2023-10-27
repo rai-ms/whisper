@@ -7,7 +7,6 @@ import '../../data/network/base_api_service.dart';
 import '../../data/network/network_api_services.dart';
 import '../../model/follower_response.dart';
 
-
 class ProfileRepository {
 
   static final BaseApiServices _baseAPIServices = NetworkApiServices();
@@ -97,14 +96,38 @@ class ProfileRepository {
       "Authorization": "Basic c29jaWFsTWVkaWE6c29jaWFsQDEyMw==",
       "Content-Type": "application/json; charset=UTF-8",
     };
+    debugPrint("Following id is:$followingId");
 
     String? token = await UserData.getUserAccessToken();
     header['Authorization'] = token!;
-    await _baseAPIServices.getAPI("${AppUrl.followUserEndPoint}$followingId", header).then((value) {
+    debugPrint("Header is:$header");
+    await _baseAPIServices.postAPIWithHeader("${AppUrl.followUserEndPoint}$followingId",{}, header).then((value) {
       // debugPrint("Follow user Data fetched ====================== $value ============================");
       apiRes = value;
     }).onError((error, stackTrace){
       debugPrint("Error in follow user $error");
+      throw AppError("Error----->$error");
+    });
+    // debugPrint("Status code of profile res is: ${res!.statusCode}");
+    return apiRes;
+  }
+
+  static Future unfollowUser({String? followingId}) async {
+    Map<String, dynamic>? apiRes;
+    Map<String, String> header = {
+      "Authorization": "Basic c29jaWFsTWVkaWE6c29jaWFsQDEyMw==",
+      "Content-Type": "application/json; charset=UTF-8",
+    };
+    debugPrint("Following id is:$followingId");
+
+    String? token = await UserData.getUserAccessToken();
+    header['Authorization'] = token!;
+    debugPrint("Header is:$header");
+    await _baseAPIServices.deleteAPI("${AppUrl.unfollowUserEndPoint}$followingId",{}, header).then((value) {
+      // debugPrint("Follow user Data fetched ====================== $value ============================");
+      apiRes = value;
+    }).onError((error, stackTrace){
+      debugPrint("Error in unfollow user $error");
       throw AppError("Error----->$error");
     });
     // debugPrint("Status code of profile res is: ${res!.statusCode}");

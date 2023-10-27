@@ -11,7 +11,9 @@ class PostViewModel extends ChangeNotifier
 
   static FeedApiResponse? feedApiResponse;
 
+
   static PostRepository postRepo = PostRepository();
+
 
   static Future<FeedApiResponse?> getAllPost() async {
     await postRepo.getMyFeed().then((value){
@@ -21,15 +23,55 @@ class PostViewModel extends ChangeNotifier
     });
     return feedApiResponse;
   }
+
+
   static getUserProfileData(String id){
 
   }
 
-  static Future createComment({required String postId, required BuildContext context}) async {
-    await postRepo.createComment(postId, CommentPayload(comment: "Hii")).then((value){
-      CustomToast(context: context, message: ToastMsg.commentAdded);
+
+  Future reportPost(String postId) async {
+    debugPrint("Report is called for:$postId");
+    await PostRepository().reportPost(postId).then((value){
+      if(value == '200'){
+        debugPrint("Report done in view-model $value");
+      }
     }).onError((error, stackTrace){
-      debugPrint("Error :$error");
+      throw AppError(error.toString());
+    });
+  }
+
+  // ----------------------- Comment API Call ---------------------------//
+  Future reportComment(String postId) async {
+    debugPrint("Report is called for:$postId");
+    await PostRepository().reportPost(postId).then((value){
+      if(value == '200'){
+        debugPrint("Report done in view-model $value");
+      }
+    }).onError((error, stackTrace){
+      throw AppError(error.toString());
+    });
+  }
+
+  Future editComment(String postId) async {
+    debugPrint("Report is called for:$postId");
+    await PostRepository().reportPost(postId).then((value){
+      if(value == '200'){
+        debugPrint("Report done in view-model $value");
+      }
+    }).onError((error, stackTrace){
+      throw AppError(error.toString());
+    });
+  }
+
+  Future deleteComment(String postId) async {
+    debugPrint("Report is called for:$postId");
+    await PostRepository().reportPost(postId).then((value){
+      if(value == '200'){
+        debugPrint("Report done in view-model $value");
+      }
+    }).onError((error, stackTrace){
+      throw AppError(error.toString());
     });
   }
 }

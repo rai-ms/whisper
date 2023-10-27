@@ -16,6 +16,7 @@ class AppStrings {
   static const String provideEmilId = "Email Required";
   static const String dataTypeMismatch = "DataType Mismatch";
   static const String noInternet = "No Internet";
+  static const String noDataFound = "No Data Found!";
   static const String requestTimeOut = "Request Time Out";
   static const String serverError = "Server Error";
   static const String databaseError = "Database Error";

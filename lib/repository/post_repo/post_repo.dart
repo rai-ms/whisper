@@ -100,4 +100,49 @@ class PostRepository {
       throw AppError("Error is:$error");
     });
   }
+
+  Future<String?> likePost(String postId) async {
+    String? statusCode;
+    String? token = await UserData.getUserAccessToken();
+    // header['Authorization'] = "Bearer "+token!;
+    header['Authorization'] = token!;
+    // debugPrint("$header is the header, model is ${model.toMap()}");
+    await _baseAPIServices.postAPIWithHeader("${AppUrl.postLikeEndPoint}$postId",
+        {}, header).then((value){
+      statusCode = value['statusCode'].toString();
+    }).onError((error, stackTrace){
+      throw AppError("Error is:$error");
+    });
+    return statusCode;
+  }
+
+  Future<String?> dislikePost(String postId) async {
+    String? statusCode;
+    String? token = await UserData.getUserAccessToken();
+    header['Authorization'] = token!;
+    debugPrint("Id is $postId");
+    await _baseAPIServices.deleteAPI("${AppUrl.postDislikeEndPoint}$postId",
+        {}, header).then((value){
+          debugPrint("Post Disliked!");
+      statusCode = value['statusCode'].toString();
+    }).onError((error, stackTrace){
+      throw AppError("Error is:$error");
+    });
+    return statusCode;
+  }
+
+  Future<String?> reportPost(String postId) async {
+    String? statusCode;
+    debugPrint("Going to report on $postId");
+    String? token = await UserData.getUserAccessToken();
+    header['Authorization'] = token!;
+    await _baseAPIServices.postAPIWithHeader("https://harshitsocial.appskeeper.in/api/v1/user/reportPost?postId=$postId", {}, header).then((value){
+      debugPrint("Report on post :$postId status is $value");
+      statusCode = value['statusCode'].toString();
+    }).onError((error, stackTrace){
+      throw AppError("Error is:$error");
+    });
+    return statusCode;
+  }
+
 }

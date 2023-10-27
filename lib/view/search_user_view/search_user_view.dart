@@ -32,7 +32,6 @@ class _SearchUserState extends State<SearchUser> {
                 obscureText: false,
                 hintText: "Find your friend",
                 labelText: "Search",
-
               ),
               sizedBox(hei: 20),
               Expanded(
@@ -40,23 +39,28 @@ class _SearchUserState extends State<SearchUser> {
                   future: pr1.onChanged(pr1.controller.text.toString().trim()),
                   builder: (context, snapshot){
                     if(pr1.searchResponseUserData != null){
-                      return InkWell(
-                        onTap: (){
-                          pr1.controller.clear();
-                          Navigator.pushNamed(context, RouteName.thirdUserProfileView, arguments: {'id' : pr1.searchResponseUserData!.data.id});
-                          // pr1.controller.dispose();
+                      return ListView.builder(
+                        itemCount: pr1.searchResponseUserData!.data.length,
+                          itemBuilder: (BuildContext context ,int index) {
+                          return InkWell(
+                            onTap: (){
+
+                              Navigator.pushNamed(context, RouteName.thirdUserProfileView, arguments: {'id' : pr1.searchResponseUserData!.data[index].id});
+                              // pr1.controller.dispose();
+                            },
+                            child: SizedBox(
+                              width: 300,
+                              child: ListTile(
+                                leading: SizedBox(
+                                    height: 60,
+                                    width: 60,
+                                    child: UtilityHelper.image(dp)),
+                                title: Text(pr1.searchResponseUserData!.data[index].username),
+                                subtitle: Text(pr1.searchResponseUserData!.data[index].email.toString()),
+                              ),
+                            ),
+                          );
                         },
-                        child: SizedBox(
-                          width: 300,
-                          child: ListTile(
-                            leading: SizedBox(
-                              height: 60,
-                              width: 60,
-                              child: UtilityHelper.image(dp)),
-                            title: Text(pr1.searchResponseUserData!.data.username.toString()),
-                            subtitle: Text(pr1.searchResponseUserData!.data.email.toString()),
-                          ),
-                        ),
                       );
                     }
                     // if(snapshot.connectionState == ConnectionState.waiting){

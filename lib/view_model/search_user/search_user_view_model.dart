@@ -4,8 +4,8 @@ import 'package:whisper/model/search_user.dart';
 import 'package:whisper/model/user_profile_response.dart';
 import 'package:whisper/repository/profile_repo/profile_repo.dart';
 import 'package:whisper/repository/search_repo/search_repo.dart';
+import '../../model/follower_response.dart';
 import '../../utils/deBouncer/deBouncer.dart';
-
 
 class SearchUserViewModel extends ChangeNotifier
 {
@@ -14,7 +14,9 @@ class SearchUserViewModel extends ChangeNotifier
     DeBouncer deBouncer = DeBouncer(milliseconds: 200);
 
     onChanged(String val) async {
-        deBouncer.run(() async { await searchUser(username: val).then((value){});});
+        if(val.isEmpty) return;
+        deBouncer.run(() async {
+        await searchUser(username: val).then((value){});});
     }
 
     SearchResponseUserData? searchResponseUserData;
@@ -23,7 +25,9 @@ class SearchUserViewModel extends ChangeNotifier
     Future searchUser({required String username}) async {
         await searchRepository.searchUser(SearchUserPayload(username: username)).then((value) {
             searchResponseUserData = value;
+            // debugPrint("Response is $value");
             notifyListeners();
+            controller.clear();
         }).onError((error, stackTrace){
             // debugPrint("Error in Search user View Model :$error");
             searchResponseUserData = null;
@@ -37,8 +41,15 @@ class SearchUserViewModel extends ChangeNotifier
         }).onError((error, stackTrace){});
     }
 
+    Future unfollowUser(String id) async {
+        await ProfileRepository.unfollowUser(followingId: id).then((value){
+            debugPrint("User is UnFollowed =========$value===============");
+        }).onError((error, stackTrace){});
+    }
+
     final ProfileRepository profileRepository = ProfileRepository();
     APIResponseUserModel? apiResponseUserModel;
+
     Future<APIResponseUserModel?> getProfile(String id) async {
         // debugPrint("Fetching userid: $id");
         ProfileRepository.getProfile(id: id).then((value){
@@ -53,9 +64,14 @@ class SearchUserViewModel extends ChangeNotifier
         return apiResponseUserModel;
     }
 
-    @override
-    void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
+    Future<GetFollowerApiRes?> getFollowers({String? id}) async {
+        GetFollowerApiRes? response;
+        await ProfileRepository.getFollowers(id: id).then((GetFollowerApiRes? res){
+            response = res;
+            // debugPrint("Response of getFollowers is: ${res!.data!.followers!.length}");
+        }).onError((error, stackTrace){
+            debugPrint("Error is $error");
+        });
+        return response;
+    }
 }

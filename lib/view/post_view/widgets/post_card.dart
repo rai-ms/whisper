@@ -1,12 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whisper/global/global.dart';
 import 'package:whisper/model/feed_response_model.dart';
-import 'package:whisper/model/user_profile_response.dart';
+import 'package:whisper/utils/routes/route_name.dart';
 import 'package:whisper/view/post_view/widgets/user_model_post.dart';
 import 'package:whisper/view_model/personal_profile_view_model/api_res_provider.dart';
-import 'package:whisper/view_model/post_view_model/post_view_model.dart';
 import '../../../components/utility_helper.dart';
 import '../../../model/comment.dart';
 import 'expandable_text.dart';
@@ -41,7 +39,11 @@ class _PostCardState extends State<PostCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 sizedBox(hei: 10),
-                UserRowPost(postedBy: widget.userData.username, postId: widget.post.id,),
+                InkWell(
+                  onTap: (){
+                    Navigator.pushNamed(context, RouteName.thirdUserProfileView, arguments: {"id" : widget.userData.id});
+                  },
+                  child: UserRowPost(postedBy: widget.userData.username, postId: widget.post.id,)),
                 sizedBox(hei: 12),
                 UtilityHelper.image(widget.post.url, width: getFullWidth(context)),
                 sizedBox(hei: 10),
@@ -57,10 +59,10 @@ class _PostCardState extends State<PostCard> {
                           builder: (context, snapshot) {
                             if(snapshot.hasData){
                               // debugPrint("${snapshot.data!.comments.length}");
-                              return CommentLikeShareBar(comments: snapshot.data!.data!.comments, postId: widget.post.id,);
+                              return CommentLikeShareBar(comments: snapshot.data!.data!.comments, postId: widget.post.id,post: widget.post,);
                             }
                             else if(snapshot.connectionState == ConnectionState.waiting){
-                              return CommentLikeShareBar(postId: "",);
+                              return const CommentLikeShareBar(postId: "",);
                             }
                             else if(snapshot.hasError){
                               return const Text("Error while loading");

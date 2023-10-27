@@ -57,8 +57,47 @@ class NetworkApiServices extends BaseApiServices {
     return responseJSON;
   }
 
+
+  @override
+  Future deleteAPI(String url, dynamic body, Map<String, String>? header) async {
+    http.Response res;
+    try {
+      res = await http.delete(Uri.parse(url), headers: header, body: jsonEncode(body));
+      debugPrint("Response is Successfully returning of delete ${jsonDecode(res.body)}");
+      return returnResponse(res);
+    } on SocketException {
+      throw InternetException(AppStrings.noNetwork);
+    } on RequestTimeOut {
+      throw RequestTimeOut(AppStrings.takingMoreTime);
+    }
+    catch(e){
+      debugPrint("Unknown Error Found $e");
+      throw AppError(e.toString());
+    }
+  }
+
+  @override
+  Future patchAPI(String url, dynamic data, Map<String, String>? header) async {
+    http.Response res;
+    try {
+      res = await http.patch(Uri.parse(url), body: jsonEncode(data), headers: header);
+      debugPrint("Response is Successfully returning of patch ${jsonDecode(res.body)}");
+      return returnResponse(res);
+    } on SocketException {
+      throw InternetException(AppStrings.noNetwork);
+    } on RequestTimeOut {
+      throw RequestTimeOut(AppStrings.takingMoreTime);
+    }
+    catch(e){
+      debugPrint("Unknown Error Found $e");
+      throw AppError(e.toString());
+    }
+  }
+
   dynamic returnResponse(http.Response response) {
     var res = jsonDecode(response.body);
+    // debugPrint("Response type is --- ${res['type']} ---");
+    // debugPrint("Response type is --- ${response.statusCode} ---");
     switch (response.statusCode) {
       case 200:
         // debugPrint("Status code is --- 200 ---");
