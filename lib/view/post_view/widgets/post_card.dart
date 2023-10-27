@@ -54,12 +54,12 @@ class _PostCardState extends State<PostCard> {
                 // CommentLikeShareBar(comments: widget.post.),
                 Consumer<PostViewApiResponseProvider>(
                     builder: (context, apiResProvider, child) {
-                      return FutureBuilder<APIResponseCommentModel?>(
-                          future: PostViewApiResponseProvider.getCommentsList(widget.post.id),
+                      return FutureBuilder<LikeAndCommentOfApiResponse?>(
+                          future: PostViewApiResponseProvider.getLikesAndComments(widget.post.id),
                           builder: (context, snapshot) {
                             if(snapshot.hasData){
                               // debugPrint("${snapshot.data!.comments.length}");
-                              return CommentLikeShareBar(comments: snapshot.data!.data!.comments, postId: widget.post.id,post: widget.post,);
+                              return CommentLikeShareBar(comments: snapshot.data!.comments!.data!.comments!, postId: widget.post.id,post: widget.post,likes: snapshot.data!.likes!.data.likes,);
                             }
                             else if(snapshot.connectionState == ConnectionState.waiting){
                               return const CommentLikeShareBar(postId: "",);

@@ -17,7 +17,7 @@ class CommentLikeShareBar extends StatefulWidget {
   const CommentLikeShareBar({super.key, this.comments, this.likes, this.share, required this.postId, this.post});
   final String postId;
   final List<APIResponseComment>? comments;
-  final List<Like>? likes;
+  final List<ApiResponseLike>? likes;
   final List<Share>? share;
   final FeedUserPost? post;
 
@@ -47,7 +47,6 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
         boxShadow: [
           BoxShadow(color: Theme.of(context).primaryColorDark, blurRadius: 5,spreadRadius: 0)
         ]
-        // boxShadow: const [BoxShadow(color: AppColors.grey, blurRadius: 5,spreadRadius: 0)],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -61,28 +60,31 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                   provider.likePost(widget.postId, widget.post!.isLiked);
                 } ,
                 onLongPress: (){
-                  // provider.showLikeBottomSheet(showLikeBottomSheet);
+                  provider.showLikeBottomSheet(showLikeBottomSheet);
                 },
                 child: Row(
                   children: [
                     if(widget.post != null) Column(
                       children: [
                         Icon(!widget.post!.isLiked? FontAwesomeIcons.thumbsUp :FontAwesomeIcons.solidThumbsUp, color: Theme.of(context).primaryColorDark,),
-                        if(widget.post != null) Text(widget.post!.isLiked?"You ${(widget.post!.likeCount - 1 == 0)? "Only" : "and ${widget.post!.likeCount - 1}"}" : widget.post!.likeCount.toString(), style: AppStyle.primaryColorDarkMedium14(context),),
+                        Text(widget.post!.isLiked?"You ${(widget.likes!.length - 1 == 0)? "Only" : "and ${widget.likes!.length - 1}"}" : widget.post!.likeCount.toString(), style: AppStyle.primaryColorDarkMedium14(context),),
+                        // Text(!isLiked? widget.likes!.length.toString():( widget.likes!.length+ 1).toString(), style: AppStyle.primaryColorDarkMedium14(context),),
                       ],
                     ),
-                    if(widget.post == null) Icon(!isLiked ? FontAwesomeIcons.thumbsUp :FontAwesomeIcons.solidThumbsUp, color: Theme.of(context).primaryColorDark,),
+                    if(widget.post == null) Column(
+                      children: [
+                        if(widget.post == null) Icon(!isLiked ? FontAwesomeIcons.thumbsUp :FontAwesomeIcons.solidThumbsUp, color: Theme.of(context).primaryColorDark,),
+                        if(widget.post == null) const Text("0"),
+                      ],
+                    ),
                     sizedBox(wid: 2),
-
-                    sizedBox(wid: 5),
-                    if(widget.likes != null) Text(!isLiked ?widget.likes!.length.toString():( widget.likes!.length+ 1).toString(), style: AppStyle.primaryColorDarkMedium14(context),),
                   ],
                 ),
               );
             }
           ),
           Consumer<PostCardCommentViewModel>(
-            builder: (context,provider23, child,) {
+            builder: (context,provider, child,) {
               return InkWell(
                   onTap:(){
                     showModalBottomSheet(
@@ -443,12 +445,12 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                         sizedBox(hei: 5),
                         ListTile(
                           leading: ClipOval(child: UtilityHelper.image("https://scontent.fdel24-1.fna.fbcdn.net/v/t39.30808-6/355482789_3551846318425242_4960182591060623934_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=x3KaytIkZbUAX-EFm5V&_nc_ht=scontent.fdel24-1.fna&oh=00_AfDsQhK_sRxGXGQyQxugJqeDLXVNlMxMn3DldXmjVbzg9w&oe=653658E0")) ?? Container(height:50,width: 50, decoration: BoxDecoration(color: AppColors.grey, borderRadius: BorderRadius.circular(100)),),
-                          title: const Text("Liked!"),
+                          title: Text(widget.likes![index].user.username),
                         ),
                         sizedBox(hei: 5),
                       ],
                     );
-                  }, itemCount: likeCount,),
+                  }, itemCount: widget.likes!.length,),
                 ),
               ],
             ),

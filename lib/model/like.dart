@@ -30,3 +30,72 @@ class Like {
     return data;
   }
 }
+
+class ApiResponseLikesData {
+  final int statusCode;
+  final String type;
+  final ApiResponseLikesResponseData data;
+
+  ApiResponseLikesData({
+    required this.statusCode,
+    required this.type,
+    required this.data,
+  });
+
+  factory ApiResponseLikesData.fromJson(Map<String, dynamic> json) {
+    return ApiResponseLikesData(
+      statusCode: json['statusCode'],
+      type: json['type'],
+      data: ApiResponseLikesResponseData.fromJson(json['data']),
+    );
+  }
+}
+
+class ApiResponseLikesResponseData {
+  final List<ApiResponseLike> likes;
+
+  ApiResponseLikesResponseData({
+    required this.likes,
+  });
+
+  factory ApiResponseLikesResponseData.fromJson(Map<String, dynamic> json) {
+    final List<dynamic> likesList = json['Likes'];
+    final List<ApiResponseLike> likes = likesList.map((likeJson) {
+      return ApiResponseLike.fromJson(likeJson);
+    }).toList();
+
+    return ApiResponseLikesResponseData(likes: likes);
+  }
+}
+
+class ApiResponseLike {
+  final ApiResponseUser user;
+
+  ApiResponseLike({
+    required this.user,
+  });
+
+  factory ApiResponseLike.fromJson(Map<String, dynamic> json) {
+    return ApiResponseLike(user: ApiResponseUser.fromJson(json['User']));
+  }
+}
+
+class ApiResponseUser {
+  final String id;
+  final String username;
+  final String email;
+
+  ApiResponseUser({
+    required this.id,
+    required this.username,
+    required this.email,
+  });
+
+  factory ApiResponseUser.fromJson(Map<String, dynamic> json) {
+    return ApiResponseUser(
+      id: json['_id'],
+      username: json['username'],
+      email: json['email'],
+    );
+  }
+}

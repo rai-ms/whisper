@@ -6,6 +6,7 @@ import 'package:whisper/model/response.dart';
 import '../../data/network/base_api_service.dart';
 import '../../data/network/network_api_services.dart';
 import '../../model/feed_response_model.dart';
+import '../../model/like.dart';
 import '../../utils/app_helper/app_url.dart';
 import '../../utils/app_helper/user_data_preferences/user_data.dart';
 
@@ -65,8 +66,8 @@ class PostRepository {
     await UserData.getUserAccessToken().then((value) async {
       header['Authorization'] = value!;
       await _baseAPIServices.getAPI(AppUrl.getMyFeedEndPoint, header).then((value) {
+        // debugPrint(value.toString());
         responses = FeedApiResponse.fromJson(value);
-        // debugPrint(value);
       }).onError((error, stackTrace) {
         debugPrint("Error Occurs $error");
       });
@@ -82,6 +83,19 @@ class PostRepository {
     await _baseAPIServices.getAPI("${AppUrl.listCommentsEndPoint}?postId=$id", header).then((value) {
       response = value;
       // debugPrint(value.toString());
+    }).onError((error, stackTrace){
+      throw AppError(error.toString());
+    });
+    return response;
+  }
+
+  Future<ApiResponseLikesData?> getListLikes(String postId) async {
+    ApiResponseLikesData? response;
+    String? token = await UserData.getUserAccessToken();
+    header['Authorization'] = token!;
+    await _baseAPIServices.getAPI("${AppUrl.getLikesEndPoint}$postId", header).then((value) {
+      response = ApiResponseLikesData.fromJson(value);
+      // debugPrint("Like list are:$value");
     }).onError((error, stackTrace){
       throw AppError(error.toString());
     });

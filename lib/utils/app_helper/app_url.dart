@@ -15,6 +15,7 @@ class AppUrl
   static const getMyFeedEndPoint = '$baseUrl/userFeed';
   static const getMyProfileEndPoint = '$baseUrl/userProfile';
   static const listCommentsEndPoint = '$baseUrl/listComments';
+  static const getLikesEndPoint = '$baseUrl/getPostLikes?postId=';
   static const createCommentEndPoint = '$baseUrl/createComment?postId=';
   static const userSearchEndPoint = 'https://harshitsocial.appskeeper.in/api/v1/user/userSearch?name=';
   static const getFollowersEndPoint = 'https://harshitsocial.appskeeper.in/api/v1/user/getFollowers?userId=';

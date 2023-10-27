@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:whisper/model/comment.dart';
+import 'package:whisper/model/like.dart';
 import 'package:whisper/repository/post_repo/post_repo.dart';
 import '../../data/app_exceptions/app_exception.dart';
 import '../../model/follower_response.dart';
@@ -36,8 +37,27 @@ class PostViewApiResponseProvider extends ChangeNotifier{
     return res;
   }
 
-  static Future getLikesList(String id) async {
+  static Future<ApiResponseLikesData?> getLikesList(String id) async {
+    ApiResponseLikesData? res;
+    await postRepository.getListLikes(id).then((value){
+      res = value;
+    }).onError((error, stackTrace){});
+    return res;
+  }
 
+
+  static Future<LikeAndCommentOfApiResponse?> getLikesAndComments(String id) async {
+    LikeAndCommentOfApiResponse? res;
+    APIResponseCommentModel? comment;
+    ApiResponseLikesData? likes;
+    await getCommentsList(id).then((value){
+      comment = value;
+    }).onError((error, stackTrace){});
+    await getLikesList(id).then((value){
+      likes = value;
+    }).onError((error, stackTrace){});
+    res = LikeAndCommentOfApiResponse(comments: comment, likes: likes);
+    return res;
   }
 
   static Future<GetFollowerApiRes?> getFollowers({String? id}) async {
@@ -59,4 +79,12 @@ class PostViewApiResponseProvider extends ChangeNotifier{
     });
   }
 
+}
+
+class LikeAndCommentOfApiResponse
+{
+  ApiResponseLikesData? likes;
+  APIResponseCommentModel? comments;
+
+  LikeAndCommentOfApiResponse({this.comments, this.likes});
 }
