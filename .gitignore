@@ -7,7 +7,7 @@
 .atom/
 .buildlog/
 .history
-.lib/aws/aws_cred.dart
+.lib/aws/aws.dart
 .svn/
 migrate_working_dir/
 
