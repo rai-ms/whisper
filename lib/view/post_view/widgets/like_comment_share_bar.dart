@@ -353,7 +353,7 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                                                               value: "delete",
                                                               child: const Text("Delete comment"),
                                                               onTap: (){
-
+                                                                provider.deleteMyComment(postId: widget.postId, commentId: widget.comments![index].id, context: context);
                                                               },
                                                             ),
                                                             if(widget.comments![index].user.username != username) PopupMenuItem(

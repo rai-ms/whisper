@@ -30,10 +30,17 @@ class PostCardCommentViewModel extends ChangeNotifier
     notifyListeners();
   }
 
+  deleteMyComment({required String postId, required String commentId, required BuildContext context}) async {
+    await postRepository.deleteComment(postId: postId, commentID: commentId,).then((value){
+      debugPrint("Comment Deleted Success");
+      CustomToast(message: "Comment Deleted Success", context: context);
+    }).onError((error, stackTrace){
+      debugPrint("Comment Deletion failed Error:$error");
+    });
+  }
 
   final PostRepository postRepository = PostRepository();
-  Future<void> sendComment({required String postID,required BuildContext context}) async
-  {
+  Future<void> sendComment({required String postID,required BuildContext context}) async {
     String commentText = commentCont.text.toString().trim();
     if(commentText.isNotEmpty && !isReply){
       await postRepository.createComment(postID, CommentPayload(comment: commentText)).then((value){

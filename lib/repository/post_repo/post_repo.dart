@@ -175,4 +175,18 @@ class PostRepository {
     return statusCode;
   }
 
+  Future<String?> deleteComment({required String postId, required String commentID,}) async {
+    String? statusCode;
+    debugPrint("Going to delete on $postId");
+    String? token = await UserData.getUserAccessToken();
+    header['Authorization'] = token!;
+    await _baseAPIServices.deleteAPI("https://harshitsocial.appskeeper.in/api/v1/user/deleteComment?postId=$postId&commentId=$commentID",{}, header).then((value){
+      debugPrint("deleted on post :$postId comment $commentID status is $value");
+      statusCode = value['statusCode'].toString();
+    }).onError((error, stackTrace){
+      throw AppError("Error is:$error");
+    });
+    return statusCode;
+  }
+
 }

@@ -13,7 +13,7 @@ class Followers extends StatefulWidget {
   State<Followers> createState() => _FollowersState();
 }
 
-class _FollowersState extends State<Followers> with AutomaticKeepAliveClientMixin{
+class _FollowersState extends State<Followers> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context)
   {
