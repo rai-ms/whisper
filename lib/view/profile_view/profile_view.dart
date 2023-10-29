@@ -5,6 +5,7 @@ import 'package:whisper/global/global.dart';
 import 'package:whisper/model/user_profile_response.dart';
 import 'package:whisper/repository/profile_repo/profile_repo.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
+import 'package:whisper/utils/app_helper/app_strings.dart';
 import 'package:whisper/utils/app_helper/app_style.dart';
 import 'package:whisper/utils/routes/route_name.dart';
 import 'package:whisper/view/profile_view/widgets/posts_follower_following.dart';
@@ -91,64 +92,59 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
             Container(
               height: 50,
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+              child: Row(
                 children: [
                   Expanded(
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex:4,
-                          child: Container(
-                            height: 50,
-                            decoration: BoxDecoration(
-                              color: AppColors.blueSplashScreen,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Row(
-                              children: [
-                                sizedBox(wid: 5),
-                                const Icon(Icons.add, color: AppColors.white),
-                                Text("Add To Story", style: AppStyle.whiteBold16,),
-                              ],
-                            ),
-                          ),),
-                        sizedBox(wid: 10),
-                        Expanded(
-                          flex: 4,
-                          child: InkWell(
-                            onTap: (){
-                              Navigator.pushNamed(context, RouteName.editProfileView);
-                            },
-                            child: Container(
-                              height: 50,
-                              decoration: BoxDecoration(
-                                color: AppColors.grey,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Row(
-                                children: [
-                                  sizedBox(wid: 5),
-                                  const Icon(Icons.edit, color: AppColors.white),
-                                  Text("Edit Profile", style: AppStyle.whiteBold16,),
-                                ],
-                              ),
-                            ),
-                          ),),
-                        sizedBox(wid: 10),
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            height: 50,
-                            decoration: BoxDecoration(
-                              color: AppColors.grey,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: const Icon(Icons.more_horiz, color: AppColors.white),
-                          ),),
-                      ],
-                    ),
-                  ),
+                    flex:4,
+                    child: Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: AppColors.blueSplashScreen,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        children: [
+                          sizedBox(wid: 5),
+                          const Icon(Icons.add, color: AppColors.white),
+                          Text("Add To Story", style: AppStyle.whiteBold16,),
+                        ],
+                      ),
+                    ),),
+                  sizedBox(wid: 10),
+                  Expanded(
+                    flex: 4,
+                    child: InkWell(
+                      onTap: (){
+                        Navigator.pushNamed(context, RouteName.editProfileView).whenComplete((){
+                          setState(() {});
+                        });
+                      },
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: AppColors.grey,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          children: [
+                            sizedBox(wid: 5),
+                            const Icon(Icons.edit, color: AppColors.white),
+                            Text("Edit Profile", style: AppStyle.whiteBold16,),
+                          ],
+                        ),
+                      ),
+                    ),),
+                  sizedBox(wid: 10),
+                  Expanded(
+                    flex: 2,
+                    child: Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: AppColors.grey,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Icon(Icons.more_horiz, color: AppColors.white),
+                    ),),
                 ],
               ),
             ),
@@ -171,7 +167,22 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                       children: [
                         const Icon(FontAwesomeIcons.house, color: AppColors.grey,),
                         sizedBox(wid: 10),
-                        Text("Lives in Ballia", style: AppStyle.primaryColorDarkMedium(context),),
+                        Consumer<GetProfileData>(
+                          builder: (context, pr, ch) {
+                            return FutureBuilder(
+                              future: pr.getBio(),
+                              builder: (context, snap) {
+                                if(snap.hasData){
+                                  return Text(snap.data.toString() ?? "", style: AppStyle.primaryColorDarkMedium(context),);
+                                }
+                                else {
+                                  return const Text(AppStrings.emptyString);
+                                }
+
+                              },
+                            );
+                          }
+                        ),
                       ],
                     ),
                     sizedBox(hei: 10),

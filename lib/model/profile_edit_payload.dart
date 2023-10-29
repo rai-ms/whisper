@@ -4,10 +4,21 @@ class ProfileEditPayload {
   ProfileEditPayload({this.username, this.profileBio, this.profilePic});
 
   Map<String, dynamic> toJson() {
-    return {
-      "username": username,
-      "profilePic": profilePic,
-      "profileBio": profileBio
-    };
+
+    Map<String, dynamic> mp =  {};
+
+    if(username != null ){
+      mp['username'] = username;
+    }
+
+    if(profilePic != null){
+      mp['profilePic'] = profilePic;
+    }
+
+    if(profileBio != null){
+      mp['profileBio'] = profileBio;
+    }
+
+    return mp;
   }
 }

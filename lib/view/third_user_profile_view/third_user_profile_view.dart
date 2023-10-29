@@ -8,8 +8,6 @@ import 'package:whisper/utils/app_helper/app_color.dart';
 import 'package:whisper/utils/app_helper/app_strings.dart';
 import 'package:whisper/view_model/search_user/search_user_view_model.dart';
 
-import '../../view_model/personal_profile_view_model/api_res_provider.dart';
-
 class ThirdUserProfileView extends StatefulWidget {
   const ThirdUserProfileView({super.key, required this.id});
   final String id;

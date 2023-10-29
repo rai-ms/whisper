@@ -18,4 +18,16 @@ class GetProfileData extends ChangeNotifier
   Future<String?> getJoinedDate() async {
     return createdAt ?? await UserData.getUserCreatedAt();
   }
+
+  Future<String?> getBio() async {
+    return createdAt ?? await UserData.getBio();
+  }
+
+  Future<String?> getFullName() async {
+    return createdAt ?? await UserData.getFullName();
+  }
+
+  Future<String?> getProfilePic() async {
+    return createdAt ?? await UserData.getProfilePic();
+  }
 }

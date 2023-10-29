@@ -57,7 +57,6 @@ class NetworkApiServices extends BaseApiServices {
     return responseJSON;
   }
 
-
   @override
   Future deleteAPI(String url, dynamic body, Map<String, String>? header) async {
     http.Response res;
@@ -104,13 +103,13 @@ class NetworkApiServices extends BaseApiServices {
         // debugPrint("Response type is --- ${res['type']} ---");
         return res;
       case 400:
-        throw InvalidUrl(res['type']);
+        throw InvalidUrl(res['error']);
       case 429:
-        throw InternalServerException(res['type']);
+        throw InternalServerException(res['error']);
       case 500:
-        throw InternalServerException(res['type']);
+        throw InternalServerException(res['error']);
       default:
-        throw FetchDataException(res['type']);
+        throw AppError(res['error']);
     }
   }
 }

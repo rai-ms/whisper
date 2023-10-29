@@ -10,6 +10,7 @@ class User {
   final String createdAt;
   final int v;
   final String accessToken;
+  final String? fullName, profilePic, profileBio;
 
   User({
     required this.id,
@@ -23,6 +24,9 @@ class User {
     required this.createdAt,
     required this.v,
     required this.accessToken,
+    this.fullName,
+    this.profilePic,
+    this.profileBio
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -31,6 +35,9 @@ class User {
       username: json['user']['username'] ?? "",
       email: json['user']['email'] ?? "",
       password: json['user']['password'] ?? "",
+      fullName: json['user']['fullName'] ?? "",
+      profilePic: json['user']['profilePic'] ?? "",
+      profileBio: json['user']['profileBio'] ?? "",
       accountVerify: json['user']['accountVerify'] ?? 0,
       followerCount: json['user']['followerCount'] ?? 0,
       followingCount: json['user']['followingCount'] ?? 0,

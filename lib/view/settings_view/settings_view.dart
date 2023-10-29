@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -23,11 +25,10 @@ class _SettingsViewState extends State<SettingsView> {
     ],
     child: Scaffold(
       appBar: AppBar(
-        leading: InkWell(onTap: (){
+        leading: IconButton(onPressed: () {
           Navigator.pop(context);
-        },child: Icon(FontAwesomeIcons.arrowLeft),),
-      ),
-      body: Center(
+        }, icon: Icon(Platform.isAndroid? Icons.arrow_back : Icons.arrow_back_ios_new),),),
+      body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

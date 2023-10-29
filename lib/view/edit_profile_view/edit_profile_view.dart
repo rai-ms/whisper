@@ -1,8 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whisper/components/app_text_form_field.dart';
+import 'package:whisper/components/utility_helper.dart';
 import 'package:whisper/global/global.dart';
+import 'package:whisper/res/components/app_rounded_button.dart';
+import 'package:whisper/res/components/custom_toast.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
+import 'package:whisper/utils/app_helper/app_strings.dart';
+import 'package:whisper/utils/app_helper/app_style.dart';
+import 'package:whisper/utils/utils.dart';
 import 'package:whisper/view_model/edit_profile_view_model/edit_profile_view_model.dart';
 
 class EditProfileView extends StatefulWidget {
@@ -20,7 +28,21 @@ class _EditProfileViewState extends State<EditProfileView> {
         ChangeNotifierProvider(create: (context)=> EditProfileViewModel()),
       ],
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          leading: IconButton(onPressed: () {
+            Navigator.pop(context);
+          }, icon: Icon(Platform.isAndroid? Icons.arrow_back : Icons.arrow_back_ios_new),),
+          actions: [Consumer<EditProfileViewModel>(
+            builder: (context, pr, child) {
+              return TextButton(onPressed: (){
+                pr.ediProfile().then((value){
+                  CustomToast(context: context, message: AppStrings.profileUpdated);
+                  Navigator.pop(context);
+                });
+              }, child: Text(AppStrings.save, style: AppStyle.whiteMedium16,));
+            },
+          )],
+        ),
         body: SingleChildScrollView(
           child: Center(
             child: Consumer<EditProfileViewModel>(
@@ -30,6 +52,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                 child: Form(
                   key: provider.formKey,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       sizedBox(hei: 20),
                       const CircleAvatar(
@@ -42,17 +65,17 @@ class _EditProfileViewState extends State<EditProfileView> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           const Expanded(
-                            flex: 2,
-                            child: Text("Username")),
+                              flex: 2,
+                              child: Text("Username")),
                           sizedBox(wid: 10),
                           Expanded(
-                              flex: 6,
-                              child: AppTextFormField(
-                                obscureText: false,
-                                cont: provider.usernameController,
-                                isPrefixIconExist: false,
-                                contentPadding: 10,
-                              ),
+                            flex: 6,
+                            child: AppTextFormField(
+                              obscureText: false,
+                              cont: provider.usernameController,
+                              isPrefixIconExist: false,
+                              contentPadding: 10,
+                            ),
                           ),
                         ],
                       ),
@@ -64,20 +87,23 @@ class _EditProfileViewState extends State<EditProfileView> {
                               child: Text("Bio")),
                           sizedBox(wid: 10),
                           Expanded(
-                              flex: 6,
-                              child: TextFormField(
-                                controller: provider.bioController,
-                                maxLines: null,
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(20),), borderSide: BorderSide(width: 2, color: AppColors.black),),
-                                  disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.all( Radius.circular(20),), borderSide: BorderSide(width: 2, color: AppColors.black),),
-                                  enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(20),), borderSide: BorderSide(width: 2, color: AppColors.black),),
-                                ),
+                            flex: 6,
+                            child: TextFormField(
+                              controller: provider.bioController,
+                              maxLines: null,
+                              onFieldSubmitted: (value){
+                                // Utils.changeFocus(context, currentFocus, nextFocus);
+                              },
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(20),), borderSide: BorderSide(width: 2, color: AppColors.black),),
+                                disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.all( Radius.circular(20),), borderSide: BorderSide(width: 2, color: AppColors.black),),
+                                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(20),), borderSide: BorderSide(width: 2, color: AppColors.black),),
                               ),
+                            ),
                           )
                         ],
                       ),
-
+                      sizedBox(hei: 20),
                     ],
                   ),
                 ),

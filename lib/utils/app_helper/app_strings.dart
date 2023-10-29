@@ -7,6 +7,8 @@ class AppStrings {
   static const String provideWebsite = "Enter Website";
   static const String provideUsername = "Enter username";
   static const String username = "Username";
+  static const String save = "Save";
+  static const String profileUpdated = "Profile Updated Successfully";
   static const String provideName = "Enter name";
   static const String invalidMobileNumber = "Invalid Phone number";
   static const String provideURL = "Provide Url number";

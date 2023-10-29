@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:whisper/data/app_exceptions/app_exception.dart';
 import '../../../model/user.dart';
 
 class UserData {
@@ -22,6 +23,74 @@ class UserData {
   static Future<String?> getUserAccessToken() async {
     final String? userDataString = _preferences?.getString('userData');
     return userDataString;
+  }
+
+  static Future<String?> getBio() async {
+    final String? userDataString = _preferences?.getString('profileBio');
+    return userDataString;
+  }
+
+  static Future<String?> getFullName() async {
+    final String? userDataString = _preferences?.getString('fullName');
+    return userDataString;
+  }
+
+  static Future<String?> getProfilePic() async {
+    final String? userDataString = _preferences?.getString('profilePic');
+    return userDataString;
+  }
+
+  static Future<String?> updateUsername(String newUsername) async {
+    await _preferences?.setString('username', newUsername).then((value){
+      return true;
+    }).onError((error, stackTrace){
+      throw AppError(error.toString());
+    });
+    return null;
+  }
+
+  static Future<String?> updateProfilePic(String newProfilePic) async {
+    await _preferences?.setString('profilePic', newProfilePic).then((value){
+      return true;
+    }).onError((error, stackTrace){
+      throw AppError(error.toString());
+    });
+    return null;
+  }
+
+  static Future<String?> updateProfileBio(String newProfileBio) async {
+    await _preferences?.setString('profileBio', newProfileBio).then((value){
+      return true;
+    }).onError((error, stackTrace){
+      throw AppError(error.toString());
+    });
+    return null;
+  }
+
+  static Future<bool?> updateBioUsernameProfilePic(
+      {String? newProfileBio,
+      String? newUsername,
+      String? newProfilePic}) async {
+    bool res = true;
+    if(newUsername != null && newUsername.isNotEmpty){
+      await updateUsername(newUsername).onError((error, stackTrace){
+        res = false;
+        return null;
+      });
+    }
+    if(newProfileBio != null && newProfileBio.isNotEmpty){
+      await updateProfileBio(newProfileBio).onError((error, stackTrace){
+        res = false;
+        return null;
+      });
+    }
+    if(newProfilePic != null && newProfilePic.isNotEmpty){
+      await updateProfilePic(newProfilePic).onError((error, stackTrace){
+        res = false;
+        return null;
+      });
+    }
+    return res;
   }
 
   static Future<String?> getUserUsername() async {
@@ -82,11 +151,37 @@ class UserData {
       return false;
     });
 
+    await _preferences?.setString('profileBio', user.profileBio ?? "Appinventiv").then((value){
+      debugPrint("profileBio Data saved: $value");
+      return true;
+    }).onError((error, stackTrace){
+      debugPrint("Unable to save profileBio data Error: $error");
+      return false;
+    });
+
+    await _preferences?.setString('profilePic', user.profilePic ?? "https://appinventiv.com/wp-content/themes/twentynineteen-child/new-images/appinventiv-mask-old.svg").then((value){
+      debugPrint("profilePic Data saved: $value");
+      return true;
+    }).onError((error, stackTrace){
+      debugPrint("Unable to save profilePic data Error: $error");
+      return false;
+    });
+
+    await _preferences?.setString('fullName', user.fullName ?? "Appinventiv User").then((value){
+      debugPrint("fullName Data saved: $value");
+      return true;
+    }).onError((error, stackTrace){
+      debugPrint("Unable to save fullName data Error: $error");
+      return false;
+    });
+
     return true;
   }
 
   static Future<bool> removeUser() async {
     bool remove = true;
+    await _preferences?.remove('profileBio').then((value) {remove &= true;}).onError((error, stackTrace) {remove &= true;});
+    await _preferences?.remove('profilePic').then((value) {remove &= true;}).onError((error, stackTrace) {remove &= true;});
     await _preferences?.remove('userData').then((value){
       remove &= true;
     }).onError((error, stackTrace) {
@@ -99,6 +194,7 @@ class UserData {
       remove &= true;
     }).onError((error, stackTrace){remove &= false;});
     await _preferences?.remove('email').then((value) {remove &= true;}).onError((error, stackTrace) {remove &= true;});
+    await _preferences?.remove('fullName').then((value) {remove &= true;}).onError((error, stackTrace) {remove &= true;});
     await _preferences?.remove('createdAt').then((value) {remove &= true;}).onError((error, stackTrace) {remove &= true;});
     return remove;
   }

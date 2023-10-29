@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:whisper/components/utility_helper.dart';
-
+import 'package:whisper/global/global.dart';
+import 'package:whisper/utils/app_helper/app_style.dart';
 import '../../../model/user_profile_response.dart';
 import '../../../utils/app_helper/app_keys.dart';
 
@@ -26,9 +27,43 @@ class _PostListState extends State<PostList> with AutomaticKeepAliveClientMixin{
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.all(2.0),
-          child: Container(
-            color: const Color.fromARGB(156, 204, 199, 199),
-            child: UtilityHelper.image(widget.postList[index].url),
+          child: Column(
+            children: [
+              Expanded(
+                flex: 8,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(156, 204, 199, 199),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                      child: UtilityHelper.image(widget.postList[index].url)),
+                ),
+              ),
+              sizedBox(hei: 3),
+              Expanded(
+                flex: 2,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(Icons.thumb_up_alt_outlined),
+                        Text(widget.postList[index].likeCount.toString(), style: AppStyle.primaryColorDarkMedium14(context),),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Icon(Icons.comment),
+                        Text(widget.postList[index].commentCount.toString(), style: AppStyle.primaryColorDarkMedium14(context),),
+                      ],
+                    ),
+
+                  ],
+                ),
+              ),
+            ],
           ),
         );
       },
