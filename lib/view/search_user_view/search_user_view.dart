@@ -4,10 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:whisper/components/app_text_form_field.dart';
 import 'package:whisper/components/utility_helper.dart';
 import 'package:whisper/global/global.dart';
-import 'package:whisper/res/components/app_rounded_button.dart';
 import 'package:whisper/utils/app_helper/app_style.dart';
 import 'package:whisper/utils/routes/route_name.dart';
-import 'package:whisper/view_model/global_provider/global_provider.dart';
 import 'package:whisper/view_model/search_user/search_user_view_model.dart';
 
 class SearchUser extends StatefulWidget {
@@ -44,7 +42,6 @@ class _SearchUserState extends State<SearchUser> {
                           itemBuilder: (BuildContext context ,int index) {
                           return InkWell(
                             onTap: (){
-
                               Navigator.pushNamed(context, RouteName.thirdUserProfileView, arguments: {'id' : pr1.searchResponseUserData!.data[index].id});
                               // pr1.controller.dispose();
                             },

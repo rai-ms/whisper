@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:whisper/global/global.dart';
@@ -27,6 +29,31 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin {
 
   List<Post> postList = [];
+
+  // Future<bool> _willPopCallback() async {
+  //   if (pageViewNumber != 0) {
+  //     final AppGlobalProvider appGlobalProvider = Provider.of(context)<AppGlobalProvider>();;
+  //     pageViewNumber = 0;
+  //     debugPrint("WillPop called page set to 0");
+  //     appGlobalProvider.pageController.jumpToPage(0);
+  //     debugPrint("Set State called");
+  //     setState(() {
+  //
+  //     });
+  //
+  //     return false;
+  //   } else {
+  //     // If already at page 0, close the app
+  //     if (Platform.isAndroid) {
+  //       // For Android, use this code to exit the app
+  //       SystemNavigator.pop();
+  //     } else if (Platform.isIOS) {
+  //       // For iOS, use this code to exit the app
+  //       exit(0);
+  //     }
+  //     return false; // Return false to prevent popping the route
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

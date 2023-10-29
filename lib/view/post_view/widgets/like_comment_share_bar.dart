@@ -10,6 +10,7 @@ import '../../../model/feed_response_model.dart';
 import '../../../model/like.dart';
 import '../../../model/share.dart';
 import '../../../utils/app_helper/app_strings.dart';
+import '../../../utils/app_helper/user_data_preferences/user_data.dart';
 import '../../../view_model/home_view_view_model/post_card_comment_view_model.dart';
 import '../../../view_model/home_view_view_model/post_card_like_view_model.dart';
 
@@ -34,7 +35,8 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
   @override
   Widget build(BuildContext context) {
     // debugPrint("${widget.comments!.length ?? empty} length of comments on this post");
-    return MultiProvider(providers: [
+    return MultiProvider(
+      providers: [
         ChangeNotifierProvider(create: (context)=> LikeViewModel() ),
       ],
       child: Container(
@@ -86,225 +88,9 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
           Consumer<PostCardCommentViewModel>(
             builder: (context,provider, child,) {
               return InkWell(
-                  onTap:(){
-                    showModalBottomSheet(
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))
-                      ),
-                      isScrollControlled: true,
-                      useSafeArea: true,
-                      context: context,
-                      builder: (context) => Container(
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).cardColor,
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                          constraints: BoxConstraints(
-                            minHeight: 400,
-                            maxHeight: getFullHeight(context) * .9,
-                          ),
-                          child: SingleChildScrollView(
-                            reverse: true,
-                            child: Column(
-                              children: [
-                                sizedBox(hei: 20),
-                                SizedBox(
-                                  height: 400,
-                                  child: ListView(
-                                    shrinkWrap: true,
-                                    children: [
-                                      if(widget.comments != null) ...List.generate(widget.comments!.length, (index){
-                                        return Column(
-                                          children: [
-                                            Consumer<PostCardCommentViewModel>(
-                                              builder: (context, provider, child) {
-                                                return ListTile(
-                                                  title: Row(
-                                                    children: [
-                                                      Expanded(flex: 10, child: ClipOval(child: UtilityHelper.image(dp, height: 40, width: 40),)),
-                                                      sizedBox(wid: 5),
-                                                      Expanded(
-                                                        flex: 90,
-                                                        child: Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: [
-                                                            Container(
-                                                              constraints: const BoxConstraints(
-                                                                minHeight: 60
-                                                              ),
-                                                              decoration: BoxDecoration(
-                                                                color: AppColors.grey,
-                                                                borderRadius: BorderRadius.circular(12)
-                                                              ),
-                                                              child: Row(
-                                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                                children: [
-                                                                  sizedBox(wid: 5),
-                                                                  Expanded(
-                                                                    flex: 90,
-                                                                    child: Column(
-                                                                      mainAxisAlignment: MainAxisAlignment.start,
-                                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                                      children: [
-                                                                        Padding(
-                                                                          padding: const EdgeInsets.only(left: 8.0),
-                                                                          child: Text(widget.comments![index].user.username),
-                                                                        ),
-                                                                        Container(
-                                                                          constraints: const BoxConstraints(
-                                                                            maxWidth: 450,
-                                                                            minWidth: 300,
-                                                                            minHeight: 40,
-                                                                          ),
-                                                                          padding: const EdgeInsets.only(left: 10),
-                                                                          decoration: BoxDecoration(
-                                                                            color: AppColors.white,
-                                                                            borderRadius: BorderRadius.circular(10),
-                                                                          ),
-                                                                          child: Column(
-                                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                                            children: [
-                                                                              Text(widget.comments![index].comment, style: AppStyle.blackMedium16,),
-                                                                            ],
-                                                                          )),
-                                                                        sizedBox(hei: 4),
-                                                                        // InkWell(
-                                                                        //   onTap:()
-                                                                        //   {
-                                                                        //       provider.gotoReply(context, widget.comments![index].comment);
-                                                                        //   },
-                                                                        //   child: Text("Reply", style: AppStyle.blueNormal16,)),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                  Expanded(
-                                                                    flex: 10,
-                                                                    child: PopupMenuButton(icon: const Icon(Icons.more_vert), itemBuilder: (BuildContext context) {
-                                                                      return [
-                                                                      const PopupMenuItem(
-                                                                        value: "report",
-                                                                        child: Text("Report comment"),
-                                                                      ),
-                                                                      // const PopupMenuItem(
-                                                                      //   value: "share",
-                                                                      //   child: Text("edit comment"),
-                                                                      // ),
-                                                                      // const PopupMenuItem(
-                                                                      //   value: "delete",
-                                                                      //   child: Text("delete comment"),
-                                                                      // ),
-                                                                    ]; },),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                            Text(widget.comments![index].user.email),
-                                                          ],
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                  // subtitle: Padding(
-                                                  //   padding: const EdgeInsets.only(left: 25.0, top: 20),
-                                                  //   child: Column(
-                                                  //     children:
-                                                  //     [
-                                                  //       if(widget.comments![index].reply.isNotEmpty) ...List.generate(widget.comments![index].reply.length, (i){
-                                                  //         return ListTile(
-                                                  //           title: Row(
-                                                  //             crossAxisAlignment: CrossAxisAlignment.start,
-                                                  //             children: [
-                                                  //               ClipOval(child: UtilityHelper.image("https://scontent.fdel72-1.fna.fbcdn.net/v/t39.30808-6/355482789_3551846318425242_4960182591060623934_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=AnRkGOVWizoAX-O4dEW&_nc_ht=scontent.fdel72-1.fna&oh=00_AfDmo8PgOQL52u6ewobm5mrTzYq-aIdjC4_LjLOfup1SnA&oe=65326460", height: 40, width: 40),),
-                                                  //               sizedBox(wid: 5),
-                                                  //               Text(widget.comments![index].reply[i].content),
-                                                  //               const Expanded(child: SizedBox()),
-                                                  //               const Icon(Icons.more_vert),
-                                                  //             ],
-                                                  //           ),
-                                                  //         );
-                                                  //       })
-                                                  //     ],
-                                                  //   ),
-                                                  // ),
-                                                );
-                                              }
-                                            ),
-                                          ],
-                                        );
-                                      }),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 100,
-                                  child: Consumer<PostCardCommentViewModel>(builder: (context, provider, child) {
-                                    return Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Expanded(
-                                          flex: 7,
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              // if(provider.replyText.isNotEmpty) Container(
-                                              //   height: 20,
-                                              //   child: Text(provider.replyText),
-                                              // ),
-                                              TextFormField(
-                                                textInputAction: TextInputAction.next,
-                                                autofocus: true,
-                                                controller: provider.commentCont,
-                                                focusNode: provider.commentFocus,
-                                                textAlign: TextAlign.start,
-                                                onFieldSubmitted: (_) async {
-                                                  await provider.sendComment(postID:  widget.postId, context: context);
-                                                },
-                                                decoration: const InputDecoration(
-                                                    prefixIcon: Icon(
-                                                      FontAwesomeIcons.comment,
-                                                      color: AppColors.blueSplashScreen,
-                                                    ),
-                                                    border: OutlineInputBorder(
-                                                        borderRadius:
-                                                        BorderRadius.all(Radius.circular(20)),
-                                                        borderSide:
-                                                        BorderSide(width: 2, color: AppColors.black)),
-                                                    hintText: AppStrings.writeComment,
-                                                    label: Text(AppStrings.comment),
-                                                    constraints: BoxConstraints(
-                                                      maxWidth: 400,
-                                                    ),
-                                                    hoverColor: AppColors.blueAccent),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Expanded(
-                                          flex: 2,
-                                          child: InkWell(
-                                            onTap:() async {
-                                             await provider.sendComment(postID:  widget.postId, context: context);
-                                            },
-                                            child: const CircleAvatar(
-                                              radius: 30,
-                                              backgroundColor: AppColors.black,
-                                              child: Icon(FontAwesomeIcons.baseballBatBall, color: AppColors.white,),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                  }),
-                                ),
-                                SizedBox(height: MediaQuery.of(context).viewInsets.bottom,)
-                              ],
-                            ),
-                          ),
-                      )
-                    );
+                  onTap:() async{
+                    String? myUserName = await UserData.getUserUsername();
+                    showMyCommentBottomSheet(myUserName ?? "");
                   },
                   child: Column(
                     children: [
@@ -444,7 +230,7 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                       children: [
                         sizedBox(hei: 5),
                         ListTile(
-                          leading: ClipOval(child: UtilityHelper.image("https://scontent.fdel24-1.fna.fbcdn.net/v/t39.30808-6/355482789_3551846318425242_4960182591060623934_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=x3KaytIkZbUAX-EFm5V&_nc_ht=scontent.fdel24-1.fna&oh=00_AfDsQhK_sRxGXGQyQxugJqeDLXVNlMxMn3DldXmjVbzg9w&oe=653658E0")) ?? Container(height:50,width: 50, decoration: BoxDecoration(color: AppColors.grey, borderRadius: BorderRadius.circular(100)),),
+                          leading: ClipOval(child: UtilityHelper.image(dp)) ?? Container(height:50,width: 50, decoration: BoxDecoration(color: AppColors.grey, borderRadius: BorderRadius.circular(100)),),
                           title: Text(widget.likes![index].user.username),
                         ),
                         sizedBox(hei: 5),
@@ -452,6 +238,239 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                     );
                   }, itemCount: widget.likes!.length,),
                 ),
+              ],
+            ),
+          ),
+        )
+    );
+  }
+
+  void showMyCommentBottomSheet(String username){
+    if(username == null || username.isEmpty) return;
+    showModalBottomSheet(
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))
+        ),
+        isScrollControlled: true,
+        useSafeArea: true,
+        context: context,
+        builder: (context) => Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.circular(30),
+          ),
+          constraints: BoxConstraints(
+            minHeight: 400,
+            maxHeight: getFullHeight(context) * .9,
+          ),
+          child: SingleChildScrollView(
+            reverse: true,
+            child: Column(
+              children: [
+                sizedBox(hei: 20),
+                SizedBox(
+                  height: 400,
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: [
+                      if(widget.comments != null) ...List.generate(widget.comments!.length, (index){
+                        return Column(
+                          children: [
+                            Consumer<PostCardCommentViewModel>(
+                                builder: (context, provider, child) {
+                                  return ListTile(
+                                    title: Row(
+                                      children: [
+                                        Expanded(flex: 10, child: ClipOval(child: UtilityHelper.image(dp, height: 40, width: 40),)),
+                                        sizedBox(wid: 5),
+                                        Expanded(
+                                          flex: 90,
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                constraints: const BoxConstraints(
+                                                    minHeight: 60
+                                                ),
+                                                decoration: BoxDecoration(
+                                                    color: AppColors.grey,
+                                                    borderRadius: BorderRadius.circular(12)
+                                                ),
+                                                child: Row(
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: [
+                                                    sizedBox(wid: 5),
+                                                    Expanded(
+                                                      flex: 90,
+                                                      child: Column(
+                                                        mainAxisAlignment: MainAxisAlignment.start,
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                          Padding(
+                                                            padding: const EdgeInsets.only(left: 8.0),
+                                                            child: Text(widget.comments![index].user.username),
+                                                          ),
+                                                          Container(
+                                                              constraints: const BoxConstraints(
+                                                                maxWidth: 450,
+                                                                minWidth: 300,
+                                                                minHeight: 40,
+                                                              ),
+                                                              padding: const EdgeInsets.only(left: 10),
+                                                              decoration: BoxDecoration(
+                                                                color: AppColors.white,
+                                                                borderRadius: BorderRadius.circular(10),
+                                                              ),
+                                                              child: Column(
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                                children: [
+                                                                  Text(widget.comments![index].comment, style: AppStyle.blackMedium16,),
+                                                                ],
+                                                              )),
+                                                          sizedBox(hei: 4),
+                                                          // InkWell(
+                                                          //   onTap:()
+                                                          //   {
+                                                          //       provider.gotoReply(context, widget.comments![index].comment);
+                                                          //   },
+                                                          //   child: Text("Reply", style: AppStyle.blueNormal16,)),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 10,
+                                                      child: PopupMenuButton(icon: const Icon(Icons.more_vert), itemBuilder: (BuildContext context) {
+                                                        return [
+                                                            if(widget.comments![index].user.username == username) PopupMenuItem(
+                                                              value: "edit",
+                                                              child: const Text("Edit comment"),
+                                                              onTap: (){
+                                                                provider.editMyComment(context: context, editOn: widget.comments![index].comment,commentID:  widget.comments![index].id);
+                                                              },
+                                                            ),
+                                                            if(widget.comments![index].user.username == username) PopupMenuItem(
+                                                              value: "delete",
+                                                              child: const Text("Delete comment"),
+                                                              onTap: (){
+
+                                                              },
+                                                            ),
+                                                            if(widget.comments![index].user.username != username) PopupMenuItem(
+                                                            value: "Report",
+                                                            child: const Text("Report comment"),
+                                                            onTap: (){
+
+                                                            },
+                                                          ),
+                                                          ];
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Text(widget.comments![index].user.email),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    // subtitle: Padding(
+                                    //   padding: const EdgeInsets.only(left: 25.0, top: 20),
+                                    //   child: Column(
+                                    //     children:
+                                    //     [
+                                    //       if(widget.comments![index].reply.isNotEmpty) ...List.generate(widget.comments![index].reply.length, (i){
+                                    //         return ListTile(
+                                    //           title: Row(
+                                    //             crossAxisAlignment: CrossAxisAlignment.start,
+                                    //             children: [
+                                    //               ClipOval(child: UtilityHelper.image("https://scontent.fdel72-1.fna.fbcdn.net/v/t39.30808-6/355482789_3551846318425242_4960182591060623934_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=AnRkGOVWizoAX-O4dEW&_nc_ht=scontent.fdel72-1.fna&oh=00_AfDmo8PgOQL52u6ewobm5mrTzYq-aIdjC4_LjLOfup1SnA&oe=65326460", height: 40, width: 40),),
+                                    //               sizedBox(wid: 5),
+                                    //               Text(widget.comments![index].reply[i].content),
+                                    //               const Expanded(child: SizedBox()),
+                                    //               const Icon(Icons.more_vert),
+                                    //             ],
+                                    //           ),
+                                    //         );
+                                    //       })
+                                    //     ],
+                                    //   ),
+                                    // ),
+                                  );
+                                }
+                            ),
+                          ],
+                        );
+                      }),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 100,
+                  child: Consumer<PostCardCommentViewModel>(builder: (context, provider, child) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          flex: 7,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if(PostCardCommentViewModel.editComment.isNotEmpty) Container(
+                                height: 20,
+                                child: Text(PostCardCommentViewModel.editComment),
+                              ),
+                              TextFormField(
+                                textInputAction: TextInputAction.next,
+                                autofocus: true,
+                                controller: provider.commentCont,
+                                focusNode: provider.commentFocus,
+                                textAlign: TextAlign.start,
+                                onFieldSubmitted: (_) async {
+                                  await provider.sendComment(postID: widget.postId, context: context);
+                                },
+                                decoration: const InputDecoration(
+                                    prefixIcon: Icon(
+                                      FontAwesomeIcons.comment,
+                                      color: AppColors.blueSplashScreen,
+                                    ),
+                                    border: OutlineInputBorder(
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(20)),
+                                        borderSide:
+                                        BorderSide(width: 2, color: AppColors.black)),
+                                    hintText: AppStrings.writeComment,
+                                    label: Text(AppStrings.comment),
+                                    constraints: BoxConstraints(
+                                      maxWidth: 400,
+                                    ),
+                                    hoverColor: AppColors.blueAccent),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: InkWell(
+                            onTap:() async {
+                              await provider.sendComment(postID:  widget.postId, context: context);
+                            },
+                            child: const CircleAvatar(
+                              radius: 30,
+                              backgroundColor: AppColors.black,
+                              child: Icon(FontAwesomeIcons.baseballBatBall, color: AppColors.white,),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  }),
+                ),
+                SizedBox(height: MediaQuery.of(context).viewInsets.bottom,)
               ],
             ),
           ),

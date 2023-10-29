@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -33,8 +34,8 @@ class _AddPostViewState extends State<AddPostView> {
             padding: EdgeInsets.zero,
             tooltip: "Go back",
             enableFeedback: true,
-            icon: const Icon(
-              Icons.arrow_back_ios,
+            icon: Icon(!Platform.isAndroid?
+              Icons.arrow_back_ios:Icons.arrow_back,
               color: AppColors.white,
             ),
           ),

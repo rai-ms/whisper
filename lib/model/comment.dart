@@ -115,10 +115,12 @@ class Data {
 }
 
 class APIResponseComment {
+  final String id;
   final String comment;
   final APIResponseUser user;
 
   APIResponseComment({
+    required this.id,
     required this.comment,
     required this.user,
   });
@@ -126,6 +128,7 @@ class APIResponseComment {
   factory APIResponseComment.fromJson(Map<String, dynamic> json) {
     return APIResponseComment(
       comment: json['comment'],
+      id: json['_id'],
       user: APIResponseUser.fromJson(json['User']),
     );
   }

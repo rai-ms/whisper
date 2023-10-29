@@ -44,11 +44,11 @@ class AppTextFormField extends StatelessWidget {
         labelText: labelText,
         hintStyle: hintStyle,
         isCollapsed: isCollapsed,
+        hintText: hintText,
+        label:label,
         prefixIcon: !isPrefixIconExist ? null : prefixIcon ?? const Icon(Icons.person,color: AppColors.blueSplashScreen,),
         border: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(20),), borderSide: BorderSide(width: 2, color: enableBorderColor ?? AppColors.black),),
-        hintText: hintText,
         disabledBorder: OutlineInputBorder(borderRadius: const BorderRadius.all( Radius.circular(20),), borderSide: BorderSide(width: 2, color: disableBorderColor ?? AppColors.black),),
-        label:label,
         enabledBorder: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(20),), borderSide: BorderSide(width: 2, color: enableBorderColor ?? AppColors.black),),
         constraints: const BoxConstraints(
           maxWidth: 400,

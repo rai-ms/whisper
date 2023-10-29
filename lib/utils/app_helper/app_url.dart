@@ -24,4 +24,5 @@ class AppUrl
   static const followUserEndPoint = 'https://harshitsocial.appskeeper.in/api/v1/user/followUser?followingId=';
   static const postDislikeEndPoint = 'https://harshitsocial.appskeeper.in/api/v1/user/postDislike?postId=';
   static const postLikeEndPoint = 'https://harshitsocial.appskeeper.in/api/v1/user/postLike?postId=';
+  static const editProfileEndPoint = 'https://harshitsocial.appskeeper.in/api/v1/user/editProfileEndPoint';
 }

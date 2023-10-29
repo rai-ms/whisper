@@ -27,13 +27,11 @@ class SearchResponseUser {
   final String id;
   final String username;
   final String email;
-  final String password;
 
   SearchResponseUser({
     required this.id,
     required this.username,
     required this.email,
-    required this.password,
   });
 
   factory SearchResponseUser.fromJson(Map<String, dynamic> json) {
@@ -41,7 +39,6 @@ class SearchResponseUser {
       id: json['_id'],
       username: json['username'],
       email: json['email'],
-      password: json['password'],
     );
   }
 }

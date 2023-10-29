@@ -3,6 +3,7 @@ import 'package:whisper/utils/routes/route_name.dart';
 import 'package:whisper/view/forget_password_view/forget_password_view.dart';
 import 'package:whisper/view/settings_view/settings_view.dart';
 import '../../view/add_post_view/add_post_view.dart';
+import '../../view/edit_profile_view/edit_profile_view.dart';
 import '../../view/home_view/home_view.dart';
 import '../../view/intro_view/intro_view.dart';
 import '../../view/login_view/login_view.dart';
@@ -33,6 +34,8 @@ class NavigateRoute {
         return MaterialPageRoute(builder: (context) => const AddPostView());
       case RouteName.profileView:
         return MaterialPageRoute(builder: (context) => const ProfileView());
+      case RouteName.editProfileView:
+        return MaterialPageRoute(builder: (context) => const EditProfileView());
       case RouteName.otpAuthView:
         Map<String, dynamic> mp = settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(

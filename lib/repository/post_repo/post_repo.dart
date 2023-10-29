@@ -82,7 +82,7 @@ class PostRepository {
     header['Authorization'] = token!;
     await _baseAPIServices.getAPI("${AppUrl.listCommentsEndPoint}?postId=$id", header).then((value) {
       response = value;
-      // debugPrint(value.toString());
+      debugPrint(value.toString());
     }).onError((error, stackTrace){
       throw AppError(error.toString());
     });
@@ -152,6 +152,22 @@ class PostRepository {
     header['Authorization'] = token!;
     await _baseAPIServices.postAPIWithHeader("https://harshitsocial.appskeeper.in/api/v1/user/reportPost?postId=$postId", {}, header).then((value){
       debugPrint("Report on post :$postId status is $value");
+      statusCode = value['statusCode'].toString();
+    }).onError((error, stackTrace){
+      throw AppError("Error is:$error");
+    });
+    return statusCode;
+  }
+
+  Future<String?> editComment({required String postId, required String commendID, required String comment}) async {
+    String? statusCode;
+    debugPrint("Going to edit on $postId");
+    String? token = await UserData.getUserAccessToken();
+    header['Authorization'] = token!;
+    await _baseAPIServices.patchAPI("https://harshitsocial.appskeeper.in/api/v1/user/editComment?postId=$postId&commentId=$commendID", {
+      "comment": comment,
+    }, header).then((value){
+      debugPrint("Edited on post :$postId comment $commendID status is $value");
       statusCode = value['statusCode'].toString();
     }).onError((error, stackTrace){
       throw AppError("Error is:$error");

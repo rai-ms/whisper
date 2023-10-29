@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:whisper/data/app_exceptions/app_exception.dart';
+import 'package:whisper/model/profile_edit_payload.dart';
 import 'package:whisper/model/user_profile_response.dart';
 import 'package:whisper/utils/app_helper/app_url.dart';
 import 'package:whisper/utils/app_helper/user_data_preferences/user_data.dart';
@@ -132,6 +133,20 @@ class ProfileRepository {
     });
     // debugPrint("Status code of profile res is: ${res!.statusCode}");
     return apiRes;
+  }
+
+  Future<Map<String, dynamic>?> editProfile(ProfileEditPayload profileEditPayload) async {
+    Map<String, dynamic>? res;
+    String? id = await UserData.getUserId();
+    headers['Authorization'] = id!;
+
+    await _baseAPIServices.patchAPI(AppUrl.editProfileEndPoint, profileEditPayload.toJson(), headers).then((value){
+        debugPrint("Profile Updated Successfully response is:$value");
+        res = value;
+    }).onError((error, stackTrace){
+        debugPrint("Profile Updation caused error, error is:$error");
+    });
+    return res;
   }
 
 }

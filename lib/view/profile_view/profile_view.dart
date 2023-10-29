@@ -6,6 +6,7 @@ import 'package:whisper/model/user_profile_response.dart';
 import 'package:whisper/repository/profile_repo/profile_repo.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
 import 'package:whisper/utils/app_helper/app_style.dart';
+import 'package:whisper/utils/routes/route_name.dart';
 import 'package:whisper/view/profile_view/widgets/posts_follower_following.dart';
 import 'package:whisper/view/profile_view/widgets/profile_top_view.dart';
 import 'package:whisper/view_model/personal_profile_view_model/personal_profile_view_model.dart';
@@ -115,18 +116,23 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                         sizedBox(wid: 10),
                         Expanded(
                           flex: 4,
-                          child: Container(
-                            height: 50,
-                            decoration: BoxDecoration(
-                              color: AppColors.grey,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Row(
-                              children: [
-                                sizedBox(wid: 5),
-                                const Icon(Icons.edit, color: AppColors.white),
-                                Text("Edit Profile", style: AppStyle.whiteBold16,),
-                              ],
+                          child: InkWell(
+                            onTap: (){
+                              Navigator.pushNamed(context, RouteName.editProfileView);
+                            },
+                            child: Container(
+                              height: 50,
+                              decoration: BoxDecoration(
+                                color: AppColors.grey,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Row(
+                                children: [
+                                  sizedBox(wid: 5),
+                                  const Icon(Icons.edit, color: AppColors.white),
+                                  Text("Edit Profile", style: AppStyle.whiteBold16,),
+                                ],
+                              ),
                             ),
                           ),),
                         sizedBox(wid: 10),
