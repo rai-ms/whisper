@@ -12,13 +12,11 @@ class PostViewApiResponseProvider extends ChangeNotifier{
 
   final ProfileRepository profileRepo = ProfileRepository();
 
+  ApiResponseUserDataModel? res;
+
   Future<ApiResponseUserDataModel?> getProfile({String? id}) async {
-    ApiResponseUserDataModel? res;
     await ProfileRepository.getProfile(id: id).then((ApiResponseUserDataModel? userProfileDataResponse){
       res = userProfileDataResponse;
-      if(res!.data!.length != null ) {
-        // debugPrint("Length is-------> :${res!.data!.length}");
-      }
     }).onError((error, stackTrace){
       throw AppError("$error");
     });

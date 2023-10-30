@@ -20,6 +20,7 @@ class SearchUserViewModel extends ChangeNotifier
     }
 
     SearchResponseUserData? searchResponseUserData;
+
     final SearchRepository searchRepository = SearchRepository();
 
     Future searchUser({required String username}) async {
@@ -48,6 +49,7 @@ class SearchUserViewModel extends ChangeNotifier
     }
 
     final ProfileRepository profileRepository = ProfileRepository();
+
     ApiResponseUserDataModel? apiResponseUserModel;
 
     Future<ApiResponseUserDataModel?> getProfile(String id) async {
@@ -57,7 +59,7 @@ class SearchUserViewModel extends ChangeNotifier
             // debugPrint("Fetched userid: $id");
             notifyListeners();
             // debugPrint("${res!.data[0].username}");
-        }).onError((error, stackTrace){
+        }).onError((error, stackTrace) {
             debugPrint("Error in fetch profile search user view model $error");
             throw AppError(error.toString());
         });

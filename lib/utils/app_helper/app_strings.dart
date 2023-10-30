@@ -38,6 +38,7 @@ class AppStrings {
   static const String deleteForAll = "Delete for All";
   static const String deleteForMe = "Delete for Me";
   static const String forwarded = "Forwarded";
+  static const String followers = "Followers";
   static const String multiForwarded = "M-For";
   static const String oo = "00:00:00.000";
   static const String accountCreation =

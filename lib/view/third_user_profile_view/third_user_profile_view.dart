@@ -6,6 +6,7 @@ import 'package:whisper/global/global.dart';
 import 'package:whisper/res/components/app_rounded_button.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
 import 'package:whisper/utils/app_helper/app_strings.dart';
+import 'package:whisper/utils/app_helper/app_style.dart';
 import 'package:whisper/view_model/search_user/search_user_view_model.dart';
 
 class ThirdUserProfileView extends StatefulWidget {
@@ -19,7 +20,6 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
 
   @override
   Widget build(BuildContext context) {
-    // debugPrint("=======================id is ${widget.id} ========================");
     return MultiProvider(providers: [ChangeNotifierProvider(create: (context) => SearchUserViewModel())],
       child: Scaffold(
         appBar: AppBar(
@@ -28,13 +28,17 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
             Navigator.pop(context);
           },child: const Icon(FontAwesomeIcons.arrowLeft),),
         ),
-        body: Center(child: Consumer<SearchUserViewModel>(
+        body: Center(
+          child: Consumer<SearchUserViewModel>(
             builder: (context, pr1, ch) {
               return Column(
                 children: [
                   FutureBuilder(
                       future: pr1.getProfile(widget.id),
                       builder: (context, snapshot) {
+                        // if(snapshot.hasData){
+                        //   pr1.apiResponseUserModel = snapshot.data;
+                        // }
                         if(pr1.apiResponseUserModel != null){
                           return Column(
                             children: [
@@ -90,9 +94,16 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                         else {
                           return const Text("No Data Found!");
                         }
-
                       }
                   ),
+                  sizedBox(hei: 30),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(AppStrings.followers, style: AppStyle.primaryColorDarkMedium25(context),),
+                    ],
+                  ),
+                  sizedBox(hei: 30),
                   Expanded(
                     child: FutureBuilder(
                       future: pr1.getFollowers(id: widget.id),
@@ -101,8 +112,7 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                           return ListView.builder(
                             itemBuilder: (context, index){
                               return Container(
-                                height: 100,
-                                width: 350,
+                                width: getFullWidth(context),
                                 decoration: const BoxDecoration(
                                   color: AppColors.grey
                                 ),

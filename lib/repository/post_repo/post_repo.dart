@@ -12,6 +12,7 @@ import '../../utils/app_helper/app_url.dart';
 import '../../utils/app_helper/user_data_preferences/user_data.dart';
 
 class PostRepository {
+
   final BaseApiServices _baseAPIServices = NetworkApiServices();
 
   Map<String, String> header = {
@@ -28,7 +29,7 @@ class PostRepository {
       };
       await _baseAPIServices.postAPIWithHeader(AppUrl.createPostEndPoint, data.toJson(), resetHeader).then((value) {
         try {
-          debugPrint("$value is the API response");
+          // debugPrint("$value is the API response");
           res = ApiResponsePostCreatedModel.fromJson(value);
         } catch (e){
           debugPrint("$e is the API error for pic upload");
@@ -39,7 +40,7 @@ class PostRepository {
         throw AppError(error.toString());
       });
     }).onError((error, stackTrace) {
-      debugPrint("UserId fetch error $error");
+      throw AppError(error.toString());
     });
     // debugPrint("Returning ${res!.statusCode}");
     return res;
@@ -64,12 +65,14 @@ class PostRepository {
     await UserData.getUserAccessToken().then((value) async {
       header['Authorization'] = value!;
       await _baseAPIServices.getAPI(AppUrl.getMyFeedEndPoint, header).then((value) {
-        debugPrint(value.toString());
+        // debugPrint(value.toString());
         responses = UserFeedModel.fromJson(value);
       }).onError((error, stackTrace) {
-        debugPrint("Error Occurs $error");
+        throw AppError(error.toString());
       });
-    }).onError((error, stackTrace) {});
+    }).onError((error, stackTrace) {
+      throw AppError(error.toString());
+    });
     // debugPrint("ReponseList length in repo is ${responses.length}");
     return responses;
   }
@@ -80,7 +83,7 @@ class PostRepository {
     header['Authorization'] = token!;
     await _baseAPIServices.getAPI("${AppUrl.listCommentsEndPoint}?postId=$id", header).then((value) {
       response = value;
-      debugPrint(value.toString());
+      // debugPrint(value.toString());
     }).onError((error, stackTrace){
       throw AppError(error.toString());
     });
@@ -105,9 +108,9 @@ class PostRepository {
     String? token = await UserData.getUserAccessToken();
     // header['Authorization'] = "Bearer "+token!;
     header['Authorization'] = token!;
-    debugPrint("$header is the header, model is ${model.toMap()}");
+    // debugPrint("$header is the header, model is ${model.toMap()}");
     await _baseAPIServices.postAPIWithHeader("https://harshitsocial.appskeeper.in/api/v1/user/createComment?postId=$postId", model.toMap(), header).then((value){
-      debugPrint("Comment Added! $value");
+      // debugPrint("Comment Added! $value");
     }).onError((error, stackTrace){
       throw AppError("Error is:$error");
     });
@@ -132,10 +135,10 @@ class PostRepository {
     String? statusCode;
     String? token = await UserData.getUserAccessToken();
     header['Authorization'] = token!;
-    debugPrint("Id is $postId");
+    // debugPrint("Id is $postId");
     await _baseAPIServices.deleteAPI("${AppUrl.postDislikeEndPoint}$postId",
         {}, header).then((value){
-          debugPrint("Post Disliked!");
+          // debugPrint("Post Disliked!");
       statusCode = value['statusCode'].toString();
     }).onError((error, stackTrace){
       throw AppError("Error is:$error");
@@ -149,7 +152,7 @@ class PostRepository {
     String? token = await UserData.getUserAccessToken();
     header['Authorization'] = token!;
     await _baseAPIServices.postAPIWithHeader("https://harshitsocial.appskeeper.in/api/v1/user/reportPost?postId=$postId", {}, header).then((value){
-      debugPrint("Report on post :$postId status is $value");
+      // debugPrint("Report on post :$postId status is $value");
       statusCode = value['statusCode'].toString();
     }).onError((error, stackTrace){
       throw AppError("Error is:$error");
@@ -159,13 +162,13 @@ class PostRepository {
 
   Future<String?> editComment({required String postId, required String commendID, required String comment}) async {
     String? statusCode;
-    debugPrint("Going to edit on $postId");
+    // debugPrint("Going to edit on $postId");
     String? token = await UserData.getUserAccessToken();
     header['Authorization'] = token!;
     await _baseAPIServices.patchAPI("https://harshitsocial.appskeeper.in/api/v1/user/editComment?postId=$postId&commentId=$commendID", {
       "comment": comment,
     }, header).then((value){
-      debugPrint("Edited on post :$postId comment $commendID status is $value");
+      // debugPrint("Edited on post :$postId comment $commendID status is $value");
       statusCode = value['statusCode'].toString();
     }).onError((error, stackTrace){
       throw AppError("Error is:$error");
@@ -175,11 +178,11 @@ class PostRepository {
 
   Future<String?> deleteComment({required String postId, required String commentID,}) async {
     String? statusCode;
-    debugPrint("Going to delete on $postId");
+    // debugPrint("Going to delete on $postId");
     String? token = await UserData.getUserAccessToken();
     header['Authorization'] = token!;
     await _baseAPIServices.deleteAPI("https://harshitsocial.appskeeper.in/api/v1/user/deleteComment?postId=$postId&commentId=$commentID",{}, header).then((value){
-      debugPrint("deleted on post :$postId comment $commentID status is $value");
+      // debugPrint("deleted on post :$postId comment $commentID status is $value");
       statusCode = value['statusCode'].toString();
     }).onError((error, stackTrace){
       throw AppError("Error is:$error");

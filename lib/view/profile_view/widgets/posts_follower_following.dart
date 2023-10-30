@@ -14,15 +14,16 @@ import '../../../view_model/personal_profile_view_model/api_res_provider.dart';
 import 'friends_list.dart';
 
 class PostFollowerFollowing extends StatefulWidget {
-  const PostFollowerFollowing({super.key});
-
+  const PostFollowerFollowing({super.key,});
 
   @override
   State<PostFollowerFollowing> createState() => _PostFollowerFollowingState();
 }
 
 class _PostFollowerFollowingState extends State<PostFollowerFollowing> {
+
   ApiResponseUserDataModel? response;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -85,7 +86,8 @@ class _PostFollowerFollowingState extends State<PostFollowerFollowing> {
                   ],
                 ),
                 const SizedBox(height: 10,),
-                if(provider.index == 0) FutureBuilder<ApiResponseUserDataModel?>(
+                // if(provider2.res != null) PostList(postList: provider2.res!.data[0].userPosts,),
+                if(provider.index == 0 && provider2.res != null) FutureBuilder<ApiResponseUserDataModel?>(
                   key: const PageStorageKey<String>(StoragePathKey.postListPathFuture) ,
                   future: provider2.getProfile(),
                   builder: (context,AsyncSnapshot<ApiResponseUserDataModel?> snapshot) {
@@ -103,6 +105,7 @@ class _PostFollowerFollowingState extends State<PostFollowerFollowing> {
                     }
                     else if(snapshot.hasData){
                       response = snapshot.data;
+                      provider2.res = snapshot.data;
                       // debugPrint(response!.data![0].userPosts.length.toString());
                       return SizedBox(
                         height: 500,

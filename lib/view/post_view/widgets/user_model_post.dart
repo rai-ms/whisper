@@ -28,13 +28,11 @@ class _UserRowPostState extends State<UserRowPost> {
     super.initState();
     loadData();
   }
+
   String? userId;
 
   loadData() async {
     userId = await UserData.getUserId();
-    debugPrint("----------------------------------UserId Fetched----------------------------------$userId");
-    debugPrint("----------------------------------PostedBy Fetched----------------------------------${widget.postedById}");
-
   }
 
   @override
@@ -80,14 +78,6 @@ class _UserRowPostState extends State<UserRowPost> {
                     // pr.reportPost(widget.postId!);
                   },
                 ),
-                // const PopupMenuItem(
-                //   value: "share",
-                //   child: Text("edit comment"),
-                // ),
-                // const PopupMenuItem(
-                //   value: "delete",
-                //   child: Text("delete comment"),
-                // ),
               ]; },);
           }
         )

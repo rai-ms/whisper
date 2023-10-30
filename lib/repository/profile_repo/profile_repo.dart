@@ -28,9 +28,9 @@ class ProfileRepository {
     id ??= await UserData.getUserId();
 
     header['Authorization'] = token!;
-    debugPrint("Header is $header and id is $id");
+    // debugPrint("Header is $header and id is $id");
     await _baseAPIServices.getAPI("${AppUrl.getMyProfileEndPoint}?userId=$id", header).then((value) {
-      debugPrint("Profile Data fetched $value");
+      // debugPrint("Profile Data fetched $value");
       res = ApiResponseUserDataModel.fromJson(value);
       // debugPrint(res!.data.length.toString());
       // debugPrint(value.toString());
