@@ -48,9 +48,9 @@ class SearchUserViewModel extends ChangeNotifier
     }
 
     final ProfileRepository profileRepository = ProfileRepository();
-    APIResponseUserModel? apiResponseUserModel;
+    ApiResponseUserDataModel? apiResponseUserModel;
 
-    Future<APIResponseUserModel?> getProfile(String id) async {
+    Future<ApiResponseUserDataModel?> getProfile(String id) async {
         // debugPrint("Fetching userid: $id");
         ProfileRepository.getProfile(id: id).then((value){
             apiResponseUserModel = value;

@@ -52,4 +52,10 @@ class UnableToLogin extends AppException {
 class InternalServerException extends AppException {
   InternalServerException([String? message]) : super(message, AppStrings.errorLogin);
 }
+class AWSBucketException extends AppException {
+  AWSBucketException([String? message]) : super(message, "AWS Bucket Error:");
+}
+class Uint8ListConvertException extends AppException {
+  Uint8ListConvertException([String? message]) : super(message, "Uint8ListConvertException conversion error:");
+}
 

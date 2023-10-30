@@ -20,17 +20,13 @@ class CommentLikeShareBar extends StatefulWidget {
   final List<APIResponseComment>? comments;
   final List<ApiResponseLike>? likes;
   final List<Share>? share;
-  final FeedUserPost? post;
+  final UserPosts? post;
 
   @override
   State<CommentLikeShareBar> createState() => _CommentLikeShareBarState();
 }
 
 class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
-
-  bool isLiked = false;
-  int likeCount = 1;
-  int empty = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -56,10 +52,12 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
           // Icon(FontAwesomeIcons.thumbsUp, color: Theme.of(context).primaryColorDark,),
           Consumer<LikeViewModel>(
             builder: (context, provider, child) {
+              provider.post = widget.post;
+              provider.like = widget.post?.isLiked ?? false;
               return InkWell(
                 onTap:(){
-                  // isLiked = !isLiked;
-                  provider.likePost(widget.postId, widget.post!.isLiked);
+                  provider.likePost(widget.postId, provider.like);
+
                 } ,
                 onLongPress: (){
                   provider.showLikeBottomSheet(showLikeBottomSheet);
@@ -68,14 +66,14 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                   children: [
                     if(widget.post != null) Column(
                       children: [
-                        Icon(!widget.post!.isLiked? FontAwesomeIcons.thumbsUp :FontAwesomeIcons.solidThumbsUp, color: Theme.of(context).primaryColorDark,),
-                        Text(widget.post!.isLiked?"You ${(widget.likes!.length - 1 == 0)? "Only" : "and ${widget.likes!.length - 1}"}" : widget.post!.likeCount.toString(), style: AppStyle.primaryColorDarkMedium14(context),),
+                        Icon(!provider.like? FontAwesomeIcons.thumbsUp :FontAwesomeIcons.solidThumbsUp, color: Theme.of(context).primaryColorDark,),
+                        Text(provider.post!.isLiked?"You ${(widget.likes!.length - 1 == 0)? "Only" : "and ${widget.likes!.length - 1}"}" : widget.post!.likeCount.toString(), style: AppStyle.primaryColorDarkMedium14(context),),
                         // Text(!isLiked? widget.likes!.length.toString():( widget.likes!.length+ 1).toString(), style: AppStyle.primaryColorDarkMedium14(context),),
                       ],
                     ),
                     if(widget.post == null) Column(
                       children: [
-                        if(widget.post == null) Icon(!isLiked ? FontAwesomeIcons.thumbsUp :FontAwesomeIcons.solidThumbsUp, color: Theme.of(context).primaryColorDark,),
+                        if(widget.post == null) Icon(FontAwesomeIcons.solidThumbsUp, color: Theme.of(context).primaryColorDark,),
                         if(widget.post == null) const Text("0"),
                       ],
                     ),
@@ -88,7 +86,7 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
           Consumer<PostCardCommentViewModel>(
             builder: (context,provider, child,) {
               return InkWell(
-                  onTap:() async{
+                  onTap:() async {
                     String? myUserName = await UserData.getUserUsername();
                     showMyCommentBottomSheet(myUserName ?? "");
                   },
@@ -245,7 +243,7 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
     );
   }
 
-  void showMyCommentBottomSheet(String username){
+  void showMyCommentBottomSheet(String username) {
     if(username == null || username.isEmpty) return;
     showModalBottomSheet(
         shape: const RoundedRectangleBorder(

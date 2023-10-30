@@ -1,39 +1,36 @@
-class APIResponseUserModel {
+class ApiResponseUserDataModel {
   final int statusCode;
   final String type;
-  final List<UserProfile> data;
+  final List<ApiResponseUserProfile> data;
 
-  APIResponseUserModel({
+  ApiResponseUserDataModel({
     required this.statusCode,
     required this.type,
     required this.data,
   });
 
-  factory APIResponseUserModel.fromJson(Map<String, dynamic> json) {
-    final List<dynamic> userProfileList = json['data']['UserPofile'];
-    final List<UserProfile> data = userProfileList.map((userProfileJson) {
-      return UserProfile.fromJson(userProfileJson);
-    }).toList();
-
-    return APIResponseUserModel(
+  factory ApiResponseUserDataModel.fromJson(Map<String, dynamic> json) {
+    return ApiResponseUserDataModel(
       statusCode: json['statusCode'],
       type: json['type'],
-      data: data,
+      data: (json['data']['UserPofile'] as List)
+          .map((userData) => ApiResponseUserProfile.fromJson(userData))
+          .toList(),
     );
   }
 }
 
-class UserProfile {
+class ApiResponseUserProfile {
   final String username;
   final String email;
   final int followerCount;
   final int followingCount;
   final int postCount;
-  final List<UserPost> userPosts;
+  final List<ApiResponseUserPost> userPosts;
   final bool isFollowing;
   final bool isFollower;
 
-  UserProfile({
+  ApiResponseUserProfile({
     required this.username,
     required this.email,
     required this.followerCount,
@@ -44,13 +41,13 @@ class UserProfile {
     required this.isFollower,
   });
 
-  factory UserProfile.fromJson(Map<String, dynamic> json) {
-    final List<dynamic> userPostsList = json['UserPosts'];
-    final List<UserPost> userPosts = userPostsList.map((userPostJson) {
-      return UserPost.fromJson(userPostJson);
-    }).toList();
+  factory ApiResponseUserProfile.fromJson(Map<String, dynamic> json) {
+    final userPostsJson = json['UserPosts'] as List;
+    final userPosts = userPostsJson
+        .map((post) => ApiResponseUserPost.fromJson(post))
+        .toList();
 
-    return UserProfile(
+    return ApiResponseUserProfile(
       username: json['username'],
       email: json['email'],
       followerCount: json['followerCount'],
@@ -63,33 +60,30 @@ class UserProfile {
   }
 }
 
-class UserPost {
+class ApiResponseUserPost {
   final String id;
   final String userId;
   final String url;
-  final String mediaType;
   final String caption;
   final int likeCount;
   final int commentCount;
   final String createdAt;
 
-  UserPost({
-    required this.id,
-    required this.userId,
-    required this.url,
-    required this.mediaType,
-    required this.caption,
-    required this.likeCount,
-    required this.commentCount,
-    required this.createdAt,
-  });
+  ApiResponseUserPost({
+  required this.id,
+  required this.userId,
+  required this.url,
+  required this.caption,
+  required this.likeCount,
+  required this.commentCount,
+  required this.createdAt,
+});
 
-  factory UserPost.fromJson(Map<String, dynamic> json) {
-    return UserPost(
+factory ApiResponseUserPost.fromJson(Map<String, dynamic> json) {
+  return ApiResponseUserPost(
       id: json['_id'],
       userId: json['userId'],
       url: json['url'],
-      mediaType: json['mediaType'],
       caption: json['caption'],
       likeCount: json['likeCount'],
       commentCount: json['commentCount'],
@@ -97,4 +91,3 @@ class UserPost {
     );
   }
 }
-

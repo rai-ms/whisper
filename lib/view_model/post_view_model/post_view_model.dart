@@ -1,21 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:whisper/data/app_exceptions/app_exception.dart';
-import 'package:whisper/model/comment.dart';
 import 'package:whisper/model/feed_response_model.dart';
-import 'package:whisper/res/components/custom_toast.dart';
-import 'package:whisper/utils/app_helper/toast_message.dart';
 import '../../repository/post_repo/post_repo.dart';
 
 class PostViewModel extends ChangeNotifier
 {
 
-  static FeedApiResponse? feedApiResponse;
+  static UserFeedModel? feedApiResponse;
 
 
   static PostRepository postRepo = PostRepository();
 
 
-  static Future<FeedApiResponse?> getAllPost() async {
+  static Future<UserFeedModel?> getAllPost() async {
     await postRepo.getMyFeed().then((value){
       feedApiResponse = value!;
     }).onError((error, stackTrace){
@@ -25,7 +22,7 @@ class PostViewModel extends ChangeNotifier
   }
 
 
-  static getUserProfileData(String id){
+  static getUserProfileData(String id) async {
 
   }
 

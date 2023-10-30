@@ -2,11 +2,13 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:whisper/global/global.dart';
 import 'package:whisper/model/login_payload.dart';
 import 'package:whisper/repository/post_repo/post_repo.dart';
 import 'package:whisper/res/components/custom_toast.dart';
+import 'package:whisper/utils/app_helper/user_data_preferences/user_data.dart';
 
+import '../../aws/aws_upload.dart';
+import '../../model/post_model.dart';
 import '../../model/response.dart';
 
 class AddPostViewModel extends ChangeNotifier
@@ -23,12 +25,11 @@ class AddPostViewModel extends ChangeNotifier
     notifyListeners();
   }
 
-
   bool isPicked = false;
   File? pickedImage;
 
-  final String _imgUrl = "https://lh3.googleusercontent.com/p/AF1QipOc4D_FziIEFMON03VmBkBcIbZJCVhRNgdbwuoJ=s1360-w1360-h1020";
-  String get imgUrl => _imgUrl;
+  String? _imgUrl = "https://lh3.googleusercontent.com/p/AF1QipOc4D_FziIEFMON03VmBkBcIbZJCVhRNgdbwuoJ=s1360-w1360-h1020";
+  String get imgUrl => _imgUrl!;
 
   fetchFromCamera() async {
     await requestPermission().then((value) async{
@@ -63,18 +64,6 @@ class AddPostViewModel extends ChangeNotifier
 
   Future<void> requestPermission() async {
     PermissionStatus status = await Permission.camera.request();
-    // Check the permission status
-    // if (status.isGranted) {
-    // debugPrint("Going to fetch Image");
-    // await fetchImage();
-    // } else {
-    //   // debugPrint("Going to fetch Image in else");
-    //   await fetchImage();
-    //   // debugPrint("Image Fetched now going to upload in else");
-    //   // await uploadImage();
-    //   // debugPrint("Image Uploaded $_imgUrl in else");
-    //   // openAppSettings();
-    // }
   }
 
   Future<void> uploadImage() async {
@@ -89,9 +78,13 @@ class AddPostViewModel extends ChangeNotifier
     setLoading(true);
     String caption = postContentCont.text.toString().trim();
     bool isCaption = caption.isNotEmpty;
+    String? userId = await UserData.getUserId();
+
     if(isPicked){
-      await postRepo.createPost(PostPayload(url: _imgUrl, caption : isCaption? caption :null)).then((UploadPostResponse? postResponse){
-        if(postResponse!.statusCode == 200){
+      _imgUrl =  await S3Services().upload(file: pickedImage!, userid: userId!);
+      debugPrint("Image Url Received Success $_imgUrl");
+      await postRepo.createPost(PostPayload(url: _imgUrl!, caption : isCaption? caption :null)).then((ApiResponsePostCreatedModel? res){
+        if(res!.statusCode == 200){
           CustomToast(message: "Post Uploaded Successfully", context: context);
           postContentCont.clear();
           isPicked = false;

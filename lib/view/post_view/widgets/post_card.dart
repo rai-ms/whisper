@@ -6,14 +6,13 @@ import 'package:whisper/utils/routes/route_name.dart';
 import 'package:whisper/view/post_view/widgets/user_model_post.dart';
 import 'package:whisper/view_model/personal_profile_view_model/api_res_provider.dart';
 import '../../../components/utility_helper.dart';
-import '../../../model/comment.dart';
 import 'expandable_text.dart';
 import 'like_comment_share_bar.dart';
 
 class PostCard extends StatefulWidget {
   const PostCard({super.key, required this.post, required this.userData});
-  final FeedUserPost post;
-  final FeedUserData userData;
+  final UserPosts post;
+  final UserDatas userData;
   @override
   State<PostCard> createState() => _PostCardState();
 }
@@ -43,7 +42,7 @@ class _PostCardState extends State<PostCard> {
                   onTap: (){
                     Navigator.pushNamed(context, RouteName.thirdUserProfileView, arguments: {"id" : widget.userData.id});
                   },
-                  child: UserRowPost(postedBy: widget.userData.username, postId: widget.post.id,)),
+                  child: UserRowPost(postedBy: widget.userData.username, postId: widget.post.id,postedById: widget.post.userId,)),
                 sizedBox(hei: 12),
                 UtilityHelper.image(widget.post.url, width: getFullWidth(context)),
                 sizedBox(hei: 10),
@@ -55,11 +54,11 @@ class _PostCardState extends State<PostCard> {
                 Consumer<PostViewApiResponseProvider>(
                     builder: (context, apiResProvider, child) {
                       return FutureBuilder<LikeAndCommentOfApiResponse?>(
-                          future: PostViewApiResponseProvider.getLikesAndComments(widget.post.id),
+                          future: PostViewApiResponseProvider.getLikesAndComments(widget.post.id ?? ""),
                           builder: (context, snapshot) {
                             if(snapshot.hasData){
                               // debugPrint("${snapshot.data!.comments.length}");
-                              return CommentLikeShareBar(comments: snapshot.data!.comments!.data!.comments!, postId: widget.post.id,post: widget.post,likes: snapshot.data!.likes!.data.likes,);
+                              return CommentLikeShareBar(comments: snapshot.data!.comments!.data!.comments!, postId: widget.post.id ?? "",post: widget.post,likes: snapshot.data!.likes!.data.likes,);
                             }
                             else if(snapshot.connectionState == ConnectionState.waiting){
                               return const CommentLikeShareBar(postId: "",);

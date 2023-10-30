@@ -7,6 +7,7 @@ import 'package:whisper/utils/app_helper/user_data_preferences/user_data.dart';
 import '../../data/network/base_api_service.dart';
 import '../../data/network/network_api_services.dart';
 import '../../model/follower_response.dart';
+import '../../model/following_response_model.dart';
 
 class ProfileRepository {
 
@@ -17,19 +18,20 @@ class ProfileRepository {
     "Content-Type": "application/json; charset=UTF-8",
   };
 
-  static Future<APIResponseUserModel?> getProfile ({String? id}) async {
+  static Future<ApiResponseUserDataModel?> getProfile ({String? id}) async {
     Map<String, String> header = {
       "Authorization": "Basic c29jaWFsTWVkaWE6c29jaWFsQDEyMw==",
       "Content-Type": "application/json; charset=UTF-8",
     };
-    APIResponseUserModel? res;
+    ApiResponseUserDataModel? res;
     String? token = await UserData.getUserAccessToken();
     id ??= await UserData.getUserId();
 
     header['Authorization'] = token!;
+    debugPrint("Header is $header and id is $id");
     await _baseAPIServices.getAPI("${AppUrl.getMyProfileEndPoint}?userId=$id", header).then((value) {
-      // debugPrint("Profile Data fetched $value");
-      res = APIResponseUserModel.fromJson(value);
+      debugPrint("Profile Data fetched $value");
+      res = ApiResponseUserDataModel.fromJson(value);
       // debugPrint(res!.data.length.toString());
       // debugPrint(value.toString());
     }).onError((error, stackTrace){
@@ -66,8 +68,8 @@ class ProfileRepository {
     return apiRes;
   }
 
-  static Future getFollowing({String? id}) async {
-    Map<String, dynamic>? apiRes;
+  static Future<GetFollowingApiRes?> getFollowing({String? id}) async {
+    GetFollowingApiRes? apiRes;
     Map<String, String> header = {
       "Authorization": "Basic c29jaWFsTWVkaWE6c29jaWFsQDEyMw==",
       "Content-Type": "application/json; charset=UTF-8",
@@ -78,13 +80,13 @@ class ProfileRepository {
       id = await UserData.getUserId();
       debugPrint("Id is $id and token is $token");
     }
-
+    header['Authorization'] = token!;
     await _baseAPIServices.getAPI("${AppUrl.getFollowingEndPoint}?userId=$id", header).then((value) {
-      debugPrint("Following Data fetched $value");
-      debugPrint(value.toString());
-      apiRes = value;
+      // debugPrint("Following Data fetched $value");
+      // debugPrint(value.toString());
+      apiRes = GetFollowingApiRes.fromJson(value);
     }).onError((error, stackTrace){
-      debugPrint("Error in profile fetch $error");
+      debugPrint("Error in following fetch $error");
       throw AppError("Error----->$error");
     });
     // debugPrint("Status code of profile res is: ${res!.statusCode}");

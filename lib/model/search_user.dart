@@ -27,11 +27,15 @@ class SearchResponseUser {
   final String id;
   final String username;
   final String email;
+  final String? fullName;
+  final String? profilePic;
 
   SearchResponseUser({
     required this.id,
     required this.username,
     required this.email,
+    required this.fullName,
+    required this.profilePic,
   });
 
   factory SearchResponseUser.fromJson(Map<String, dynamic> json) {
@@ -39,13 +43,13 @@ class SearchResponseUser {
       id: json['_id'],
       username: json['username'],
       email: json['email'],
+      fullName: json['fullName'],
+      profilePic: json['profilePic'],
     );
   }
 }
 
-
-class SearchUserPayload
-{
+class SearchUserPayload {
   String? username;
 
   SearchUserPayload({this.username});

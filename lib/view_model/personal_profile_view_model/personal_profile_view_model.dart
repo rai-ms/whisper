@@ -1,7 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:whisper/data/app_exceptions/app_exception.dart';
-import 'package:whisper/model/user_profile_response.dart';
-import 'package:whisper/repository/profile_repo/profile_repo.dart';
 
 class PersonalProfileViewModel extends ChangeNotifier {
   int _index = 0;

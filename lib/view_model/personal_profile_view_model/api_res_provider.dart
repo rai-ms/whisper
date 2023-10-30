@@ -4,6 +4,7 @@ import 'package:whisper/model/like.dart';
 import 'package:whisper/repository/post_repo/post_repo.dart';
 import '../../data/app_exceptions/app_exception.dart';
 import '../../model/follower_response.dart';
+import '../../model/following_response_model.dart';
 import '../../model/user_profile_response.dart';
 import '../../repository/profile_repo/profile_repo.dart';
 
@@ -11,9 +12,9 @@ class PostViewApiResponseProvider extends ChangeNotifier{
 
   final ProfileRepository profileRepo = ProfileRepository();
 
-  Future<APIResponseUserModel?> getProfile({String? id}) async {
-    APIResponseUserModel? res;
-    await ProfileRepository.getProfile(id: id).then((APIResponseUserModel? userProfileDataResponse){
+  Future<ApiResponseUserDataModel?> getProfile({String? id}) async {
+    ApiResponseUserDataModel? res;
+    await ProfileRepository.getProfile(id: id).then((ApiResponseUserDataModel? userProfileDataResponse){
       res = userProfileDataResponse;
       if(res!.data!.length != null ) {
         // debugPrint("Length is-------> :${res!.data!.length}");
@@ -71,18 +72,21 @@ class PostViewApiResponseProvider extends ChangeNotifier{
     return response;
   }
 
-  static Future getFollowing({String? id}) async {
-    ProfileRepository.getFollowing(id: id).then((value){
-      debugPrint("Response of getFollowing is: $value");
+  static Future<GetFollowingApiRes?> getFollowing({String? id}) async {
+    GetFollowingApiRes? res;
+    await ProfileRepository.getFollowing(id: id).then((value){
+      // debugPrint("Response of getFollowing is: ************************************************* $value *************************************************");
+      res = value;
     }).onError((error, stackTrace){
       debugPrint("Error is $error");
     });
+
+    return res;
   }
 
 }
 
-class LikeAndCommentOfApiResponse
-{
+class LikeAndCommentOfApiResponse {
   ApiResponseLikesData? likes;
   APIResponseCommentModel? comments;
 

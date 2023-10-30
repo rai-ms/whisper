@@ -7,6 +7,7 @@ import '../../data/network/base_api_service.dart';
 import '../../data/network/network_api_services.dart';
 import '../../model/feed_response_model.dart';
 import '../../model/like.dart';
+import '../../model/post_model.dart';
 import '../../utils/app_helper/app_url.dart';
 import '../../utils/app_helper/user_data_preferences/user_data.dart';
 
@@ -18,24 +19,21 @@ class PostRepository {
     "Content-Type": "application/json; charset=UTF-8",
   };
 
-  Future<UploadPostResponse?> createPost(PostPayload data) async {
-    UploadPostResponse? res;
+  Future<ApiResponsePostCreatedModel?> createPost(PostPayload data) async {
+    ApiResponsePostCreatedModel? res;
     await UserData.getUserAccessToken().then((accessToken) async {
       Map<String, String> resetHeader = {
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': accessToken!,
       };
-      await _baseAPIServices
-          .postAPIWithHeader(
-              AppUrl.createPostEndPoint, data.toJson(), resetHeader)
-          .then((value) {
-        debugPrint(value['type']);
+      await _baseAPIServices.postAPIWithHeader(AppUrl.createPostEndPoint, data.toJson(), resetHeader).then((value) {
         try {
-          res = UploadPostResponse.fromJson(value);
-          debugPrint("$value is the api response ${res!.type}");
-        } catch (e) {
-          debugPrint("Error in conversion");
+          debugPrint("$value is the API response");
+          res = ApiResponsePostCreatedModel.fromJson(value);
+        } catch (e){
+          debugPrint("$e is the API error for pic upload");
         }
+        return 200;
       }).onError((error, stackTrace) {
         debugPrint("Error in posting: $error");
         throw AppError(error.toString());
@@ -43,7 +41,7 @@ class PostRepository {
     }).onError((error, stackTrace) {
       debugPrint("UserId fetch error $error");
     });
-    debugPrint("Returning ${res!.statusCode}");
+    // debugPrint("Returning ${res!.statusCode}");
     return res;
   }
 
@@ -60,14 +58,14 @@ class PostRepository {
   //   return response;
   // }
 
-  Future<FeedApiResponse?> getMyFeed() async {
-    FeedApiResponse? responses;
+  Future<UserFeedModel?> getMyFeed() async {
+    UserFeedModel? responses;
     Map<String, dynamic> res = {};
     await UserData.getUserAccessToken().then((value) async {
       header['Authorization'] = value!;
       await _baseAPIServices.getAPI(AppUrl.getMyFeedEndPoint, header).then((value) {
-        // debugPrint(value.toString());
-        responses = FeedApiResponse.fromJson(value);
+        debugPrint(value.toString());
+        responses = UserFeedModel.fromJson(value);
       }).onError((error, stackTrace) {
         debugPrint("Error Occurs $error");
       });

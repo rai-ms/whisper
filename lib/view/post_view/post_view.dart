@@ -15,7 +15,7 @@ class PostView extends StatefulWidget {
 
 class _PostViewState extends State<PostView> with AutomaticKeepAliveClientMixin {
 
-  FeedApiResponse? feedApiResponse;
+  UserFeedModel? feedApiResponse;
   final ScrollController postPageController = ScrollController();
 
   @override
@@ -38,7 +38,7 @@ class _PostViewState extends State<PostView> with AutomaticKeepAliveClientMixin 
                  flex: 95,
                  child: Consumer<PostViewModel>(
                      builder: (context, provider, child) {
-                       return FutureBuilder<FeedApiResponse?>(
+                       return FutureBuilder<UserFeedModel?>(
                            future: PostViewModel.getAllPost(),
                            builder: (context, snapshot) {
                              feedApiResponse = snapshot.data;

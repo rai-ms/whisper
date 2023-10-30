@@ -48,6 +48,8 @@ dependencies:
   flutter_svg: ^2.0.7
   flutter_otp_text_field: ^1.1.1
   shimmer: ^3.0.0
+  amazon_cognito_identity_dart_2: ^3.5.0
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

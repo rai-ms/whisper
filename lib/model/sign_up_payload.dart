@@ -1,5 +1,4 @@
-class SignUpPayloadModel
-{
+class SignUpPayloadModel {
   String email;
   String password;
   String username;

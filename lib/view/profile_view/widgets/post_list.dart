@@ -7,12 +7,12 @@ import '../../../utils/app_helper/app_keys.dart';
 
 class PostList extends StatefulWidget {
   const PostList({super.key, required this.postList});
-  final List<UserPost> postList;
+  final List<ApiResponseUserPost> postList;
   @override
   State<PostList> createState() => _PostListState();
 }
 
-class _PostListState extends State<PostList> with AutomaticKeepAliveClientMixin{
+class _PostListState extends State<PostList> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);

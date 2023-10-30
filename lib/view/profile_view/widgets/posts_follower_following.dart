@@ -22,7 +22,7 @@ class PostFollowerFollowing extends StatefulWidget {
 }
 
 class _PostFollowerFollowingState extends State<PostFollowerFollowing> {
-  APIResponseUserModel? response;
+  ApiResponseUserDataModel? response;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -85,10 +85,10 @@ class _PostFollowerFollowingState extends State<PostFollowerFollowing> {
                   ],
                 ),
                 const SizedBox(height: 10,),
-                if(provider.index == 0) FutureBuilder<APIResponseUserModel?>(
+                if(provider.index == 0) FutureBuilder<ApiResponseUserDataModel?>(
                   key: const PageStorageKey<String>(StoragePathKey.postListPathFuture) ,
                   future: provider2.getProfile(),
-                  builder: (context,AsyncSnapshot<APIResponseUserModel?> snapshot) {
+                  builder: (context,AsyncSnapshot<ApiResponseUserDataModel?> snapshot) {
                     if(snapshot.connectionState == ConnectionState.waiting){
                       return Container(
                         height: 500,
@@ -107,7 +107,7 @@ class _PostFollowerFollowingState extends State<PostFollowerFollowing> {
                       return SizedBox(
                         height: 500,
                         width: getFullWidth(context),// Make sure this height is within the parent's constraints.
-                        child: PostList(postList: response!.data![0].userPosts,)
+                        child: PostList(postList: response!.data[0].userPosts,)
 
                       );
                     }
@@ -117,7 +117,7 @@ class _PostFollowerFollowingState extends State<PostFollowerFollowing> {
                   }
                 ),
                 if(provider.index == 1) const Followers(),
-                if(provider.index == 4) const Following(),
+                if(provider.index == 2) const Following(),
               ],
             );
           }
