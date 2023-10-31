@@ -13,6 +13,7 @@ class AppUrl
   static const createPostEndPoint = '$baseUrl/createPost';
   static const getMyPostEndPoint = '$baseUrl/getMyPost';
   static const getMyFeedEndPoint = '$baseUrl/userFeed';
+  static const deletePostEndPoint = '$baseUrl/deletePost?postId=';
   static const getMyProfileEndPoint = '$baseUrl/userProfile';
   static const listCommentsEndPoint = '$baseUrl/listComments';
   static const getLikesEndPoint = '$baseUrl/getPostLikes?postId=';

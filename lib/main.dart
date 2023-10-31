@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
           primaryColor:  AppColors.blueSplashScreen,
           cardColor: Colors.grey.shade50,
           dividerColor: Colors.grey.shade300,
-          canvasColor: Colors.grey,
+          canvasColor: AppColors.grey,
           primaryColorDark: AppColors.black,
           primaryColorLight: Colors.white,
           appBarTheme: AppBarTheme(

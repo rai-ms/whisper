@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:whisper/aws/aws_upload.dart';
 import 'package:whisper/data/app_exceptions/app_exception.dart';
 import 'package:whisper/model/profile_edit_payload.dart';
 import 'package:whisper/utils/app_helper/user_data_preferences/user_data.dart';
@@ -28,8 +29,8 @@ class EditProfileViewModel extends ChangeNotifier {
   bool isPicked = false;
   File? pickedImage;
 
-  final String _imgUrl = "https://lh3.googleusercontent.com/p/AF1QipOc4D_FziIEFMON03VmBkBcIbZJCVhRNgdbwuoJ=s1360-w1360-h1020";
-  String get imgUrl => _imgUrl;
+  String? _imgUrl;
+  String get imgUrl => _imgUrl!;
 
   fetchFromCamera() async {
     await requestPermission().then((value) async{
@@ -67,21 +68,30 @@ class EditProfileViewModel extends ChangeNotifier {
   }
 
   Future<void> uploadImage() async {
+
     if (!isPicked) {
-      // return debugPrint("Image not Picked");
-    } else {}
+      return debugPrint("Image not Picked");
+    } else {
+      String? userid = await UserData.getUserId();
+      _imgUrl = await S3Services().upload(file: pickedImage!, userid: userid!);
+    }
   }
 
   Future ediProfile() async {
     String newUsername = usernameController.text.toString().trim();
     String newBio = bioController.text.toString().trim();
-    if(newUsername.isEmpty && newBio.isEmpty) return;
-    await repository.editProfile(ProfileEditPayload(username: newUsername, profileBio: newBio)).then((value) async {
-      debugPrint("Profile Updated Successfully in view model response is:$value");
-      await UserData.updateBioUsernameProfilePic(newUsername:newUsername, newProfileBio:newBio,);
+    if(newUsername.isEmpty && newBio.isEmpty && !isPicked) return;
+    await uploadImage();
+    await repository.editProfile(ProfileEditPayload(username: newUsername, profileBio: newBio, profilePic: _imgUrl)).then((value) async {
+      // debugPrint("Profile Updated Successfully in view model response is:$value");
+      await UserData.updateBioUsernameProfilePic(newUsername: newUsername, newProfileBio: newBio, newProfilePic: _imgUrl);
+      pickedImage = null;
+      isPicked = false;
     }).onError((error, stackTrace){
-      debugPrint("Profile Updated failed in view model error is:$error");
+      // debugPrint("Profile Updated failed in view model error is:$error");
       throw AppError(error.toString());
+      pickedImage = null;
+      isPicked = false;
     });
   }
 

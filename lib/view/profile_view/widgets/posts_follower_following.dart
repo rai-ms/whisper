@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:whisper/utils/app_helper/app_color.dart';
-import 'package:whisper/utils/app_helper/app_strings.dart';
-import 'package:whisper/view/profile_view/widgets/photos_list.dart';
+import 'package:whisper/view/profile_view/widgets/following_list.dart';
 import 'package:whisper/view/profile_view/widgets/post_list.dart';
 import 'package:whisper/view_model/personal_profile_view_model/personal_profile_view_model.dart';
 import '../../../global/global.dart';
+import '../../../model/my_profile_api_response.dart';
 import '../../../model/user_profile_response.dart';
-import '../../../utils/app_helper/app_keys.dart';
 import '../../../utils/app_helper/app_style.dart';
-import '../../../view_model/global_provider/global_provider.dart';
 import '../../../view_model/personal_profile_view_model/api_res_provider.dart';
-import 'friends_list.dart';
+import 'my_followers_list.dart';
 
 class PostFollowerFollowing extends StatefulWidget {
-  const PostFollowerFollowing({super.key,});
+  const PostFollowerFollowing({super.key, required this.res});
+
+  final ApiResponseMyProfileUserDataModel res;
+
 
   @override
   State<PostFollowerFollowing> createState() => _PostFollowerFollowingState();
@@ -46,7 +46,7 @@ class _PostFollowerFollowingState extends State<PostFollowerFollowing> {
                               color: provider.index == 0? Theme.of(context).dividerColor : null,
                               borderRadius: BorderRadius.circular(20)
                           ),
-                          child: Center(child: Text("Posts", style: AppStyle.primaryColorDarkMedium20(context),)),
+                          child: Center(child: Text("Posts ${widget.res.data[0].postCount}", style: AppStyle.primaryColorDarkMedium20(context),)),
                         ),
                       ),
                     ),
@@ -62,7 +62,7 @@ class _PostFollowerFollowingState extends State<PostFollowerFollowing> {
                               color: provider.index == 1? Theme.of(context).dividerColor  : null,
                               borderRadius: BorderRadius.circular(20)
                           ),
-                          child: Center(child: Text("Follower", style: AppStyle.primaryColorDarkMedium20(context),)),
+                          child: Center(child: Text("Follower ${widget.res.data[0].followerCount}", style: AppStyle.primaryColorDarkMedium20(context),)),
                         ),
                       ),
                     ),
@@ -78,7 +78,7 @@ class _PostFollowerFollowingState extends State<PostFollowerFollowing> {
                               color: provider.index == 2? Theme.of(context).dividerColor  : null,
                               borderRadius: BorderRadius.circular(20)
                           ),
-                          child: Center(child: Text("Following", style: AppStyle.primaryColorDarkMedium20(context),)),
+                          child: Center(child: Text("Following ${widget.res.data[0].followingCount}", style: AppStyle.primaryColorDarkMedium20(context),)),
                         ),
                       ),
                     ),
@@ -87,38 +87,48 @@ class _PostFollowerFollowingState extends State<PostFollowerFollowing> {
                 ),
                 const SizedBox(height: 10,),
                 // if(provider2.res != null) PostList(postList: provider2.res!.data[0].userPosts,),
-                if(provider.index == 0 && provider2.res != null) FutureBuilder<ApiResponseUserDataModel?>(
-                  key: const PageStorageKey<String>(StoragePathKey.postListPathFuture) ,
-                  future: provider2.getProfile(),
-                  builder: (context,AsyncSnapshot<ApiResponseUserDataModel?> snapshot) {
-                    if(snapshot.connectionState == ConnectionState.waiting){
-                      return Container(
-                        height: 500,
-                        width: getFullWidth(context),
-                        color: AppColors.grey,
-                      );
-                      // return const Center(child: CircularProgressIndicator());
-                    }
-                    else if(snapshot.hasError){
-                      debugPrint("${snapshot.error} is the error");
-                      return const Center(child: Text(AppStrings.errorOccured),);
-                    }
-                    else if(snapshot.hasData){
-                      response = snapshot.data;
-                      provider2.res = snapshot.data;
-                      // debugPrint(response!.data![0].userPosts.length.toString());
-                      return SizedBox(
-                        height: 500,
-                        width: getFullWidth(context),// Make sure this height is within the parent's constraints.
-                        child: PostList(postList: response!.data[0].userPosts,)
+                if(provider.index == 0) SizedBox(
+                    height: 500,
+                    width: getFullWidth(context),// Make sure this height is within the parent's constraints.
+                    child: PostList(postList: widget.res.data[0].userPosts,)
+                   ),
+            // response = snapshot.data;
+            // provider2.res = snapshot.data;
+            // debugPrint(response!.data![0].userPosts.length.toString());
 
-                      );
-                    }
-                    else {
-                      return const Center(child: Text(AppStrings.errorOccured),);
-                    }
-                  }
-                ),
+
+                //   FutureBuilder<ApiResponseUserDataModel?>(
+                //   key: const PageStorageKey<String>(StoragePathKey.postListPathFuture) ,
+                //   future: provider2.getProfile(),
+                //   builder: (context,AsyncSnapshot<ApiResponseUserDataModel?> snapshot) {
+                //     if(snapshot.connectionState == ConnectionState.waiting){
+                //       return Container(
+                //         height: 500,
+                //         width: getFullWidth(context),
+                //         color: AppColors.grey,
+                //       );
+                //       // return const Center(child: CircularProgressIndicator());
+                //     }
+                //     // else if(snapshot.hasError){
+                //     //   debugPrint("${snapshot.error} is the error");
+                //     //   return const Center(child: Text(AppStrings.errorOccured),);
+                //     // }
+                //     else if(snapshot.hasData){
+                //       // response = snapshot.data;
+                //       // provider2.res = snapshot.data;
+                //       // debugPrint(response!.data![0].userPosts.length.toString());
+                //       return SizedBox(
+                //         height: 500,
+                //         width: getFullWidth(context),// Make sure this height is within the parent's constraints.
+                //         child: PostList(postList: widget.res.data[0].userPosts,)
+                //
+                //       );
+                //     }
+                //     else {
+                //       return const Center(child: Text(AppStrings.errorOccured),);
+                //     }
+                //   }
+                // ),
                 if(provider.index == 1) const Followers(),
                 if(provider.index == 2) const Following(),
               ],

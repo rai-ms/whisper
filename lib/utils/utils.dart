@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Utils {
+
+  static String formatDateTime(String dateTime) {
+    final inputFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    final outputFormat = DateFormat("E 'at' HH:mm, d MMM, yy");
+    final parsedDate = inputFormat.parse(dateTime);
+    final formattedDateTime = outputFormat.format(parsedDate);
+    return formattedDateTime;
+  }
+
   static changeFocus(
       BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
     currentFocus.unfocus();

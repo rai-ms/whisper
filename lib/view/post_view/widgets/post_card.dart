@@ -52,7 +52,7 @@ class _PostCardState extends State<PostCard> {
                           pr.setPage(3);
                         }
                       },
-                      child: UserRowPost(postedBy: widget.userData.username, postId: widget.post.id,postedById: widget.post.userId,));
+                      child: UserRowPost(postedBy: widget.userData.username, postId: widget.post.id,postedById: widget.post.userId, postDate: widget.post.createdAt,));
                   }
                 ),
                 sizedBox(hei: 12),

@@ -6,12 +6,11 @@ class ProfileEditPayload {
   Map<String, dynamic> toJson() {
 
     Map<String, dynamic> mp =  {};
-
     if(username != null ){
       mp['username'] = username;
     }
 
-    if(profilePic != null){
+    if(profilePic != null && profilePic!.isNotEmpty){
       mp['profilePic'] = profilePic;
     }
 

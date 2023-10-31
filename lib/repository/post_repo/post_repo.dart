@@ -190,4 +190,18 @@ class PostRepository {
     return statusCode;
   }
 
+  Future<String?> deletePost(String postId) async {
+    String? statusCode;
+    String? token = await UserData.getUserAccessToken();
+    header['Authorization'] = token!;
+    await _baseAPIServices.deleteAPI("${AppUrl.deletePostEndPoint}$postId",
+        {}, header).then((value){
+      debugPrint("Post Deleted!");
+      statusCode = value['statusCode'].toString();
+    }).onError((error, stackTrace){
+      throw AppError("Error is:$error");
+    });
+    return statusCode;
+  }
+
 }

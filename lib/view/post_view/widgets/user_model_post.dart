@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whisper/components/utility_helper.dart';
 import 'package:whisper/global/global.dart';
+import 'package:whisper/repository/post_repo/post_repo.dart';
 import 'package:whisper/utils/app_helper/app_style.dart';
 import 'package:whisper/utils/app_helper/user_data_preferences/user_data.dart';
-
+import '../../../utils/utils.dart';
 import '../../../view_model/post_view_model/post_view_model.dart';
 
 class UserRowPost extends StatefulWidget {
@@ -48,7 +49,7 @@ class _UserRowPostState extends State<UserRowPost> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(widget.postedBy ?? "", style: AppStyle.primaryColorDarkMedium(context),),
-                Text(widget.postDate ?? postTime, style: AppStyle.primaryColorDarkMedium14(context),),
+                Text(widget.postDate == null ? postTime : Utils.formatDateTime(widget.postDate!), style: AppStyle.primaryColorDarkMedium14(context),),
               ],
             ),
           ],
@@ -75,7 +76,11 @@ class _UserRowPostState extends State<UserRowPost> {
                   value: "delete",
                   child: const Text("Delete Post"),
                   onTap: (){
-                    // pr.reportPost(widget.postId!);
+                    PostRepository().deletePost(widget.postId!).then((value){
+                      setState(() {
+
+                      });
+                    });
                   },
                 ),
               ]; },);

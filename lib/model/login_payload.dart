@@ -14,8 +14,7 @@ class PostPayload {
   }
 }
 
-class LoginPayload
-{
+class LoginPayload {
   String email, password;
   LoginPayload({required this.email, required this.password});
   Map<String, dynamic> toJson() {
@@ -25,4 +24,3 @@ class LoginPayload
     };
   }
 }
-

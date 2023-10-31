@@ -6,10 +6,8 @@ import 'package:whisper/model/login_payload.dart';
 import 'package:whisper/repository/post_repo/post_repo.dart';
 import 'package:whisper/res/components/custom_toast.dart';
 import 'package:whisper/utils/app_helper/user_data_preferences/user_data.dart';
-
 import '../../aws/aws_upload.dart';
 import '../../model/post_model.dart';
-import '../../model/response.dart';
 
 class AddPostViewModel extends ChangeNotifier
 {
