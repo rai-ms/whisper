@@ -44,7 +44,6 @@ class PostViewApiResponseProvider extends ChangeNotifier{
     return res;
   }
 
-
   static Future<LikeAndCommentOfApiResponse?> getLikesAndComments(String id) async {
     LikeAndCommentOfApiResponse? res;
     APIResponseCommentModel? comment;

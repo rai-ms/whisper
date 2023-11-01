@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whisper/global/global.dart';
 import 'package:whisper/model/feed_response_model.dart';
+import 'package:whisper/utils/app_helper/app_strings.dart';
 import 'package:whisper/utils/app_helper/user_data_preferences/user_data.dart';
 import 'package:whisper/utils/routes/route_name.dart';
 import 'package:whisper/view/post_view/widgets/user_model_post.dart';
@@ -76,11 +77,11 @@ class _PostCardState extends State<PostCard> {
                               return const CommentLikeShareBar(postId: "",);
                             }
                             else if(snapshot.hasError){
-                              return const Text("Error while loading");
+                              return const Text(AppStrings.errorOccured);
                             }
                             else {
 
-                              return const Text("Data not found");
+                              return const Text(AppStrings.noDataFound);
                             }
                           }
                       );

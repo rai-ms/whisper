@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:whisper/components/app_text_form_field.dart';
 import 'package:whisper/global/global.dart';
 import 'package:whisper/res/components/app_rounded_button.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
@@ -54,7 +53,7 @@ class _OTPAuthViewState extends State<OTPAuthView> {
                         ],
                       ),
                       sizedBox(hei: 10),
-                      Text("Please enter 4-digits code sent to your Email ${widget.mail}", style: AppStyle.whiteMedium16,textAlign: TextAlign.start,),
+                      Text("${AppStrings.pleaseEnter}${widget.mail}", style: AppStyle.whiteMedium16,textAlign: TextAlign.start,),
                     ],
                   ),
                 ),whiteContainerWidget: sizedBox(),),
@@ -76,7 +75,7 @@ class _OTPAuthViewState extends State<OTPAuthView> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                Text("Verify for ${widget.mail}", style: AppStyle.blackMedium16,),
+                                Text("${AppStrings.verifyFor} ${widget.mail}", style: AppStyle.blackMedium16,),
                                 sizedBox(),
                               ],
                             ),
@@ -100,7 +99,7 @@ class _OTPAuthViewState extends State<OTPAuthView> {
                                         provider.sendOTPForVerification(email: widget.mail, isForgetPass: widget.isForgetPass, context: context,);
                                       }, // end onSubmit
                                     ),
-                                    Text(provider.isValidOTP? AppStrings.emptyString : "Enter a Valid OTP", style: AppStyle.redMedium12,),
+                                    Text(provider.isValidOTP? AppStrings.emptyString : AppStrings.enterValidOTP, style: AppStyle.redMedium12,),
                                   ],
                                 );
                               }

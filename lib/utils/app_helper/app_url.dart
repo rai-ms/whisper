@@ -18,12 +18,12 @@ class AppUrl
   static const listCommentsEndPoint = '$baseUrl/listComments';
   static const getLikesEndPoint = '$baseUrl/getPostLikes?postId=';
   static const createCommentEndPoint = '$baseUrl/createComment?postId=';
-  static const userSearchEndPoint = 'https://harshitsocial.appskeeper.in/api/v1/user/userSearch?name=';
-  static const getFollowersEndPoint = 'https://harshitsocial.appskeeper.in/api/v1/user/getFollowers?userId=';
+  static const userSearchEndPoint = '$baseUrl/userSearch?name=';
+  static const getFollowersEndPoint = '$baseUrl/getFollowers?userId=';
   static const getFollowingEndPoint = '$baseUrl/getFollowing';
   static const unfollowUserEndPoint = '$baseUrl/unfollowUser?followingId=';
-  static const followUserEndPoint = 'https://harshitsocial.appskeeper.in/api/v1/user/followUser?followingId=';
-  static const postDislikeEndPoint = 'https://harshitsocial.appskeeper.in/api/v1/user/postDislike?postId=';
-  static const postLikeEndPoint = 'https://harshitsocial.appskeeper.in/api/v1/user/postLike?postId=';
-  static const editProfileEndPoint = 'https://harshitsocial.appskeeper.in/api/v1/user/editProfile';
+  static const followUserEndPoint = '$baseUrl/followUser?followingId=';
+  static const postDislikeEndPoint = '$baseUrl/postDislike?postId=';
+  static const postLikeEndPoint = '$baseUrl/postLike?postId=';
+  static const editProfileEndPoint = '$baseUrl/editProfile';
 }

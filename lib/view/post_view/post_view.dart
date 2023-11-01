@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
+import 'package:whisper/utils/app_helper/app_strings.dart';
 import 'package:whisper/view/post_view/widgets/post_card.dart';
 import '../../model/feed_response_model.dart';
 import '../../utils/app_helper/app_keys.dart';
@@ -39,10 +40,10 @@ class _PostViewState extends State<PostView> with AutomaticKeepAliveClientMixin 
                  child: Consumer<PostViewModel>(
                      builder: (context, provider, child) {
                        return FutureBuilder<UserFeedModel?>(
-                           future: PostViewModel.getAllPost(),
-                           builder: (context, snapshot) {
+                         future: PostViewModel.getAllPost(),
+                         builder: (context, snapshot) {
                              feedApiResponse = snapshot.data;
-                             if(snapshot.connectionState == ConnectionState.waiting){
+                             if(snapshot.connectionState == ConnectionState.waiting) {
                                return Center(
                                    child: Container(
                                      height: 490,
@@ -54,11 +55,11 @@ class _PostViewState extends State<PostView> with AutomaticKeepAliveClientMixin 
                                    )
                                );
                              }
-                             else if(snapshot.hasError){
-                               return const Center(child: Text("Error"));
+                             else if(snapshot.hasError) {
+                               return const Center(child: Text (AppStrings.error));
                              }
-                             else if(snapshot.hasData){
-                               return ListView.builder(
+                             else if(snapshot.hasData) {
+                               return ListView.builder (
                                  key: const PageStorageKey<String>(StoragePathKey.postViewPath),
                                  controller: postPageController,
                                  itemBuilder: (context, index){
@@ -68,7 +69,7 @@ class _PostViewState extends State<PostView> with AutomaticKeepAliveClientMixin 
                                );
                              }
                              else {
-                               return const Center(child: Text("No Data Found!"));
+                               return const Center(child: Text(AppStrings.noDataFound));
                              }
                            }
                        );

@@ -57,7 +57,6 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
 
   @override
   Widget build(BuildContext context) {
-    var ht = getFullHeight(context);
     super.build(context);
     return MultiProvider(
       providers: [
@@ -115,44 +114,46 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
             ],
           ),
         ),
-        body: Center(
-          child: Container(
-            height: ht,
-            color: Theme.of(context).primaryColorLight,
-            child: Column(
-              children: [
-                Expanded(
-                  flex: 11,
-                  child: Consumer<AppGlobalProvider>(
-                      builder: (context, provider, child) {
-                        return PageStorage(
-                          bucket: provider.pageStorageBucket,
-                          child: PageView(
-                            key: const PageStorageKey<String>('pathHomeView'),
-                            controller: provider.pageController,
-                            pageSnapping: true,
-                            reverse: false,
-                            allowImplicitScrolling: false,
-                            physics: const NeverScrollableScrollPhysics(),
-                            children: const [
-                              PostView(key: PageStorageKey('page0'),),
-                              NotificationView(key: PageStorageKey('page1'),),
-                              SearchUser(key: PageStorageKey('page2'),),
-                              ProfileView(key:PageStorageKey('page3')),
-                            ],
-                          ),
-                        );
-                      }
+        body: SingleChildScrollView(
+          child: Center(
+            child: Container(
+              height: getFullHeight(context)-110,
+              color: Theme.of(context).primaryColorLight,
+              child: Column(
+                children: [
+                  Expanded(
+                    flex: 11,
+                    child: Consumer<AppGlobalProvider>(
+                        builder: (context, provider, child) {
+                          return PageStorage(
+                            bucket: provider.pageStorageBucket,
+                            child: PageView(
+                              key: const PageStorageKey<String>('pathHomeView'),
+                              controller: provider.pageController,
+                              pageSnapping: true,
+                              reverse: false,
+                              allowImplicitScrolling: false,
+                              physics: const NeverScrollableScrollPhysics(),
+                              children: const [
+                                PostView(key: PageStorageKey('page0'),),
+                                NotificationView(key: PageStorageKey('page1'),),
+                                SearchUser(key: PageStorageKey('page2'),),
+                                ProfileView(key:PageStorageKey('page3')),
+                              ],
+                            ),
+                          );
+                        }
+                    ),
                   ),
-                ),
-                // const Flexible(
-                //   flex: 1,
-                //   child: AppBottomNavigationBar()),
-              ],
+                  const Flexible(
+                    flex: 1,
+                    child: AppBottomNavigationBar()),
+                ],
+              ),
             ),
           ),
         ),
-        bottomNavigationBar: const AppBottomNavigationBar(),
+        // bottomNavigationBar: const AppBottomNavigationBar(),
       ),
     );
   }

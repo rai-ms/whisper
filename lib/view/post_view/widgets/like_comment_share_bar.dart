@@ -418,7 +418,7 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              if(PostCardCommentViewModel.editComment.isNotEmpty) Container(
+                              if(PostCardCommentViewModel.editComment.isNotEmpty) SizedBox(
                                 height: 20,
                                 child: Text(PostCardCommentViewModel.editComment),
                               ),

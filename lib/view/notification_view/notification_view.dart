@@ -52,7 +52,7 @@ class _NotificationViewState extends State<NotificationView> {
                 key: const PageStorageKey<String>(StoragePathKey.notificationPath),
                 itemBuilder: (context, index){
                   return const ListTile(
-                    title: Text("Notification Content which contains Like, Share, Follow, Comment messages"),
+                    title: Text(AppStrings.notificationContent),
                     // leading: ,
                     // leading: ClipRRect(
                     //   child: UtilityHelper.image("https://cdn-icons-png.flaticon.com/512/25/25231.png")),

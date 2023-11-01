@@ -52,7 +52,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                     children: [
                       sizedBox(hei: 20),
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           provider.fetchFromGallery();
                         },
                         child: (provider.isPicked) ? SizedBox(
@@ -64,7 +64,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                           ),
                         ) : CircleAvatar(
                           radius: 100,
-                          backgroundColor: Theme.of(context).canvasColor,
+                          backgroundColor: Theme.of(context).primaryColor,
                         ),
                       ),
                       sizedBox(hei: 10),

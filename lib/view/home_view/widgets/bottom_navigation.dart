@@ -19,7 +19,6 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
   double? unSelectedSize = 25;
   @override
   Widget build(BuildContext context) {
-
     return Container (
         padding: const EdgeInsets.only(top: 10,),
         decoration: BoxDecoration(

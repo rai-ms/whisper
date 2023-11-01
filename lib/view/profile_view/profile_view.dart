@@ -8,6 +8,7 @@ import 'package:whisper/utils/app_helper/app_color.dart';
 import 'package:whisper/utils/app_helper/app_strings.dart';
 import 'package:whisper/utils/app_helper/app_style.dart';
 import 'package:whisper/utils/routes/route_name.dart';
+import 'package:whisper/utils/utils.dart';
 import 'package:whisper/view/profile_view/widgets/posts_follower_following.dart';
 import 'package:whisper/view/profile_view/widgets/profile_top_view.dart';
 import 'package:whisper/view_model/personal_profile_view_model/personal_profile_view_model.dart';
@@ -111,7 +112,7 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                           children: [
                             sizedBox(wid: 5),
                             const Icon(Icons.add, color: AppColors.white),
-                            Text("Add To Story", style: AppStyle.whiteBold16,),
+                            Text(AppStrings.addToStory, style: AppStyle.whiteBold16,),
                           ],
                         ),
                       ),),
@@ -135,7 +136,7 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                             children: [
                               sizedBox(wid: 5),
                               const Icon(Icons.edit, color: AppColors.white),
-                              Text("Edit Profile", style: AppStyle.whiteBold16,),
+                              Text(AppStrings.editProfile, style: AppStyle.whiteBold16,),
                             ],
                           ),
                         ),
@@ -159,7 +160,7 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const SizedBox(width: 10,),
-                  Text("Details", style: AppStyle.primaryColorDarkMedium25(context),),
+                  Text(AppStrings.details, style: AppStyle.primaryColorDarkMedium25(context),),
                 ],
               ),
               sizedBox(hei: 10),
@@ -206,7 +207,7 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                                       }
                                       else if(data.hasData){
                                         String? joinDate = data.data;
-                                        return Text("Joined on ${joinDate!.substring(0, 10)}", style: AppStyle.primaryColorDarkMedium(context),);
+                                        return Text("${AppStrings.joinedOn}${Utils.formatDateTime(joinDate!)}", style: AppStyle.primaryColorDarkMedium(context),);
                                       }
                                       return Text("${data.data}");
 
@@ -220,7 +221,7 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                         children: [
                           const Icon(Icons.more_horiz, color: AppColors.grey,),
                           sizedBox(wid: 10),
-                          Text("See your About Info", style: AppStyle.primaryColorDarkMedium(context),),
+                          Text(AppStrings.seeYourAbout, style: AppStyle.primaryColorDarkMedium(context),),
                         ],
                       ),
                     ],
@@ -239,7 +240,7 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                     future: ProfileRepository.getMyProfile(),
                     builder: (context, snapshot) {
                       if(snapshot.hasData){
-                        debugPrint("***************Data Received******************");
+                        // debugPrint("***************Data Received******************");
                         debugPrint(snapshot.data!.data[0].userPosts.length.toString());
                         return PostFollowerFollowing(res: snapshot.data!,);
                       }

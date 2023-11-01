@@ -53,7 +53,7 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                                       onTap: (){
                                         pr1.unfollowUser(widget.id);
                                       },
-                                    title: "Unfollow",
+                                    title: AppStrings.unfollow,
                                     ),
                                   )
                                     :
@@ -61,7 +61,7 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                                     flex: 3,
                                     child: AppRoundedButton(height: 50, onTap: () async {
                                       pr1.followUser(widget.id);
-                                    }, title: "Follow"),
+                                    }, title: AppStrings.follow),
                                   ),
                                   sizedBox(wid: 20),
                                 ],
@@ -92,7 +92,7 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                           );
                         }
                         else {
-                          return const Text("No Data Found!");
+                          return const Text(AppStrings.noDataFound);
                         }
                       }
                   ),

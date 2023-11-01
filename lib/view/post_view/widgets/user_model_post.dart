@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:whisper/components/utility_helper.dart';
 import 'package:whisper/global/global.dart';
 import 'package:whisper/repository/post_repo/post_repo.dart';
+import 'package:whisper/utils/app_helper/app_strings.dart';
 import 'package:whisper/utils/app_helper/app_style.dart';
 import 'package:whisper/utils/app_helper/user_data_preferences/user_data.dart';
 import '../../../utils/utils.dart';
@@ -43,7 +44,7 @@ class _UserRowPostState extends State<UserRowPost> {
       children: [
         Row(
           children: [
-            ClipOval(child: UtilityHelper.image( widget.postedByUserImage ??  "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500", height: 40, width: 40, fit: BoxFit.fill)),
+            ClipOval(child: UtilityHelper.image( widget.postedByUserImage ??  dp, height: 40, width: 40, fit: BoxFit.fill)),
             sizedBox(wid: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,7 +61,7 @@ class _UserRowPostState extends State<UserRowPost> {
               return [
                 if(userId != widget.postedById) PopupMenuItem(
                   value: "report",
-                  child: const Text("Report Post"),
+                  child: const Text(AppStrings.reportPost),
                   onTap: (){
                     pr.reportPost(widget.postId!);
                   },

@@ -3,6 +3,7 @@ import 'package:whisper/data/app_exceptions/app_exception.dart';
 import 'package:whisper/model/comment.dart';
 import 'package:whisper/model/login_payload.dart';
 import 'package:whisper/model/response.dart';
+import 'package:whisper/utils/app_helper/app_keys.dart';
 import '../../data/network/base_api_service.dart';
 import '../../data/network/network_api_services.dart';
 import '../../model/feed_response_model.dart';
@@ -24,8 +25,8 @@ class PostRepository {
     ApiResponsePostCreatedModel? res;
     await UserData.getUserAccessToken().then((accessToken) async {
       Map<String, String> resetHeader = {
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': accessToken!,
+        ApiKeys.contentType: '${ApiKeys.applicationJson} charset=UTF-8',
+        ApiKeys.authorization: accessToken!,
       };
       await _baseAPIServices.postAPIWithHeader(AppUrl.createPostEndPoint, data.toJson(), resetHeader).then((value) {
         try {
