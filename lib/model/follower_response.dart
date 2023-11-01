@@ -53,6 +53,7 @@ class GetUser {
   final String? id;
   final String? username;
   final String? email;
+  final String? profilePic;
   final int? accountVerify;
 
   GetUser({
@@ -60,6 +61,7 @@ class GetUser {
     this.username,
     this.email,
     this.accountVerify,
+    this.profilePic,
   });
 
   factory GetUser.fromJson(Map<String, dynamic> json) {
@@ -68,6 +70,7 @@ class GetUser {
       username: json['username'],
       email: json['email'],
       accountVerify: json['accountVerify'],
+      profilePic: json['profilePic'],
     );
   }
 }

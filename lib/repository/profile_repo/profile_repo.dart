@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:whisper/data/app_exceptions/app_exception.dart';
 import 'package:whisper/model/profile_edit_payload.dart';
 import 'package:whisper/model/user_profile_response.dart';
+import 'package:whisper/utils/app_helper/app_keys.dart';
+import 'package:whisper/utils/app_helper/app_strings.dart';
 import 'package:whisper/utils/app_helper/app_url.dart';
 import 'package:whisper/utils/app_helper/user_data_preferences/user_data.dart';
 import '../../data/network/base_api_service.dart';
@@ -14,21 +16,21 @@ class ProfileRepository {
 
   static final BaseApiServices _baseAPIServices = NetworkApiServices();
 
-  Map<String, String> headers = {
-    "Authorization": "Basic c29jaWFsTWVkaWE6c29jaWFsQDEyMw==",
-    "Content-Type": "application/json; charset=UTF-8",
+  static Map<String, String> headers = {
+    ApiKeys.authorization: "Basic c29jaWFsTWVkaWE6c29jaWFsQDEyMw==",
+    ApiKeys.contentType: ApiKeys.applicationJson,
   };
 
   static Future<ApiResponseUserDataModel?> getProfile ({String? id}) async {
     Map<String, String> header = {
-      "Authorization": "Basic c29jaWFsTWVkaWE6c29jaWFsQDEyMw==",
-      "Content-Type": "application/json; charset=UTF-8",
+      ApiKeys.authorization: "Basic c29jaWFsTWVkaWE6c29jaWFsQDEyMw==",
+      ApiKeys.contentType: ApiKeys.applicationJson,
     };
     ApiResponseUserDataModel? res;
     String? token = await UserData.getUserAccessToken();
     id ??= await UserData.getUserId();
 
-    header['Authorization'] = token!;
+    header[ApiKeys.authorization] = token!;
     // debugPrint("Header is $header and id is $id");
     await _baseAPIServices.getAPI("${AppUrl.getMyProfileEndPoint}?userId=$id", header).then((value) {
       // debugPrint("Profile Data fetched $value");
@@ -37,7 +39,7 @@ class ProfileRepository {
       debugPrint(value.toString());
     }).onError((error, stackTrace){
       // debugPrint("Error in profile fetch $error");
-      throw AppError("Error----->$error");
+      throw AppError("${AppStrings.error}$error");
     });
     // debugPrint("Status code of profile res is: ${res!.statusCode}");
     return res;
@@ -45,134 +47,94 @@ class ProfileRepository {
 
   static Future<GetFollowerApiRes?> getFollowers({String? id}) async {
     GetFollowerApiRes? apiRes;
-
-    Map<String, String> header = {
-      "Authorization": "Basic c29jaWFsTWVkaWE6c29jaWFsQDEyMw==",
-      "Content-Type": "application/json; charset=UTF-8",
-    };
-
     String? token = await UserData.getUserAccessToken();
-
-    header["Authorization"] = token!;
-
+    headers[ApiKeys.authorization] = token!;
     id ??= await UserData.getUserId();
-    // debugPrint("$id is the id");
-    await _baseAPIServices.getAPI("${AppUrl.getFollowersEndPoint}$id", header).then((value) {
+    await _baseAPIServices.getAPI("${AppUrl.getFollowersEndPoint}$id", headers).then((value) {
       // debugPrint("Followers Data fetched $value");
-      // debugPrint(value.toString());
       apiRes = GetFollowerApiRes.fromJson(value);
-    }).onError((error, stackTrace){
-      // debugPrint("Error in getFollowers fetch $error");
+    }).onError((error, stackTrace) {
       throw AppError("Error----->$error");
     });
-    // debugPrint("Status code of profile res is: ${res!.statusCode}");
     return apiRes;
   }
 
   static Future<GetFollowingApiRes?> getFollowing({String? id}) async {
     GetFollowingApiRes? apiRes;
-    Map<String, String> header = {
-      "Authorization": "Basic c29jaWFsTWVkaWE6c29jaWFsQDEyMw==",
-      "Content-Type": "application/json; charset=UTF-8",
-    };
 
     String? token = await UserData.getUserAccessToken();
-    if(id == null){
-      id = await UserData.getUserId();
-      debugPrint("Id is $id and token is $token");
-    }
-    header['Authorization'] = token!;
-    await _baseAPIServices.getAPI("${AppUrl.getFollowingEndPoint}?userId=$id", header).then((value) {
+    id ??= await UserData.getUserId();
+    headers[ApiKeys.authorization] = token!;
+    await _baseAPIServices.getAPI("${AppUrl.getFollowingEndPoint}?userId=$id", headers).then((value) {
       // debugPrint("Following Data fetched $value");
-      // debugPrint(value.toString());
       apiRes = GetFollowingApiRes.fromJson(value);
     }).onError((error, stackTrace){
       debugPrint("Error in following fetch $error");
       throw AppError("Error----->$error");
     });
-    // debugPrint("Status code of profile res is: ${res!.statusCode}");
     return apiRes;
   }
 
   static Future followUser({String? followingId}) async {
     Map<String, dynamic>? apiRes;
-    Map<String, String> header = {
-      "Authorization": "Basic c29jaWFsTWVkaWE6c29jaWFsQDEyMw==",
-      "Content-Type": "application/json; charset=UTF-8",
-    };
     debugPrint("Following id is:$followingId");
 
     String? token = await UserData.getUserAccessToken();
-    header['Authorization'] = token!;
-    debugPrint("Header is:$header");
-    await _baseAPIServices.postAPIWithHeader("${AppUrl.followUserEndPoint}$followingId",{}, header).then((value) {
+    headers[ApiKeys.authorization] = token!;
+    // debugPrint("Header is:$headers");
+    await _baseAPIServices.postAPIWithHeader("${AppUrl.followUserEndPoint}$followingId",{}, headers).then((value) {
       // debugPrint("Follow user Data fetched ====================== $value ============================");
       apiRes = value;
     }).onError((error, stackTrace){
-      debugPrint("Error in follow user $error");
-      throw AppError("Error----->$error");
+      // debugPrint("Error in follow user $error");
+      throw AppError("${AppStrings.error}$error");
     });
-    // debugPrint("Status code of profile res is: ${res!.statusCode}");
     return apiRes;
   }
 
   static Future unfollowUser({String? followingId}) async {
     Map<String, dynamic>? apiRes;
-    Map<String, String> header = {
-      "Authorization": "Basic c29jaWFsTWVkaWE6c29jaWFsQDEyMw==",
-      "Content-Type": "application/json; charset=UTF-8",
-    };
     debugPrint("Following id is:$followingId");
 
     String? token = await UserData.getUserAccessToken();
-    header['Authorization'] = token!;
-    debugPrint("Header is:$header");
-    await _baseAPIServices.deleteAPI("${AppUrl.unfollowUserEndPoint}$followingId",{}, header).then((value) {
+    headers[ApiKeys.authorization] = token!;
+    // debugPrint("Header is:$headers");
+    await _baseAPIServices.deleteAPI("${AppUrl.unfollowUserEndPoint}$followingId",{}, headers).then((value) {
       // debugPrint("Follow user Data fetched ====================== $value ============================");
       apiRes = value;
     }).onError((error, stackTrace){
-      debugPrint("Error in unfollow user $error");
-      throw AppError("Error----->$error");
+      throw AppError("${AppStrings.error}$error");
     });
     // debugPrint("Status code of profile res is: ${res!.statusCode}");
     return apiRes;
   }
 
-  Future<Map<String, dynamic>?> editProfile(ProfileEditPayload profileEditPayload) async {
+  static Future<Map<String, dynamic>?> editProfile(ProfileEditPayload profileEditPayload) async {
     Map<String, dynamic>? res;
     String? id = await UserData.getUserId();
-    headers['Authorization'] = id!;
-
+    headers[ApiKeys.authorization] = id!;
     await _baseAPIServices.patchAPI(AppUrl.editProfileEndPoint, profileEditPayload.toJson(), headers).then((value){
-        debugPrint("Profile Updated Successfully response is:$value");
+        // debugPrint("Profile Updated Successfully response is:$value");
         res = value;
     }).onError((error, stackTrace){
-        debugPrint("Profile Updation caused error, error is:$error");
+        // debugPrint("Profile Updation caused error, error is:$error");
+        throw AppError("${AppStrings.error}$error");
     });
     return res;
   }
 
   static Future<ApiResponseMyProfileUserDataModel?> getMyProfile () async {
-    Map<String, String> header = {
-      "Authorization": "Basic c29jaWFsTWVkaWE6c29jaWFsQDEyMw==",
-      "Content-Type": "application/json; charset=UTF-8",
-    };
     ApiResponseMyProfileUserDataModel? res;
     String? token = await UserData.getUserAccessToken();
     String? id = await UserData.getUserId();
 
-    header['Authorization'] = token!;
-    // debugPrint("Header is $header and id is $id");
-    await _baseAPIServices.getAPI("${AppUrl.getMyProfileEndPoint}?userId=$id", header).then((value) {
+    headers[ApiKeys.authorization] = token!;
+    await _baseAPIServices.getAPI("${AppUrl.getMyProfileEndPoint}?userId=$id", headers).then((value) {
       // debugPrint("Profile Data fetched $value");
       res = ApiResponseMyProfileUserDataModel.fromJson(value);
-      // debugPrint("Length of post are: ${res!.data[0].userPosts.length}");
-      debugPrint(value.toString());
     }).onError((error, stackTrace){
-      // debugPrint("Error in profile fetch $error");
       throw AppError("Error----->$error");
     });
-    // debugPrint("Status code of profile res is: ${res!.statusCode}");
     return res;
   }
 

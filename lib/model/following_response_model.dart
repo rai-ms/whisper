@@ -35,35 +35,38 @@ class FollowingData {
 }
 
 class FollowingUser {
-  final GetUser user;
+  final GetUserFollowingResponse user;
 
   FollowingUser({
     required this.user,
   });
 
   factory FollowingUser.fromJson(Map<String, dynamic> json) {
-    return FollowingUser(user: GetUser.fromJson(json['User']));
+    return FollowingUser(user: GetUserFollowingResponse.fromJson(json['User']));
   }
 }
 
-class GetUser {
+class GetUserFollowingResponse {
   final String? id;
   final String? username;
   final String? email;
+  final String? profilePic;
   final int? accountVerify;
 
-  GetUser({
+  GetUserFollowingResponse({
     this.id,
     this.username,
     this.email,
     this.accountVerify,
+    this.profilePic,
   });
 
-  factory GetUser.fromJson(Map<String, dynamic> json) {
-    return GetUser(
+  factory GetUserFollowingResponse.fromJson(Map<String, dynamic> json) {
+    return GetUserFollowingResponse(
       id: json['_id'],
       username: json['username'],
       email: json['email'],
+      profilePic: json['profilePic'],
       accountVerify: json['accountVerify'],
     );
   }

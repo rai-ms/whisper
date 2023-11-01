@@ -72,7 +72,7 @@ class AddPostViewModel extends ChangeNotifier
 
   var postRepo = PostRepository();
 
-  uploadMyPost(BuildContext context) async {
+  Future uploadMyPost(BuildContext context) async {
     setLoading(true);
     String caption = postContentCont.text.toString().trim();
     bool isCaption = caption.isNotEmpty;

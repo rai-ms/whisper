@@ -25,15 +25,16 @@ class PostRepository {
     ApiResponsePostCreatedModel? res;
     await UserData.getUserAccessToken().then((accessToken) async {
       Map<String, String> resetHeader = {
-        ApiKeys.contentType: '${ApiKeys.applicationJson} charset=UTF-8',
+        ApiKeys.contentType: ApiKeys.applicationJson,
         ApiKeys.authorization: accessToken!,
       };
+      debugPrint("Header is $resetHeader");
       await _baseAPIServices.postAPIWithHeader(AppUrl.createPostEndPoint, data.toJson(), resetHeader).then((value) {
         try {
-          // debugPrint("$value is the API response");
+          debugPrint("$value is the API response");
           res = ApiResponsePostCreatedModel.fromJson(value);
         } catch (e){
-          debugPrint("$e is the API error for pic upload");
+          debugPrint("$e error in data conversion");
         }
         return 200;
       }).onError((error, stackTrace) {
@@ -47,26 +48,12 @@ class PostRepository {
     return res;
   }
 
-  // Future<PostResponse?> getMyPost() async {
-  //   PostResponse? response;
-  //   UserData.getUserAccessToken().then((value) {
-  //     _baseAPIServices.getAPI(AppUrl.getMyPostEndPoint, header).then((value) {
-  //       debugPrint("Response of Get All Post");
-  //       response = PostResponse.fromJson(value);
-  //     }).onError((error, stackTrace) {
-  //       debugPrint("Error Occurs");
-  //     });
-  //   }).onError((error, stackTrace) {});
-  //   return response;
-  // }
-
-  Future<UserFeedModel?> getMyFeed() async {
+  Future<UserFeedModel?> getMyFeed({required int pageNo, required int limit}) async {
     UserFeedModel? responses;
-    Map<String, dynamic> res = {};
     await UserData.getUserAccessToken().then((value) async {
-      header['Authorization'] = value!;
-      await _baseAPIServices.getAPI(AppUrl.getMyFeedEndPoint, header).then((value) {
-        // debugPrint(value.toString());
+      header[ApiKeys.authorization] = value!;
+      await _baseAPIServices.getAPI("${AppUrl.getMyFeedEndPoint}?pageNo=$pageNo&limit=$limit", header).then((value) {
+        debugPrint(value.toString());
         responses = UserFeedModel.fromJson(value);
       }).onError((error, stackTrace) {
         throw AppError(error.toString());
@@ -74,7 +61,6 @@ class PostRepository {
     }).onError((error, stackTrace) {
       throw AppError(error.toString());
     });
-    // debugPrint("ReponseList length in repo is ${responses.length}");
     return responses;
   }
 
@@ -82,9 +68,10 @@ class PostRepository {
     Map<String, dynamic>? response;
     String? token = await UserData.getUserAccessToken();
     header['Authorization'] = token!;
+    // debugPrint("$id");
     await _baseAPIServices.getAPI("${AppUrl.listCommentsEndPoint}?postId=$id", header).then((value) {
       response = value;
-      // debugPrint(value.toString());
+      debugPrint(value.toString());
     }).onError((error, stackTrace){
       throw AppError(error.toString());
     });

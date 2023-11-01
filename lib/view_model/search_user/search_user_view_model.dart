@@ -70,6 +70,7 @@ class SearchUserViewModel extends ChangeNotifier
         GetFollowerApiRes? response;
         await ProfileRepository.getFollowers(id: id).then((GetFollowerApiRes? res){
             response = res;
+            notifyListeners();
             // debugPrint("Response of getFollowers is: ${res!.data!.followers!.length}");
         }).onError((error, stackTrace){
             debugPrint("Error is $error");

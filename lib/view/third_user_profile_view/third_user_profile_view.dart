@@ -36,9 +36,6 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                   FutureBuilder(
                       future: pr1.getProfile(widget.id),
                       builder: (context, snapshot) {
-                        // if(snapshot.hasData){
-                        //   pr1.apiResponseUserModel = snapshot.data;
-                        // }
                         if(pr1.apiResponseUserModel != null){
                           return Column(
                             children: [

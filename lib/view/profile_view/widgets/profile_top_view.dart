@@ -5,11 +5,12 @@ import 'package:whisper/global/global.dart';
 import '../../../utils/app_helper/app_color.dart';
 
 class ProfileTopView extends StatelessWidget {
-  const ProfileTopView({super.key});
+  const ProfileTopView({super.key, this.profilePic});
+  final String? profilePic;
 
   @override
   Widget build(BuildContext context) {
-    Widget dpImage = UtilityHelper.image(dp,);
+    Widget dpImage = UtilityHelper.image(profilePic ?? dp ,fit: BoxFit.fill);
     return Column(
       children: [
         Stack(
@@ -17,31 +18,39 @@ class ProfileTopView extends StatelessWidget {
             SizedBox(
               width: getFullWidth(context),
               height: getFullHeight(context) * .255,
-              child: UtilityHelper.image("https://images.unsplash.com/photo-1610252305328-a87676353dc7?auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDB8fG5hdHVyYWwlMjBiYWNrZ3JvdW5kfGVufDB8fDB8fHww&w=800", fit: BoxFit.fitWidth)
-              ,
+              child: UtilityHelper.image("https://images.unsplash.com/photo-1610252305328-a87676353dc7?auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDB8fG5hdHVyYWwlMjBiYWNrZ3JvdW5kfGVufDB8fDB8fHww&w=800", fit: BoxFit.fitWidth),
             ),
             Padding(
-              padding: EdgeInsets.only(top: getFullHeight(context) * .12, left: 10),
+              padding: EdgeInsets.only(top: getFullHeight(context) * .1 + getFullHeight(context) * .05,),
               child: Container(
-                width: getFullWidth(context) * .45,
+                height: getFullWidth(context) * .3,
+                width: getFullWidth(context) * .3,
                 decoration: BoxDecoration(
                   border: Border.all(color: Theme.of(context).primaryColorDark, width: 5),
                   borderRadius: BorderRadius.circular(1000)
                 ),
                 child: Stack(
                   children: [
-                    InkWell(onTap:(){
-                      showDialog(context: context, builder: (context){
-                        return Dialog(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30)
-                          ),
-                          child: AppDialog(
-                              dialogWidget:dpImage,
-                          ),
-                        );
-                      });
-                    },child: ClipOval(child: dpImage)),
+                    SizedBox(
+                      height: getFullWidth(context) * .3,
+                      width: getFullWidth(context) * .3,
+                      child: InkWell(
+                        onTap:(){
+                          showDialog(context: context, builder: (context){
+                            return Dialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30)
+                              ),
+                              child: AppDialog(
+                                dialogWidget: dpImage,
+                              ),
+                            );
+                            });
+                          },
+                        child: ClipOval(
+                          child: dpImage,
+                        )),
+                    ),
                     Align(
                       alignment: Alignment.bottomRight,
                       child: Container(

@@ -307,6 +307,6 @@ String image = "https://media.licdn.com/dms/image/C4E03AQEXPYjYIiM28Q/profile-di
 String name = "Ashish Rai";
 String id = "sdfvwasdfafsvrjt";
 String postTime = "12/12/2012 at 12:12";
-String dp = "https://images.thequint.com/thequint%2F2019-09%2Fa7a64147-4af2-4245-9b42-fcf312397bd3%2Ff36ca4b4a82cfa077ef8cd57bf8c4630.jpg";
+String? dp = "https://images.thequint.com/thequint%2F2019-09%2Fa7a64147-4af2-4245-9b42-fcf312397bd3%2Ff36ca4b4a82cfa077ef8cd57bf8c4630.jpg";
 
 int pageViewNumber = 0;

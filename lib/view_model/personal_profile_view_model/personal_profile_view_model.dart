@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../../model/follower_response.dart';
 import '../../model/following_response_model.dart';
+import '../../model/my_profile_api_response.dart';
 import '../../repository/profile_repo/profile_repo.dart';
 
 class PersonalProfileViewModel extends ChangeNotifier {
@@ -17,12 +18,13 @@ class PersonalProfileViewModel extends ChangeNotifier {
 
   int get index => _index;
 
-  getMyProfileData() async {
+  ApiResponseMyProfileUserDataModel? apiResponseMyProfileUserDataModel;
+
+  Future<ApiResponseMyProfileUserDataModel?> getMyProfileData() async {
     await ProfileRepository.getMyProfile().then((value){
-
-    }).onError((error, stackTrace){
-
-    });
+      apiResponseMyProfileUserDataModel = value;
+    }).onError((error, stackTrace){});
+    return apiResponseMyProfileUserDataModel;
   }
 
 

@@ -94,7 +94,7 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                     children: [
                       Icon(FontAwesomeIcons.commentDots, color: Theme.of(context).primaryColorDark,),
                       sizedBox(wid: 5),
-                      widget.comments != null ? Text(widget.comments!.length.toString(),) : const Text("0")
+                      widget.comments != null ? Text(widget.post!.commentCount.toString(),) : const Text("0")
                     ],
                   ));
             }
@@ -279,7 +279,7 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                                   return ListTile(
                                     title: Row(
                                       children: [
-                                        Expanded(flex: 10, child: ClipOval(child: UtilityHelper.image(dp, height: 40, width: 40),)),
+                                        Expanded(flex: 10, child: ClipOval(child: UtilityHelper.image(widget.comments?[index].user.profilePic ?? dp, height: 40, width: 40),)),
                                         sizedBox(wid: 5),
                                         Expanded(
                                           flex: 90,

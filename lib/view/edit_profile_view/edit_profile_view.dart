@@ -63,7 +63,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                             child: Image.file(provider.pickedImage!, fit: BoxFit.fill,),
                           ),
                         ) : CircleAvatar(
-                          radius: 100,
+                          radius: 50,
                           backgroundColor: Theme.of(context).primaryColor,
                         ),
                       ),

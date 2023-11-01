@@ -9,7 +9,6 @@ class PostPayload {
     return {
       if(caption != null) 'caption': caption,
       'url': url,
-      'mediaType': mediaType,
     };
   }
 }

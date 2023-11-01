@@ -71,7 +71,7 @@ class _PostCardState extends State<PostCard> {
                           builder: (context, snapshot) {
                             if(snapshot.hasData){
                               // debugPrint("${snapshot.data!.comments.length}");
-                              return CommentLikeShareBar(comments: snapshot.data!.comments!.data!.comments!, postId: widget.post.id ?? "",post: widget.post,likes: snapshot.data!.likes!.data.likes,);
+                              return CommentLikeShareBar(comments: snapshot.data!.comments!.data!.comments!, postId: widget.post.id ?? "", post: widget.post,likes: snapshot.data!.likes!.data.likes,);
                             }
                             else if(snapshot.connectionState == ConnectionState.waiting){
                               return const CommentLikeShareBar(postId: "",);

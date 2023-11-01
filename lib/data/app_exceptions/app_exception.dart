@@ -59,3 +59,7 @@ class Uint8ListConvertException extends AppException {
   Uint8ListConvertException([String? message]) : super(message, "Uint8ListConvertException conversion error:");
 }
 
+class ChutiyaException extends AppException {
+  ChutiyaException([String? message]) : super(message, "ChutiyaException error:");
+}
+

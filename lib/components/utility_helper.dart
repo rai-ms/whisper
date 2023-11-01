@@ -36,7 +36,7 @@ class UtilityHelper {
     }
   }
 
-  static CachedNetworkImage image(img, {double? height, double? width,String? placeHolderImage,File? file,BoxFit? fit, bool cachedExtent = true, Widget Function(BuildContext, String)? placeholder}) {
+  static CachedNetworkImage image(img, {double? height, double? width, String? placeHolderImage, File? file, BoxFit? fit, bool cachedExtent = true, Widget Function(BuildContext, String)? placeholder}) {
     return CachedNetworkImage(
       imageUrl: img,
       height: height,
@@ -47,19 +47,13 @@ class UtilityHelper {
       fit: fit ?? BoxFit.contain,
       errorWidget: (context, url, error) => Container(
         color: Colors.white,
-        child: file != null
-            ? Image.file(
-                file,
-                height: height ?? 40,
-                width: width ?? 40,
-                fit: BoxFit.contain,
-              )
-            : Image.asset(
-                placeHolderImage ?? AppImages.tapOnLogo,
-                height: height ?? 40,
-                width: width ?? 40,
-                fit: BoxFit.contain,
-              ),
+        child: file != null ? Image.file(file, height: height ?? 40, width: width ?? 40, fit: BoxFit.contain,)
+        : Image.asset(
+            placeHolderImage ?? AppImages.profileBackground,
+            height: height ?? 40,
+            width: width ?? 40,
+            fit: BoxFit.contain,
+          ),
       ),
     );
   }

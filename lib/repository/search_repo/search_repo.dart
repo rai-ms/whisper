@@ -22,7 +22,7 @@ class SearchRepository {
       token = value;
     }).onError((error, stackTrace){});
     header['Authorization'] = token!;
-    await _baseAPIServices.getAPI("${AppUrl.userSearchEndPoint}?${payload.username}", header).then((value) {
+    await _baseAPIServices.getAPI("${AppUrl.userSearchEndPoint}${payload.username}", header).then((value) {
       debugPrint("Search Response is $value");
       res = SearchResponseUserData.fromJson(value);
     }).onError((error, stackTrace) {

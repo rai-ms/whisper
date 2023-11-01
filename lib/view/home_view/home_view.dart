@@ -1,6 +1,4 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:whisper/global/global.dart';
@@ -114,46 +112,55 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
             ],
           ),
         ),
-        body: SingleChildScrollView(
-          child: Center(
-            child: Container(
-              height: getFullHeight(context)-110,
-              color: Theme.of(context).primaryColorLight,
-              child: Column(
-                children: [
-                  Expanded(
-                    flex: 11,
-                    child: Consumer<AppGlobalProvider>(
-                        builder: (context, provider, child) {
-                          return PageStorage(
-                            bucket: provider.pageStorageBucket,
-                            child: PageView(
-                              key: const PageStorageKey<String>('pathHomeView'),
-                              controller: provider.pageController,
-                              pageSnapping: true,
-                              reverse: false,
-                              allowImplicitScrolling: false,
-                              physics: const NeverScrollableScrollPhysics(),
-                              children: const [
-                                PostView(key: PageStorageKey('page0'),),
-                                NotificationView(key: PageStorageKey('page1'),),
-                                SearchUser(key: PageStorageKey('page2'),),
-                                ProfileView(key:PageStorageKey('page3')),
-                              ],
-                            ),
-                          );
-                        }
-                    ),
+        body: Center(
+          child: Container(
+            height: getFullHeight(context)-110,
+            color: Theme.of(context).primaryColorLight,
+            child: Column(
+              children: [
+                // FutureBuilder(future: UtilityHelper.isInternet(), builder: (context, snapshot){
+                //   if(snapshot.data == true){
+                //     return ;
+                //   }
+                //   else {
+                //         return Expanded(
+                //           flex: 11,
+                //           child: Image.asset(AppImages.dog1),
+                //         );
+                //       }
+                //     })
+                Expanded(
+                  flex: 11,
+                  child: Consumer<AppGlobalProvider>(
+                      builder: (context, provider, child) {
+                        return PageStorage(
+                          bucket: provider.pageStorageBucket,
+                          child: PageView(
+                            key: const PageStorageKey<String>('pathHomeView'),
+                            controller: provider.pageController,
+                            pageSnapping: true,
+                            reverse: false,
+                            allowImplicitScrolling: false,
+                            physics: const NeverScrollableScrollPhysics(),
+                            children: const [
+                              PostView(key: PageStorageKey('page0'),),
+                              NotificationView(key: PageStorageKey('page1'),),
+                              SearchUser(key: PageStorageKey('page2'),),
+                              ProfileView(key:PageStorageKey('page3')),
+                            ],
+                          ),
+                        );
+                      }
                   ),
-                  const Flexible(
-                    flex: 1,
-                    child: AppBottomNavigationBar()),
-                ],
-              ),
+                )
+                // const Flexible(
+                //   flex: 1,
+                //   child: AppBottomNavigationBar()),
+              ],
             ),
           ),
         ),
-        // bottomNavigationBar: const AppBottomNavigationBar(),
+        bottomNavigationBar: const AppBottomNavigationBar(),
       ),
     );
   }

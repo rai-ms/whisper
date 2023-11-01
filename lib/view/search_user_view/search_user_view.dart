@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whisper/components/app_text_form_field.dart';
@@ -53,7 +52,8 @@ class _SearchUserState extends State<SearchUser> {
                                     width: 60,
                                     child: UtilityHelper.image(dp)),
                                 title: Text(pr1.searchResponseUserData!.data[index].username),
-                                subtitle: Text(pr1.searchResponseUserData!.data[index].email.toString()),
+                                // subtitle: Text(pr1.searchResponseUserData!.data[index].email.toString())
+
                               ),
                             ),
                           );

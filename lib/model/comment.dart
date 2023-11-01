@@ -138,11 +138,13 @@ class APIResponseUser {
   final String id;
   final String username;
   final String email;
+  String? profilePic;
 
   APIResponseUser({
     required this.id,
     required this.username,
     required this.email,
+    this.profilePic,
   });
 
   factory APIResponseUser.fromJson(Map<String, dynamic> json) {
@@ -150,6 +152,7 @@ class APIResponseUser {
       id: json['_id'],
       username: json['username'],
       email: json['email'],
+      profilePic: json['profilePic'],
     );
   }
 }

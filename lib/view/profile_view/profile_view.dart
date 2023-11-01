@@ -7,6 +7,7 @@ import 'package:whisper/repository/profile_repo/profile_repo.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
 import 'package:whisper/utils/app_helper/app_strings.dart';
 import 'package:whisper/utils/app_helper/app_style.dart';
+import 'package:whisper/utils/app_helper/user_data_preferences/user_data.dart';
 import 'package:whisper/utils/routes/route_name.dart';
 import 'package:whisper/utils/utils.dart';
 import 'package:whisper/view/profile_view/widgets/posts_follower_following.dart';
@@ -24,6 +25,21 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClientMixin{
+
+  @override
+  void initState() {
+    super.initState();
+    loadLocal();
+  }
+
+  loadLocal() async {
+    dp = await UserData.getProfilePic();
+    debugPrint("Dp is $dp");
+    // await GetProfileData.getJoinedDate();
+    // await GetProfileData.getBio();
+    // await GetProfileData.getUsername();
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -42,19 +58,23 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
           child: Column(
             children:
             [
-              const ProfileTopView(),
               Consumer<GetProfileData>(
                   builder: (context, provider, child) {
-                    return FutureBuilder<String?>(
-                        future: provider.getUsername(),
-                        builder: (context,AsyncSnapshot<String?> data) {
+                    return FutureBuilder(
+                        future: provider.loadAllDataWithProfilePic(),
+                        builder: (context, data) {
                           String? username = data.data;
                           if(data.connectionState == ConnectionState.waiting){
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                            return Column(
                               children: [
-                                const SizedBox(width: 10,),
-                                Container(width: 100, height: 60, color: AppColors.grey,)
+                                const ProfileTopView(),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(width: 10,),
+                                    Container(width: 100, height: 60, color: AppColors.grey,)
+                                  ],
+                                ),
                               ],
                             );
                           }
@@ -68,11 +88,16 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                             );
                           }
                           else if(data.hasData){
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                            return Column(
                               children: [
-                                const SizedBox(width: 10,),
-                                Text( "$username", style: AppStyle.primaryColorDarkMedium(context),),
+                                const ProfileTopView(),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(width: 10,),
+                                    Text( "$username", style: AppStyle.primaryColorDarkMedium(context),),
+                                  ],
+                                ),
                               ],
                             );
                           }
