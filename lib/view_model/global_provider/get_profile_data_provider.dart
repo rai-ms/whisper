@@ -3,9 +3,9 @@ import '../../utils/app_helper/user_data_preferences/user_data.dart';
 
 class GetProfileData extends ChangeNotifier
 {
-   String? accessToken;
-   String? username;
-   String? createdAt;
+  String? accessToken;
+  String? username;
+  String? createdAt;
 
   Future<String?> getUsername() async {
     return username ?? await UserData.getUserUsername();

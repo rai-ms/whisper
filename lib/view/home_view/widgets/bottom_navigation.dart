@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:whisper/components/utility_helper.dart';
 import 'package:whisper/global/global.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
+import 'package:whisper/utils/app_helper/user_data_preferences/user_data.dart';
 import 'package:whisper/utils/routes/route_name.dart';
+import 'package:whisper/view_model/global_provider/get_profile_data_provider.dart';
 import 'package:whisper/view_model/global_provider/global_provider.dart';
 
 class AppBottomNavigationBar extends StatefulWidget {
@@ -15,6 +17,7 @@ class AppBottomNavigationBar extends StatefulWidget {
 }
 
 class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
+
   double? selectedSize = 35;
   double? unSelectedSize = 25;
   @override
@@ -77,12 +80,18 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
                         // debugPrint("Tapped on index 3");
                       },
                       child: Container(
+                        height: pageViewNumber == 3? (selectedSize!+10.0) : unSelectedSize! + 12,
+                        width: pageViewNumber == 3? (selectedSize!+10.0) : unSelectedSize! + 12,
                         decoration: BoxDecoration(
                           border: Border.all(color: Theme.of(context).primaryColorDark, width:  3),
                           borderRadius: BorderRadius.circular(100)
                         ),
                         // child: ClipOval(child: CachedNetworkImage(imageUrl: dp, height: 30,width: 30,),),),),
-                        child: ClipOval(child: UtilityHelper.image(dp, height: pageViewNumber == 3? (selectedSize!+10.0) : unSelectedSize! + 5)))),
+                        child: FutureBuilder(
+                          builder: (context, snap) {
+                            return ClipOval(child: UtilityHelper.image(snap.data, height: pageViewNumber == 3? (selectedSize!+10.0) : unSelectedSize! + 5, fit: BoxFit.fill));
+                          }, future: UserData.getProfilePic(),
+                        ))),
                 ],
               );
             }
@@ -90,6 +99,7 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
         ),
       );
   }
+
 }
 
 

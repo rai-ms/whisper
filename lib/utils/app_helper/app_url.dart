@@ -17,6 +17,7 @@ class AppUrl
   static const getMyProfileEndPoint = '$baseUrl/userProfile';
   static const listCommentsEndPoint = '$baseUrl/listComments';
   static const getLikesEndPoint = '$baseUrl/getPostLikes?postId=';
+  static const postDetailsEndPoint = '$baseUrl/post?postId=';
   static const createCommentEndPoint = '$baseUrl/createComment?postId=';
   static const userSearchEndPoint = '$baseUrl/userSearch?name=';
   static const getFollowersEndPoint = '$baseUrl/getFollowers?userId=';

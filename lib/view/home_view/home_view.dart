@@ -11,6 +11,7 @@ import '../../components/app_text_form_field.dart';
 import '../../components/utility_helper.dart';
 import '../../model/response.dart';
 import '../../utils/app_helper/app_style.dart';
+import '../../utils/app_helper/user_data_preferences/user_data.dart';
 import '../../view_model/global_provider/global_provider.dart';
 import '../../view_model/post_view_model/post_view_model.dart';
 import '../notification_view/notification_view.dart';
@@ -75,11 +76,18 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                           provider.setPage(3);
                         }
                       },child: Container(
+                          height: 38,
+                          width: 38,
                           decoration: BoxDecoration(
-                              border: Border.all(color: AppColors.white, width:  3),
+                              border: Border.all(color: AppColors.white, width:  1.5),
                               borderRadius: BorderRadius.circular(100)
                           ),
-                          child: ClipOval(child: UtilityHelper.image(dp,))));
+                          // child: ClipOval(child: CachedNetworkImage(imageUrl: dp, height: 30,width: 30,),),),),
+                          child: FutureBuilder(
+                            builder: (context, snap) {
+                              return ClipOval(child: UtilityHelper.image(snap.data, fit: BoxFit.fill));
+                            }, future: UserData.getProfilePic(),
+                          )));
                     }
                 ),
               ),

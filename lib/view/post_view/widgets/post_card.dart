@@ -57,7 +57,7 @@ class _PostCardState extends State<PostCard> {
                   }
                 ),
                 sizedBox(hei: 12),
-                UtilityHelper.image(widget.post.url, width: getFullWidth(context)),
+                InteractiveViewer(child: UtilityHelper.image(widget.post.url, width: getFullWidth(context))),
                 sizedBox(hei: 10),
                 // DescriptionTextWidget(text: widget.post.postDescription.toString(),),
                 ExpandableText(
@@ -74,7 +74,7 @@ class _PostCardState extends State<PostCard> {
                               return CommentLikeShareBar(comments: snapshot.data!.comments!.data!.comments!, postId: widget.post.id ?? "", post: widget.post,likes: snapshot.data!.likes!.data.likes,);
                             }
                             else if(snapshot.connectionState == ConnectionState.waiting){
-                              return const CommentLikeShareBar(postId: "",);
+                              return CommentLikeShareBar(postId: "",);
                             }
                             else if(snapshot.hasError){
                               return const Text(AppStrings.errorOccured);

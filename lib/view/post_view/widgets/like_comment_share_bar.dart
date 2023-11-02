@@ -15,11 +15,11 @@ import '../../../view_model/home_view_view_model/post_card_comment_view_model.da
 import '../../../view_model/home_view_view_model/post_card_like_view_model.dart';
 
 class CommentLikeShareBar extends StatefulWidget {
-  const CommentLikeShareBar({super.key, this.comments, this.likes, this.share, required this.postId, this.post});
+  const CommentLikeShareBar({super.key, this.comments, this.likes, required this.postId, this.post});
   final String postId;
   final List<APIResponseComment>? comments;
   final List<ApiResponseLike>? likes;
-  final List<Share>? share;
+  // final List<Share>? share;
   final UserPosts? post;
 
   @override
@@ -27,6 +27,13 @@ class CommentLikeShareBar extends StatefulWidget {
 }
 
 class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +59,15 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
           // Icon(FontAwesomeIcons.thumbsUp, color: Theme.of(context).primaryColorDark,),
           Consumer<LikeViewModel>(
             builder: (context, provider, child) {
-              provider.post = widget.post;
-              provider.like = widget.post?.isLiked ?? false;
               return InkWell(
                 onTap:(){
-                  provider.likePost(widget.postId, provider.like);
 
+                  provider.likePost(widget.postId, widget.post!.isLiked ?? false);
+
+                  setState(() {
+                    debugPrint("DebugPrint");
+                    widget.post!.isLiked !=  widget.post!.isLiked;
+                  });
                 } ,
                 onLongPress: (){
                   provider.showLikeBottomSheet(showLikeBottomSheet);
@@ -66,8 +76,8 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                   children: [
                     if(widget.post != null) Column(
                       children: [
-                        Icon(!provider.like? FontAwesomeIcons.thumbsUp :FontAwesomeIcons.solidThumbsUp, color: Theme.of(context).primaryColorDark,),
-                        Text(provider.post!.isLiked?"You ${(widget.likes!.length - 1 == 0)? "Only" : "and ${widget.likes!.length - 1}"}" : widget.post!.likeCount.toString(), style: AppStyle.primaryColorDarkMedium14(context),),
+                        Icon(!widget.post!.isLiked ? FontAwesomeIcons.thumbsUp : FontAwesomeIcons.solidThumbsUp, color: Theme.of(context).primaryColorDark,),
+                        Text(widget.post!.isLiked ? "You ${(widget.likes!.length - 1 == 0)? "Only" : "and ${widget.likes!.length - 1}"}" : widget.post!.likeCount.toString(), style: AppStyle.primaryColorDarkMedium14(context),),
                         // Text(!isLiked? widget.likes!.length.toString():( widget.likes!.length+ 1).toString(), style: AppStyle.primaryColorDarkMedium14(context),),
                       ],
                     ),

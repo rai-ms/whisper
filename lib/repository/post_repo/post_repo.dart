@@ -52,6 +52,7 @@ class PostRepository {
     UserFeedModel? responses;
     await UserData.getUserAccessToken().then((value) async {
       header[ApiKeys.authorization] = value!;
+      debugPrint(header.toString());
       await _baseAPIServices.getAPI("${AppUrl.getMyFeedEndPoint}?pageNo=$pageNo&limit=$limit", header).then((value) {
         debugPrint(value.toString());
         responses = UserFeedModel.fromJson(value);
@@ -67,7 +68,7 @@ class PostRepository {
   Future<Map<String, dynamic>?> getListComments(String id) async {
     Map<String, dynamic>? response;
     String? token = await UserData.getUserAccessToken();
-    header['Authorization'] = token!;
+    header[ApiKeys.authorization] = token!;
     // debugPrint("$id");
     await _baseAPIServices.getAPI("${AppUrl.listCommentsEndPoint}?postId=$id", header).then((value) {
       response = value;
@@ -81,7 +82,7 @@ class PostRepository {
   Future<ApiResponseLikesData?> getListLikes(String postId) async {
     ApiResponseLikesData? response;
     String? token = await UserData.getUserAccessToken();
-    header['Authorization'] = token!;
+    header[ApiKeys.authorization] = token!;
     await _baseAPIServices.getAPI("${AppUrl.getLikesEndPoint}$postId", header).then((value) {
       response = ApiResponseLikesData.fromJson(value);
       // debugPrint("Like list are:$value");
@@ -91,24 +92,40 @@ class PostRepository {
     return response;
   }
 
-  Future createComment(String postId, CommentPayload model) async {
-    debugPrint("Going to comment on $postId");
+  Future<ApiResponseLikesData?> getPostDetails(String postId) async {
+    ApiResponseLikesData? response;
+    String? token = await UserData.getUserAccessToken();
+    header[ApiKeys.authorization] = token!;
+    await _baseAPIServices.getAPI("${AppUrl.postDetailsEndPoint}$postId", header).then((value) {
+      response = ApiResponseLikesData.fromJson(value);
+      // debugPrint("Like list are:$value");
+    }).onError((error, stackTrace){
+      throw AppError(error.toString());
+    });
+    return response;
+  }
+
+  Future<String?> createComment(String postId, CommentPayload model) async {
+    // debugPrint("Going to comment on $postId");
+    String? res;
     String? token = await UserData.getUserAccessToken();
     // header['Authorization'] = "Bearer "+token!;
-    header['Authorization'] = token!;
+    header[ApiKeys.authorization] = token!;
     // debugPrint("$header is the header, model is ${model.toMap()}");
     await _baseAPIServices.postAPIWithHeader("https://harshitsocial.appskeeper.in/api/v1/user/createComment?postId=$postId", model.toMap(), header).then((value){
       // debugPrint("Comment Added! $value");
+      res = value;
     }).onError((error, stackTrace){
       throw AppError("Error is:$error");
     });
+    return res;
   }
 
   Future<String?> likePost(String postId) async {
     String? statusCode;
     String? token = await UserData.getUserAccessToken();
     // header['Authorization'] = "Bearer "+token!;
-    header['Authorization'] = token!;
+    header[ApiKeys.authorization] = token!;
     // debugPrint("$header is the header, model is ${model.toMap()}");
     await _baseAPIServices.postAPIWithHeader("${AppUrl.postLikeEndPoint}$postId",
         {}, header).then((value){
@@ -122,7 +139,7 @@ class PostRepository {
   Future<String?> dislikePost(String postId) async {
     String? statusCode;
     String? token = await UserData.getUserAccessToken();
-    header['Authorization'] = token!;
+    header[ApiKeys.authorization] = token!;
     // debugPrint("Id is $postId");
     await _baseAPIServices.deleteAPI("${AppUrl.postDislikeEndPoint}$postId",
         {}, header).then((value){
@@ -138,7 +155,7 @@ class PostRepository {
     String? statusCode;
     debugPrint("Going to report on $postId");
     String? token = await UserData.getUserAccessToken();
-    header['Authorization'] = token!;
+    header[ApiKeys.authorization] = token!;
     await _baseAPIServices.postAPIWithHeader("https://harshitsocial.appskeeper.in/api/v1/user/reportPost?postId=$postId", {}, header).then((value){
       // debugPrint("Report on post :$postId status is $value");
       statusCode = value['statusCode'].toString();
@@ -152,7 +169,7 @@ class PostRepository {
     String? statusCode;
     // debugPrint("Going to edit on $postId");
     String? token = await UserData.getUserAccessToken();
-    header['Authorization'] = token!;
+    header[ApiKeys.authorization] = token!;
     await _baseAPIServices.patchAPI("https://harshitsocial.appskeeper.in/api/v1/user/editComment?postId=$postId&commentId=$commendID", {
       "comment": comment,
     }, header).then((value){
@@ -168,7 +185,7 @@ class PostRepository {
     String? statusCode;
     // debugPrint("Going to delete on $postId");
     String? token = await UserData.getUserAccessToken();
-    header['Authorization'] = token!;
+    header[ApiKeys.authorization] = token!;
     await _baseAPIServices.deleteAPI("https://harshitsocial.appskeeper.in/api/v1/user/deleteComment?postId=$postId&commentId=$commentID",{}, header).then((value){
       // debugPrint("deleted on post :$postId comment $commentID status is $value");
       statusCode = value['statusCode'].toString();
@@ -181,7 +198,7 @@ class PostRepository {
   Future<String?> deletePost(String postId) async {
     String? statusCode;
     String? token = await UserData.getUserAccessToken();
-    header['Authorization'] = token!;
+    header[ApiKeys.authorization] = token!;
     await _baseAPIServices.deleteAPI("${AppUrl.deletePostEndPoint}$postId",
         {}, header).then((value){
       debugPrint("Post Deleted!");

@@ -8,15 +8,14 @@ import '../../model/like.dart';
 class LikeViewModel extends ChangeNotifier
 {
   List<ApiResponseLike>? likes;
-  UserPosts? post;
 
-  bool like = true;
 
-  getAllLikes(UserPosts? posts){
-    post = posts;
-    like = post!.isLiked;
-  }
+  // getAllLikes(UserPosts? posts){
+  //   post = posts;
+  // }
+
   likeMyPost(String postId, bool isLiked) async {
+    notifyListeners();
     await likePost(postId, isLiked);
   }
 
@@ -27,16 +26,13 @@ class LikeViewModel extends ChangeNotifier
   PostRepository repo = PostRepository();
 
   Future likePost(String postId, bool isLiked) async {
+    notifyListeners();
     if(isLiked){
-      like = false;
-      notifyListeners();
       repo.dislikePost(postId).then((value){
         debugPrint("Post-disliked! done in view-model $value");
       }).onError((error, stackTrace){});
     }
     else {
-      like = true;
-      notifyListeners();
       await repo.likePost(postId).then((value){
         debugPrint("PostLiked! done in view-model $value");
       }).onError((error, stackTrace){

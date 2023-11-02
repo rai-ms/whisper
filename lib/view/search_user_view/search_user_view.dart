@@ -53,7 +53,6 @@ class _SearchUserState extends State<SearchUser> {
                                     child: UtilityHelper.image(dp)),
                                 title: Text(pr1.searchResponseUserData!.data[index].username),
                                 // subtitle: Text(pr1.searchResponseUserData!.data[index].email.toString())
-
                               ),
                             ),
                           );

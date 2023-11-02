@@ -24,9 +24,9 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AppGlobalProvider()),
-        ChangeNotifierProvider(create: (context)=> PostCardCommentViewModel()),
-        ChangeNotifierProvider(create: (context)=> PostShareViewModel()),
-        ChangeNotifierProvider(create: (context)=> GetProfileData()),
+        ChangeNotifierProvider(create: (context) => PostCardCommentViewModel()),
+        ChangeNotifierProvider(create: (context) => PostShareViewModel()),
+        ChangeNotifierProvider(create: (context) => GetProfileData()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

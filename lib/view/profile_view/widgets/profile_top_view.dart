@@ -10,7 +10,7 @@ class ProfileTopView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget dpImage = UtilityHelper.image(profilePic ?? dp ,fit: BoxFit.fill);
+    Widget dpImage = UtilityHelper.image(profilePic ?? dp, fit: BoxFit.fill);
     return Column(
       children: [
         Stack(
@@ -36,20 +36,24 @@ class ProfileTopView extends StatelessWidget {
                       width: getFullWidth(context) * .3,
                       child: InkWell(
                         onTap:(){
-                          showDialog(context: context, builder: (context){
+                            showDialog(context: context, builder: (context){
                             return Dialog(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30)
                               ),
                               child: AppDialog(
-                                dialogWidget: dpImage,
+                                dialogWidget: Padding(
+                                  padding: const EdgeInsets.all(1.2),
+                                  child: UtilityHelper.image(profilePic ?? dp, fit: BoxFit.contain),
+                                ),
                               ),
                             );
                             });
                           },
                         child: ClipOval(
                           child: dpImage,
-                        )),
+                        ),
+                      ),
                     ),
                     Align(
                       alignment: Alignment.bottomRight,

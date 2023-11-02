@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "658973924374",
+    "project_id": "social-app-5ddb1",
+    "storage_bucket": "social-app-5ddb1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:658973924374:android:deef1712e55dca32d8a937",
+        "android_client_info": {
+          "package_name": "com.appinventiv.ashish.whisper.whisper"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVwBztVdGWSt92iGcFVc925WYUaXFZXiU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

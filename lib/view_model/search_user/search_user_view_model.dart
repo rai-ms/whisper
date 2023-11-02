@@ -12,8 +12,14 @@ class SearchUserViewModel extends ChangeNotifier
     TextEditingController controller = TextEditingController();
 
     DeBouncer deBouncer = DeBouncer(milliseconds: 200);
-
+    String? prevSearch;
     onChanged(String val) async {
+        if(prevSearch != val){
+            prevSearch = val;
+        }
+        else {
+            return;
+        }
         if(val.isEmpty) return;
         deBouncer.run(() async {
         await searchUser(username: val).then((value){});});
@@ -28,10 +34,10 @@ class SearchUserViewModel extends ChangeNotifier
             searchResponseUserData = value;
             // debugPrint("Response is $value");
             notifyListeners();
-            controller.clear();
+            // controller.clear();
         }).onError((error, stackTrace){
             // debugPrint("Error in Search user View Model :$error");
-            searchResponseUserData = null;
+            // searchResponseUserData = null;
             notifyListeners();
         });
     }
