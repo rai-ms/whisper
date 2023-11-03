@@ -12,7 +12,12 @@ import '../../components/background_app.dart';
 import '../../view_model/otp_auth_view_model/otp_auth_view_model.dart';
 
 class OTPAuthView extends StatefulWidget {
-  const OTPAuthView({super.key, required this.mail, required this.password, this.isForgetPass = false, this.token = ""});
+  const OTPAuthView(
+      {super.key,
+      required this.mail,
+      required this.password,
+      this.isForgetPass = false,
+      this.token = ""});
 
   final String mail;
   final String password;
@@ -24,15 +29,13 @@ class OTPAuthView extends StatefulWidget {
 }
 
 class _OTPAuthViewState extends State<OTPAuthView> {
-
   @override
   Widget build(BuildContext context) {
     double padTop = getViewPadding(context).top;
     return MultiProvider(
-      providers:
-      [
-        ChangeNotifierProvider(create: (context)=> OTPAuthViewModel()),
-      ], 
+      providers: [
+        ChangeNotifierProvider(create: (context) => OTPAuthViewModel()),
+      ],
       child: Scaffold(
         body: SingleChildScrollView(
           child: SizedBox(
@@ -40,23 +43,34 @@ class _OTPAuthViewState extends State<OTPAuthView> {
             width: getFullWidth(context),
             child: Stack(
               children: [
-                AppBackGroundTwoContainer(blueContainerWidget: Padding(
-                  padding: const EdgeInsets.all(28.0),
-                  child: Column(
-                    children: [
-                      sizedBox(hei: padTop),
-                      SvgPicture.asset(AppImages.logoAndName),
-                      sizedBox(hei: 20),
-                      Row(
-                        children: [
-                          Text(AppStrings.otpAuth, style: AppStyle.whiteBold20,textAlign: TextAlign.start,),
-                        ],
-                      ),
-                      sizedBox(hei: 10),
-                      Text("${AppStrings.pleaseEnter}${widget.mail}", style: AppStyle.whiteMedium16,textAlign: TextAlign.start,),
-                    ],
+                AppBackGroundTwoContainer(
+                  blueContainerWidget: Padding(
+                    padding: const EdgeInsets.all(28.0),
+                    child: Column(
+                      children: [
+                        sizedBox(hei: padTop),
+                        SvgPicture.asset(AppImages.logoAndName),
+                        sizedBox(hei: 20),
+                        Row(
+                          children: [
+                            Text(
+                              AppStrings.otpAuth,
+                              style: AppStyle.whiteBold20,
+                              textAlign: TextAlign.start,
+                            ),
+                          ],
+                        ),
+                        sizedBox(hei: 10),
+                        Text(
+                          "${AppStrings.pleaseEnter}${widget.mail}",
+                          style: AppStyle.whiteMedium16,
+                          textAlign: TextAlign.start,
+                        ),
+                      ],
+                    ),
                   ),
-                ),whiteContainerWidget: sizedBox(),),
+                  whiteContainerWidget: sizedBox(),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(28.0),
                   child: Center(
@@ -75,49 +89,59 @@ class _OTPAuthViewState extends State<OTPAuthView> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                Text("${AppStrings.verifyFor} ${widget.mail}", style: AppStyle.blackMedium16,),
+                                Text(
+                                  "${AppStrings.verifyFor} ${widget.mail}",
+                                  style: AppStyle.blackMedium16,
+                                ),
                                 sizedBox(),
                               ],
                             ),
                             sizedBox(hei: 20),
                             Consumer<OTPAuthViewModel>(
-                              builder: (context, provider, child) {
-                                return Column(
-                                  children: [
-                                    OtpTextField(
-                                      keyboardType: TextInputType.number,
-                                      numberOfFields: 4,
-                                      borderColor: AppColors.blueSplashScreen,
-                                      showFieldAsBox: true,
-                                      fieldWidth: 60,
-                                      onCodeChanged: (String code)  {
-                                        provider.isValidOTP = code.length == 4;
-                                      },
-                                      onSubmit: (String verificationCode){
-                                        provider.otp = verificationCode;
-                                        // debugPrint("Value of forgetPass is ${widget.isForgetPass}");
-                                        provider.sendOTPForVerification(email: widget.mail, isForgetPass: widget.isForgetPass, context: context,);
-                                      }, // end onSubmit
-                                    ),
-                                    Text(provider.isValidOTP? AppStrings.emptyString : AppStrings.enterValidOTP, style: AppStyle.redMedium12,),
-                                  ],
-                                );
-                              }
-                            ),
+                                builder: (context, provider, child) {
+                              return Column(
+                                children: [
+                                  OtpTextField(
+                                    keyboardType: TextInputType.number,
+                                    numberOfFields: 4,
+                                    borderColor: AppColors.blueSplashScreen,
+                                    showFieldAsBox: true,
+                                    fieldWidth: 60,
+                                    onCodeChanged: (String code) {
+                                      provider.isValidOTP = code.length == 4;
+                                    },
+                                    onSubmit: (String verificationCode) {
+                                      provider.otp = verificationCode;
+                                      // debugPrint("Value of forgetPass is ${widget.isForgetPass}");
+                                      provider.sendOTPForVerification(
+                                        email: widget.mail,
+                                        isForgetPass: widget.isForgetPass,
+                                        context: context,
+                                      );
+                                    }, // end onSubmit
+                                  ),
+                                  Text(
+                                    provider.isValidOTP
+                                        ? AppStrings.emptyString
+                                        : AppStrings.enterValidOTP,
+                                    style: AppStyle.redMedium12,
+                                  ),
+                                ],
+                              );
+                            }),
                             sizedBox(hei: 20),
                             Consumer<OTPAuthViewModel>(
-                              builder: (context, provider, child){
-                                provider.startTimer();
-                                return AppRoundedButton(
+                                builder: (context, provider, child) {
+                              provider.startTimer();
+                              return AppRoundedButton(
                                   isEnable: !provider.enableButton,
                                   // loading: !provider.enableButton,
                                   // loadingWidget: Text("Resend OTP \n${provider.sec} seconds", textAlign: TextAlign.center,),
-                                  onTap: (){
+                                  onTap: () {
                                     provider.resendOTP(widget.mail);
                                   },
                                   title: AppStrings.resendOtp);
-                              }
-                            ),
+                            }),
                           ],
                         ),
                       ),
@@ -132,5 +156,3 @@ class _OTPAuthViewState extends State<OTPAuthView> {
     );
   }
 }
-
-

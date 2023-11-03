@@ -39,13 +39,16 @@ class LoginViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  final deBouncer = DeBouncer(milliseconds: 1000,);
+  final deBouncer = DeBouncer(
+    milliseconds: 1000,
+  );
 
   login(BuildContext context) async {
     formKey.currentState!.save();
     if (formKey.currentState!.validate()) {
-      deBouncer.run(() async{await loginAPI(context);});
-
+      deBouncer.run(() async {
+        await loginAPI(context);
+      });
     }
   }
 
@@ -57,14 +60,14 @@ class LoginViewModel extends ChangeNotifier {
       "email": mailCont.text.toString().trim(),
       "password": passCont.text.toString().trim()
     };
-    myLoginRepo.loginAPI(data).then((User? user){
+    myLoginRepo.loginAPI(data).then((User? user) {
       CustomToast(context: context, message: "Login Successful");
-      Navigator.pushNamedAndRemoveUntil(context, RouteName.homeView, (route) => false);
-    }).onError((error, stackTrace){
+      Navigator.pushNamedAndRemoveUntil(
+          context, RouteName.homeView, (route) => false);
+    }).onError((error, stackTrace) {
       debugPrint("Error is $error");
-      CustomToast(context: context, message:"Error occur in API Call $error");
+      CustomToast(context: context, message: "Error occur in API Call $error");
     });
     setLoading(false);
   }
-
 }

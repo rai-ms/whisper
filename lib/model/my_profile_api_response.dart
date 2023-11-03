@@ -1,4 +1,3 @@
-
 class ApiResponseMyProfileUserDataModel {
   final int statusCode;
   final String type;
@@ -10,7 +9,8 @@ class ApiResponseMyProfileUserDataModel {
     required this.data,
   });
 
-  factory ApiResponseMyProfileUserDataModel.fromJson(Map<String, dynamic> json) {
+  factory ApiResponseMyProfileUserDataModel.fromJson(
+      Map<String, dynamic> json) {
     return ApiResponseMyProfileUserDataModel(
       statusCode: json['statusCode'],
       type: json['type'],

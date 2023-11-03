@@ -12,22 +12,21 @@ class User {
   final String accessToken;
   final String? fullName, profilePic, profileBio;
 
-  User({
-    required this.id,
-    required this.username,
-    required this.email,
-    required this.password,
-    required this.accountVerify,
-    required this.followerCount,
-    required this.followingCount,
-    required this.postCount,
-    required this.createdAt,
-    required this.v,
-    required this.accessToken,
-    this.fullName,
-    this.profilePic,
-    this.profileBio
-  });
+  User(
+      {required this.id,
+      required this.username,
+      required this.email,
+      required this.password,
+      required this.accountVerify,
+      required this.followerCount,
+      required this.followingCount,
+      required this.postCount,
+      required this.createdAt,
+      required this.v,
+      required this.accessToken,
+      this.fullName,
+      this.profilePic,
+      this.profileBio});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(

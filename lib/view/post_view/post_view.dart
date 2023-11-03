@@ -14,8 +14,8 @@ class PostView extends StatefulWidget {
   State<PostView> createState() => _PostViewState();
 }
 
-class _PostViewState extends State<PostView> with AutomaticKeepAliveClientMixin {
-
+class _PostViewState extends State<PostView>
+    with AutomaticKeepAliveClientMixin {
   UserFeedModel? feedApiResponse;
   final ScrollController postPageController = ScrollController();
 
@@ -29,71 +29,75 @@ class _PostViewState extends State<PostView> with AutomaticKeepAliveClientMixin 
   Widget build(BuildContext context) {
     super.build(context);
     debugPrint("Reloading Post View.......");
-    return MultiProvider(providers: [ChangeNotifierProvider(create: (context) => PostViewApiResponseProvider())],
-     child: RefreshIndicator (
-       onRefresh:  () async {
-         setState(() {
-
-         });
-       },
-       child: Center (
-         child: Container (
-           color: Theme.of(context).primaryColorLight,
-           child: Column (
-             children: [
-               Expanded (
-                 flex: 95,
-                 child: Consumer<PostViewModel> (
-                   builder: (context, provider, child) {
-                     return FutureBuilder<UserFeedModel?>(
-                       future: PostViewModel.getAllPost(),
-                       builder: (context, snapshot) {
-                         feedApiResponse = snapshot.data;
-                         if(snapshot.connectionState == ConnectionState.waiting) {
-                           return Center(
-                               child: Container(
-                                 height: 490,
-                                 width:  350,
-                                 decoration: BoxDecoration(
-                                   color: AppColors.grey,
-                                   borderRadius: BorderRadius.circular(20),
-                                 ),
-                               )
-                           );
-                         }
-                         else if(snapshot.hasError) {
-                           return const Center(child: Text (AppStrings.error));
-                         }
-                         else if(snapshot.hasData) {
-                           return ListView.builder (
-                             key: const PageStorageKey<String>(StoragePathKey.postViewPath),
-                             controller: postPageController,
-                             itemBuilder: (context, index){
-                               return PostCard(post: feedApiResponse!.userFeed[index].userPosts, userData: feedApiResponse!.userFeed[index].userData,);
-                             },
-                             itemCount: feedApiResponse!.userFeed.length,
-                           );
-                         }
-                         else {
-                           return const Center(child: Text(AppStrings.noDataFound));
-                         }
-                       }
-                     );
-                   },
-                 ),
-               ),
-             ],
-           ),
-         ),
-       ),
-     ),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+            create: (context) => PostViewApiResponseProvider())
+      ],
+      child: RefreshIndicator(
+        onRefresh: () async {
+          setState(() {});
+        },
+        child: Center(
+          child: Container(
+            color: Theme.of(context).primaryColorLight,
+            child: Column(
+              children: [
+                Expanded(
+                  flex: 95,
+                  child: Consumer<PostViewModel>(
+                    builder: (context, provider, child) {
+                      return FutureBuilder<UserFeedModel?>(
+                          future: PostViewModel.getAllPost(),
+                          builder: (context, snapshot) {
+                            feedApiResponse = snapshot.data;
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Center(
+                                  child: Container(
+                                height: 490,
+                                width: 350,
+                                decoration: BoxDecoration(
+                                  color: AppColors.grey,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ));
+                            } else if (snapshot.hasError) {
+                              return const Center(
+                                  child: Text(AppStrings.error));
+                            } else if (snapshot.hasData) {
+                              return ListView.builder(
+                                key: const PageStorageKey<String>(
+                                    StoragePathKey.postViewPath),
+                                controller: postPageController,
+                                itemBuilder: (context, index) {
+                                  return PostCard(
+                                    post: feedApiResponse!
+                                        .userFeed[index].userPosts,
+                                    userData: feedApiResponse!
+                                        .userFeed[index].userData,
+                                  );
+                                },
+                                itemCount: feedApiResponse!.userFeed.length,
+                              );
+                            } else {
+                              return const Center(
+                                  child: Text(AppStrings.noDataFound));
+                            }
+                          });
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 
   loadMore() async {
-    postPageController.addListener(() {
-
-    });
+    postPageController.addListener(() {});
   }
 
   @override

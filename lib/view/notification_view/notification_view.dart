@@ -14,7 +14,7 @@ class _NotificationViewState extends State<NotificationView> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () async  {
+      onRefresh: () async {
         setState(() {});
       },
       child: Center(
@@ -25,7 +25,10 @@ class _NotificationViewState extends State<NotificationView> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(AppStrings.notification, style: AppStyle.blackBold24,),
+                  Text(
+                    AppStrings.notification,
+                    style: AppStyle.blackBold24,
+                  ),
                 ],
               ),
             ),
@@ -49,15 +52,18 @@ class _NotificationViewState extends State<NotificationView> {
             Expanded(
               flex: 90,
               child: ListView.builder(
-                key: const PageStorageKey<String>(StoragePathKey.notificationPath),
-                itemBuilder: (context, index){
+                key: const PageStorageKey<String>(
+                    StoragePathKey.notificationPath),
+                itemBuilder: (context, index) {
                   return const ListTile(
                     title: Text(AppStrings.notificationContent),
                     // leading: ,
                     // leading: ClipRRect(
                     //   child: UtilityHelper.image("https://cdn-icons-png.flaticon.com/512/25/25231.png")),
                   );
-                }, itemCount:30,),
+                },
+                itemCount: 30,
+              ),
             ),
 
             /// This widget will be used while loading the data so that user won't know that data is loading

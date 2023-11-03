@@ -9,6 +9,7 @@ import 'package:whisper/view_model/global_provider/global_provider.dart';
 import 'package:whisper/view_model/home_view_view_model/post_card_comment_view_model.dart';
 import 'package:whisper/view_model/home_view_view_model/share_post_view_model.dart';
 import 'package:whisper/view_model/global_provider/get_profile_data_provider.dart';
+import 'package:whisper/view_model/post_details_provider/post_details_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => AppGlobalProvider()),
         ChangeNotifierProvider(create: (context) => PostCardCommentViewModel()),
+        ChangeNotifierProvider(create: (context) => PostDetailsProvider()),
         ChangeNotifierProvider(create: (context) => PostShareViewModel()),
         ChangeNotifierProvider(create: (context) => GetProfileData()),
       ],
@@ -39,31 +41,29 @@ class MyApp extends StatelessWidget {
           cardColor: AppColors.lightBlack,
           canvasColor: AppColors.grey,
           dividerColor: Colors.grey.shade800,
-          appBarTheme: const AppBarTheme(
-            color: AppColors.lightBlack,
-            centerTitle: true
-          ),
+          appBarTheme:
+              const AppBarTheme(color: AppColors.lightBlack, centerTitle: true),
         ),
         theme: ThemeData(
           useMaterial3: true,
           brightness: Brightness.light,
-          primaryColor:  AppColors.blueSplashScreen,
+          primaryColor: AppColors.blueSplashScreen,
           cardColor: Colors.grey.shade50,
           dividerColor: Colors.grey.shade300,
           canvasColor: AppColors.grey,
           primaryColorDark: AppColors.black,
           primaryColorLight: Colors.white,
           appBarTheme: AppBarTheme(
-            centerTitle: true,
-            titleTextStyle: AppStyle.whiteMedium22,
-            backgroundColor: AppColors.blueSplashScreen,
-            shadowColor: AppColors.grey,
-            foregroundColor: AppColors.white
-          ),
+              centerTitle: true,
+              titleTextStyle: AppStyle.whiteMedium22,
+              backgroundColor: AppColors.blueSplashScreen,
+              shadowColor: AppColors.grey,
+              foregroundColor: AppColors.white),
         ),
         themeMode: ThemeMode.system,
         onGenerateRoute: NavigateRoute.onGenerate,
         initialRoute: RouteName.splashscreen,
-    ),);
+      ),
+    );
   }
 }

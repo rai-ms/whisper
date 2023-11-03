@@ -24,8 +24,8 @@ class ProfileView extends StatefulWidget {
   State<ProfileView> createState() => _ProfileViewState();
 }
 
-class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClientMixin{
-
+class _ProfileViewState extends State<ProfileView>
+    with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     super.initState();
@@ -47,86 +47,99 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
       providers: [
         ChangeNotifierProvider(create: (context) => PersonalProfileViewModel()),
         ChangeNotifierProvider(create: (context) => GetProfileData()),
-        ChangeNotifierProvider(create: (context) => PostViewApiResponseProvider()),
-      ] ,
+        ChangeNotifierProvider(
+            create: (context) => PostViewApiResponseProvider()),
+      ],
       child: RefreshIndicator(
-        onRefresh: () async  {
-        setState(() {});
-      },
+        onRefresh: () async {
+          setState(() {});
+        },
         child: SingleChildScrollView(
           key: const PageStorageKey<String>('personalProfileViewPath'),
           child: Column(
-            children:
-            [
-              Consumer<GetProfileData>(
-                  builder: (context, provider, child) {
-                    return FutureBuilder(
-                        future: provider.loadAllDataWithProfilePic(),
-                        builder: (context, data) {
-                          String? username = data.data;
-                          if(data.connectionState == ConnectionState.waiting){
-                            return Column(
-                              children: [
-                                const ProfileTopView(),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(width: 10,),
-                                    Container(width: 100, height: 60, color: AppColors.grey,)
-                                  ],
-                                ),
-                              ],
-                            );
-                          }
-                          else if(data.hasError){
-                            return Row(
+            children: [
+              Consumer<GetProfileData>(builder: (context, provider, child) {
+                return FutureBuilder(
+                    future: provider.loadAllDataWithProfilePic(),
+                    builder: (context, data) {
+                      String? username = data.data;
+                      if (data.connectionState == ConnectionState.waiting) {
+                        return Column(
+                          children: [
+                            const ProfileTopView(),
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                const SizedBox(width: 10,),
-                                Text("Unable to load!", style: AppStyle.blackBold24,),
-                              ],
-                            );
-                          }
-                          else if(data.hasData){
-                            return Column(
-                              children: [
-                                const ProfileTopView(),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(width: 10,),
-                                    Text( "$username", style: AppStyle.primaryColorDarkMedium(context),),
-                                  ],
+                                const SizedBox(
+                                  width: 10,
                                 ),
+                                Container(
+                                  width: 100,
+                                  height: 60,
+                                  color: AppColors.grey,
+                                )
                               ],
-                            );
-                          }
-                          else {
-                            return Row(
+                            ),
+                          ],
+                        );
+                      } else if (data.hasError) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Unable to load!",
+                              style: AppStyle.blackBold24,
+                            ),
+                          ],
+                        );
+                      } else if (data.hasData) {
+                        return Column(
+                          children: [
+                            const ProfileTopView(),
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 const SizedBox(
                                   width: 10,
                                 ),
                                 Text(
-                                  "Ashish Rai",
-                                  style: AppStyle.primaryColorDarkMedium(context),
+                                  "$username",
+                                  style:
+                                      AppStyle.primaryColorDarkMedium(context),
                                 ),
                               ],
-                            );
-                          }
-                        }
-                    );
-                  }
+                            ),
+                          ],
+                        );
+                      } else {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Ashish Rai",
+                              style: AppStyle.primaryColorDarkMedium(context),
+                            ),
+                          ],
+                        );
+                      }
+                    });
+              }),
+              const SizedBox(
+                height: 5,
               ),
-              const SizedBox(height: 5,),
               Container(
                 height: 50,
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Row(
                   children: [
                     Expanded(
-                      flex:4,
+                      flex: 4,
                       child: Container(
                         height: 50,
                         decoration: BoxDecoration(
@@ -137,16 +150,22 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                           children: [
                             sizedBox(wid: 5),
                             const Icon(Icons.add, color: AppColors.white),
-                            Text(AppStrings.addToStory, style: AppStyle.whiteBold16,),
+                            Text(
+                              AppStrings.addToStory,
+                              style: AppStyle.whiteBold16,
+                            ),
                           ],
                         ),
-                      ),),
+                      ),
+                    ),
                     sizedBox(wid: 10),
                     Expanded(
                       flex: 4,
                       child: InkWell(
-                        onTap: (){
-                          Navigator.pushNamed(context, RouteName.editProfileView).whenComplete((){
+                        onTap: () {
+                          Navigator.pushNamed(
+                                  context, RouteName.editProfileView)
+                              .whenComplete(() {
                             setState(() {});
                           });
                         },
@@ -155,17 +174,22 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                           decoration: BoxDecoration(
                             color: AppColors.grey,
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: Theme.of(context).primaryColor),
+                            border: Border.all(
+                                color: Theme.of(context).primaryColor),
                           ),
                           child: Row(
                             children: [
                               sizedBox(wid: 5),
                               const Icon(Icons.edit, color: AppColors.white),
-                              Text(AppStrings.editProfile, style: AppStyle.whiteBold16,),
+                              Text(
+                                AppStrings.editProfile,
+                                style: AppStyle.whiteBold16,
+                              ),
                             ],
                           ),
                         ),
-                      ),),
+                      ),
+                    ),
                     sizedBox(wid: 10),
                     Expanded(
                       flex: 2,
@@ -175,8 +199,10 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                           color: AppColors.grey,
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: const Icon(Icons.more_horiz, color: AppColors.white),
-                      ),),
+                        child: const Icon(Icons.more_horiz,
+                            color: AppColors.white),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -184,8 +210,13 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const SizedBox(width: 10,),
-                  Text(AppStrings.details, style: AppStyle.primaryColorDarkMedium25(context),),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    AppStrings.details,
+                    style: AppStyle.primaryColorDarkMedium25(context),
+                  ),
                 ],
               ),
               sizedBox(hei: 10),
@@ -197,56 +228,75 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                     children: [
                       Row(
                         children: [
-                          const Icon(FontAwesomeIcons.house, color: AppColors.grey,),
-                          sizedBox(wid: 10),
-                          Consumer<GetProfileData>(
-                            builder: (context, pr, ch) {
-                              return FutureBuilder(
-                                future: pr.getBio(),
-                                builder: (context, snap) {
-                                  if(snap.hasData){
-                                    return Text(snap.data.toString() ?? "", style: AppStyle.primaryColorDarkMedium(context),);
-                                  }
-                                  else {
-                                    return const Text(AppStrings.emptyString);
-                                  }
-
-                                },
-                              );
-                            }
+                          const Icon(
+                            FontAwesomeIcons.house,
+                            color: AppColors.grey,
                           ),
+                          sizedBox(wid: 10),
+                          Consumer<GetProfileData>(builder: (context, pr, ch) {
+                            return FutureBuilder(
+                              future: pr.getBio(),
+                              builder: (context, snap) {
+                                if (snap.hasData) {
+                                  return Text(
+                                    snap.data.toString() ?? "",
+                                    style: AppStyle.primaryColorDarkMedium(
+                                        context),
+                                  );
+                                } else {
+                                  return const Text(AppStrings.emptyString);
+                                }
+                              },
+                            );
+                          }),
                         ],
                       ),
                       sizedBox(hei: 10),
                       Row(
                         children: [
-                          const Icon(FontAwesomeIcons.clock, color: AppColors.grey,),
+                          const Icon(
+                            FontAwesomeIcons.clock,
+                            color: AppColors.grey,
+                          ),
                           sizedBox(wid: 10),
                           Consumer<GetProfileData>(
                               builder: (context, provider, child) {
-                                return FutureBuilder<String?>(
-                                    future: provider.getJoinedDate(),
-                                    builder: (context, data){
-                                      if(!data.hasData || data.connectionState == ConnectionState.waiting){
-                                        return Container(height: 50, width: 100, color: AppColors.grey,);
-                                      }
-                                      else if(data.hasData){
-                                        String? joinDate = data.data;
-                                        return Text("${AppStrings.joinedOn}${Utils.formatDateTime(joinDate!)}", style: AppStyle.primaryColorDarkMedium(context),);
-                                      }
-                                      return Text("${data.data}");
-
-                                    });
-                              }
-                          ),
+                            return FutureBuilder<String?>(
+                                future: provider.getJoinedDate(),
+                                builder: (context, data) {
+                                  if (!data.hasData ||
+                                      data.connectionState ==
+                                          ConnectionState.waiting) {
+                                    return Container(
+                                      height: 50,
+                                      width: 100,
+                                      color: AppColors.grey,
+                                    );
+                                  } else if (data.hasData) {
+                                    String? joinDate = data.data;
+                                    return Text(
+                                      "${AppStrings.joinedOn}${Utils.formatDateTime(joinDate!)}",
+                                      style: AppStyle.primaryColorDarkMedium(
+                                          context),
+                                    );
+                                  }
+                                  return Text("${data.data}");
+                                });
+                          }),
                         ],
                       ),
                       sizedBox(hei: 10),
                       Row(
                         children: [
-                          const Icon(Icons.more_horiz, color: AppColors.grey,),
+                          const Icon(
+                            Icons.more_horiz,
+                            color: AppColors.grey,
+                          ),
                           sizedBox(wid: 10),
-                          Text(AppStrings.seeYourAbout, style: AppStyle.primaryColorDarkMedium(context),),
+                          Text(
+                            AppStrings.seeYourAbout,
+                            style: AppStyle.primaryColorDarkMedium(context),
+                          ),
                         ],
                       ),
                     ],
@@ -259,23 +309,22 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                 color: Theme.of(context).dividerColor,
               ),
               sizedBox(hei: 10),
-              Consumer<PersonalProfileViewModel>(
-                builder: (context ,pr, ch) {
-                  return FutureBuilder<ApiResponseMyProfileUserDataModel?>(
+              Consumer<PersonalProfileViewModel>(builder: (context, pr, ch) {
+                return FutureBuilder<ApiResponseMyProfileUserDataModel?>(
                     future: ProfileRepository.getMyProfile(),
                     builder: (context, snapshot) {
-                      if(snapshot.hasData){
+                      if (snapshot.hasData) {
                         // debugPrint("***************Data Received******************");
-                        debugPrint(snapshot.data!.data[0].userPosts.length.toString());
-                        return PostFollowerFollowing(res: snapshot.data!,);
-                      }
-                      else {
+                        debugPrint(
+                            snapshot.data!.data[0].userPosts.length.toString());
+                        return PostFollowerFollowing(
+                          res: snapshot.data!,
+                        );
+                      } else {
                         return sizedBox();
                       }
-                    }
-                  );
-                }
-              ),
+                    });
+              }),
             ],
           ),
         ),

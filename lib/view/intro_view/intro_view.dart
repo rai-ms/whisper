@@ -26,7 +26,11 @@ class _IntroViewState extends State<IntroView> {
               pos = index;
               setState(() {});
             },
-            controller: PageController( initialPage: 0, keepPage: false, viewportFraction: 1,),
+            controller: PageController(
+              initialPage: 0,
+              keepPage: false,
+              viewportFraction: 1,
+            ),
             pageSnapping: true,
             reverse: false,
             allowImplicitScrolling: true,
@@ -63,13 +67,13 @@ class _IntroViewState extends State<IntroView> {
                         right: 30,
                         child: AppRoundedButton(
                           onTap: () {
-                            Navigator.pushNamedAndRemoveUntil(context,
-                                RouteName.loginView, (route) => false);
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, RouteName.loginView, (route) => false);
                           },
                           height: 60,
                           width: 60,
                           title: "Skip",
-                          textStyle:AppStyle.blueBold20,
+                          textStyle: AppStyle.blueBold20,
                           borderColor: AppColors.blueSplashScreen,
                           buttonColor: AppColors.white,
                           borderWidth: 2,
@@ -113,13 +117,13 @@ class _IntroViewState extends State<IntroView> {
                         right: 30,
                         child: AppRoundedButton(
                           onTap: () {
-                            Navigator.pushNamedAndRemoveUntil(context,
-                                RouteName.loginView, (route) => false);
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, RouteName.loginView, (route) => false);
                           },
                           height: 60,
                           width: 60,
                           title: "Skip",
-                          textStyle:AppStyle.whiteBold20,
+                          textStyle: AppStyle.whiteBold20,
                           borderColor: AppColors.white,
                           buttonColor: AppColors.transparent,
                           borderWidth: 2,

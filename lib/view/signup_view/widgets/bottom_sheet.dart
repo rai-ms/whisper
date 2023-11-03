@@ -9,15 +9,16 @@ import '../../../utils/app_helper/app_image.dart';
 import '../../../utils/app_helper/app_strings.dart';
 
 class BottomSheetVerifyAccount extends StatefulWidget {
-  const BottomSheetVerifyAccount({super.key, required this.mail, required this.pass});
+  const BottomSheetVerifyAccount(
+      {super.key, required this.mail, required this.pass});
   final String mail;
   final String pass;
   @override
-  State<BottomSheetVerifyAccount> createState() => _BottomSheetVerifyAccountState();
+  State<BottomSheetVerifyAccount> createState() =>
+      _BottomSheetVerifyAccountState();
 }
 
 class _BottomSheetVerifyAccountState extends State<BottomSheetVerifyAccount> {
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -27,23 +28,26 @@ class _BottomSheetVerifyAccountState extends State<BottomSheetVerifyAccount> {
         padding: const EdgeInsets.only(top: 18.0, left: 20, right: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          children:
-          [
+          children: [
             SvgPicture.asset(AppImages.verifyMailLogo),
             sizedBox(hei: 10),
-            const Text(AppStrings.verifyYourMail, textAlign: TextAlign.center,),
+            const Text(
+              AppStrings.verifyYourMail,
+              textAlign: TextAlign.center,
+            ),
             sizedBox(hei: 15),
             AppRoundedButton(
-              onTap: ()  {
-                  Navigator.pushReplacementNamed(context, RouteName.otpAuthView,arguments: {"mail":widget.mail, 'password':widget.pass});
+              onTap: () {
+                Navigator.pushReplacementNamed(context, RouteName.otpAuthView,
+                    arguments: {"mail": widget.mail, 'password': widget.pass});
               },
-              title:  AppStrings.verify,
-              textStyle:AppStyle.blueSplashBold20,
+              title: AppStrings.verify,
+              textStyle: AppStyle.blueSplashBold20,
               borderWidth: 2,
-              borderColor:AppColors.blueSplashScreen,
+              borderColor: AppColors.blueSplashScreen,
               isEnable: true,
               buttonColor: AppColors.white,
-              loading:false,
+              loading: false,
             )
           ],
         ),

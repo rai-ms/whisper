@@ -2,11 +2,33 @@ import 'package:flutter/material.dart';
 import '../utils/app_helper/app_color.dart';
 
 class AppTextFormField extends StatelessWidget {
-  const AppTextFormField({super.key, this.cont, this.isPrefixIconExist = true, this.focusNode, this.onFieldSubmitted, this.validator, this.maxLines = 1, this.hintText, this.label, this.onChanged, this.enableBorderColor, this.disableBorderColor,this.textInputType, this.contentPadding,this.obscureText = true, this.style, this.prefixIcon, this.hintStyle, this.isCollapsed = false, this.enable, this.labelText, this.suffixIcon});
+  const AppTextFormField(
+      {super.key,
+      this.cont,
+      this.isPrefixIconExist = true,
+      this.focusNode,
+      this.onFieldSubmitted,
+      this.validator,
+      this.maxLines = 1,
+      this.hintText,
+      this.label,
+      this.onChanged,
+      this.enableBorderColor,
+      this.disableBorderColor,
+      this.textInputType,
+      this.contentPadding,
+      this.obscureText = true,
+      this.style,
+      this.prefixIcon,
+      this.hintStyle,
+      this.isCollapsed = false,
+      this.enable,
+      this.labelText,
+      this.suffixIcon});
   final TextEditingController? cont;
   final FocusNode? focusNode;
-  final String? Function (String?)? validator;
-  final String? Function (String?)? onFieldSubmitted;
+  final String? Function(String?)? validator;
+  final String? Function(String?)? onFieldSubmitted;
   final String? hintText;
   final Widget? label;
   final void Function(String)? onChanged;
@@ -36,20 +58,49 @@ class AppTextFormField extends StatelessWidget {
       maxLines: maxLines,
       enabled: enable,
       focusNode: focusNode,
-      validator: validator ?? (_){ return null;},
+      validator: validator ??
+          (_) {
+            return null;
+          },
       onFieldSubmitted: onFieldSubmitted,
       decoration: InputDecoration(
         suffixIcon: suffixIcon,
-        contentPadding: contentPadding == null ? EdgeInsets.zero : EdgeInsets.all(contentPadding!),
+        contentPadding: contentPadding == null
+            ? EdgeInsets.zero
+            : EdgeInsets.all(contentPadding!),
         labelText: labelText,
         hintStyle: hintStyle,
         isCollapsed: isCollapsed,
         hintText: hintText,
-        label:label,
-        prefixIcon: !isPrefixIconExist ? null : prefixIcon ?? const Icon(Icons.person,color: AppColors.blueSplashScreen,),
-        border: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(20),), borderSide: BorderSide(width: 2, color: enableBorderColor ?? AppColors.black),),
-        disabledBorder: OutlineInputBorder(borderRadius: const BorderRadius.all( Radius.circular(20),), borderSide: BorderSide(width: 2, color: disableBorderColor ?? AppColors.black),),
-        enabledBorder: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(20),), borderSide: BorderSide(width: 2, color: enableBorderColor ?? AppColors.black),),
+        label: label,
+        prefixIcon: !isPrefixIconExist
+            ? null
+            : prefixIcon ??
+                const Icon(
+                  Icons.person,
+                  color: AppColors.blueSplashScreen,
+                ),
+        border: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(20),
+          ),
+          borderSide:
+              BorderSide(width: 2, color: enableBorderColor ?? AppColors.black),
+        ),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(20),
+          ),
+          borderSide: BorderSide(
+              width: 2, color: disableBorderColor ?? AppColors.black),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(20),
+          ),
+          borderSide:
+              BorderSide(width: 2, color: enableBorderColor ?? AppColors.black),
+        ),
         constraints: const BoxConstraints(
           maxWidth: 400,
         ),

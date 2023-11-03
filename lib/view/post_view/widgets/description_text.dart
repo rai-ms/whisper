@@ -34,26 +34,26 @@ class _DescriptionTextWidgetState extends State<DescriptionTextWidget> {
       child: secondHalf.isEmpty
           ? Text(firstHalf)
           : Column(
-        children: <Widget>[
-          Text(flag ? ("$firstHalf...") : (firstHalf + secondHalf)),
-          InkWell(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                Text(
-                  flag ? "show more" : "show less",
-                  style: const TextStyle(color: Colors.blue),
+                Text(flag ? ("$firstHalf...") : (firstHalf + secondHalf)),
+                InkWell(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Text(
+                        flag ? "show more" : "show less",
+                        style: const TextStyle(color: Colors.blue),
+                      ),
+                    ],
+                  ),
+                  onTap: () {
+                    setState(() {
+                      flag = !flag;
+                    });
+                  },
                 ),
               ],
             ),
-            onTap: () {
-              setState(() {
-                flag = !flag;
-              });
-            },
-          ),
-        ],
-      ),
     );
   }
 }

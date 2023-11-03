@@ -14,67 +14,67 @@ class Followers extends StatefulWidget {
   State<Followers> createState() => _FollowersState();
 }
 
-class _FollowersState extends State<Followers> with AutomaticKeepAliveClientMixin {
+class _FollowersState extends State<Followers>
+    with AutomaticKeepAliveClientMixin {
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     super.build(context);
     return RefreshIndicator(
-      onRefresh: () async  {
+      onRefresh: () async {
         setState(() {});
       },
       child: SizedBox(
         height: 500,
-        child: Consumer<PostViewApiResponseProvider>(
-          builder: (context, pr, ch) {
-            return FutureBuilder<GetFollowerApiRes?>(
+        child:
+            Consumer<PostViewApiResponseProvider>(builder: (context, pr, ch) {
+          return FutureBuilder<GetFollowerApiRes?>(
               future: pr.getFollowers(),
               builder: (context, snapshot) {
-                if(pr.response == null){
-                    return ListView.builder(
-                      itemBuilder: (BuildContext context, int index) {
-                        return ListTile(
-                          title: Container (
-                            height: 60,
-                            decoration: BoxDecoration(
-                              color: AppColors.grey,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
+                if (pr.response == null) {
+                  return ListView.builder(
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                        title: Container(
+                          height: 60,
+                          decoration: BoxDecoration(
+                            color: AppColors.grey,
+                            borderRadius: BorderRadius.circular(20),
                           ),
-                          leading: const CircleAvatar (
-                            backgroundColor: AppColors.grey,
-                            radius: 20,
-                          ),
-                        );
-                      },
-                      itemCount: 5,
-                    );
-                  }
-                // else if(snapshot.data == null){
-                //   return const Text("No Data");
-                // }
+                        ),
+                        leading: const CircleAvatar(
+                          backgroundColor: AppColors.grey,
+                          radius: 20,
+                        ),
+                      );
+                    },
+                    itemCount: 5,
+                  );
+                }
                 else {
                   GetFollowerApiRes? getFollowerApiRes = pr.response;
                   return ListView.builder(
-                    key: const PageStorageKey<String>(StoragePathKey.friendsListPath),
+                    key: const PageStorageKey<String>(
+                        StoragePathKey.friendsListPath),
                     itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        onTap: (){
-                          Navigator.pushNamed(context, RouteName.thirdUserProfileView, arguments: {"id" : getFollowerApiRes.data!.followers![index].user.id});
-                        },
-                        title: Text("${getFollowerApiRes!.data!.followers![index].user.username}"),
-                        subtitle: Text("${getFollowerApiRes!.data!.followers![index].user.email}"),
-                        leading: ClipRRect (
-                          borderRadius: BorderRadius.circular(100),
-                          child: UtilityHelper.image(getFollowerApiRes.data!.followers![index].user.profilePic ?? dp)),
+                      return SizedBox(
+                        height: 80,
+                        child: ListTile(
+                          onTap: () {
+                            Navigator.pushNamed(context, RouteName.thirdUserProfileView, arguments: {"id": getFollowerApiRes.data!.followers![index].user.id});
+                          },
+                          title: Text("${getFollowerApiRes!.data!.followers![index].user.username}"),
+                          subtitle: Text("${getFollowerApiRes!.data!.followers![index].user.email}"),
+                          leading: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: UtilityHelper.image(getFollowerApiRes.data!.followers![index].user.profilePic ?? dp, width: 50)),
+                        ),
                       );
                     },
-                    itemCount: getFollowerApiRes!.data!.followers!.length,);
+                    itemCount: getFollowerApiRes!.data!.followers!.length,
+                  );
                 }
-              }
-            );
-          }
-        ),
+              });
+        }),
       ),
     );
   }

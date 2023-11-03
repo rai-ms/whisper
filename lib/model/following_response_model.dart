@@ -27,8 +27,9 @@ class FollowingData {
 
   factory FollowingData.fromJson(Map<String, dynamic> json) {
     final List<dynamic> followingList = json['Following'];
-    final List<FollowingUser> following =
-    followingList.map((userJson) => FollowingUser.fromJson(userJson)).toList();
+    final List<FollowingUser> following = followingList
+        .map((userJson) => FollowingUser.fromJson(userJson))
+        .toList();
 
     return FollowingData(following: following);
   }

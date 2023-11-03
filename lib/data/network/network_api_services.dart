@@ -18,8 +18,7 @@ class NetworkApiServices extends BaseApiServices {
       throw InternetException(AppStrings.noNetwork);
     } on RequestTimeOut {
       throw RequestTimeOut(AppStrings.takingMoreTime);
-    }
-    catch(e){
+    } catch (e) {
       debugPrint("Unknown Error Found $e");
       throw AppError(e.toString());
     }
@@ -31,17 +30,21 @@ class NetworkApiServices extends BaseApiServices {
     dynamic responseJSON;
     try {
       final response = await http
-          .post(Uri.parse(url), body: jsonEncode(data),)
+          .post(
+            Uri.parse(url),
+            body: jsonEncode(data),
+          )
           .timeout(const Duration(seconds: 10));
       responseJSON = returnResponse(response);
-    } catch(e) {
+    } catch (e) {
       // debugPrint("$e");
     }
     return responseJSON;
   }
 
   @override
-  Future postAPIWithHeader(String url, dynamic data, Map<String, String> header) async {
+  Future postAPIWithHeader(
+      String url, dynamic data, Map<String, String> header) async {
     dynamic responseJSON;
     try {
       final response = await http
@@ -50,7 +53,7 @@ class NetworkApiServices extends BaseApiServices {
       // debugPrint("JSON Status Code: ${response.statusCode}");
       responseJSON = returnResponse(response);
       // debugPrint("JSON Return: $responseJSON");
-    } catch(e) {
+    } catch (e) {
       // debugPrint("Error: $e");
     }
     // debugPrint("Going to return Response :$responseJSON");
@@ -58,18 +61,20 @@ class NetworkApiServices extends BaseApiServices {
   }
 
   @override
-  Future deleteAPI(String url, dynamic body, Map<String, String>? header) async {
+  Future deleteAPI(
+      String url, dynamic body, Map<String, String>? header) async {
     http.Response res;
     try {
-      res = await http.delete(Uri.parse(url), headers: header, body: jsonEncode(body));
-      debugPrint("Response is Successfully returning of delete ${jsonDecode(res.body)}");
+      res = await http.delete(Uri.parse(url),
+          headers: header, body: jsonEncode(body));
+      debugPrint(
+          "Response is Successfully returning of delete ${jsonDecode(res.body)}");
       return returnResponse(res);
     } on SocketException {
       throw InternetException(AppStrings.noNetwork);
     } on RequestTimeOut {
       throw RequestTimeOut(AppStrings.takingMoreTime);
-    }
-    catch(e){
+    } catch (e) {
       debugPrint("Unknown Error Found $e");
       throw AppError(e.toString());
     }
@@ -79,15 +84,16 @@ class NetworkApiServices extends BaseApiServices {
   Future patchAPI(String url, dynamic data, Map<String, String>? header) async {
     http.Response res;
     try {
-      res = await http.patch(Uri.parse(url), body: jsonEncode(data), headers: header);
-      debugPrint("Response is Successfully returning of patch ${jsonDecode(res.body)}");
+      res = await http.patch(Uri.parse(url),
+          body: jsonEncode(data), headers: header);
+      debugPrint(
+          "Response is Successfully returning of patch ${jsonDecode(res.body)}");
       return returnResponse(res);
     } on SocketException {
       throw InternetException(AppStrings.noNetwork);
     } on RequestTimeOut {
       throw RequestTimeOut(AppStrings.takingMoreTime);
-    }
-    catch(e){
+    } catch (e) {
       debugPrint("Unknown Error Found $e");
       throw AppError(e.toString());
     }

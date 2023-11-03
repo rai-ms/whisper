@@ -13,7 +13,6 @@ import '../../model/following_response_model.dart';
 import '../../model/my_profile_api_response.dart';
 
 class ProfileRepository {
-
   static final BaseApiServices _baseAPIServices = NetworkApiServices();
 
   static Map<String, String> headers = {
@@ -21,7 +20,7 @@ class ProfileRepository {
     ApiKeys.contentType: ApiKeys.applicationJson,
   };
 
-  static Future<ApiResponseUserDataModel?> getProfile ({String? id}) async {
+  static Future<ApiResponseUserDataModel?> getProfile({String? id}) async {
     Map<String, String> header = {
       ApiKeys.authorization: "Basic c29jaWFsTWVkaWE6c29jaWFsQDEyMw==",
       ApiKeys.contentType: ApiKeys.applicationJson,
@@ -32,12 +31,14 @@ class ProfileRepository {
 
     header[ApiKeys.authorization] = token!;
     // debugPrint("Header is $header and id is $id");
-    await _baseAPIServices.getAPI("${AppUrl.getMyProfileEndPoint}?userId=$id", header).then((value) {
+    await _baseAPIServices
+        .getAPI("${AppUrl.getMyProfileEndPoint}?userId=$id", header)
+        .then((value) {
       // debugPrint("Profile Data fetched $value");
       res = ApiResponseUserDataModel.fromJson(value);
       // debugPrint("Length of post are: ${res!.data[0].userPosts.length}");
-      debugPrint(value.toString());
-    }).onError((error, stackTrace){
+      // debugPrint(value.toString());
+    }).onError((error, stackTrace) {
       // debugPrint("Error in profile fetch $error");
       throw AppError("${AppStrings.error}$error");
     });
@@ -50,11 +51,13 @@ class ProfileRepository {
     String? token = await UserData.getUserAccessToken();
     headers[ApiKeys.authorization] = token!;
     id ??= await UserData.getUserId();
-    await _baseAPIServices.getAPI("${AppUrl.getFollowersEndPoint}$id", headers).then((value) {
+    await _baseAPIServices
+        .getAPI("${AppUrl.getFollowersEndPoint}$id", headers)
+        .then((value) {
       // debugPrint("Followers Data fetched $value");
       apiRes = GetFollowerApiRes.fromJson(value);
     }).onError((error, stackTrace) {
-      throw AppError("Error----->$error");
+      throw AppError("Get Follower Error----->$error");
     });
     return apiRes;
   }
@@ -65,12 +68,14 @@ class ProfileRepository {
     String? token = await UserData.getUserAccessToken();
     id ??= await UserData.getUserId();
     headers[ApiKeys.authorization] = token!;
-    await _baseAPIServices.getAPI("${AppUrl.getFollowingEndPoint}?userId=$id", headers).then((value) {
+    await _baseAPIServices
+        .getAPI("${AppUrl.getFollowingEndPoint}?userId=$id", headers)
+        .then((value) {
       // debugPrint("Following Data fetched $value");
       apiRes = GetFollowingApiRes.fromJson(value);
-    }).onError((error, stackTrace){
+    }).onError((error, stackTrace) {
       debugPrint("Error in following fetch $error");
-      throw AppError("Error----->$error");
+      throw AppError("Get Following Error----->$error");
     });
     return apiRes;
   }
@@ -82,10 +87,13 @@ class ProfileRepository {
     String? token = await UserData.getUserAccessToken();
     headers[ApiKeys.authorization] = token!;
     // debugPrint("Header is:$headers");
-    await _baseAPIServices.postAPIWithHeader("${AppUrl.followUserEndPoint}$followingId",{}, headers).then((value) {
+    await _baseAPIServices
+        .postAPIWithHeader(
+            "${AppUrl.followUserEndPoint}$followingId", {}, headers)
+        .then((value) {
       // debugPrint("Follow user Data fetched ====================== $value ============================");
       apiRes = value;
-    }).onError((error, stackTrace){
+    }).onError((error, stackTrace) {
       // debugPrint("Error in follow user $error");
       throw AppError("${AppStrings.error}$error");
     });
@@ -99,43 +107,50 @@ class ProfileRepository {
     String? token = await UserData.getUserAccessToken();
     headers[ApiKeys.authorization] = token!;
     // debugPrint("Header is:$headers");
-    await _baseAPIServices.deleteAPI("${AppUrl.unfollowUserEndPoint}$followingId",{}, headers).then((value) {
+    await _baseAPIServices
+        .deleteAPI("${AppUrl.unfollowUserEndPoint}$followingId", {}, headers)
+        .then((value) {
       // debugPrint("Follow user Data fetched ====================== $value ============================");
       apiRes = value;
-    }).onError((error, stackTrace){
+    }).onError((error, stackTrace) {
       throw AppError("${AppStrings.error}$error");
     });
     // debugPrint("Status code of profile res is: ${res!.statusCode}");
     return apiRes;
   }
 
-  static Future<Map<String, dynamic>?> editProfile(ProfileEditPayload profileEditPayload) async {
+  static Future<Map<String, dynamic>?> editProfile(
+      ProfileEditPayload profileEditPayload) async {
     Map<String, dynamic>? res;
     String? id = await UserData.getUserId();
     headers[ApiKeys.authorization] = id!;
-    await _baseAPIServices.patchAPI(AppUrl.editProfileEndPoint, profileEditPayload.toJson(), headers).then((value){
-        // debugPrint("Profile Updated Successfully response is:$value");
-        res = value;
-    }).onError((error, stackTrace){
-        // debugPrint("Profile Updation caused error, error is:$error");
-        throw AppError("${AppStrings.error}$error");
+    await _baseAPIServices
+        .patchAPI(
+            AppUrl.editProfileEndPoint, profileEditPayload.toJson(), headers)
+        .then((value) {
+      // debugPrint("Profile Updated Successfully response is:$value");
+      res = value;
+    }).onError((error, stackTrace) {
+      // debugPrint("Profile Updation caused error, error is:$error");
+      throw AppError("${AppStrings.error}$error");
     });
     return res;
   }
 
-  static Future<ApiResponseMyProfileUserDataModel?> getMyProfile () async {
+  static Future<ApiResponseMyProfileUserDataModel?> getMyProfile() async {
     ApiResponseMyProfileUserDataModel? res;
     String? token = await UserData.getUserAccessToken();
     String? id = await UserData.getUserId();
 
     headers[ApiKeys.authorization] = token!;
-    await _baseAPIServices.getAPI("${AppUrl.getMyProfileEndPoint}?userId=$id", headers).then((value) {
+    await _baseAPIServices
+        .getAPI("${AppUrl.getMyProfileEndPoint}?userId=$id", headers)
+        .then((value) {
       // debugPrint("Profile Data fetched $value");
       res = ApiResponseMyProfileUserDataModel.fromJson(value);
-    }).onError((error, stackTrace){
-      throw AppError("Error----->$error");
+    }).onError((error, stackTrace) {
+      throw AppError("Get My Profile Error----->$error");
     });
     return res;
   }
-
 }

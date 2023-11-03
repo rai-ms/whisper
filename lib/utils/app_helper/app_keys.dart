@@ -40,6 +40,7 @@ abstract class ApiKeys {
   static const String data = 'data';
   static const String token = 'token';
   static const String loginType = 'loginType';
+  static const String statusCode = 'statusCode';
 }
 
 class AppPreferenceKeys {
@@ -47,5 +48,3 @@ class AppPreferenceKeys {
   static const String userID = 'userID';
   static const String userData = 'userData';
 }
-
-

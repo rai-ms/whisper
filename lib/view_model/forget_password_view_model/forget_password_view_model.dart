@@ -2,8 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:whisper/repository/login_repo/login_repo.dart';
 import 'package:whisper/utils/routes/route_name.dart';
 
-class ForgetPasswordViewModel extends ChangeNotifier
-{
+class ForgetPasswordViewModel extends ChangeNotifier {
   TextEditingController mailCont = TextEditingController();
   FocusNode emailFocusNode = FocusNode();
   FocusNode buttonFocusNode = FocusNode();
@@ -12,23 +11,27 @@ class ForgetPasswordViewModel extends ChangeNotifier
 
   final LoginRepository _repo = LoginRepository();
   sendOTPForForgetPassword(BuildContext context) async {
-    if(formkey.currentState!.validate()){
+    if (formkey.currentState!.validate()) {
       loading = true;
       notifyListeners();
 
-      try{
+      try {
         await Future.delayed(const Duration(seconds: 2));
-        _repo.forgetPasswordLoginAPI({"email":mailCont.text.toString().trim()}).then((value) {
+        _repo.forgetPasswordLoginAPI(
+            {"email": mailCont.text.toString().trim()}).then((value) {
           debugPrint("OTP Sent Success $value");
-          Navigator.pushNamed(context, RouteName.otpAuthView, arguments: {'mail':mailCont.text.toString().trim(), 'password': "", 'isForgetPass' : true});
-        }).onError((error, stackTrace){
-            debugPrint("Error in Forget Password: $error");
-            return;
+          Navigator.pushNamed(context, RouteName.otpAuthView, arguments: {
+            'mail': mailCont.text.toString().trim(),
+            'password': "",
+            'isForgetPass': true
+          });
+        }).onError((error, stackTrace) {
+          debugPrint("Error in Forget Password: $error");
+          return;
         });
         loading = false;
         notifyListeners();
-      }
-      catch(e) {
+      } catch (e) {
         debugPrint(e.toString());
       }
       // if(context.mounted)
@@ -38,7 +41,6 @@ class ForgetPasswordViewModel extends ChangeNotifier
     }
   }
 
-
   @override
   void dispose() {
     mailCont.dispose();
@@ -46,5 +48,4 @@ class ForgetPasswordViewModel extends ChangeNotifier
     emailFocusNode.dispose();
     super.dispose();
   }
-
 }

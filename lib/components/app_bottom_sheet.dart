@@ -15,20 +15,19 @@ class _AppBottomSheetState extends State<AppBottomSheet> {
   Widget build(BuildContext context) {
     return Container(
       height: 300,
-      width: getFullWidth(context)-30,
+      width: getFullWidth(context) - 30,
       decoration: const BoxDecoration(
-        borderRadius: BorderRadius.only(topRight: Radius.circular(20), topLeft:  Radius.circular(20))
-      ),
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(20), topLeft: Radius.circular(20))),
       child: SizedBox(
-        child: IconTheme(data: const IconThemeData(color: AppColors.transparent), child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children:
-            [
-              Expanded(child: widget)
-            ],
-          ),
-        )),
+        child: IconTheme(
+            data: const IconThemeData(color: AppColors.transparent),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [Expanded(child: widget)],
+              ),
+            )),
       ),
     );
   }

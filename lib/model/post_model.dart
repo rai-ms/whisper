@@ -31,20 +31,20 @@ class ApiResponsePostCreatedData {
   final int v;
 
   ApiResponsePostCreatedData({
-  required this.userId,
-  required this.url,
-  required this.caption,
-  required this.likeCount,
-  required this.commentCount,
-  required this.postStatus,
-  required this.id,
-  required this.createdAt,
-  required this.updatedAt,
-  required this.v,
-});
+    required this.userId,
+    required this.url,
+    required this.caption,
+    required this.likeCount,
+    required this.commentCount,
+    required this.postStatus,
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.v,
+  });
 
-factory ApiResponsePostCreatedData.fromJson(Map<String, dynamic> json) {
-  return ApiResponsePostCreatedData(
+  factory ApiResponsePostCreatedData.fromJson(Map<String, dynamic> json) {
+    return ApiResponsePostCreatedData(
       userId: json['userId'],
       url: json['url'],
       caption: json['caption'],

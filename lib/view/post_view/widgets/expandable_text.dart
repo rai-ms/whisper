@@ -14,27 +14,25 @@ class _ExpandableTextState extends State<ExpandableText>
     with TickerProviderStateMixin<ExpandableText> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>
-      [
-        InkWell(
-          onTap: (){
-            widget.isExpanded = !widget.isExpanded;
-            setState(() {});
-          },
-          child: AnimatedSize(
-          duration: const Duration(milliseconds: 50),
-          child: ConstrainedBox(
-              constraints: widget.isExpanded
-                  ? const BoxConstraints()
-                  : const BoxConstraints(maxHeight: 30.0),
-              child: Text(
-                widget.text,
-                softWrap: true,
-                overflow: TextOverflow.fade,
-                style: AppStyle.primaryColorDarkMedium14(context),
-              ))),
-        ),
-      ]);
+    return Column(children: <Widget>[
+      InkWell(
+        onTap: () {
+          widget.isExpanded = !widget.isExpanded;
+          setState(() {});
+        },
+        child: AnimatedSize(
+            duration: const Duration(milliseconds: 50),
+            child: ConstrainedBox(
+                constraints: widget.isExpanded
+                    ? const BoxConstraints()
+                    : const BoxConstraints(maxHeight: 30.0),
+                child: Text(
+                  widget.text,
+                  softWrap: true,
+                  overflow: TextOverflow.fade,
+                  style: AppStyle.primaryColorDarkMedium14(context),
+                ))),
+      ),
+    ]);
   }
 }

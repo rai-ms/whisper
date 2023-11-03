@@ -3,7 +3,7 @@ class Like {
   final String likedBy;
   final String postedBy;
   final String createdAt;
-   // final int likeType;
+  // final int likeType;
 
   Like({
     required this.id,

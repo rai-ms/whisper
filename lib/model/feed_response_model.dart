@@ -122,8 +122,6 @@
 //   }
 // }
 
-
-
 class UserFeedModel {
   final int statusCode;
   final String? type;
@@ -138,8 +136,9 @@ class UserFeedModel {
   factory UserFeedModel.fromJson(Map<String, dynamic> json) {
     final List<dynamic>? userFeedList = json['User_Feed'];
     final List<UserFeedItem> userFeed = userFeedList?.map((item) {
-      return UserFeedItem.fromJson(item);
-    }).toList() ?? [];
+          return UserFeedItem.fromJson(item);
+        }).toList() ??
+        [];
 
     return UserFeedModel(
       statusCode: json['statusCode'],
@@ -232,4 +231,3 @@ class UserPosts {
     );
   }
 }
-

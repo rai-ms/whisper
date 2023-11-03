@@ -28,14 +28,14 @@ class SearchResponseUser {
   final String username;
   // final String email;
   // final String? fullName;
-  // final String? profilePic;
+  final String? profilePic;
 
   SearchResponseUser({
     required this.id,
     required this.username,
     // required this.email,
     // required this.fullName,
-    // required this.profilePic,
+    required this.profilePic,
   });
 
   factory SearchResponseUser.fromJson(Map<String, dynamic> json) {
@@ -44,7 +44,7 @@ class SearchResponseUser {
       username: json['username'],
       // email: json['email'],
       // fullName: json['fullName'] ?? "",
-      // profilePic: json['profilePic'],
+      profilePic: json['profilePic'],
     );
   }
 }
@@ -55,8 +55,6 @@ class SearchUserPayload {
   SearchUserPayload({this.username});
 
   Map<String, dynamic> toJsonUsername() {
-    return {
-      'name': username
-    };
+    return {'name': username};
   }
 }

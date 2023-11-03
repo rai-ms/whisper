@@ -10,13 +10,11 @@ import 'package:whisper/utils/app_helper/user_data_preferences/user_data.dart';
 import '../../repository/edit_profile_repo/edit_profile_repo.dart';
 
 class EditProfileViewModel extends ChangeNotifier {
-
   TextEditingController usernameController = TextEditingController();
   TextEditingController bioController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey();
 
   EditProfileRepository repository = EditProfileRepository();
-
 
   bool _loading = false;
   bool get loading => _loading;
@@ -33,10 +31,10 @@ class EditProfileViewModel extends ChangeNotifier {
   String get imgUrl => _imgUrl!;
 
   fetchFromCamera() async {
-    await requestPermission().then((value) async{
+    await requestPermission().then((value) async {
       await fetchImage(ImageSource.camera);
       notifyListeners();
-    }).onError((error, stackTrace){
+    }).onError((error, stackTrace) {
       debugPrint("Error while fetchFromCamera : $error");
     });
   }
@@ -45,15 +43,15 @@ class EditProfileViewModel extends ChangeNotifier {
     await requestPermission().then((value) async {
       await fetchImage(ImageSource.gallery);
       notifyListeners();
-    }).onError((error, stackTrace){
+    }).onError((error, stackTrace) {
       debugPrint("Error while fetchFromGallery : $error");
     });
   }
 
   fetchImage(ImageSource source) async {
     try {
-      XFile? pickImage = await ImagePicker().pickImage(
-          source: source, maxHeight: 200, maxWidth: 300);
+      XFile? pickImage = await ImagePicker()
+          .pickImage(source: source, maxHeight: 200, maxWidth: 300);
       if (pickImage == null) return;
       final tmpImage = File(pickImage.path);
       pickedImage = tmpImage;
@@ -68,7 +66,6 @@ class EditProfileViewModel extends ChangeNotifier {
   }
 
   Future<void> uploadImage() async {
-
     if (!isPicked) {
       return debugPrint("Image not Picked");
     } else {
@@ -77,17 +74,36 @@ class EditProfileViewModel extends ChangeNotifier {
     }
   }
 
+  String? ifUploadProfileUrl;
+
   Future ediProfile() async {
-    String newUsername = usernameController.text.toString().trim();
-    String newBio = bioController.text.toString().trim();
-    if(newUsername.isEmpty && newBio.isEmpty && !isPicked) return;
-    await uploadImage();
-    await repository.editProfile(ProfileEditPayload(username: newUsername, profileBio: newBio, profilePic: _imgUrl)).then((value) async {
+    String? username = await UserData.getUserUsername();
+    String? bio = await UserData.getBio();
+    String? newUsername = usernameController.text.toString().trim();
+    String? newBio = bioController.text.toString().trim();
+    if (newUsername.isEmpty && newBio.isEmpty && !isPicked) return;
+    if (isPicked) {
+      await uploadImage();
+      ifUploadProfileUrl = _imgUrl;
+    } else {
+      ifUploadProfileUrl = null;
+    }
+    if (newBio == bio) newBio = null;
+    if (newUsername == username) newUsername = null;
+    await repository
+        .editProfile(ProfileEditPayload(
+            username: newUsername,
+            profileBio: newBio,
+            profilePic: ifUploadProfileUrl))
+        .then((value) async {
       // debugPrint("Profile Updated Successfully in view model response is:$value");
-      await UserData.updateBioUsernameProfilePic(newUsername: newUsername, newProfileBio: newBio, newProfilePic: _imgUrl);
+      await UserData.updateBioUsernameProfilePic(
+          newUsername: newUsername,
+          newProfileBio: newBio,
+          newProfilePic: ifUploadProfileUrl);
       pickedImage = null;
       isPicked = false;
-    }).onError((error, stackTrace){
+    }).onError((error, stackTrace) {
       // debugPrint("Profile Updated failed in view model error is:$error");
       throw AppError(error.toString());
       pickedImage = null;

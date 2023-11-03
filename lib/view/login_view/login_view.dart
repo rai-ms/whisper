@@ -40,9 +40,15 @@ class _LoginViewState extends State<LoginView> {
                       children: [
                         sizedBox(hei: getViewPadding(context).top),
                         Center(child: SvgPicture.asset(AppImages.logoAndName)),
-                        Text(AppStrings.login, style: AppStyle.whiteBold30,),
+                        Text(
+                          AppStrings.login,
+                          style: AppStyle.whiteBold30,
+                        ),
                         sizedBox(hei: 10),
-                        Text(AppStrings.loginSubTitle, style: AppStyle.whiteMedium16,),
+                        Text(
+                          AppStrings.loginSubTitle,
+                          style: AppStyle.whiteMedium16,
+                        ),
                       ],
                     ),
                     whiteContainerWidget: Column(
@@ -70,24 +76,31 @@ class _LoginViewState extends State<LoginView> {
                         ),
                         sizedBox(hei: getViewPadding(context).top),
                       ],
-                    ),),
+                    ),
+                  ),
                   Column(
                     children: [
-                      sizedBox(hei: getFullHeight(context)*.3),
-                      Consumer<LoginViewModel>(builder: (context, provider, child) {
+                      sizedBox(hei: getFullHeight(context) * .3),
+                      Consumer<LoginViewModel>(
+                          builder: (context, provider, child) {
                         return Form(
                           key: provider.formKey,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: Container(
                               height: 400,
-                              padding: const EdgeInsets.symmetric(horizontal: 28.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 28.0),
                               decoration: BoxDecoration(
                                 color: Theme.of(context).primaryColorLight,
                                 borderRadius: BorderRadius.circular(40),
-                                border: Border.all(color: AppColors.black, width: 0.15),
-                                boxShadow:  [
-                                  BoxShadow(color: Theme.of(context).canvasColor, blurRadius: 2,spreadRadius: 1),
+                                border: Border.all(
+                                    color: AppColors.black, width: 0.15),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Theme.of(context).canvasColor,
+                                      blurRadius: 2,
+                                      spreadRadius: 1),
                                 ],
                               ),
                               child: Column(
@@ -96,99 +109,133 @@ class _LoginViewState extends State<LoginView> {
                                 children: [
                                   Text(
                                     AppStrings.login,
-                                    style: AppStyle.primaryColorDarkMedium25(context),
+                                    style: AppStyle.primaryColorDarkMedium25(
+                                        context),
                                   ),
                                   sizedBox(hei: 15),
                                   TextFormField(
                                     textInputAction: TextInputAction.next,
                                     controller: provider.mailCont,
-                                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                                    style: AppStyle.primaryColorDarkMedium16(context),
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    style: AppStyle.primaryColorDarkMedium16(
+                                        context),
                                     focusNode: provider.emailFocusNode,
                                     validator: Utils.isValidEmail,
                                     onFieldSubmitted: (_) {
-                                      Utils.changeFocus(context, provider.emailFocusNode,
+                                      Utils.changeFocus(
+                                          context,
+                                          provider.emailFocusNode,
                                           provider.passFocusNode);
                                     },
                                     decoration: InputDecoration(
                                       prefixIcon: Icon(
                                         Icons.person,
-                                        color: Theme.of(context).primaryColorDark,
+                                        color:
+                                            Theme.of(context).primaryColorDark,
                                       ),
                                       border: const OutlineInputBorder(
-                                          borderRadius:
-                                          BorderRadius.all(Radius.circular(20)),
-                                          borderSide:
-                                          BorderSide(width: 2, color: AppColors.black)),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(20)),
+                                          borderSide: BorderSide(
+                                              width: 2,
+                                              color: AppColors.black)),
                                       hintText: AppStrings.enterEmailAddress,
-                                      hintStyle: AppStyle.primaryColorDarkMedium16(context),
+                                      hintStyle:
+                                          AppStyle.primaryColorDarkMedium16(
+                                              context),
                                       label: const Text(AppStrings.yourEmail),
                                       constraints: const BoxConstraints(
                                         maxWidth: 400,
                                       ),
-                                      labelStyle: AppStyle.primaryColorDarkMedium16(context),
+                                      labelStyle:
+                                          AppStyle.primaryColorDarkMedium16(
+                                              context),
                                       hoverColor: AppColors.blueAccent,
                                       disabledBorder: const OutlineInputBorder(
-                                          borderRadius:
-                                          BorderRadius.all(Radius.circular(20)),
-                                          borderSide:
-                                          BorderSide(width: 2, color: AppColors.black)),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(20)),
+                                          borderSide: BorderSide(
+                                              width: 2,
+                                              color: AppColors.black)),
                                     ),
                                   ),
                                   sizedBox(hei: 20),
                                   TextFormField(
-                                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
                                     textInputAction: TextInputAction.done,
                                     controller: provider.passCont,
-                                    style: AppStyle.primaryColorDarkMedium16(context),
+                                    style: AppStyle.primaryColorDarkMedium16(
+                                        context),
                                     focusNode: provider.passFocusNode,
                                     validator: Utils.isValidPass,
                                     onFieldSubmitted: (_) {
-                                      Utils.changeFocus(context, provider.passFocusNode,
+                                      Utils.changeFocus(
+                                          context,
+                                          provider.passFocusNode,
                                           provider.buttonFocusNode);
                                     },
                                     obscuringCharacter: "*",
                                     obscureText: provider.obsText,
                                     decoration: InputDecoration(
-                                      labelStyle: AppStyle.primaryColorDarkMedium16(context),
-                                      hintStyle: AppStyle.primaryColorDarkMedium16(context),
-                                      prefixIcon: Icon(
-                                        Icons.lock_open,
-                                        color: Theme.of(context).primaryColorDark,
-                                      ),
-                                      suffixIcon: InkWell(
-                                          onTap: () {
-                                            provider.passShowHide();
-                                          },
-                                          child: Icon(provider.obsText
-                                              ? Icons.visibility_outlined
-                                              : Icons.visibility_off_outlined, color: Theme.of(context).primaryColorDark,)),
-                                      border: const OutlineInputBorder(
-                                          borderRadius:
-                                          BorderRadius.all(Radius.circular(20)),
-                                          borderSide:
-                                          BorderSide(width: 2, color: AppColors.black)),
-                                      hintText: AppStrings.pass,
-                                      label: const Text(AppStrings.pass),
-                                      constraints: const BoxConstraints(
-                                        maxWidth: 400,
-                                      ),
-                                      hoverColor: AppColors.blueAccent),
+                                        labelStyle:
+                                            AppStyle.primaryColorDarkMedium16(
+                                                context),
+                                        hintStyle:
+                                            AppStyle.primaryColorDarkMedium16(
+                                                context),
+                                        prefixIcon: Icon(
+                                          Icons.lock_open,
+                                          color: Theme.of(context)
+                                              .primaryColorDark,
+                                        ),
+                                        suffixIcon: InkWell(
+                                            onTap: () {
+                                              provider.passShowHide();
+                                            },
+                                            child: Icon(
+                                              provider.obsText
+                                                  ? Icons.visibility_outlined
+                                                  : Icons
+                                                      .visibility_off_outlined,
+                                              color: Theme.of(context)
+                                                  .primaryColorDark,
+                                            )),
+                                        border: const OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(20)),
+                                            borderSide: BorderSide(
+                                                width: 2,
+                                                color: AppColors.black)),
+                                        hintText: AppStrings.pass,
+                                        label: const Text(AppStrings.pass),
+                                        constraints: const BoxConstraints(
+                                          maxWidth: 400,
+                                        ),
+                                        hoverColor: AppColors.blueAccent),
                                   ),
                                   sizedBox(hei: 5),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       InkWell(
-                                        onTap:(){
-                                          Navigator.pushNamed(context, RouteName.forgetPasswordView);
-                                        },
-                                        child: Text(AppStrings.forgetPassword, style: AppStyle.primaryColorDarkMedium16(context),)),
+                                          onTap: () {
+                                            Navigator.pushNamed(context,
+                                                RouteName.forgetPasswordView);
+                                          },
+                                          child: Text(
+                                            AppStrings.forgetPassword,
+                                            style: AppStyle
+                                                .primaryColorDarkMedium16(
+                                                    context),
+                                          )),
                                     ],
                                   ),
                                   sizedBox(hei: 20),
                                   AppRoundedButton(
-                                    loadingWidget: const CircularProgressIndicator(),
+                                    loadingWidget:
+                                        const CircularProgressIndicator(),
                                     isEnable: !provider.loading,
                                     focusNode: provider.buttonFocusNode,
                                     loading: provider.loading,

@@ -11,7 +11,7 @@ class AppException implements Exception {
 }
 
 class InternetException extends AppException {
-  InternetException([String? message]): super(message, AppStrings.noInternet);
+  InternetException([String? message]) : super(message, AppStrings.noInternet);
 }
 
 class RequestTimeOut extends AppException {
@@ -23,11 +23,12 @@ class ServerException extends AppException {
 }
 
 class AppError extends AppException {
-  AppError([String? message]) : super(message,AppStrings.apiCallError);
+  AppError([String? message]) : super(message, AppStrings.apiCallError);
 }
 
 class DatabaseException extends AppException {
-  DatabaseException([String? message]) : super (message, AppStrings.databaseError);
+  DatabaseException([String? message])
+      : super(message, AppStrings.databaseError);
 }
 
 class InvalidUrl extends AppException {
@@ -35,31 +36,38 @@ class InvalidUrl extends AppException {
 }
 
 class UnauthorizedAccessException extends AppException {
-  UnauthorizedAccessException([String? message]) : super(message, AppStrings.invalidUser);
+  UnauthorizedAccessException([String? message])
+      : super(message, AppStrings.invalidUser);
 }
 
 class FetchDataException extends AppException {
-  FetchDataException([String? message]): super(message, AppStrings.errorOccured);
+  FetchDataException([String? message])
+      : super(message, AppStrings.errorOccured);
 }
 
 class UnableToConvert extends AppException {
-  UnableToConvert([String? message]) : super (message, AppStrings.errorDataType);
+  UnableToConvert([String? message]) : super(message, AppStrings.errorDataType);
 }
 
 class UnableToLogin extends AppException {
-  UnableToLogin([String? message]) : super (message, AppStrings.errorLogin);
+  UnableToLogin([String? message]) : super(message, AppStrings.errorLogin);
 }
+
 class InternalServerException extends AppException {
-  InternalServerException([String? message]) : super(message, AppStrings.errorLogin);
+  InternalServerException([String? message])
+      : super(message, AppStrings.errorLogin);
 }
+
 class AWSBucketException extends AppException {
   AWSBucketException([String? message]) : super(message, "AWS Bucket Error:");
 }
+
 class Uint8ListConvertException extends AppException {
-  Uint8ListConvertException([String? message]) : super(message, "Uint8ListConvertException conversion error:");
+  Uint8ListConvertException([String? message])
+      : super(message, "Uint8ListConvertException conversion error:");
 }
 
 class ChutiyaException extends AppException {
-  ChutiyaException([String? message]) : super(message, "ChutiyaException error:");
+  ChutiyaException([String? message])
+      : super(message, "ChutiyaException error:");
 }
-

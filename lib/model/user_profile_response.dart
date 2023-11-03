@@ -23,6 +23,9 @@ class ApiResponseUserDataModel {
 class ApiResponseUserProfile {
   final String username;
   final String email;
+  final String? fullName;
+  final String? profilePic;
+  final String? profileBio;
   final int followerCount;
   final int followingCount;
   final int postCount;
@@ -32,7 +35,10 @@ class ApiResponseUserProfile {
 
   ApiResponseUserProfile({
     required this.username,
+    required this.profileBio,
     required this.email,
+    required this.profilePic,
+    required this.fullName,
     required this.followerCount,
     required this.followingCount,
     required this.postCount,
@@ -50,6 +56,9 @@ class ApiResponseUserProfile {
     return ApiResponseUserProfile(
       username: json['username'],
       email: json['email'],
+      profileBio: json['profileBio'],
+      profilePic: json['profilePic'],
+      fullName: json['fullName'],
       followerCount: json['followerCount'],
       followingCount: json['followingCount'],
       postCount: json['postCount'],
@@ -70,17 +79,17 @@ class ApiResponseUserPost {
   final String createdAt;
 
   ApiResponseUserPost({
-  required this.id,
-  required this.userId,
-  required this.url,
-  required this.caption,
-  required this.likeCount,
-  required this.commentCount,
-  required this.createdAt,
-});
+    required this.id,
+    required this.userId,
+    required this.url,
+    required this.caption,
+    required this.likeCount,
+    required this.commentCount,
+    required this.createdAt,
+  });
 
-factory ApiResponseUserPost.fromJson(Map<String, dynamic> json) {
-  return ApiResponseUserPost(
+  factory ApiResponseUserPost.fromJson(Map<String, dynamic> json) {
+    return ApiResponseUserPost(
       id: json['_id'],
       userId: json['userId'],
       url: json['url'],

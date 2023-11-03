@@ -1,5 +1,4 @@
-class AppUrl
-{
+class AppUrl {
   static const baseUrl = 'https://harshitsocial.appskeeper.in/api/v1/user';
   static const signupCredEndPoint = "$baseUrl/signup";
   static const verifyUserSignup = "$baseUrl/verifyUser";
@@ -7,7 +6,8 @@ class AppUrl
   static const logoutEndPoint = '$baseUrl/logout';
   static const forgetPasswordEmailEndPoint = '$baseUrl/forgot-password';
   static const verifyOTPForgetPasswordEmailEndPoint = '$baseUrl/verifyOTP';
-  static const resetPasswordForgetPasswordEmailEndPoint = '$baseUrl/reset-password';
+  static const resetPasswordForgetPasswordEmailEndPoint =
+      '$baseUrl/reset-password';
   static const resendOtpForgetPasswordEmailEndPoint = '$baseUrl/send-otp';
   static const signupOTPEndPoint = '$baseUrl/send-otp';
   static const createPostEndPoint = '$baseUrl/createPost';
@@ -27,4 +27,5 @@ class AppUrl
   static const postDislikeEndPoint = '$baseUrl/postDislike?postId=';
   static const postLikeEndPoint = '$baseUrl/postLike?postId=';
   static const editProfileEndPoint = '$baseUrl/editProfile';
+  static const editCommentEndPoint = '$baseUrl/editComment';
 }

@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import '../utils/app_helper/app_color.dart';
 
 class AppDialog extends StatefulWidget {
-  const AppDialog(
-      {super.key, required this.dialogWidget});
+  const AppDialog({super.key, required this.dialogWidget});
   final Widget dialogWidget;
   @override
   State<AppDialog> createState() => _AppDialogState();
@@ -22,12 +21,10 @@ class _AppDialogState extends State<AppDialog> {
       ),
       child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(child: widget.dialogWidget)
-            ],
-          )),
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [Expanded(child: widget.dialogWidget)],
+      )),
     );
   }
 }

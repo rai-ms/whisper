@@ -25,8 +25,8 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin {
-
+class _HomeViewState extends State<HomeView>
+    with AutomaticKeepAliveClientMixin {
   List<Post> postList = [];
 
   // Future<bool> _willPopCallback() async {
@@ -64,65 +64,84 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
       ],
       child: Scaffold(
         appBar: AppBar(
-          title:  Row(
+          title: Row(
             children: [
               // sizedBox(wid: 20),
               Expanded(
                 flex: 10,
                 child: Consumer<AppGlobalProvider>(
                     builder: (context, provider, child) {
-                      return InkWell(onTap: (){
-                        if(pageViewNumber != 3){
+                  return InkWell(
+                      onTap: () {
+                        if (pageViewNumber != 3) {
                           provider.setPage(3);
                         }
-                      },child: Container(
+                      },
+                      child: Container(
                           height: 38,
                           width: 38,
                           decoration: BoxDecoration(
-                              border: Border.all(color: AppColors.white, width:  1.5),
-                              borderRadius: BorderRadius.circular(100)
-                          ),
+                              border: Border.all(
+                                  color: AppColors.white, width: 1.5),
+                              borderRadius: BorderRadius.circular(100)),
                           // child: ClipOval(child: CachedNetworkImage(imageUrl: dp, height: 30,width: 30,),),),),
                           child: FutureBuilder(
-                            builder: (context, snap) {
-                              return ClipOval(child: UtilityHelper.image(snap.data, fit: BoxFit.fill));
-                            }, future: UserData.getProfilePic(),
+                            future: UserData.getProfilePic(),
+                            builder: (context, snaps) {
+                              return ClipOval(
+                                  child: UtilityHelper.image(snaps.data ?? dp,
+                                      fit: BoxFit.fill));
+                            },
                           )));
-                    }
-                ),
+                }),
               ),
               sizedBox(wid: 5),
-              Expanded(flex: 80,
-                child: InkWell(
-                  onTap: () {
+              Expanded(
+                  flex: 80,
+                  child: InkWell(onTap: () {
                     Navigator.pushNamed(context, RouteName.addPostView);
-                  },
-                  child: Consumer<AppGlobalProvider>(
-                    builder: (context, provider, child) {
-                      return AppTextFormField(cont: AppGlobalProvider.controller,style: AppStyle.whiteMedium16, onChanged: AppGlobalProvider.onChanged, enableBorderColor: AppColors.white, enable: false, prefixIcon: const Icon( null, color: AppColors.white,),disableBorderColor: AppColors.white, hintText: "What's in your mind??", hintStyle: AppStyle.greyRegular20,obscureText: false,);
-                  }
-              ))),
+                  }, child: Consumer<AppGlobalProvider>(
+                      builder: (context, provider, child) {
+                    return AppTextFormField(
+                      cont: AppGlobalProvider.controller,
+                      style: AppStyle.whiteMedium16,
+                      onChanged: AppGlobalProvider.onChanged,
+                      enableBorderColor: AppColors.white,
+                      enable: false,
+                      prefixIcon: const Icon(
+                        null,
+                        color: AppColors.white,
+                      ),
+                      disableBorderColor: AppColors.white,
+                      hintText: "What's in your mind??",
+                      hintStyle: AppStyle.greyRegular20,
+                      obscureText: false,
+                    );
+                  }))),
               sizedBox(wid: 5),
-              Expanded(flex: 10,child: InkWell(onTap: (){
-                if(pageViewNumber != 3) {
-                  Navigator.pushNamed(context, RouteName.addPostView);
-                }
-                else
-                {
-                  Navigator.pushNamed(context, RouteName.settingsView);
-                }
-              },child: Consumer<AppGlobalProvider>(
-                  builder: (context, pr, ch) {
-                    return Icon(pageViewNumber != 3? FontAwesomeIcons.images: FontAwesomeIcons.gear, );
-                  }
-              ))),
+              Expanded(
+                  flex: 10,
+                  child: InkWell(onTap: () {
+                    if (pageViewNumber != 3) {
+                      Navigator.pushNamed(context, RouteName.addPostView);
+                    } else {
+                      Navigator.pushNamed(context, RouteName.settingsView);
+                    }
+                  }, child:
+                      Consumer<AppGlobalProvider>(builder: (context, pr, ch) {
+                    return Icon(
+                      pageViewNumber != 3
+                          ? FontAwesomeIcons.images
+                          : FontAwesomeIcons.gear,
+                    );
+                  }))),
               // sizedBox(wid: 20),
             ],
           ),
         ),
         body: Center(
           child: Container(
-            height: getFullHeight(context)-110,
+            height: getFullHeight(context) - 110,
             color: Theme.of(context).primaryColorLight,
             child: Column(
               children: [
@@ -141,25 +160,30 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                   flex: 11,
                   child: Consumer<AppGlobalProvider>(
                       builder: (context, provider, child) {
-                        return PageStorage(
-                          bucket: provider.pageStorageBucket,
-                          child: PageView(
-                            key: const PageStorageKey<String>('pathHomeView'),
-                            controller: provider.pageController,
-                            pageSnapping: true,
-                            reverse: false,
-                            allowImplicitScrolling: false,
-                            physics: const NeverScrollableScrollPhysics(),
-                            children: const [
-                              PostView(key: PageStorageKey('page0'),),
-                              NotificationView(key: PageStorageKey('page1'),),
-                              SearchUser(key: PageStorageKey('page2'),),
-                              ProfileView(key:PageStorageKey('page3')),
-                            ],
+                    return PageStorage(
+                      bucket: provider.pageStorageBucket,
+                      child: PageView(
+                        key: const PageStorageKey<String>('pathHomeView'),
+                        controller: provider.pageController,
+                        pageSnapping: true,
+                        reverse: false,
+                        allowImplicitScrolling: false,
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: const [
+                          PostView(
+                            key: PageStorageKey('page0'),
                           ),
-                        );
-                      }
-                  ),
+                          NotificationView(
+                            key: PageStorageKey('page1'),
+                          ),
+                          SearchUser(
+                            key: PageStorageKey('page2'),
+                          ),
+                          ProfileView(key: PageStorageKey('page3')),
+                        ],
+                      ),
+                    );
+                  }),
                 )
                 // const Flexible(
                 //   flex: 1,
@@ -172,7 +196,6 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
       ),
     );
   }
-
 
   @override
   bool get wantKeepAlive => true;

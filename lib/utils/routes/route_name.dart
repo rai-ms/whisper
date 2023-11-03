@@ -11,4 +11,5 @@ class RouteName {
   static const String addPostView = "/addPostView";
   static const String thirdUserProfileView = "/thirdUserProfileView";
   static const String editProfileView = "/editProfileView";
+  static const String postDetailsView = "/postDetailsView";
 }

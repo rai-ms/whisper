@@ -4,7 +4,10 @@ import '../global/global.dart';
 import '../utils/app_helper/app_color.dart';
 
 class AppBackGroundTwoContainer extends StatelessWidget {
-  const AppBackGroundTwoContainer({super.key, this.blueContainerWidget = const SizedBox(), this.whiteContainerWidget = const SizedBox()});
+  const AppBackGroundTwoContainer(
+      {super.key,
+      this.blueContainerWidget = const SizedBox(),
+      this.whiteContainerWidget = const SizedBox()});
 
   final Widget? blueContainerWidget;
   final Widget? whiteContainerWidget;
@@ -24,12 +27,8 @@ class AppBackGroundTwoContainer extends StatelessWidget {
                 padding: const EdgeInsets.all(28.0),
                 child: blueContainerWidget,
               ),
-            )
-        ),
-        Expanded(
-            flex: 3,
-            child: whiteContainerWidget!
-        ),
+            )),
+        Expanded(flex: 3, child: whiteContainerWidget!),
       ],
     );
   }

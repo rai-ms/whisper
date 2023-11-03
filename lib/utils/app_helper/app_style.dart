@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'app_color.dart';
 
 class AppStyle {
-
   static TextStyle? get whiteBold16 {
     return const TextStyle(
       color: AppColors.white,
@@ -139,8 +138,7 @@ class AppStyle {
     );
   }
 
-  static TextStyle? primaryColorDarkMedium(BuildContext context)
-  {
+  static TextStyle? primaryColorDarkMedium(BuildContext context) {
     return TextStyle(
       color: Theme.of(context).primaryColorDark,
       fontSize: 15,
@@ -148,8 +146,7 @@ class AppStyle {
     );
   }
 
-  static TextStyle? primaryColorDarkMedium25(BuildContext context)
-  {
+  static TextStyle? primaryColorDarkMedium25(BuildContext context) {
     return TextStyle(
       color: Theme.of(context).primaryColorDark,
       fontSize: 22,
@@ -157,8 +154,7 @@ class AppStyle {
     );
   }
 
-  static TextStyle? primaryColorDarkMedium20(BuildContext context)
-  {
+  static TextStyle? primaryColorDarkMedium20(BuildContext context) {
     return TextStyle(
       color: Theme.of(context).primaryColorDark,
       fontSize: 18,
@@ -166,8 +162,7 @@ class AppStyle {
     );
   }
 
-  static TextStyle? primaryColorDarkBold20(BuildContext context)
-  {
+  static TextStyle? primaryColorDarkBold20(BuildContext context) {
     return TextStyle(
       color: Theme.of(context).primaryColorDark,
       fontSize: 18,
@@ -175,8 +170,7 @@ class AppStyle {
     );
   }
 
-  static TextStyle? primaryColorDarkMedium14(BuildContext context)
-  {
+  static TextStyle? primaryColorDarkMedium14(BuildContext context) {
     return TextStyle(
       color: Theme.of(context).primaryColorDark,
       fontSize: 12,
@@ -184,8 +178,7 @@ class AppStyle {
     );
   }
 
-  static TextStyle? primaryColorDarkMedium16(BuildContext context)
-  {
+  static TextStyle? primaryColorDarkMedium16(BuildContext context) {
     return TextStyle(
       color: Theme.of(context).primaryColorDark,
       fontSize: 16,

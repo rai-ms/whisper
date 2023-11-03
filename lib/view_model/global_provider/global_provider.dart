@@ -11,21 +11,25 @@ import '../../model/response.dart';
 import '../../model/search_user.dart';
 import '../../repository/search_repo/search_repo.dart';
 
-class AppGlobalProvider extends ChangeNotifier
-{
+class AppGlobalProvider extends ChangeNotifier {
   static TextEditingController controller = TextEditingController();
   static DeBouncer deBouncer = DeBouncer(milliseconds: 200);
   static onChanged(String val) async {
-    deBouncer.run(() async { await searchUser(username: val).then((value){});});
+    deBouncer.run(() async {
+      await searchUser(username: val).then((value) {});
+    });
   }
+
   static SearchResponseUserData? searchResponseUserData;
   static final SearchRepository searchRepository = SearchRepository();
   static Future searchUser({required String username}) async {
-    await searchRepository.searchUser(SearchUserPayload(username: username)).then((value) {
+    await searchRepository
+        .searchUser(SearchUserPayload(username: username))
+        .then((value) {
       // debugPrint("Response received in view model email is:${value!.data.email}");
       // debugPrint("Response received in view model username is:${value!.data.username}");
       searchResponseUserData = value;
-    }).onError((error, stackTrace){
+    }).onError((error, stackTrace) {
       debugPrint("Error in Search user View Model :$error");
     });
   }
@@ -39,7 +43,11 @@ class AppGlobalProvider extends ChangeNotifier
   // Page 2 = Search User
   // Page 3 = User Profile Page
 
-  PageController pageController = PageController(initialPage: 0, keepPage: false, viewportFraction: 1,);
+  PageController pageController = PageController(
+    initialPage: 0,
+    keepPage: false,
+    viewportFraction: 1,
+  );
 
   // void scrollListner(){
   //   postPageController.addListener(() {
@@ -49,13 +57,19 @@ class AppGlobalProvider extends ChangeNotifier
   //   });
   // }
 
-   setPage (val) {
+  setPage(val) {
     pageViewNumber = val;
-    pageController.animateToPage(val, duration: const Duration(milliseconds: 200), curve: Curves.ease);
+    pageController.animateToPage(val,
+        duration: const Duration(milliseconds: 200), curve: Curves.ease);
     notifyListeners();
   }
 
-  List<Widget> views = [const PostView(), const NotificationView(), const SearchUser(), const ProfileView(),];
+  List<Widget> views = [
+    const PostView(),
+    const NotificationView(),
+    const SearchUser(),
+    const ProfileView(),
+  ];
 
   List<Post> postList = [];
 
@@ -64,16 +78,11 @@ class AppGlobalProvider extends ChangeNotifier
   //   return generateDummyPosts();
   // }
 
-  getUserProfile(String id) async {
-
-  }
-
-
+  getUserProfile(String id) async {}
 
   @override
   void dispose() {
     super.dispose();
     controller?.dispose();
   }
-
 }

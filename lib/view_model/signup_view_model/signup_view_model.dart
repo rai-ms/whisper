@@ -8,8 +8,7 @@ import '../../res/components/custom_toast.dart';
 import '../../utils/app_helper/app_strings.dart';
 import '../../utils/utils.dart';
 
-class SignUpViewModel extends ChangeNotifier
-{
+class SignUpViewModel extends ChangeNotifier {
   TextEditingController emailCont = TextEditingController();
   TextEditingController usernameCont = TextEditingController();
   TextEditingController nameCont = TextEditingController();
@@ -30,7 +29,7 @@ class SignUpViewModel extends ChangeNotifier
 
   get readOnly => _readOnly;
 
-  toggleReadOnly(){
+  toggleReadOnly() {
     _readOnly = !_readOnly;
     notifyListeners();
   }
@@ -40,10 +39,9 @@ class SignUpViewModel extends ChangeNotifier
     notifyListeners();
   }
 
-
-  checkBoxToggle(bool isChecked, BuildContext context){
+  checkBoxToggle(bool isChecked, BuildContext context) {
     isCheckCheckBox = isChecked;
-    if(isCheckCheckBox){
+    if (isCheckCheckBox) {
       Utils.changeFocus(context, checkBoxFocusNode, loginButtonFocusNode);
     }
     notifyListeners();
@@ -64,7 +62,7 @@ class SignUpViewModel extends ChangeNotifier
     super.dispose();
   }
 
-  createAccount(BuildContext context,Function function) async {
+  createAccount(BuildContext context, Function function) async {
     setLoading(true);
     String passwordUser = passCont.text.toString().trim();
     String confPassUser = confPassCont.text.toString().trim();
@@ -74,21 +72,21 @@ class SignUpViewModel extends ChangeNotifier
       CustomToast(context: context, message: AppStrings.passwordNotMatched);
       Utils.changeFocus(context, passFocusNode, confPassFocusNode);
       setLoading(false);
-    }
-    else if (formKey.currentState!.validate() && confPassUser == passwordUser && isCheckCheckBox) {
+    } else if (formKey.currentState!.validate() &&
+        confPassUser == passwordUser &&
+        isCheckCheckBox) {
       await signUp(context, function);
       setLoading(false);
-    }
-    else {
+    } else {
       setLoading(false);
     }
-
   }
 
   bool isPicked = false;
   File? pickedImage;
 
-  final String _imgUrl = "https://i.pinimg.com/750x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg";
+  final String _imgUrl =
+      "https://i.pinimg.com/750x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg";
   String get imgUrl => _imgUrl;
 
   fetchImage() async {
@@ -139,14 +137,18 @@ class SignUpViewModel extends ChangeNotifier
   final _myRepo = SignUpRepository();
 
   Future<void> signUp(BuildContext context, Function showBottomSheet) async {
-    await _myRepo.registrationAPI(SignUpPayloadModel(password: passCont.text.toString().trim(), email: emailCont.text.toString().trim().toLowerCase(), username: usernameCont.text.toString().trim().toLowerCase(), name: nameCont.text.toString().trim()))
-        .then((value){
+    await _myRepo
+        .registrationAPI(SignUpPayloadModel(
+            password: passCont.text.toString().trim(),
+            email: emailCont.text.toString().trim().toLowerCase(),
+            username: usernameCont.text.toString().trim().toLowerCase(),
+            name: nameCont.text.toString().trim()))
+        .then((value) {
       CustomToast(context: context, message: "SignUp Successfully Done $value");
       showBottomSheet();
       // setLoading(false);
-    })
-    .onError((error, stackTrace) {
-    debugPrint("${AppStrings.errorOccured}:$error");
+    }).onError((error, stackTrace) {
+      debugPrint("${AppStrings.errorOccured}:$error");
     });
     // CustomToast(context: context, message: "SignUp Successfully Done");
     // showBottomSheet();

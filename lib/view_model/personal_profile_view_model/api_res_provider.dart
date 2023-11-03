@@ -8,16 +8,16 @@ import '../../model/following_response_model.dart';
 import '../../model/user_profile_response.dart';
 import '../../repository/profile_repo/profile_repo.dart';
 
-class PostViewApiResponseProvider extends ChangeNotifier{
-
+class PostViewApiResponseProvider extends ChangeNotifier {
   final ProfileRepository profileRepo = ProfileRepository();
 
   ApiResponseUserDataModel? res;
   Future<ApiResponseUserDataModel?> getProfile({String? id}) async {
-    await ProfileRepository.getProfile(id: id).then((ApiResponseUserDataModel? userProfileDataResponse){
+    await ProfileRepository.getProfile(id: id)
+        .then((ApiResponseUserDataModel? userProfileDataResponse) {
       res = userProfileDataResponse;
       notifyListeners();
-    }).onError((error, stackTrace){
+    }).onError((error, stackTrace) {
       throw AppError("$error");
     });
     return res;
@@ -27,10 +27,10 @@ class PostViewApiResponseProvider extends ChangeNotifier{
 
   static Future<APIResponseCommentModel?> getCommentsList(String id) async {
     APIResponseCommentModel? res;
-    await postRepository.getListComments(id).then((value){
+    await postRepository.getListComments(id).then((value) {
       // debugPrint("These are the comments$value of post:$id");
       res = APIResponseCommentModel.fromJson(value!);
-    }).onError((error, stackTrace){
+    }).onError((error, stackTrace) {
       throw AppError(error.toString());
     });
     return res;
@@ -38,22 +38,23 @@ class PostViewApiResponseProvider extends ChangeNotifier{
 
   static Future<ApiResponseLikesData?> getLikesList(String id) async {
     ApiResponseLikesData? res;
-    await postRepository.getListLikes(id).then((value){
+    await postRepository.getListLikes(id).then((value) {
       res = value;
-    }).onError((error, stackTrace){});
+    }).onError((error, stackTrace) {});
     return res;
   }
 
-  static Future<LikeAndCommentOfApiResponse?> getLikesAndComments(String id) async {
+  static Future<LikeAndCommentOfApiResponse?> getLikesAndComments(
+      String id) async {
     LikeAndCommentOfApiResponse? res;
     APIResponseCommentModel? comment;
     ApiResponseLikesData? likes;
-    await getCommentsList(id).then((value){
+    await getCommentsList(id).then((value) {
       comment = value;
-    }).onError((error, stackTrace){});
-    await getLikesList(id).then((value){
+    }).onError((error, stackTrace) {});
+    await getLikesList(id).then((value) {
       likes = value;
-    }).onError((error, stackTrace){});
+    }).onError((error, stackTrace) {});
     res = LikeAndCommentOfApiResponse(comments: comment, likes: likes);
     return res;
   }
@@ -61,11 +62,11 @@ class PostViewApiResponseProvider extends ChangeNotifier{
   GetFollowerApiRes? response;
   Future<GetFollowerApiRes?> getFollowers({String? id}) async {
     // if(response != null) return response;
-    await ProfileRepository.getFollowers(id: id).then((GetFollowerApiRes? res){
+    await ProfileRepository.getFollowers(id: id).then((GetFollowerApiRes? res) {
       response = res;
       notifyListeners();
       // debugPrint("Response of getFollowers is: ${res!.data!.followers!.length}");
-    }).onError((error, stackTrace){
+    }).onError((error, stackTrace) {
       debugPrint("Error is $error");
     });
     return response;
@@ -73,17 +74,16 @@ class PostViewApiResponseProvider extends ChangeNotifier{
 
   GetFollowingApiRes? getFollowingApiRes;
   Future<GetFollowingApiRes?> getFollowing({String? id}) async {
-    await ProfileRepository.getFollowing(id: id).then((value){
+    await ProfileRepository.getFollowing(id: id).then((value) {
       // debugPrint("Response of getFollowing is: ************************************************* $value *************************************************");
       getFollowingApiRes = value;
       notifyListeners();
-    }).onError((error, stackTrace){
+    }).onError((error, stackTrace) {
       debugPrint("Error is $error");
     });
 
     return getFollowingApiRes;
   }
-
 }
 
 class LikeAndCommentOfApiResponse {

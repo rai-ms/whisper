@@ -75,7 +75,8 @@ class PostResponse {
 
   factory PostResponse.fromJson(Map<String, dynamic> json) {
     final List<dynamic> postsList = json['Posts'];
-    final List<Post> posts = postsList.map((post) => Post.fromJson(post)).toList();
+    final List<Post> posts =
+        postsList.map((post) => Post.fromJson(post)).toList();
 
     return PostResponse(
       statusCode: json['statusCode'],

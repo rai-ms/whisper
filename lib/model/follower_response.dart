@@ -30,7 +30,9 @@ class GetData {
     List<GetFollower>? followers;
 
     if (followersList != null) {
-      followers = followersList.map((followerJson) => GetFollower.fromJson(followerJson)).toList();
+      followers = followersList
+          .map((followerJson) => GetFollower.fromJson(followerJson))
+          .toList();
     }
 
     return GetData(followers: followers);

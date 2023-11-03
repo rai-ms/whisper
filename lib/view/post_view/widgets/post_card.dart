@@ -21,7 +21,6 @@ class PostCard extends StatefulWidget {
 }
 
 class _PostCardState extends State<PostCard> {
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -31,8 +30,11 @@ class _PostCardState extends State<PostCard> {
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(20),
-            boxShadow:  [
-               BoxShadow(color: Theme.of(context).canvasColor, blurRadius: 2,spreadRadius: 1),
+            boxShadow: [
+              BoxShadow(
+                  color: Theme.of(context).canvasColor,
+                  blurRadius: 2,
+                  spreadRadius: 1),
             ],
           ),
           child: Padding(
@@ -41,52 +43,76 @@ class _PostCardState extends State<PostCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 sizedBox(hei: 10),
-                Consumer<AppGlobalProvider>(
-                  builder: (context, pr, ch) {
-                    return InkWell(
-                      onTap: () async {
-                        String? cUid = await UserData.getUserId();
-                        if(widget.userData.id != cUid && context.mounted) {
-                          Navigator.pushNamed(context, RouteName.thirdUserProfileView, arguments: {"id" : widget.userData.id});
-                        }
-                        else {
-                          pr.setPage(3);
-                        }
-                      },
-                      child: UserRowPost(postedBy: widget.userData.username, postId: widget.post.id,postedById: widget.post.userId, postDate: widget.post.createdAt,));
-                  }
+                Consumer<AppGlobalProvider>(builder: (context, pr, ch) {
+                  return InkWell(
+                    onTap: () async {
+                      String? cUid = await UserData.getUserId();
+                      if (widget.userData.id != cUid && context.mounted) {
+                        Navigator.pushNamed(context, RouteName.thirdUserProfileView, arguments: {"id": widget.userData.id});
+                      }
+                      else {
+                        pr.setPage(3);
+                      }
+                    },
+                    child: UserRowPost(
+                          postedBy: widget.userData.username,
+                          postId: widget.post.id,
+                          postedById: widget.post.userId,
+                          postDate: widget.post.createdAt,
+                          profilePic: widget.userData.profilePic));
+                }),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, RouteName.postDetailsView,
+                        arguments: {
+                          'postId': widget.post.id,
+                          'isLiked': widget.post.isLiked
+                        });
+                  },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      sizedBox(hei: 12),
+                      InteractiveViewer(
+                          child: UtilityHelper.image(
+                        widget.post.url,
+                        width: getFullWidth(context),
+                      )),
+                      sizedBox(hei: 10),
+                      // DescriptionTextWidget(text: widget.post.postDescription.toString(),),
+                      ExpandableText(
+                        text: widget.post.caption.toString(),
+                      ),
+                      sizedBox(hei: 10),
+                    ],
+                  ),
                 ),
-                sizedBox(hei: 12),
-                InteractiveViewer(child: UtilityHelper.image(widget.post.url, width: getFullWidth(context))),
-                sizedBox(hei: 10),
-                // DescriptionTextWidget(text: widget.post.postDescription.toString(),),
-                ExpandableText(
-                  text: widget.post.caption.toString(),),
-                sizedBox(hei: 10),
-                // CommentLikeShareBar(comments: widget.post.),
-                Consumer<PostViewApiResponseProvider>(
-                    builder: (context, apiResProvider, child) {
-                      return FutureBuilder<LikeAndCommentOfApiResponse?>(
-                          future: PostViewApiResponseProvider.getLikesAndComments(widget.post.id ?? ""),
-                          builder: (context, snapshot) {
-                            if(snapshot.hasData){
-                              // debugPrint("${snapshot.data!.comments.length}");
-                              return CommentLikeShareBar(comments: snapshot.data!.comments!.data!.comments!, postId: widget.post.id ?? "", post: widget.post,likes: snapshot.data!.likes!.data.likes,);
-                            }
-                            else if(snapshot.connectionState == ConnectionState.waiting){
-                              return CommentLikeShareBar(postId: "",);
-                            }
-                            else if(snapshot.hasError){
-                              return const Text(AppStrings.errorOccured);
-                            }
-                            else {
-
-                              return const Text(AppStrings.noDataFound);
-                            }
-                          }
-                      );
-                    }
-                ),
+                Consumer<PostViewApiResponseProvider>(builder: (context, apiResProvider, child) {
+                  return FutureBuilder<LikeAndCommentOfApiResponse?>(
+                    future: PostViewApiResponseProvider.getLikesAndComments(widget.post.id ?? ""),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        // debugPrint("${snapshot.data!.comments.length}");
+                        return CommentLikeShareBar(
+                          comments: snapshot.data!.comments!.data!.comments!,
+                          postId: widget.post.id ?? "",
+                          post: widget.post,
+                          likes: snapshot.data!.likes!.data.likes,
+                        );
+                      }
+                      else if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CommentLikeShareBar(
+                          postId: "",
+                        );
+                      }
+                      else if (snapshot.hasError) {
+                        return const Text(AppStrings.errorOccured);
+                      }
+                      else {
+                        return const Text(AppStrings.noDataFound);
+                      }
+                    });
+                }),
                 sizedBox(hei: 10),
               ],
             ),

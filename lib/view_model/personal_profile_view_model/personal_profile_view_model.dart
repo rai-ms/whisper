@@ -21,20 +21,19 @@ class PersonalProfileViewModel extends ChangeNotifier {
   ApiResponseMyProfileUserDataModel? apiResponseMyProfileUserDataModel;
 
   Future<ApiResponseMyProfileUserDataModel?> getMyProfileData() async {
-    await ProfileRepository.getMyProfile().then((value){
+    await ProfileRepository.getMyProfile().then((value) {
       apiResponseMyProfileUserDataModel = value;
-    }).onError((error, stackTrace){});
+    }).onError((error, stackTrace) {});
     return apiResponseMyProfileUserDataModel;
   }
 
-
-
   static Future<GetFollowerApiRes?> getFollowers({String? id}) async {
     GetFollowerApiRes? response;
-    await ProfileRepository.getFollowers(id: id).then((GetFollowerApiRes? res){
+    await ProfileRepository.getFollowers(id: id).then((GetFollowerApiRes? res) {
       response = res;
-      debugPrint("Response of getFollowers is: ${res!.data!.followers!.length}");
-    }).onError((error, stackTrace){
+      debugPrint(
+          "Response of getFollowers is: ${res!.data!.followers!.length}");
+    }).onError((error, stackTrace) {
       debugPrint("Error is $error");
     });
     return response;
@@ -42,14 +41,13 @@ class PersonalProfileViewModel extends ChangeNotifier {
 
   static Future<GetFollowingApiRes?> getFollowing({String? id}) async {
     GetFollowingApiRes? res;
-    await ProfileRepository.getFollowing(id: id).then((value){
+    await ProfileRepository.getFollowing(id: id).then((value) {
       // debugPrint("Response of getFollowing is: ************************************************* $value *************************************************");
       res = value;
-    }).onError((error, stackTrace){
+    }).onError((error, stackTrace) {
       debugPrint("Error is $error");
     });
 
     return res;
   }
-
 }

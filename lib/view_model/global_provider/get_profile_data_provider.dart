@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../utils/app_helper/user_data_preferences/user_data.dart';
 
-class GetProfileData extends ChangeNotifier
-{
+class GetProfileData extends ChangeNotifier {
   String? accessToken;
   String? username;
   String? createdAt;
@@ -41,5 +40,4 @@ class GetProfileData extends ChangeNotifier
     await getFullName();
     return data;
   }
-
 }

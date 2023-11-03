@@ -7,80 +7,83 @@ import 'package:whisper/repository/search_repo/search_repo.dart';
 import '../../model/follower_response.dart';
 import '../../utils/deBouncer/deBouncer.dart';
 
-class SearchUserViewModel extends ChangeNotifier
-{
-    TextEditingController controller = TextEditingController();
+class SearchUserViewModel extends ChangeNotifier {
+  TextEditingController controller = TextEditingController();
 
-    DeBouncer deBouncer = DeBouncer(milliseconds: 200);
-    String? prevSearch;
-    onChanged(String val) async {
-        if(prevSearch != val){
-            prevSearch = val;
-        }
-        else {
-            return;
-        }
-        if(val.isEmpty) return;
-        deBouncer.run(() async {
-        await searchUser(username: val).then((value){});});
+  DeBouncer deBouncer = DeBouncer(milliseconds: 200);
+  String? prevSearch;
+
+  onChanged(String val) async {
+    if (prevSearch != val) {
+      prevSearch = val;
+    } else {
+      return;
     }
+    if (val.isEmpty) return;
+    deBouncer.run(() async {
+      await searchUser(username: val).then((value) {});
+    });
+  }
 
-    SearchResponseUserData? searchResponseUserData;
+  SearchResponseUserData? searchResponseUserData;
 
-    final SearchRepository searchRepository = SearchRepository();
+  final SearchRepository searchRepository = SearchRepository();
 
-    Future searchUser({required String username}) async {
-        await searchRepository.searchUser(SearchUserPayload(username: username)).then((value) {
-            searchResponseUserData = value;
-            // debugPrint("Response is $value");
-            notifyListeners();
-            // controller.clear();
-        }).onError((error, stackTrace){
-            // debugPrint("Error in Search user View Model :$error");
-            // searchResponseUserData = null;
-            notifyListeners();
-        });
-    }
+  Future<SearchResponseUserData?> searchUser({required String username}) async {
+    await searchRepository
+        .searchUser(SearchUserPayload(username: username))
+        .then((value) {
+      searchResponseUserData = value;
+      // debugPrint("Response is $value");
+      notifyListeners();
+      // controller.clear();
+    }).onError((error, stackTrace) {
+      // debugPrint("Error in Search user View Model :$error");
+      // searchResponseUserData = null;
+      notifyListeners();
+    });
+    return searchResponseUserData;
+  }
 
-    Future followUser(String id) async {
-        await ProfileRepository.followUser(followingId: id).then((value){
-            debugPrint("User is Followed =========$value===============");
-        }).onError((error, stackTrace){});
-    }
+  Future followUser(String id) async {
+    await ProfileRepository.followUser(followingId: id).then((value) {
+      debugPrint("User is Followed =========$value===============");
+    }).onError((error, stackTrace) {});
+  }
 
-    Future unfollowUser(String id) async {
-        await ProfileRepository.unfollowUser(followingId: id).then((value){
-            debugPrint("User is UnFollowed =========$value===============");
-        }).onError((error, stackTrace){});
-    }
+  Future unfollowUser(String id) async {
+    await ProfileRepository.unfollowUser(followingId: id).then((value) {
+      debugPrint("User is UnFollowed =========$value===============");
+    }).onError((error, stackTrace) {});
+  }
 
-    final ProfileRepository profileRepository = ProfileRepository();
+  final ProfileRepository profileRepository = ProfileRepository();
 
-    ApiResponseUserDataModel? apiResponseUserModel;
+  ApiResponseUserDataModel? apiResponseUserModel;
 
-    Future<ApiResponseUserDataModel?> getProfile(String id) async {
-        // debugPrint("Fetching userid: $id");
-        ProfileRepository.getProfile(id: id).then((value){
-            apiResponseUserModel = value;
-            // debugPrint("Fetched userid: $id");
-            notifyListeners();
-            // debugPrint("${res!.data[0].username}");
-        }).onError((error, stackTrace) {
-            debugPrint("Error in fetch profile search user view model $error");
-            throw AppError(error.toString());
-        });
-        return apiResponseUserModel;
-    }
+  Future<ApiResponseUserDataModel?> getProfile(String id) async {
+    // debugPrint("Fetching userid: $id");
+    ProfileRepository.getProfile(id: id).then((value) {
+      apiResponseUserModel = value;
+      // debugPrint("Fetched userid: $id");
+      notifyListeners();
+      // debugPrint("${res!.data[0].username}");
+    }).onError((error, stackTrace) {
+      // debugPrint("Error in fetch profile search user view model $error");
+      throw AppError(error.toString());
+    });
+    return apiResponseUserModel;
+  }
 
-    Future<GetFollowerApiRes?> getFollowers({String? id}) async {
-        GetFollowerApiRes? response;
-        await ProfileRepository.getFollowers(id: id).then((GetFollowerApiRes? res){
-            response = res;
-            notifyListeners();
-            // debugPrint("Response of getFollowers is: ${res!.data!.followers!.length}");
-        }).onError((error, stackTrace){
-            debugPrint("Error is $error");
-        });
-        return response;
-    }
+  Future<GetFollowerApiRes?> getFollowers({String? id}) async {
+    GetFollowerApiRes? response;
+    await ProfileRepository.getFollowers(id: id).then((GetFollowerApiRes? res) {
+      response = res;
+      notifyListeners();
+      // debugPrint("Response of getFollowers is: ${res!.data!.followers!.length}");
+    }).onError((error, stackTrace) {
+      throw AppError("Get Followers Error:$error");
+    });
+    return response;
+  }
 }

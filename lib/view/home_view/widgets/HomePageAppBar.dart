@@ -20,25 +20,25 @@ class _HomePageAppBarState extends State<HomePageAppBar> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         sizedBox(hei: 60),
-        Consumer<SettingsViewModel>(
-          builder: (context, provider, child) {
-            return Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children:
-              [
-                sizedBox(wid: 20),
-                InkWell(
-                  onTap: (){
+        Consumer<SettingsViewModel>(builder: (context, provider, child) {
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              sizedBox(wid: 20),
+              InkWell(
+                  onTap: () {
                     provider.logoutUser(context);
                   },
-                  child: Icon(Icons.exit_to_app, color: Theme.of(context).primaryColor,)),
-                sizedBox(wid: 30),
-                const Text("Logout")
-              ],
-            );
-          }
-        ),
+                  child: Icon(
+                    Icons.exit_to_app,
+                    color: Theme.of(context).primaryColor,
+                  )),
+              sizedBox(wid: 30),
+              const Text("Logout")
+            ],
+          );
+        }),
         sizedBox(hei: 10),
       ],
     );

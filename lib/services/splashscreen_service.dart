@@ -8,14 +8,15 @@ class SplashScreenServices {
     // String? id = await UserData.getUserId();
     // debugPrint("UserId: $id");
     await Future.delayed(const Duration(seconds: 3));
-    if(user == "null" || user == null){
-      if(context.mounted){
-        Navigator.pushNamedAndRemoveUntil(context, RouteName.introView, (route)=> false);
+    if (user == "null" || user == null) {
+      if (context.mounted) {
+        Navigator.pushNamedAndRemoveUntil(
+            context, RouteName.introView, (route) => false);
       }
-    }
-    else {
-      if(context.mounted){
-        Navigator.pushNamedAndRemoveUntil(context, RouteName.homeView, (route)=> false);
+    } else {
+      if (context.mounted) {
+        Navigator.pushNamedAndRemoveUntil(
+            context, RouteName.homeView, (route) => false);
       }
     }
   }

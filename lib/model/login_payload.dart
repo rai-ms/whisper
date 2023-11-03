@@ -7,7 +7,7 @@ class PostPayload {
 
   Map<String, dynamic> toJson() {
     return {
-      if(caption != null) 'caption': caption,
+      if (caption != null) 'caption': caption,
       'url': url,
     };
   }

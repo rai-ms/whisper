@@ -21,28 +21,42 @@ class _EditProfileViewState extends State<EditProfileView> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context)=> EditProfileViewModel()),
+        ChangeNotifierProvider(create: (context) => EditProfileViewModel()),
       ],
       child: Scaffold(
         appBar: AppBar(
-          leading: IconButton(onPressed: () {
-            Navigator.pop(context);
-          }, icon: Icon(Platform.isAndroid? Icons.arrow_back : Icons.arrow_back_ios_new,),),
-          actions: [Consumer<EditProfileViewModel>(
-            builder: (context, pr, child) {
-              return TextButton(onPressed: (){
-                pr.ediProfile().then((value){
-                  CustomToast(context: context, message: AppStrings.profileUpdated);
-                  Navigator.pop(context);
-                });
-              }, child: Text(AppStrings.save, style: AppStyle.whiteMedium16,));
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
             },
-          )],
+            icon: Icon(
+              Platform.isAndroid ? Icons.arrow_back : Icons.arrow_back_ios_new,
+            ),
+          ),
+          actions: [
+            Consumer<EditProfileViewModel>(
+              builder: (context, pr, child) {
+                return TextButton(
+                    onPressed: () {
+                      pr.ediProfile().then((value) {
+                        CustomToast(
+                            context: context,
+                            message: AppStrings.profileUpdated);
+                        Navigator.pop(context);
+                      });
+                    },
+                    child: Text(
+                      AppStrings.save,
+                      style: AppStyle.whiteMedium16,
+                    ));
+              },
+            )
+          ],
         ),
         body: SingleChildScrollView(
           child: Center(
             child: Consumer<EditProfileViewModel>(
-            builder: (context, provider, ch) {
+                builder: (context, provider, ch) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 28.0),
                 child: Form(
@@ -55,26 +69,29 @@ class _EditProfileViewState extends State<EditProfileView> {
                         onTap: () {
                           provider.fetchFromGallery();
                         },
-                        child: (provider.isPicked) ? SizedBox(
-                          height: 100,
-                          width: 100,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: Image.file(provider.pickedImage!, fit: BoxFit.fill,),
-                          ),
-                        ) : CircleAvatar(
-                          radius: 50,
-                          backgroundColor: Theme.of(context).primaryColor,
-                        ),
+                        child: (provider.isPicked)
+                            ? SizedBox(
+                                height: 100,
+                                width: 100,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(100),
+                                  child: Image.file(
+                                    provider.pickedImage!,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              )
+                            : CircleAvatar(
+                                radius: 50,
+                                backgroundColor: Theme.of(context).primaryColor,
+                              ),
                       ),
                       sizedBox(hei: 10),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const Expanded(
-                              flex: 2,
-                              child: Text("Username")),
+                          const Expanded(flex: 2, child: Text("Username")),
                           sizedBox(wid: 10),
                           Expanded(
                             flex: 6,
@@ -90,22 +107,38 @@ class _EditProfileViewState extends State<EditProfileView> {
                       sizedBox(hei: 10),
                       Row(
                         children: [
-                          const Expanded(
-                              flex: 2,
-                              child: Text("Bio")),
+                          const Expanded(flex: 2, child: Text("Bio")),
                           sizedBox(wid: 10),
                           Expanded(
                             flex: 6,
                             child: TextFormField(
                               controller: provider.bioController,
                               maxLines: null,
-                              onFieldSubmitted: (value){
+                              onFieldSubmitted: (value) {
                                 // Utils.changeFocus(context, currentFocus, nextFocus);
                               },
                               decoration: const InputDecoration(
-                                border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(20),), borderSide: BorderSide(width: 2, color: AppColors.black),),
-                                disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.all( Radius.circular(20),), borderSide: BorderSide(width: 2, color: AppColors.black),),
-                                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(20),), borderSide: BorderSide(width: 2, color: AppColors.black),),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(20),
+                                  ),
+                                  borderSide: BorderSide(
+                                      width: 2, color: AppColors.black),
+                                ),
+                                disabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(20),
+                                  ),
+                                  borderSide: BorderSide(
+                                      width: 2, color: AppColors.black),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(20),
+                                  ),
+                                  borderSide: BorderSide(
+                                      width: 2, color: AppColors.black),
+                                ),
                               ),
                             ),
                           )
@@ -116,10 +149,10 @@ class _EditProfileViewState extends State<EditProfileView> {
                   ),
                 ),
               );
-            }
+            }),
           ),
-      ),
         ),
-    ),);
+      ),
+    );
   }
 }

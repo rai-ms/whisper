@@ -3,23 +3,19 @@ import '../data/network/network_api_services.dart';
 import '../model/user_model.dart';
 import '../utils/app_helper/app_url.dart';
 
-class AuthRepository
-{
+class AuthRepository {
   final BaseApiServices _baseAPIServices = NetworkApiServices();
-  Future<dynamic> loginAPI(dynamic data) async
-  {
+  Future<dynamic> loginAPI(dynamic data) async {
     dynamic res;
-    try{
+    try {
       res = _baseAPIServices.postAPI(AppUrl.loginEndPoint, data);
       Map<String, dynamic> apiAns = await res;
       // return UserModel.fromJSON(apiAns);
       return apiAns;
-    }
-    catch(e){
+    } catch (e) {
       rethrow;
     }
   }
-
 
   // Future<dynamic> userDataGetAPI() async
   // {
@@ -31,4 +27,3 @@ class AuthRepository
   //   catch (e){rethrow;}
   // }
 }
-

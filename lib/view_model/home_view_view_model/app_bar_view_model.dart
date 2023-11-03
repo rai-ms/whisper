@@ -6,8 +6,7 @@ import 'package:whisper/utils/routes/route_name.dart';
 
 import '../../utils/app_helper/user_data_preferences/user_data.dart';
 
-class AppBarViewModel extends ChangeNotifier
-{
+class AppBarViewModel extends ChangeNotifier {
   logoutUser(BuildContext context) async {
     // Api call for logout
     await UserData.removeUser().then((value) {

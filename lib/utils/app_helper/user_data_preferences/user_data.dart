@@ -41,27 +41,27 @@ class UserData {
   }
 
   static Future<String?> updateUsername(String newUsername) async {
-    await _preferences?.setString('username', newUsername).then((value){
+    await _preferences?.setString('username', newUsername).then((value) {
       return true;
-    }).onError((error, stackTrace){
+    }).onError((error, stackTrace) {
       throw AppError(error.toString());
     });
     return null;
   }
 
   static Future<String?> updateProfilePic(String newProfilePic) async {
-    await _preferences?.setString('profilePic', newProfilePic).then((value){
+    await _preferences?.setString('profilePic', newProfilePic).then((value) {
       return true;
-    }).onError((error, stackTrace){
+    }).onError((error, stackTrace) {
       throw AppError(error.toString());
     });
     return null;
   }
 
   static Future<String?> updateProfileBio(String newProfileBio) async {
-    await _preferences?.setString('profileBio', newProfileBio).then((value){
+    await _preferences?.setString('profileBio', newProfileBio).then((value) {
       return true;
-    }).onError((error, stackTrace){
+    }).onError((error, stackTrace) {
       throw AppError(error.toString());
     });
     return null;
@@ -72,20 +72,20 @@ class UserData {
       String? newUsername,
       String? newProfilePic}) async {
     bool res = true;
-    if(newUsername != null && newUsername.isNotEmpty){
-      await updateUsername(newUsername).onError((error, stackTrace){
+    if (newUsername != null && newUsername.isNotEmpty) {
+      await updateUsername(newUsername).onError((error, stackTrace) {
         res = false;
         return null;
       });
     }
-    if(newProfileBio != null && newProfileBio.isNotEmpty){
-      await updateProfileBio(newProfileBio).onError((error, stackTrace){
+    if (newProfileBio != null && newProfileBio.isNotEmpty) {
+      await updateProfileBio(newProfileBio).onError((error, stackTrace) {
         res = false;
         return null;
       });
     }
-    if(newProfilePic != null && newProfilePic.isNotEmpty){
-      await updateProfilePic(newProfilePic).onError((error, stackTrace){
+    if (newProfilePic != null && newProfilePic.isNotEmpty) {
+      await updateProfilePic(newProfilePic).onError((error, stackTrace) {
         res = false;
         return null;
       });
@@ -117,60 +117,69 @@ class UserData {
     // final Map<String, dynamic> userDataMap = user.toJson();
     // final String userDataString = json.encode(userDataMap);
     // debugPrint("$userDataMap <- This data is going to store into this-> $userDataString");
-    await _preferences?.setString('userData', user.accessToken).then((value){
+    await _preferences?.setString('userData', user.accessToken).then((value) {
       debugPrint("Data saved: $value");
-    }).onError((error, stackTrace){
+    }).onError((error, stackTrace) {
       debugPrint("Unable to save data Error: $error");
     });
 
-    await _preferences?.setString('username', user.username).then((value){
+    await _preferences?.setString('username', user.username).then((value) {
       debugPrint("Username Data saved: $value");
-    }).onError((error, stackTrace){
+    }).onError((error, stackTrace) {
       debugPrint("Unable to save Username data Error: $error");
     });
 
-    await _preferences?.setString('createdAt', user.createdAt).then((value){
+    await _preferences?.setString('createdAt', user.createdAt).then((value) {
       debugPrint("createdAt Data saved: $value");
-    }).onError((error, stackTrace){
+    }).onError((error, stackTrace) {
       debugPrint("Unable to save createdAt data Error: $error");
     });
 
-    await _preferences?.setString('email', user.email).then((value){
+    await _preferences?.setString('email', user.email).then((value) {
       debugPrint("email Data saved: $value");
       return true;
-    }).onError((error, stackTrace){
+    }).onError((error, stackTrace) {
       debugPrint("Unable to save email data Error: $error");
       return false;
     });
 
-    await _preferences?.setString('_id', user.id).then((value){
+    await _preferences?.setString('_id', user.id).then((value) {
       debugPrint("id Data saved: $value");
       return true;
-    }).onError((error, stackTrace){
+    }).onError((error, stackTrace) {
       debugPrint("Unable to save email data Error: $error");
       return false;
     });
 
-    await _preferences?.setString('profileBio', user.profileBio ?? "Appinventiv").then((value){
+    await _preferences
+        ?.setString('profileBio', user.profileBio ?? "Appinventiv")
+        .then((value) {
       debugPrint("profileBio Data saved: $value");
       return true;
-    }).onError((error, stackTrace){
+    }).onError((error, stackTrace) {
       debugPrint("Unable to save profileBio data Error: $error");
       return false;
     });
 
-    await _preferences?.setString('profilePic', user.profilePic ?? "https://appinventiv.com/wp-content/themes/twentynineteen-child/new-images/appinventiv-mask-old.svg").then((value){
+    await _preferences
+        ?.setString(
+            'profilePic',
+            user.profilePic ??
+                "https://appinventiv.com/wp-content/themes/twentynineteen-child/new-images/appinventiv-mask-old.svg")
+        .then((value) {
       debugPrint("profilePic Data saved: $value");
       return true;
-    }).onError((error, stackTrace){
+    }).onError((error, stackTrace) {
       debugPrint("Unable to save profilePic data Error: $error");
       return false;
     });
 
-    await _preferences?.setString('fullName', user.fullName ?? "Appinventiv User").then((value){
+    await _preferences
+        ?.setString('fullName', user.fullName ?? "Appinventiv User")
+        .then((value) {
       debugPrint("fullName Data saved: $value");
       return true;
-    }).onError((error, stackTrace){
+    }).onError((error, stackTrace) {
       debugPrint("Unable to save fullName data Error: $error");
       return false;
     });
@@ -180,22 +189,46 @@ class UserData {
 
   static Future<bool> removeUser() async {
     bool remove = true;
-    await _preferences?.remove('profileBio').then((value) {remove &= true;}).onError((error, stackTrace) {remove &= true;});
-    await _preferences?.remove('profilePic').then((value) {remove &= true;}).onError((error, stackTrace) {remove &= true;});
-    await _preferences?.remove('userData').then((value){
+    await _preferences?.remove('profileBio').then((value) {
+      remove &= true;
+    }).onError((error, stackTrace) {
+      remove &= true;
+    });
+    await _preferences?.remove('profilePic').then((value) {
+      remove &= true;
+    }).onError((error, stackTrace) {
+      remove &= true;
+    });
+    await _preferences?.remove('userData').then((value) {
       remove &= true;
     }).onError((error, stackTrace) {
       remove &= false;
     });
     await _preferences?.remove('_id').then((value) {
       remove &= true;
-    }).onError((error, stackTrace){remove &= false;});
+    }).onError((error, stackTrace) {
+      remove &= false;
+    });
     await _preferences?.remove('username').then((value) {
       remove &= true;
-    }).onError((error, stackTrace){remove &= false;});
-    await _preferences?.remove('email').then((value) {remove &= true;}).onError((error, stackTrace) {remove &= true;});
-    await _preferences?.remove('fullName').then((value) {remove &= true;}).onError((error, stackTrace) {remove &= true;});
-    await _preferences?.remove('createdAt').then((value) {remove &= true;}).onError((error, stackTrace) {remove &= true;});
+    }).onError((error, stackTrace) {
+      remove &= false;
+    });
+    await _preferences?.remove('email').then((value) {
+      remove &= true;
+    }).onError((error, stackTrace) {
+      remove &= true;
+    });
+    await _preferences?.remove('fullName').then((value) {
+      remove &= true;
+    }).onError((error, stackTrace) {
+      remove &= true;
+    });
+    await _preferences?.remove('createdAt').then((value) {
+      remove &= true;
+    }).onError((error, stackTrace) {
+      remove &= true;
+    });
     return remove;
   }
 }

@@ -74,8 +74,8 @@ class CommentPayload {
   String comment;
   CommentPayload({required this.comment});
 
-  Map<String, dynamic> toMap(){
-    return {'comment':comment};
+  Map<String, dynamic> toMap() {
+    return {'comment': comment};
   }
 }
 
@@ -105,7 +105,8 @@ class Data {
   Data({this.comments}); // Mark 'comments' as nullable
 
   factory Data.fromJson(Map<String, dynamic> json) {
-    final List<dynamic>? commentsList = json['Comments']; // Make 'commentsList' nullable
+    final List<dynamic>? commentsList =
+        json['Comments']; // Make 'commentsList' nullable
     final List<APIResponseComment>? comments = commentsList?.map((commentJson) {
       return APIResponseComment.fromJson(commentJson);
     }).toList();
@@ -156,5 +157,3 @@ class APIResponseUser {
     );
   }
 }
-
-

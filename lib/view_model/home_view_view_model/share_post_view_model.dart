@@ -1,6 +1,3 @@
 import 'package:flutter/material.dart';
 
-class PostShareViewModel extends ChangeNotifier
-{
-
-}
+class PostShareViewModel extends ChangeNotifier {}

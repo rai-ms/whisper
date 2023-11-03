@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../utils/app_helper/app_color.dart';
 
-class AppRoundedButton extends StatelessWidget
-{
+class AppRoundedButton extends StatelessWidget {
   /// [title] is a text of the [AppRoundedButton] which will be visible when [loading] will be false
   String title;
 
@@ -37,8 +36,8 @@ class AppRoundedButton extends StatelessWidget
   bool isEnable;
 
   /// Custom App Button used for multipurpose in the app
-  AppRoundedButton({
-      super.key,
+  AppRoundedButton(
+      {super.key,
       this.buttonColor,
       required this.onTap,
       required this.title,
@@ -53,38 +52,38 @@ class AppRoundedButton extends StatelessWidget
       this.isEnable = true,
       this.textStyle,
       this.borderWidth,
-      this.loading = false
-    }
-  );
-
-
+      this.loading = false});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
-        if(isEnable){
+      onTap: () {
+        if (isEnable) {
           onTap();
         }
       },
       focusNode: focusNode,
       child: Container(
-        height:height?? 60,
-        width: width??200,
+        height: height ?? 60,
+        width: width ?? 200,
         decoration: BoxDecoration(
-            color: isEnable? buttonColor : AppColors.grey,
+            color: isEnable ? buttonColor : AppColors.grey,
             borderRadius: BorderRadius.circular(20),
-            border: borderColor!= null ? Border.all(color: borderColor!, width: borderWidth ?? 1) :Border.all()
-        ),
+            border: borderColor != null
+                ? Border.all(color: borderColor!, width: borderWidth ?? 1)
+                : Border.all()),
         child: Center(
-            child:  loading ? loadingWidget: Text(
-              title,
-              style: textStyle ?? TextStyle(
-                  color: textColor,
-                  fontSize: 20,
-                  fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.w400),
-            )),
+            child: loading
+                ? loadingWidget
+                : Text(
+                    title,
+                    style: textStyle ??
+                        TextStyle(
+                            color: textColor,
+                            fontSize: 20,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w400),
+                  )),
       ),
     );
   }

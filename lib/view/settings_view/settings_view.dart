@@ -18,24 +18,33 @@ class SettingsView extends StatefulWidget {
 class _SettingsViewState extends State<SettingsView> {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(providers: [
-      ChangeNotifierProvider(create: (context) => AppGlobalProvider()),
-      ChangeNotifierProvider(create: (context) => AppBarViewModel()),
-      ChangeNotifierProvider(create: (context) => SettingsViewModel()),
-    ],
-    child: Scaffold(
-      appBar: AppBar(
-        leading: IconButton(onPressed: () {
-          Navigator.pop(context);
-        }, icon: Icon(Platform.isAndroid? Icons.arrow_back : Icons.arrow_back_ios_new),),),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("Settings"),
-            HomePageAppBar(),
-          ],
-        ),),
-    ),);
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AppGlobalProvider()),
+        ChangeNotifierProvider(create: (context) => AppBarViewModel()),
+        ChangeNotifierProvider(create: (context) => SettingsViewModel()),
+      ],
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(Platform.isAndroid
+                ? Icons.arrow_back
+                : Icons.arrow_back_ios_new),
+          ),
+        ),
+        body: const Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("Settings"),
+              HomePageAppBar(),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

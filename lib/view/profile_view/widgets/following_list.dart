@@ -16,24 +16,25 @@ class Following extends StatefulWidget {
   State<Following> createState() => _FollowingState();
 }
 
-class _FollowingState extends State<Following> with AutomaticKeepAliveClientMixin{
+class _FollowingState extends State<Following>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
     return RefreshIndicator(
-      onRefresh: () async  {
+      onRefresh: () async {
         setState(() {});
       },
       child: Column(
         children: [
           SizedBox(
-            height: getFullHeight(context)/2,
+            height: getFullHeight(context) / 2,
             child: Consumer<PostViewApiResponseProvider>(
-              builder: (context, pr, ch) {
-                return FutureBuilder<GetFollowingApiRes?>(
+                builder: (context, pr, ch) {
+              return FutureBuilder<GetFollowingApiRes?>(
                   future: pr.getFollowing(),
                   builder: (context, snapshot) {
-                    if(pr.getFollowingApiRes == null){
+                    if (pr.getFollowingApiRes == null) {
                       return ListView.builder(
                         itemBuilder: (BuildContext context, int index) {
                           return ListTile(
@@ -57,27 +58,28 @@ class _FollowingState extends State<Following> with AutomaticKeepAliveClientMixi
                     //   return const Text("No Data");
                     // }
                     else {
-                      GetFollowingApiRes getFollowingApiRes = pr.getFollowingApiRes!;
+                      GetFollowingApiRes getFollowingApiRes =
+                          pr.getFollowingApiRes!;
                       return ListView.builder(
-                        key: const PageStorageKey<String>(StoragePathKey.friendsListPath),
+                        key: const PageStorageKey<String>(
+                            StoragePathKey.friendsListPath),
                         itemBuilder: (BuildContext context, int index) {
                           return ListTile(
-                            onTap: (){
-                              Navigator.pushNamed(context, RouteName.thirdUserProfileView, arguments: {"id" : getFollowingApiRes.data!.following![index].user.id});
+                            onTap: () {
+                              Navigator.pushNamed(context, RouteName.thirdUserProfileView, arguments: { "id": getFollowingApiRes.data!.following![index].user.id});
                             },
                             title: Text("${getFollowingApiRes.data!.following![index].user.username}"),
                             subtitle: Text("${getFollowingApiRes.data!.following![index].user.email}"),
                             leading: ClipRRect(
                                 borderRadius: BorderRadius.circular(100),
-                                child: UtilityHelper.image(dp)),
+                                child: UtilityHelper.image(getFollowingApiRes.data!.following![index].user.profilePic ??dp, width: 50)),
                           );
                         },
-                        itemCount: getFollowingApiRes.data!.following!.length,);
+                        itemCount: getFollowingApiRes.data!.following!.length,
+                      );
                     }
-                  }
-                );
-              }
-            ),
+                  });
+            }),
           ),
         ],
       ),

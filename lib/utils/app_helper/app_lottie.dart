@@ -1,3 +1,3 @@
-class AppLottie{
+class AppLottie {
   String basePath = "assets/lottie";
 }
