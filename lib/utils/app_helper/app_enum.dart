@@ -4,5 +4,5 @@ class NotificationType
 {
   static const String COMMENT = "COMMENT";
   static const String LIKE = "LIKE";
-  static const String FOLLOW = "FOLLOW";
+  static const String FOLLOW = "FOLLOW_USER";
 }

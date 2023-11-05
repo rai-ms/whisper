@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:whisper/data/app_exceptions/app_exception.dart';
 import 'package:whisper/model/feed_response_model.dart';
 import '../../repository/post_repo/post_repo.dart';
+import '../global_provider/global_provider.dart';
 
 class PostViewModel extends ChangeNotifier {
   static bool isFirstPage = true;
+
   static UserFeedModel? feedApiResponse;
 
   static PostRepository postRepo = PostRepository();
@@ -14,12 +16,19 @@ class PostViewModel extends ChangeNotifier {
 
   static Future<UserFeedModel?> getAllPost() async {
     isFirstPage = false;
-    await postRepo.getMyFeed(pageNo: pageNo, limit: limit).then((value) {
+    await postRepo.getMyFeed(pageNo: pageNo, limit: limit).then((value) async {
       feedApiResponse = value!;
+      await updateAllLikes(feedApiResponse!);
     }).onError((error, stackTrace) {
       throw AppError(error.toString());
     });
     return feedApiResponse;
+  }
+
+  static updateAllLikes(UserFeedModel apiRes) async {
+    for(int i = 0; i < apiRes.userFeed.length; ++i){
+      AppGlobalProvider.isPostLikeByMe[apiRes.userFeed[i].userPosts.id.toString()] = apiRes.userFeed[i].userPosts.isLiked;
+    }
   }
 
   addMore() async {

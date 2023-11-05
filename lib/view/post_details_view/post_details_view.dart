@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:whisper/components/app_text_form_field.dart';
+import 'package:whisper/components/loading_tile.dart';
 import 'package:whisper/components/utility_helper.dart';
 import 'package:whisper/global/global.dart';
 import 'package:whisper/res/components/app_rounded_button.dart';
@@ -12,8 +13,7 @@ import '../../components/app_dialog.dart';
 import '../../utils/app_helper/app_style.dart';
 
 class PostDetailsView extends StatefulWidget {
-  const PostDetailsView(
-      {super.key, required this.postId, required this.isLiked});
+  const PostDetailsView({super.key, required this.postId, this.isLiked = false});
 
   final bool isLiked;
   final String postId;
@@ -60,136 +60,207 @@ class _PostDetailsViewState extends State<PostDetailsView> {
                           builder: (context, snap) {
                             return Column(
                               children: [
-                                SizedBox(
-                                  height: 470,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.center,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          sizedBox(wid: 10),
-                                          if (pr.apiResponseUserDataModel == null) const CircleAvatar(radius: 40,),
-                                          if (pr.apiResponseUserDataModel != null) SizedBox(
-                                              height: 60,
-                                              width: 60,
-                                              child: ClipOval(
-                                                child: UtilityHelper.image( pr.apiResponseUserDataModel?.data[0].profilePic, fit: BoxFit.fill),
-                                              ),
+                                Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        sizedBox(wid: 10),
+                                        if (pr.apiResponseUserDataModel == null) const CircleAvatar(radius: 40,),
+                                        if (pr.apiResponseUserDataModel != null) SizedBox(
+                                            height: 60,
+                                            width: 60,
+                                            child: ClipOval(
+                                              child: UtilityHelper.image( pr.apiResponseUserDataModel?.data[0].profilePic, fit: BoxFit.fill),
                                             ),
-                                          sizedBox(wid: 10),
-                                          Column(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                          ),
+                                        sizedBox(wid: 10),
+                                        Column(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                          children: [
+                                            if (pr.apiResponsePostModel == null) const Text("Loading..."),
+                                            if (pr.apiResponsePostModel != null) Text(pr.apiResponseUserDataModel!.data[0].username.toString() ?? "Loading..."),
+                                            if (pr.apiResponsePostModel == null) const Text("Loading..."),
+                                            if (pr.apiResponsePostModel != null) Text(pr.apiResponsePostModel!.data[0].createdAt.toString() ?? "Loading..."),
+                                          ],
+                                        ),
+                                        Expanded(child: sizedBox()),
+                                        IconButton(
+                                          onPressed: () {
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return Dialog(
+                                                    shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(30)),
+                                                    child: AppDialog( dialogWidget: Padding(
+                                                      padding: const EdgeInsets.all(1.2),
+                                                      child: Column(
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                                        children: [
+                                                          Padding(
+                                                            padding: const EdgeInsets.all(8.0),
+                                                            child: AppTextFormField(cont: pr.editPostController, obscureText: false, isPrefixIconExist: false, disableBorderColor: AppColors.white, enableBorderColor: AppColors.white, style: AppStyle.whiteMedium16, maxLines: 3, contentPadding: 10,),
+                                                          ),
+                                                          sizedBox(hei: 10),
+                                                          AppRoundedButton(onTap: (){
+                                                            pr.editPostCaption();
+                                                          }, title: AppStrings.save, borderColor: AppColors.white, borderWidth: 2, textStyle: AppStyle.whiteMedium16,),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    ),
+                                                  );
+                                                });
+                                          },
+                                          icon: const Icon(Icons.edit),
+                                        ),
+                                        // if(pr.apiResponseUserDataModel != null) FutureBuilder(
+                                        //   future: pr.getUserName(),
+                                        //   builder: (context, snap) {
+                                        //     // if(snap.hasData && snap.data == pr.apiResponseUserDataModel!.data[0].username){
+                                        //     //   return IconButton(
+                                        //     //       onPressed: () {
+                                        //     //         showDialog(
+                                        //     //             context: context,
+                                        //     //             builder: (context) {
+                                        //     //               return Dialog(
+                                        //     //                 shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(30)),
+                                        //     //                 child: AppDialog( dialogWidget: Padding(
+                                        //     //                   padding: const EdgeInsets.all(1.2),
+                                        //     //                   child: Column(
+                                        //     //                     children: [
+                                        //     //                       TextFormField(),
+                                        //     //                       AppRoundedButton(onTap: (){
+                                        //     //                         pr.editPostCaption();
+                                        //     //                       }, title: AppStrings.save),
+                                        //     //                     ],
+                                        //     //                   ),
+                                        //     //                 ),
+                                        //     //                 ),
+                                        //     //               );
+                                        //     //             });
+                                        //     //       },
+                                        //     //       icon: const Icon(Icons.edit),
+                                        //     //   );
+                                        //     // }
+                                        //     // else {
+                                        //     //   return sizedBox();
+                                        //     // }
+                                        //     return IconButton(
+                                        //       onPressed: () {
+                                        //         showDialog(
+                                        //             context: context,
+                                        //             builder: (context) {
+                                        //               return Dialog(
+                                        //                 shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(30)),
+                                        //                 child: AppDialog( dialogWidget: Padding(
+                                        //                   padding: const EdgeInsets.all(1.2),
+                                        //                   child: Column(
+                                        //                     mainAxisAlignment: MainAxisAlignment.center,
+                                        //                     crossAxisAlignment: CrossAxisAlignment.center,
+                                        //                     children: [
+                                        //                       Padding(
+                                        //                         padding: const EdgeInsets.all(8.0),
+                                        //                         child: AppTextFormField(cont: pr.editPostController, obscureText: false, isPrefixIconExist: false, disableBorderColor: AppColors.white, enableBorderColor: AppColors.white, style: AppStyle.whiteMedium16, maxLines: 3, contentPadding: 10,),
+                                        //                       ),
+                                        //                       sizedBox(hei: 10),
+                                        //                       AppRoundedButton(onTap: (){
+                                        //                         pr.editPostCaption();
+                                        //                       }, title: AppStrings.save, borderColor: AppColors.white, borderWidth: 2, textStyle: AppStyle.whiteMedium16,),
+                                        //                     ],
+                                        //                   ),
+                                        //                 ),
+                                        //                 ),
+                                        //               );
+                                        //             });
+                                        //       },
+                                        //       icon: const Icon(Icons.edit),
+                                        //     );
+                                        //   }
+                                        // ),
+                                        sizedBox(wid: 10),
+                                      ],
+                                    ),
+                                    sizedBox(hei: 10),
+                                    if(pr.apiResponsePostModel != null) Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        sizedBox(wid: 10),
+                                        Text(pr.apiResponsePostModel!.data[0].caption.toString(), style: AppStyle.primaryColorDarkMedium14(context),),
+                                      ],
+                                    ),
+                                    sizedBox(hei: 10),
+                                    if (pr.apiResponseUserDataModel == null) Container (
+                                        height: 280,
+                                        width: getFullWidth(context),
+                                        color: AppColors.greyShade,
+                                      ),
+                                    if (pr.apiResponseUserDataModel != null) SizedBox (
+                                        height: 300,
+                                        child: UtilityHelper.image(pr.apiResponsePostModel!.data[0].url, width: getFullWidth(context), fit: BoxFit.fill)),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context).primaryColorLight,
+                                          borderRadius: BorderRadius.circular(20),
+                                          boxShadow: [
+                                              BoxShadow(
+                                                  color: Theme.of(context).primaryColorDark, blurRadius: 5, spreadRadius: 0)
+                                            ]),
+                                        child: Padding(
+                                          padding:
+                                          const EdgeInsets.all(10.0),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                                             children: [
-                                              if (pr.apiResponsePostModel == null) const Text("Loading..."),
-                                              if (pr.apiResponsePostModel != null) Text(pr.apiResponseUserDataModel!.data[0].username.toString() ?? "Loading..."),
-                                              if (pr.apiResponsePostModel == null) const Text("Loading..."),
-                                              if (pr.apiResponsePostModel != null) Text(pr.apiResponsePostModel!.data[0].createdAt.toString() ?? "Loading..."),
+                                              InkWell(
+                                                onTap: () {
+                                                  pr.likePost();
+                                                },
+                                                child: Column(
+                                                  children: [
+                                                    Icon(PostDetailsProvider.isLiked ? FontAwesomeIcons.solidThumbsUp : FontAwesomeIcons.thumbsUp,
+                                                      color: Theme.of(context).primaryColorDark,
+                                                    ),
+                                                    Text("${pr.apiResponsePostModel == null ? "0" : pr.apiResponsePostModel!.data[0].likeCount}"),
+                                                  ],
+                                                ),
+                                              ),
+                                              Column(
+                                                children: [
+                                                    Icon(FontAwesomeIcons.commentDots, color: Theme.of(context).primaryColorDark,
+                                                  ),
+                                                  Text("${pr.apiResponsePostModel == null ? "0" : pr.apiResponsePostModel!.data[0].commentCount}"),
+                                                ],
+                                              ),
+                                              Column(
+                                                children: [
+                                                    Icon(FontAwesomeIcons.share, color: Theme.of(context).primaryColorDark,
+                                                  ),
+                                                  const Text("0")
+                                                ],
+                                              ),
                                             ],
                                           ),
-                                          Expanded(child: sizedBox()),
-                                          if(pr.apiResponseUserDataModel != null) FutureBuilder(
-                                            future: pr.getUserName(),
-                                            builder: (context, snap) {
-                                              if(snap.hasData && snap.data == pr.apiResponseUserDataModel!.data[0].username){
-                                                return IconButton(
-                                                    onPressed: () {
-                                                      showDialog(
-                                                          context: context,
-                                                          builder: (context) {
-                                                            return Dialog(
-                                                              shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(30)),
-                                                              child: AppDialog( dialogWidget: Padding(
-                                                                padding: const EdgeInsets.all(1.2),
-                                                                child: Column(
-                                                                  children: [
-                                                                    TextFormField(),
-                                                                    AppRoundedButton(onTap: (){
-                                                                      pr.editPostCaption();
-                                                                    }, title: AppStrings.save),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                              ),
-                                                            );
-                                                          });
-                                                    },
-                                                    icon: const Icon(Icons.edit));
-                                              }
-                                              else {
-                                                return sizedBox();
-                                              }
-                                            }
-                                          ),
-                                          sizedBox(wid: 10),
-                                        ],
-                                      ),
-                                      sizedBox(hei: 10),
-                                      if (pr.apiResponseUserDataModel == null) Container(
-                                          height: 280,
-                                          width: getFullWidth(context),
-                                          color: AppColors.grey,
-                                        ),
-                                      if (pr.apiResponseUserDataModel != null) SizedBox(
-                                          height: 300,
-                                          child: UtilityHelper.image(pr.apiResponsePostModel!.data[0].url, width: getFullWidth(context), fit: BoxFit.fill)),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: Theme.of(context).primaryColorLight,
-                                            borderRadius: BorderRadius.circular(20),
-                                            boxShadow: [
-                                                BoxShadow(
-                                                    color: Theme.of(context).primaryColorDark, blurRadius: 5, spreadRadius: 0)
-                                              ]),
-                                          child: Padding(
-                                            padding:
-                                            const EdgeInsets.all(10.0),
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                              children: [
-                                                InkWell(
-                                                  onTap: () {
-                                                    pr.likePost();
-                                                  },
-                                                  child: Column(
-                                                    children: [
-                                                      Icon(!PostDetailsProvider.isLiked ? FontAwesomeIcons.solidThumbsUp : FontAwesomeIcons.thumbsUp,
-                                                        color: Theme.of(context).primaryColorDark,
-                                                      ),
-                                                      Text("${pr.apiResponsePostModel == null ? "0" : pr.apiResponsePostModel!.data[0].likeCount}"),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Column(
-                                                  children: [
-                                                      Icon(FontAwesomeIcons.commentDots, color: Theme.of(context).primaryColorDark,
-                                                    ),
-                                                    Text("${pr.apiResponsePostModel == null ? "0" : pr.apiResponsePostModel!.data[0].commentCount}"),
-                                                  ],
-                                                ),
-                                                Column(
-                                                  children: [
-                                                      Icon(FontAwesomeIcons.share, color: Theme.of(context).primaryColorDark,
-                                                    ),
-                                                    const Text("0")
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
                                         ),
                                       ),
-                                      sizedBox(hei: 10),
-                                    ],
-                                  ),
+                                    ),
+                                    sizedBox(hei: 10),
+                                  ],
                                 ),
-                                if(pr.res != null) Column(
+                                Row(
                                   children: [
-                                      ...List.generate(
-                                        pr.res!.data!.comments!.length,
+                                    sizedBox(wid: 10),
+                                    Text("Comments", style: AppStyle.primaryColorDarkBold20(context),),
+                                  ],
+                                ),
+                                if(pr.resCommentSpecificPost != null) Column(
+                                  children: [
+                                     if(pr.resCommentSpecificPost!.data!.comments!.isEmpty) Text("No Comments Found..", style: AppStyle.primaryColorDarkMedium14(context),),
+                                     if(pr.resCommentSpecificPost!.data!.comments!.isNotEmpty) ...List.generate(
+                                        pr.resCommentSpecificPost!.data!.comments!.length,
                                         (index) => Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Row(
@@ -197,7 +268,7 @@ class _PostDetailsViewState extends State<PostDetailsView> {
                                                 Expanded(
                                                   flex: 10,
                                                   child: ClipOval(
-                                                    child: UtilityHelper.image(pr.res!.data!.comments?[index].user.profilePic ?? dp, height: 40, width: 40),
+                                                    child: UtilityHelper.image(pr.resCommentSpecificPost!.data!.comments![index].user.profilePic.toString()),
                                                   )),
                                                 sizedBox(wid: 5),
                                                 Expanded(
@@ -205,54 +276,30 @@ class _PostDetailsViewState extends State<PostDetailsView> {
                                                   child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       Container(
-                                                        constraints: const BoxConstraints(
-                                                                minHeight: 60),
+                                                        constraints: const BoxConstraints(minHeight: 60),
                                                         decoration: BoxDecoration(
-                                                            color:
-                                                                AppColors.grey,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        12)),
+                                                            color: AppColors.grey,
+                                                            borderRadius: BorderRadius.circular(12)),
                                                         child: Row(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
+                                                          crossAxisAlignment: CrossAxisAlignment.center,
                                                           children: [
                                                             sizedBox(wid: 5),
                                                             Expanded(
                                                               flex: 90,
                                                               child: Column(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .start,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
+                                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                                 children: [
                                                                   Padding(
-                                                                    padding: const EdgeInsets
-                                                                            .only(
-                                                                        left:
-                                                                            8.0),
-                                                                    child: Text(pr
-                                                                        .res!
-                                                                        .data!
-                                                                        .comments![
-                                                                            index]
-                                                                        .user
-                                                                        .username),
+                                                                    padding: const EdgeInsets.only(left: 8.0),
+                                                                    child: Text(pr.resCommentSpecificPost!.data!.comments![index].user.username),
                                                                   ),
                                                                   Container(
                                                                     constraints:const BoxConstraints(maxWidth: 450,minWidth:300, minHeight: 40,),
-                                                                    padding: const EdgeInsets.only(
-                                                                        left:
-                                                                            10),
+                                                                    padding: const EdgeInsets.only(left: 10),
                                                                     decoration: BoxDecoration(
-                                                                      color: AppColors
-                                                                          .white,
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(10),
+                                                                      color: AppColors.white,
+                                                                      borderRadius: BorderRadius.circular(10),
                                                                     ),
                                                                     child: Column(
                                                                         crossAxisAlignment:
@@ -260,22 +307,17 @@ class _PostDetailsViewState extends State<PostDetailsView> {
                                                                         mainAxisAlignment:
                                                                             MainAxisAlignment.center,
                                                                         children: [
-                                                                          Text(
-                                                                            pr.res!.data!.comments![index].comment,
-                                                                            style:
-                                                                                AppStyle.blackMedium16,
-                                                                          ),
+                                                                          Text(pr.resCommentSpecificPost!.data!.comments![index].comment, style: AppStyle.blackMedium16,),
                                                                         ],
                                                                       )),
-                                                                  sizedBox(
-                                                                      hei: 4),
+                                                                  sizedBox(hei: 4),
                                                                 ],
                                                               ),
                                                             ),
                                                           ],
                                                         ),
                                                       ),
-                                                      Text(pr .res! .data!.comments![index].user.email),
+                                                      Text(pr.resCommentSpecificPost! .data!.comments![index].user.email),
                                                     ],
                                                   ),
                                                 ),
@@ -284,8 +326,7 @@ class _PostDetailsViewState extends State<PostDetailsView> {
                                                   child: PopupMenuButton(
                                                     icon: const Icon(
                                                         Icons.more_vert),
-                                                    itemBuilder:
-                                                        (BuildContext context) {
+                                                    itemBuilder: (BuildContext context) {
                                                       return [
                                                         // if(pr.res!.data!.comments?[index].user.username == username) PopupMenuItem(
                                                         //   value: "edit",
@@ -294,11 +335,11 @@ class _PostDetailsViewState extends State<PostDetailsView> {
                                                         //     // pr.editMyComment(context: context, editOn: widget.comments![index].comment,commentID:  widget.comments![index].id);
                                                         //   },
                                                         // ),
-                                                        if (pr.res!.data!.comments?[index].user.id == PostDetailsProvider.userId) PopupMenuItem(
+                                                        if (pr.resCommentSpecificPost!.data!.comments?[index].user.id == PostDetailsProvider.userId) PopupMenuItem(
                                                             value: "delete",
                                                             child: const Text( "Delete comment"),
                                                             onTap: () {
-                                                              pr.deleteMyComment( commentId: pr.res!.data!.comments?[index].id.toString() ?? "", context: context);
+                                                              pr.deleteMyComment( commentId: pr.resCommentSpecificPost!.data!.comments?[index].id.toString() ?? "", context: context);
                                                             },
                                                           ),
                                                       ];
@@ -310,7 +351,7 @@ class _PostDetailsViewState extends State<PostDetailsView> {
                                           ))
                                     ],
                                 ),
-                                if (pr.res == null) Container()
+                                if (pr.resCommentSpecificPost == null) const LoadingWidgetTile(count: 3,)
                               ],
                             );
                           },

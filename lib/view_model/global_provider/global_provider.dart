@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:whisper/utils/deBouncer/deBouncer.dart';
-import 'package:whisper/view/add_post_view/add_post_view.dart';
 import 'package:whisper/view/notification_view/notification_view.dart';
 import 'package:whisper/view/post_view/post_view.dart';
 import 'package:whisper/view/profile_view/profile_view.dart';
 import 'package:whisper/view/search_user_view/search_user_view.dart';
 import '../../global/global.dart';
-import '../../model/post_model.dart';
 import '../../model/response.dart';
 import '../../model/search_user.dart';
 import '../../repository/search_repo/search_repo.dart';
@@ -85,4 +83,7 @@ class AppGlobalProvider extends ChangeNotifier {
     super.dispose();
     controller?.dispose();
   }
+
+  static Map<String, bool> isPostLikeByMe = {"":false};
+
 }

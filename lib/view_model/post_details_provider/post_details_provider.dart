@@ -14,14 +14,15 @@ class PostDetailsProvider extends ChangeNotifier {
   final ProfileRepository profileRepository = ProfileRepository();
   final EditPostRepo editPostRepo = EditPostRepo();
   TextEditingController controller = TextEditingController();
+  TextEditingController editPostController = TextEditingController();
 
   static String? userId = "";
-  static String? username = "";
+  static String? username;
 
-  getUserName() async {
-    if(username!.toString().trim().isNotEmpty) return;
+  Future<String?> getUserName() async {
     username ??= await UserData.getUserUsername();
-    debugPrint("getUserName is $username");
+    // debugPrint("getUserName is $username");
+    return username;
   }
 
   static bool isLiked = false;
@@ -34,17 +35,22 @@ class PostDetailsProvider extends ChangeNotifier {
     await postRepository.getPostDetails(postId).then((value) {
       apiResponsePostModel = value;
     }).onError((error, stackTrace) {});
-    await ProfileRepository.getProfile( id: apiResponsePostModel!.data[0].userId.toString()).then((value) {
+    await ProfileRepository.getProfile(id: apiResponsePostModel!.data[0].userId.toString()).then((value) {
       apiResponseUserDataModel = value;
     }).onError((error, stackTrace) {
       throw AppError("Error in PostDetailsProvider getPostDetails $error");
     });
     notifyListeners();
+    await getCommentsList();
+    notifyListeners();
     return apiResponsePostModel;
   }
 
+
+
   Future editPostCaption() async {
-    String caption = controller.text.toString().trim();
+    String caption = editPostController.text.toString().trim();
+    debugPrint("Post Edited Called");
     if (caption.isEmpty || apiResponsePostModel == null) return;
     apiResponsePostModel!.data[0].caption = caption;
     notifyListeners();
@@ -58,7 +64,7 @@ class PostDetailsProvider extends ChangeNotifier {
   Future likePost() async {
     isLiked = !isLiked;
     if (!isLiked) {
-      await postRepository.likePost(postId).then((value) {
+      await postRepository.likePost(postId, userId!).then((value) {
         // debugPrint("Post Liked! api res");
       }).onError((error, stackTrace) {
         throw AppError("Error in PostDetailsProvider likePost $error");
@@ -89,16 +95,16 @@ class PostDetailsProvider extends ChangeNotifier {
     return likesData;
   }
 
-  APIResponseCommentModel? res;
+  APIResponseCommentModel? resCommentSpecificPost;
   Future<APIResponseCommentModel?> getCommentsList() async {
     await postRepository.getListComments(postId).then((value) {
-      res = APIResponseCommentModel.fromJson(value!);
+      resCommentSpecificPost = APIResponseCommentModel.fromJson(value!);
     }).onError((error, stackTrace) {
       throw AppError("Error in PostDetailsProvider getCommentsList $error");
     });
     await Future.delayed(const Duration(seconds: 2));
     notifyListeners();
-    return res;
+    return resCommentSpecificPost;
   }
 
   Future sendComment(String postedById) async {
@@ -115,8 +121,7 @@ class PostDetailsProvider extends ChangeNotifier {
     });
   }
 
-  Future deleteMyComment(
-      {required String commentId, required BuildContext context}) async {
+  Future deleteMyComment({required String commentId, required BuildContext context}) async {
     await postRepository.deleteComment(postId: postId, commentID: commentId);
   }
 }

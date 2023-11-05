@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:whisper/global/global.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
 import '../utils/app_helper/app_image.dart';
 
@@ -36,14 +37,7 @@ class UtilityHelper {
     }
   }
 
-  static CachedNetworkImage image(img,
-      {double? height,
-      double? width,
-      String? placeHolderImage,
-      File? file,
-      BoxFit? fit,
-      bool cachedExtent = true,
-      Widget Function(BuildContext, String)? placeholder}) {
+  static CachedNetworkImage image (img, {double? height, double? width, String? placeHolderImage, File? file, BoxFit? fit, bool cachedExtent = true, Widget Function(BuildContext, String)? placeholder}) {
     return CachedNetworkImage(
       imageUrl: img,
       height: height,
@@ -73,6 +67,15 @@ class UtilityHelper {
                 fit: BoxFit.contain,
               ),
       ),
+    );
+  }
+
+  static Widget fadedImage({required String image}){
+    String dpImage = image ?? dp!;
+    if(image == null || dpImage.isEmpty) dpImage = dp!;
+    return FadeInImage.assetNetwork(
+      placeholder: AppImages.logoAndName,
+      image: dpImage,
     );
   }
 }

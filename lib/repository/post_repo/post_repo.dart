@@ -112,7 +112,7 @@ class PostRepository {
         .getAPI("${AppUrl.postDetailsEndPoint}$postId", header)
         .then((value) {
       response = ApiResponsePostModel.fromJson(value);
-      // debugPrint("Like list are:$value");
+      // debugPrint("getPostDetails are:$value");
     }).onError((error, stackTrace) {
       throw AppError(error.toString());
     });
@@ -127,12 +127,7 @@ class PostRepository {
     // header['Authorization'] = "Bearer "+token!;
     header[ApiKeys.authorization] = token!;
     debugPrint("$header is the header, model is ${model.toMap()}");
-    await _baseAPIServices
-        .postAPIWithHeader(
-            "https://harshitsocial.appskeeper.in/api/v1/user/createComment?postId=$postId",
-            model.toMap(),
-            header)
-        .then((value) {
+    await _baseAPIServices.postAPIWithHeader("https://harshitsocial.appskeeper.in/api/v1/user/createComment?postId=$postId", model.toMap(), header).then((value) {
       debugPrint("Comment Added! $value");
       res = value.toString();
     }).onError((error, stackTrace) {
@@ -142,7 +137,7 @@ class PostRepository {
     return res;
   }
 
-  Future<String?> likePost(String postId) async {
+  Future<String?> likePost(String postId, String postedById) async {
     String? statusCode;
     String? token = await UserData.getUserAccessToken();
     // header['Authorization'] = "Bearer "+token!;

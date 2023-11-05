@@ -14,6 +14,7 @@ class AppColors {
   static const Color greenAccent = Colors.greenAccent;
   static const Color blueAccent = Colors.blueAccent;
   static const Color grey = Color(0xFF9E9E9E);
+  static const Color greyShade = Color(0xFFD3D3D3);
   static const Color green = Colors.green;
   static const Color yellow = Colors.yellow;
 }

@@ -61,7 +61,7 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
               return InkWell(
                 onTap: () {
                   provider.likePost(
-                      widget.postId, widget.post!.isLiked ?? false);
+                      widget.postId, widget.post!.isLiked ?? false, widget.post!.userId!);
                   setState(() {
                     debugPrint("DebugPrint");
                     widget.post!.isLiked != widget.post!.isLiked;

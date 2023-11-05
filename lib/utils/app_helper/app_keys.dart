@@ -26,7 +26,7 @@ abstract class ApiKeys {
   static const String applicationJson = 'application/json';
   static const String formData = 'multipart/form-data';
   static const String authorization = 'Authorization';
-  static const String accept = 'Accept';
+  static const String accept = 'accept';
   static const String userAgent = 'User-Agent';
   static const String formUrlEncoded = 'application/x-www-form-urlencoded';
 

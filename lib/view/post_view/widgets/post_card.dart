@@ -9,6 +9,7 @@ import 'package:whisper/view/post_view/widgets/user_model_post.dart';
 import 'package:whisper/view_model/global_provider/global_provider.dart';
 import 'package:whisper/view_model/personal_profile_view_model/api_res_provider.dart';
 import '../../../components/utility_helper.dart';
+import '../../../view_model/post_view_model/post_view_model.dart';
 import 'expandable_text.dart';
 import 'like_comment_share_bar.dart';
 
@@ -43,7 +44,7 @@ class _PostCardState extends State<PostCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 sizedBox(hei: 10),
-                Consumer<AppGlobalProvider>(builder: (context, pr, ch) {
+                Consumer2<AppGlobalProvider, PostViewModel> (builder: (context, pr, pr2, ch) {
                   return InkWell(
                     onTap: () async {
                       String? cUid = await UserData.getUserId();

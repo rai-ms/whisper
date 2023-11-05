@@ -125,7 +125,7 @@
 class UserFeedModel {
   final int statusCode;
   final String? type;
-  final List<UserFeedItem> userFeed;
+  List<UserFeedItem> userFeed;
 
   UserFeedModel({
     required this.statusCode,
@@ -150,7 +150,7 @@ class UserFeedModel {
 
 class UserFeedItem {
   final UserDatas userData;
-  final UserPosts userPosts;
+  UserPosts userPosts;
 
   UserFeedItem({
     required this.userData,
@@ -197,10 +197,10 @@ class UserPosts {
   final String? url;
   final String? mediaType;
   final String? caption;
-  final int likeCount;
+  int likeCount;
   final int commentCount;
   final String? createdAt;
-  final bool isLiked;
+  bool isLiked;
   final String? content;
 
   UserPosts({

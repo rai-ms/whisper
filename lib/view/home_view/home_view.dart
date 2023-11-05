@@ -25,8 +25,7 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView>
-    with AutomaticKeepAliveClientMixin {
+class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin {
   List<Post> postList = [];
 
   // Future<bool> _willPopCallback() async {

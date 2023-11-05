@@ -44,19 +44,19 @@ class PostViewApiResponseProvider extends ChangeNotifier {
     return res;
   }
 
-  static Future<LikeAndCommentOfApiResponse?> getLikesAndComments(
-      String id) async {
-    LikeAndCommentOfApiResponse? res;
-    APIResponseCommentModel? comment;
-    ApiResponseLikesData? likes;
+  static LikeAndCommentOfApiResponse? likeAndCommentOfApiResponse;
+  static APIResponseCommentModel? comment;
+  static ApiResponseLikesData? likes;
+
+  static Future<LikeAndCommentOfApiResponse?> getLikesAndComments(String id) async {
     await getCommentsList(id).then((value) {
       comment = value;
     }).onError((error, stackTrace) {});
     await getLikesList(id).then((value) {
       likes = value;
     }).onError((error, stackTrace) {});
-    res = LikeAndCommentOfApiResponse(comments: comment, likes: likes);
-    return res;
+    likeAndCommentOfApiResponse = LikeAndCommentOfApiResponse(comments: comment, likes: likes);
+    return likeAndCommentOfApiResponse;
   }
 
   GetFollowerApiRes? response;
