@@ -571,7 +571,7 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                                     onFieldSubmitted: (_) async {
                                       await provider.sendComment(
                                           postID: widget.postId,
-                                          context: context);
+                                          context: context, postedById:  widget.post!.userId ?? "");
                                     },
                                     decoration: const InputDecoration(
                                         prefixIcon: Icon(
@@ -599,7 +599,7 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                               child: InkWell(
                                 onTap: () async {
                                   await provider.sendComment(
-                                      postID: widget.postId, context: context);
+                                      postID: widget.postId, context: context, postedById:  widget.post!.userId ?? "");
                                 },
                                 child: const CircleAvatar(
                                   radius: 30,

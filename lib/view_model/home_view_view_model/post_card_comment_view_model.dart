@@ -51,11 +51,11 @@ class PostCardCommentViewModel extends ChangeNotifier {
   final PostRepository postRepository = PostRepository();
 
   Future<void> sendComment(
-      {required String postID, required BuildContext context}) async {
+      {required String postID, required BuildContext context, required String postedById}) async {
     String commentText = commentCont.text.toString().trim();
     if (commentText.isNotEmpty && !isReply) {
       await postRepository
-          .createComment(postID, CommentPayload(comment: commentText))
+          .createComment(postID, CommentPayload(comment: commentText), postedById)
           .then((value) {
         // debugPrint("---------------------------------Comment Response is :$value ---------------------------------");
         commentCont.clear();

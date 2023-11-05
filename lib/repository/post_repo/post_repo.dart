@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:whisper/data/app_exceptions/app_exception.dart';
 import 'package:whisper/model/comment.dart';
 import 'package:whisper/model/login_payload.dart';
-import 'package:whisper/model/response.dart';
 import 'package:whisper/utils/app_helper/app_keys.dart';
 import '../../data/network/base_api_service.dart';
 import '../../data/network/network_api_services.dart';
@@ -10,11 +9,14 @@ import '../../model/feed_response_model.dart';
 import '../../model/like.dart';
 import '../../model/post_api_res.dart';
 import '../../model/post_model.dart';
+import '../../utils/app_helper/app_enum.dart';
 import '../../utils/app_helper/app_url.dart';
 import '../../utils/app_helper/user_data_preferences/user_data.dart';
+import '../notification_repo/notification_repo.dart';
 
 class PostRepository {
   final BaseApiServices _baseAPIServices = NetworkApiServices();
+  final NotificationRepo notifications = NotificationRepo();
 
   Map<String, String> header = {
     ApiKeys.authorization: "Basic c29jaWFsTWVkaWE6c29jaWFsQDEyMw==",
@@ -51,8 +53,7 @@ class PostRepository {
     return res;
   }
 
-  Future<UserFeedModel?> getMyFeed(
-      {required int pageNo, required int limit}) async {
+  Future<UserFeedModel?> getMyFeed( {required int pageNo, required int limit}) async {
     UserFeedModel? responses;
     await UserData.getUserAccessToken().then((value) async {
       header[ApiKeys.authorization] = value!;
@@ -118,10 +119,11 @@ class PostRepository {
     return response;
   }
 
-  Future<String?> createComment(String postId, CommentPayload model) async {
+  Future<String?> createComment(String postId, CommentPayload model, String postedById) async {
     // debugPrint("Going to comment on $postId");
     String? res;
     String? token = await UserData.getUserAccessToken();
+    String? myId = await UserData.getUserId();
     // header['Authorization'] = "Bearer "+token!;
     header[ApiKeys.authorization] = token!;
     debugPrint("$header is the header, model is ${model.toMap()}");
@@ -136,6 +138,7 @@ class PostRepository {
     }).onError((error, stackTrace) {
       throw AppError("Error is:$error");
     });
+    await NotificationRepo().addPushNotification(postedById, myId!, NotificationType.COMMENT);
     return res;
   }
 
@@ -177,12 +180,7 @@ class PostRepository {
     debugPrint("Going to report on $postId");
     String? token = await UserData.getUserAccessToken();
     header[ApiKeys.authorization] = token!;
-    await _baseAPIServices
-        .postAPIWithHeader(
-            "https://harshitsocial.appskeeper.in/api/v1/user/reportPost?postId=$postId",
-            {},
-            header)
-        .then((value) {
+    await _baseAPIServices.postAPIWithHeader("https://harshitsocial.appskeeper.in/api/v1/user/reportPost?postId=$postId", {}, header).then((value) {
       // debugPrint("Report on post :$postId status is $value");
       statusCode = value['statusCode'].toString();
     }).onError((error, stackTrace) {
@@ -191,22 +189,12 @@ class PostRepository {
     return statusCode;
   }
 
-  Future<String?> editComment(
-      {required String postId,
-      required String commendID,
-      required String comment}) async {
+  Future<String?> editComment({required String postId, required String commendID, required String comment}) async {
     String? statusCode;
     // debugPrint("Going to edit on $postId");
     String? token = await UserData.getUserAccessToken();
     header[ApiKeys.authorization] = token!;
-    await _baseAPIServices
-        .patchAPI(
-            "${AppUrl.editCommentEndPoint}?postId=$postId&commentId=$commendID",
-            {
-              "comment": comment,
-            },
-            header)
-        .then((value) {
+    await _baseAPIServices.patchAPI("${AppUrl.editCommentEndPoint}?postId=$postId&commentId=$commendID", {"comment": comment,}, header).then((value) {
       // debugPrint("Edited on post :$postId comment $commendID status is $value");
       statusCode = value['statusCode'].toString();
     }).onError((error, stackTrace) {
@@ -215,10 +203,7 @@ class PostRepository {
     return statusCode;
   }
 
-  Future<String?> deleteComment({
-    required String postId,
-    required String commentID,
-  }) async {
+  Future<String?> deleteComment({required String postId, required String commentID,}) async {
     String? statusCode;
     // debugPrint("Going to delete on $postId");
     String? token = await UserData.getUserAccessToken();
@@ -241,9 +226,7 @@ class PostRepository {
     String? statusCode;
     String? token = await UserData.getUserAccessToken();
     header[ApiKeys.authorization] = token!;
-    await _baseAPIServices
-        .deleteAPI("${AppUrl.deletePostEndPoint}$postId", {}, header)
-        .then((value) {
+    await _baseAPIServices.deleteAPI("${AppUrl.deletePostEndPoint}$postId", {}, header).then((value) {
       debugPrint("Post Deleted!");
       statusCode = value['statusCode'].toString();
     }).onError((error, stackTrace) {

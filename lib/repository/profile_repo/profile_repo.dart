@@ -11,6 +11,8 @@ import '../../data/network/network_api_services.dart';
 import '../../model/follower_response.dart';
 import '../../model/following_response_model.dart';
 import '../../model/my_profile_api_response.dart';
+import '../../utils/app_helper/app_enum.dart';
+import '../notification_repo/notification_repo.dart';
 
 class ProfileRepository {
   static final BaseApiServices _baseAPIServices = NetworkApiServices();
@@ -80,23 +82,20 @@ class ProfileRepository {
     return apiRes;
   }
 
-  static Future followUser({String? followingId}) async {
+  static Future followUser({required String followingId}) async {
     Map<String, dynamic>? apiRes;
     debugPrint("Following id is:$followingId");
-
     String? token = await UserData.getUserAccessToken();
+    String? myId = await UserData.getUserId();
     headers[ApiKeys.authorization] = token!;
-    // debugPrint("Header is:$headers");
-    await _baseAPIServices
-        .postAPIWithHeader(
-            "${AppUrl.followUserEndPoint}$followingId", {}, headers)
-        .then((value) {
+    await _baseAPIServices.postAPIWithHeader("${AppUrl.followUserEndPoint}$followingId", {}, headers).then((value) {
       // debugPrint("Follow user Data fetched ====================== $value ============================");
       apiRes = value;
     }).onError((error, stackTrace) {
       // debugPrint("Error in follow user $error");
       throw AppError("${AppStrings.error}$error");
     });
+    await NotificationRepo().addPushNotification(followingId, myId!, NotificationType.FOLLOW);
     return apiRes;
   }
 
@@ -119,8 +118,7 @@ class ProfileRepository {
     return apiRes;
   }
 
-  static Future<Map<String, dynamic>?> editProfile(
-      ProfileEditPayload profileEditPayload) async {
+  static Future<Map<String, dynamic>?> editProfile(ProfileEditPayload profileEditPayload) async {
     Map<String, dynamic>? res;
     String? id = await UserData.getUserId();
     headers[ApiKeys.authorization] = id!;

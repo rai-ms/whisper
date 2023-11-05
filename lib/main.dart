@@ -9,6 +9,7 @@ import 'package:whisper/view_model/global_provider/global_provider.dart';
 import 'package:whisper/view_model/home_view_view_model/post_card_comment_view_model.dart';
 import 'package:whisper/view_model/home_view_view_model/share_post_view_model.dart';
 import 'package:whisper/view_model/global_provider/get_profile_data_provider.dart';
+import 'package:whisper/view_model/notification_view_model/notification_view_model.dart';
 import 'package:whisper/view_model/post_details_provider/post_details_provider.dart';
 
 Future<void> main() async {
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => PostDetailsProvider()),
         ChangeNotifierProvider(create: (context) => PostShareViewModel()),
         ChangeNotifierProvider(create: (context) => GetProfileData()),
+        ChangeNotifierProvider(create: (context) => NotificationViewModel()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

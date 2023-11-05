@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:whisper/data/app_exceptions/app_exception.dart';
 import 'package:whisper/data/network/base_api_service.dart';
 import 'package:whisper/model/profile_edit_payload.dart';
+import 'package:whisper/utils/app_helper/app_keys.dart';
 import 'package:whisper/utils/app_helper/user_data_preferences/user_data.dart';
 import '../../data/network/network_api_services.dart';
 import '../../utils/app_helper/app_url.dart';
@@ -17,7 +18,7 @@ class EditProfileRepository {
   Future editProfile(ProfileEditPayload payload) async {
     if (payload.toJson().isEmpty) return;
     String? id = await UserData.getUserAccessToken();
-    header['Authorization'] = id!;
+    header[ApiKeys.authorization] = id!;
     debugPrint("Id is: $id");
     await _baseApiServices
         .patchAPI(AppUrl.editProfileEndPoint, payload.toJson(), header)

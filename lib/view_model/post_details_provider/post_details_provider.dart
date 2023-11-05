@@ -101,12 +101,12 @@ class PostDetailsProvider extends ChangeNotifier {
     return res;
   }
 
-  Future sendComment() async {
+  Future sendComment(String postedById) async {
     String? comment = controller.text.toString().trim();
     controller.clear();
     if (comment.isEmpty) return;
     await postRepository
-        .createComment(postId, CommentPayload(comment: comment))
+        .createComment(postId, CommentPayload(comment: comment),postedById )
         .then((value) {
       debugPrint("Comment Added Done in provider PostDetailsProvider $value");
       notifyListeners();

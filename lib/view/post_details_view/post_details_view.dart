@@ -336,7 +336,7 @@ class _PostDetailsViewState extends State<PostDetailsView> {
                             flex: 1,
                             child: InkWell(
                                 onTap: () {
-                                  pr.sendComment();
+                                  pr.sendComment(pr.apiResponsePostModel!.data[0].userId ?? "");
                                 },
                                 child: const Icon(Icons.send)),
                           ),

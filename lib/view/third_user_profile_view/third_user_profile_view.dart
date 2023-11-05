@@ -118,9 +118,7 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(
-                      AppStrings.followers,
-                      style: AppStyle.primaryColorDarkMedium25(context),
+                    Text(AppStrings.followers, style: AppStyle.primaryColorDarkMedium25(context),
                     ),
                   ],
                 ),
