@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:whisper/components/loading_tile.dart';
 import 'package:whisper/components/utility_helper.dart';
 import 'package:whisper/global/global.dart';
 import 'package:whisper/res/components/app_rounded_button.dart';
@@ -61,22 +62,23 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                                     ],
                                   )),
                                 snapshot.data?.data[0].isFollowing == true ? Expanded(
-                                        flex: 3,
+                                        flex: 2,
                                         child: AppRoundedButton(
                                           onTap: () {
                                             pr1.unfollowUser(widget.id);
                                           },
                                           title: AppStrings.unfollow,
+                                          textStyle: AppStyle.primaryColorDarkMedium14(context),
                                         ),
-                                      ) :
-                                  Expanded(
-                                    flex: 3,
+                                      ) : Expanded(
+                                    flex: 2,
                                     child: AppRoundedButton(
                                       height: 50,
                                       onTap: () async {
                                         pr1.followUser(widget.id);
                                       },
                                       title: AppStrings.follow,
+                                      textStyle: AppStyle.primaryColorDarkMedium14(context),
                                     ),
                                   ),
                                 sizedBox(wid: 20),
@@ -160,7 +162,7 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                     ),
                   ],
                 ),
-                sizedBox(hei: 30),
+                sizedBox(hei: 15),
                 Expanded(
                   child: FutureBuilder(
                     future: pr1.getFollowers(id: widget.id),
@@ -168,37 +170,55 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                       if (snapshot.hasData) {
                         return ListView.builder(
                           itemBuilder: (context, index) {
-                            return Container(
+                            return SizedBox(
                               width: getFullWidth(context),
-                              decoration: const BoxDecoration(color: AppColors.grey),
-                              child: Text("${pr1.response!.data!.followers![index].user.username}"),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 27,
+                                      backgroundColor: Theme.of(context).primaryColorDark,
+                                      child: ClipOval(
+                                        child: UtilityHelper.image(pr1.response!.data!.followers![index].user.profilePic, height: 50, width: 50, fit: BoxFit.fill)),
+                                    ),
+                                    sizedBox(wid: 10),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text("${pr1.response!.data!.followers![index].user.username}", style: AppStyle.primaryColorDarkMedium16(context),),
+                                        Text("${pr1.response!.data!.followers![index].user.email}", style: AppStyle.primaryColorDarkMedium14(context),),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
                             );
                           },
                           itemCount: pr1.response!.data!.followers!.length ?? 0,
                         );
-                      } else if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting) {
+                      }
+                      else if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting) {
                         return ListView.builder(
                           itemBuilder: (context, index) {
-                            return Container(
-                              height: 100,
-                              width: 350,
-                              decoration: const BoxDecoration(color: AppColors.grey),
-                            );
+                            return const LoadingWidgetTile();
                           },
                           itemCount: 10,
                         );
-                      } else if (snapshot.hasError) {
+                      }
+                      else if (snapshot.hasError) {
                         return const Center(
                           child: Text(AppStrings.errorOccured),
                         );
-                      } else {
+                      }
+                      else {
                         return const Center(
                           child: Text(AppStrings.noDataFound),
                         );
                       }
                     },
                   ),
-                )
+                ),
               ],
             );
           }),

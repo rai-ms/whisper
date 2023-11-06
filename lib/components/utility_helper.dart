@@ -37,7 +37,7 @@ class UtilityHelper {
     }
   }
 
-  static CachedNetworkImage image (img, {double? height, double? width, String? placeHolderImage, File? file, BoxFit? fit, bool cachedExtent = true, Widget Function(BuildContext, String)? placeholder}) {
+  static CachedNetworkImage image (img, {double? height, double? width, String? placeHolderImage, File? file, BoxFit fit = BoxFit.fill, bool cachedExtent = true, Widget Function(BuildContext, String)? placeholder}) {
     return CachedNetworkImage(
       imageUrl: img,
       height: height,
@@ -50,7 +50,7 @@ class UtilityHelper {
               ),
       memCacheHeight: cachedExtent ? 250 : null,
       memCacheWidth: cachedExtent ? 250 : null,
-      fit: fit ?? BoxFit.contain,
+      fit: fit,
       errorWidget: (context, url, error) => Container(
         color: Colors.white,
         child: file != null
@@ -71,8 +71,8 @@ class UtilityHelper {
   }
 
   static Widget fadedImage({required String image}){
-    String dpImage = image ?? dp!;
-    if(image == null || dpImage.isEmpty) dpImage = dp!;
+    String dpImage = image;
+    if(dpImage.isEmpty) dpImage = dp!;
     return FadeInImage.assetNetwork(
       placeholder: AppImages.logoAndName,
       image: dpImage,
