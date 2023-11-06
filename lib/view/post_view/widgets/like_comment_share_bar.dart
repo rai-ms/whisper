@@ -248,7 +248,7 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                             children: [
                               sizedBox(hei: 5),
                               ListTile(
-                                leading: ClipOval(child: UtilityHelper.image(dp)),
+                                leading: ClipOval(child: UtilityHelper.image(dp, height: 50, width: 50, fit: BoxFit.fill)),
                                 title: Text(widget.likes![index].user.username),
                               ),
                               sizedBox(hei: 5),
@@ -305,13 +305,10 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                                             return ListTile(
                                               title: Row(
                                                 children: [
-                                                  Expanded(
-                                                    flex: 10,
-                                                    child: ClipOval(
-                                                      child: UtilityHelper.image(snap.data!.data!.comments![index].user.profilePic ?? dp, height: 40, width: 40),)),
+                                                  ClipOval(
+                                                    child: UtilityHelper.image(snap.data!.data!.comments![index].user.profilePic ?? dp, height: 50, width: 50, fit: BoxFit.fill),),
                                                   sizedBox(wid: 5),
                                                   Expanded(
-                                                    flex: 90,
                                                     child: Column(
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
