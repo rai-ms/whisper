@@ -6,20 +6,19 @@ import 'package:whisper/utils/app_helper/app_style.dart';
 import 'package:whisper/view_model/home_view_view_model/app_bar_view_model.dart';
 import 'package:whisper/view_model/settings_view_model/settings_view_model.dart';
 
-class HomePageAppBar extends StatefulWidget {
-  const HomePageAppBar({super.key});
+class LogoutViewSettings extends StatefulWidget {
+  const LogoutViewSettings({super.key});
 
   @override
-  State<HomePageAppBar> createState() => _HomePageAppBarState();
+  State<LogoutViewSettings> createState() => _LogoutViewSettingsState();
 }
 
-class _HomePageAppBarState extends State<HomePageAppBar> {
+class _LogoutViewSettingsState extends State<LogoutViewSettings> {
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        sizedBox(hei: 60),
         Consumer<SettingsViewModel>(builder: (context, provider, child) {
           return Row(
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -35,7 +34,7 @@ class _HomePageAppBarState extends State<HomePageAppBar> {
                     color: Theme.of(context).primaryColor,
                   )),
               sizedBox(wid: 30),
-              const Text("Logout")
+              Text("Logout", style: AppStyle.primaryColorDarkMedium20(context),)
             ],
           );
         }),

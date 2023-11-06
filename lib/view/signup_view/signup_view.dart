@@ -83,18 +83,16 @@ class _SignUpViewState extends State<SignUpView> {
                           children: [
                             sizedBox(hei: getFullHeight(context) * .23),
                             Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 20),
+                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                               decoration: BoxDecoration(
                                 color: Theme.of(context).primaryColorLight,
                                 borderRadius: BorderRadius.circular(40),
-                                border: Border.all(
-                                    color: AppColors.black, width: 0.15),
+                                border: Border.all(color: AppColors.black, width: 0.15),
                                 boxShadow: [
                                   BoxShadow(
-                                      color: Theme.of(context).canvasColor,
-                                      blurRadius: 2,
-                                      spreadRadius: 1),
+                                    color: Theme.of(context).canvasColor,
+                                    blurRadius: 2,
+                                    spreadRadius: 1),
                                 ],
                               ),
                               child: Column(

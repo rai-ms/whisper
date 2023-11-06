@@ -55,12 +55,11 @@ class LoginViewModel extends ChangeNotifier {
   final myLoginRepo = LoginRepository();
 
   Future<void> loginAPI(BuildContext context) async {
-    setLoading(true);
     dynamic data = {
       "email": mailCont.text.toString().trim(),
       "password": passCont.text.toString().trim()
     };
-    myLoginRepo.loginAPI(data).then((User? user) {
+    await myLoginRepo.loginAPI(data).then((User? user) {
       CustomToast(context: context, message: "Login Successful");
       Navigator.pushNamedAndRemoveUntil(
           context, RouteName.homeView, (route) => false);

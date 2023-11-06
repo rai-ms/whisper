@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +6,6 @@ import 'package:whisper/global/global.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
 import 'package:whisper/utils/app_helper/user_data_preferences/user_data.dart';
 import 'package:whisper/utils/routes/route_name.dart';
-import 'package:whisper/view_model/global_provider/get_profile_data_provider.dart';
 import 'package:whisper/view_model/global_provider/global_provider.dart';
 
 class AppBottomNavigationBar extends StatefulWidget {
@@ -17,24 +15,23 @@ class AppBottomNavigationBar extends StatefulWidget {
 }
 
 class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
-  double? selectedSize = 35;
+  double? selectedSize = 30;
   double? unSelectedSize = 25;
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(
-        top: 10,
+        top: 5,
+        bottom: 5
       ),
       decoration: BoxDecoration(
           color: Theme.of(context).primaryColorLight,
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(40), topLeft: Radius.circular(40)),
-          border:
-              Border.all(width: 1, color: Theme.of(context).primaryColorDark),
+          borderRadius: BorderRadius.circular(40),
+          border:Border.all(width: 1, color: Theme.of(context).primaryColorDark),
           shape: BoxShape.rectangle),
       child: Padding(
         padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewPadding.bottom / 4),
+          bottom: MediaQuery.of(context).viewPadding.bottom / 5),
         child: Consumer<AppGlobalProvider>(builder: (context, provider, child) {
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -72,7 +69,7 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
                     Navigator.pushNamed(context, RouteName.addPostView);
                   },
                   child: Container(
-                    height: 50,
+                    height: 40,
                     decoration: BoxDecoration(
                         color: AppColors.blueSplashScreen,
                         borderRadius: BorderRadius.circular(10)),
@@ -94,7 +91,7 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
                     color: pageViewNumber != 2
                         ? Theme.of(context).primaryColorDark
                         : AppColors.red,
-                    size: pageViewNumber == 2 ? selectedSize : unSelectedSize,
+                    size: pageViewNumber == 2 ? selectedSize! + 5.0 : unSelectedSize! + 5,
                   )),
               InkWell(
                   onTap: () {
@@ -135,45 +132,45 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
   }
 }
 
-class NotchClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final path = Path();
-    final centerX = size.width / 2.0;
-    const notchRadius = 20.0; // Adjust the radius as needed
-
-    path.moveTo(0, 0);
-    path.lineTo(centerX - notchRadius, 0);
-
-    path.arcToPoint(
-      Offset(centerX + notchRadius, 0),
-      radius: const Radius.circular(notchRadius),
-      clockwise: true,
-    );
-
-    path.lineTo(size.width, 0);
-    path.lineTo(size.width, size.height);
-    path.lineTo(0, size.height);
-
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    return false;
-  }
-}
-
-class BottomSheetClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final path = Path();
-
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    return false;
-  }
-}
+// class NotchClipper extends CustomClipper<Path> {
+//   @override
+//   Path getClip(Size size) {
+//     final path = Path();
+//     final centerX = size.width / 2.0;
+//     const notchRadius = 20.0; // Adjust the radius as needed
+//
+//     path.moveTo(0, 0);
+//     path.lineTo(centerX - notchRadius, 0);
+//
+//     path.arcToPoint(
+//       Offset(centerX + notchRadius, 0),
+//       radius: const Radius.circular(notchRadius),
+//       clockwise: true,
+//     );
+//
+//     path.lineTo(size.width, 0);
+//     path.lineTo(size.width, size.height);
+//     path.lineTo(0, size.height);
+//
+//     return path;
+//   }
+//
+//   @override
+//   bool shouldReclip(CustomClipper<Path> oldClipper) {
+//     return false;
+//   }
+// }
+//
+// class BottomSheetClipper extends CustomClipper<Path> {
+//   @override
+//   Path getClip(Size size) {
+//     final path = Path();
+//
+//     return path;
+//   }
+//
+//   @override
+//   bool shouldReclip(CustomClipper<Path> oldClipper) {
+//     return false;
+//   }
+// }

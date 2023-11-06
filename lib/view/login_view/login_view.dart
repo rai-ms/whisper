@@ -81,21 +81,18 @@ class _LoginViewState extends State<LoginView> {
                   Column(
                     children: [
                       sizedBox(hei: getFullHeight(context) * .3),
-                      Consumer<LoginViewModel>(
-                          builder: (context, provider, child) {
+                      Consumer<LoginViewModel>( builder: (context, provider, child) {
                         return Form(
                           key: provider.formKey,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: Container(
                               height: 400,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 28.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 28.0),
                               decoration: BoxDecoration(
                                 color: Theme.of(context).primaryColorLight,
                                 borderRadius: BorderRadius.circular(40),
-                                border: Border.all(
-                                    color: AppColors.black, width: 0.15),
+                                border: Border.all(color: AppColors.black, width: 0.15),
                                 boxShadow: [
                                   BoxShadow(
                                       color: Theme.of(context).canvasColor,
@@ -234,12 +231,11 @@ class _LoginViewState extends State<LoginView> {
                                   ),
                                   sizedBox(hei: 20),
                                   AppRoundedButton(
-                                    loadingWidget:
-                                        const CircularProgressIndicator(),
                                     isEnable: !provider.loading,
                                     focusNode: provider.buttonFocusNode,
                                     loading: provider.loading,
                                     onTap: () {
+                                      provider.setLoading(true);
                                       provider.login(context);
                                     },
                                     title: AppStrings.login,

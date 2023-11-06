@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:whisper/global/global.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
 import 'package:whisper/utils/app_helper/app_strings.dart';
+import 'package:whisper/view/post_view/widgets/loading_widget_post.dart';
 import 'package:whisper/view/post_view/widgets/post_card.dart';
 import '../../model/feed_response_model.dart';
 import '../../utils/app_helper/app_keys.dart';
@@ -14,16 +17,14 @@ class PostView extends StatefulWidget {
   State<PostView> createState() => _PostViewState();
 }
 
-class _PostViewState extends State<PostView>
-    with AutomaticKeepAliveClientMixin {
-  UserFeedModel? feedApiResponse;
+class _PostViewState extends State<PostView> with AutomaticKeepAliveClientMixin {
   final ScrollController postPageController = ScrollController();
 
-  @override
-  void initState() {
-    super.initState();
-    // postPageController = new ScrollController()..addListener(_scrollListener);
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   postPageController = new ScrollController()..addListener(_scrollListener);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +32,7 @@ class _PostViewState extends State<PostView>
     debugPrint("Reloading Post View.......");
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-            create: (context) => PostViewApiResponseProvider())
+        ChangeNotifierProvider( create: (context) => PostViewApiResponseProvider())
       ],
       child: RefreshIndicator(
         onRefresh: () async {
@@ -48,39 +48,29 @@ class _PostViewState extends State<PostView>
                   child: Consumer<PostViewModel>(
                     builder: (context, provider, child) {
                       return FutureBuilder<UserFeedModel?>(
-                          future: PostViewModel.getAllPost(),
-                          builder: (context, snapshot) {
-                            feedApiResponse = snapshot.data;
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return Center(
-                                  child: Container(
-                                height: 490,
-                                width: 350,
-                                decoration: BoxDecoration(
-                                  color: AppColors.grey,
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                              ));
-                            } else if (snapshot.hasError) {
+                        future: provider.getAllPost(),
+                        builder: (context, snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
+                              return const LoadingPost(length: 20);
+                            }
+                            else if (snapshot.hasError) {
                               return const Center(
                                   child: Text(AppStrings.error));
-                            } else if (snapshot.hasData) {
+                            }
+                            else if (provider.feedApiResponse != null) {
                               return ListView.builder(
-                                key: const PageStorageKey<String>(
-                                    StoragePathKey.postViewPath),
+                                key: const PageStorageKey<String>(StoragePathKey.postViewPath),
                                 controller: postPageController,
                                 itemBuilder: (context, index) {
                                   return PostCard(
-                                    post: feedApiResponse!
-                                        .userFeed[index].userPosts,
-                                    userData: feedApiResponse!
-                                        .userFeed[index].userData,
+                                    post: provider.feedApiResponse!.userFeed[index].userPosts,
+                                    userData: provider.feedApiResponse!.userFeed[index].userData,
                                   );
                                 },
-                                itemCount: feedApiResponse!.userFeed.length,
+                                itemCount: provider.feedApiResponse!.userFeed.length,
                               );
-                            } else {
+                            }
+                            else {
                               return const Center(
                                   child: Text(AppStrings.noDataFound));
                             }
@@ -96,8 +86,11 @@ class _PostViewState extends State<PostView>
     );
   }
 
+  /// For pagination
   loadMore() async {
-    postPageController.addListener(() {});
+    postPageController.addListener((){
+      debugPrint("Listening....");
+    });
   }
 
   @override

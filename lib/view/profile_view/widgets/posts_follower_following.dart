@@ -83,13 +83,10 @@ class _PostFollowerFollowingState extends State<PostFollowerFollowing> {
                       child: Container(
                         height: 40,
                         decoration: BoxDecoration(
-                            color: provider.index == 2
-                                ? Theme.of(context).dividerColor
-                                : null,
-                            borderRadius: BorderRadius.circular(20)),
+                          color: provider.index == 2 ? Theme.of(context).dividerColor : null,
+                          borderRadius: BorderRadius.circular(20)),
                         child: Center(
-                            child: Text(
-                          "Following ${widget.res.data[0].followingCount}",
+                          child: Text("Following ${widget.res.data[0].followingCount}",
                           style: AppStyle.primaryColorDarkMedium20(context),
                         )),
                       ),

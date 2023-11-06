@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:whisper/components/app_bottom_sheet.dart';
 import 'package:whisper/components/app_text_form_field.dart';
 import 'package:whisper/components/loading_tile.dart';
 import 'package:whisper/components/utility_helper.dart';
 import 'package:whisper/global/global.dart';
+import 'package:whisper/model/like.dart';
 import 'package:whisper/res/components/app_rounded_button.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
 import 'package:whisper/utils/app_helper/app_strings.dart';
@@ -69,13 +71,10 @@ class _PostDetailsViewState extends State<PostDetailsView> {
                                       children: [
                                         sizedBox(wid: 10),
                                         if (pr.apiResponseUserDataModel == null) const CircleAvatar(radius: 40,),
-                                        if (pr.apiResponseUserDataModel != null) SizedBox(
-                                            height: 60,
-                                            width: 60,
-                                            child: ClipOval(
-                                              child: UtilityHelper.image( pr.apiResponseUserDataModel?.data[0].profilePic, fit: BoxFit.fill),
-                                            ),
-                                          ),
+                                        if (pr.apiResponseUserDataModel != null) ClipOval(
+                                          child: UtilityHelper.image( pr.apiResponseUserDataModel?.data[0].profilePic, fit: BoxFit.fill,height: 60,
+                                            width: 60,),
+                                        ),
                                         sizedBox(wid: 10),
                                         Column(
                                           crossAxisAlignment:
@@ -223,6 +222,10 @@ class _PostDetailsViewState extends State<PostDetailsView> {
                                               InkWell(
                                                 onTap: () {
                                                   pr.likeThisPost();
+                                                },
+                                                onLongPress: () async {
+                                                  // await pr.getLikeList(widget.postId);
+                                                  showLikeList();
                                                 },
                                                 child: Column(
                                                   children: [
@@ -400,15 +403,57 @@ class _PostDetailsViewState extends State<PostDetailsView> {
     );
   }
 
-  String formatDateTime(String dateTimeString) {
-    // Parse the input date and time string
-    debugPrint("---------------$dateTimeString this is the date---------------");
-    DateTime dateTime = DateTime.parse(dateTimeString);
-
-    // Define a custom format
-    DateFormat customFormat = DateFormat("E 'at' HH:mm, d MMM, yy");
-
-    // Format the DateTime object using the custom format
-    return customFormat.format(dateTime);
+  showLikeList() async {
+    await showModalBottomSheet(context: context, builder: (context){
+      return SizedBox(
+        child: Consumer<PostDetailsProvider>(
+          builder: (context, pr, ch) {
+            return FutureBuilder<ApiResponseLikesData?>(
+              future: pr.getLikeList(widget.postId),
+              builder: (context, snap) {
+                if(snap.hasData) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 28.0, left: 25, right: 25),
+                    child: ListView.builder(itemCount: snap.data!.data.likes.length,
+                      itemBuilder: (context, index) {
+                        return FutureBuilder(
+                              future: pr.getProfileDetails(snap.data!.data.likes[index].user.id),
+                              builder: (context, snaps) {
+                                  return Row(
+                                    children: [
+                                      snaps.hasData? ClipOval(child: UtilityHelper.image(snaps.data!.data[0].profilePic, height: 50, width: 50, fit: BoxFit.fill)) : const CircleAvatar(radius: 30,backgroundColor: AppColors.greyShade,),
+                                      sizedBox(wid: 10),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(snaps.hasData? "${snaps.data!.data[0].fullName} 👍🏻!" : "Loading", style: AppStyle.primaryColorDarkMedium20(context),),
+                                          Text(snaps.hasData? snaps.data!.data[0].email: "Loading..", style: AppStyle.primaryColorDarkMedium14(context),),
+                                        ],
+                                      ),
+                                    ],
+                                  );
+                                });
+                      },
+                    ),
+                  );
+                }
+                else {
+                  return  SingleChildScrollView(
+                    child: Padding(
+                    padding: const EdgeInsets.only(top: 28.0, left: 25,),
+                    child: Row(
+                      children: [
+                        LoadingWidgetTile(count: 10,width: getFullWidth(context)*.7,),
+                      ],
+                    ),
+                  ));
+                }
+              }
+            );
+          }
+        ),
+      );
+    });
   }
+
 }

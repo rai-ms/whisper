@@ -8,7 +8,6 @@ import 'package:whisper/utils/app_helper/app_color.dart';
 import 'package:whisper/utils/app_helper/app_style.dart';
 import '../../../model/feed_response_model.dart';
 import '../../../model/like.dart';
-import '../../../model/share.dart';
 import '../../../utils/app_helper/app_strings.dart';
 import '../../../utils/app_helper/user_data_preferences/user_data.dart';
 import '../../../view_model/home_view_view_model/post_card_comment_view_model.dart';
@@ -55,15 +54,13 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            // Icon(FontAwesomeIcons.thumbsUp, color: Theme.of(context).primaryColorDark,),
             Consumer<LikeViewModel>(builder: (context, provider, child) {
               return InkWell(
                 onTap: () {
-                  provider.likePost(
-                      widget.postId, widget.post!.isLiked ?? false, widget.post!.userId!);
+                  provider.likePost(widget.postId, widget.post?.isLiked ?? false, widget.post?.userId ?? "");
                   setState(() {
-                    debugPrint("DebugPrint");
-                    widget.post!.isLiked != widget.post!.isLiked;
+                    debugPrint("DebugPrint for like");
+                    widget.post!.isLiked = !widget.post!.isLiked;
                   });
                 },
                 onLongPress: () {
@@ -74,19 +71,8 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                     if (widget.post != null)
                       Column(
                         children: [
-                          Icon(
-                            !widget.post!.isLiked
-                                ? FontAwesomeIcons.thumbsUp
-                                : FontAwesomeIcons.solidThumbsUp,
-                            color: Theme.of(context).primaryColorDark,
-                          ),
-                          Text(
-                            widget.post!.isLiked
-                                ? "You ${(widget.likes!.length - 1 == 0) ? "Only" : "and ${widget.likes!.length - 1}"}"
-                                : widget.post!.likeCount.toString(),
-                            style: AppStyle.primaryColorDarkMedium14(context),
-                          ),
-                          // Text(!isLiked? widget.likes!.length.toString():( widget.likes!.length+ 1).toString(), style: AppStyle.primaryColorDarkMedium14(context),),
+                          Icon(!widget.post!.isLiked ? FontAwesomeIcons.thumbsUp : FontAwesomeIcons.solidThumbsUp, color: Theme.of(context).primaryColorDark,),
+                          Text(widget.post!.isLiked ? "You ${(widget.likes!.length - 1 == 0) ? "Only" : "and ${widget.likes!.length - 1}"}" : widget.post!.likeCount.toString(), style: AppStyle.primaryColorDarkMedium14(context),),
                         ],
                       ),
                     if (widget.post == null)
@@ -262,15 +248,7 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                             children: [
                               sizedBox(hei: 5),
                               ListTile(
-                                leading: ClipOval(child: UtilityHelper.image(dp)) ??
-                                        Container(
-                                          height: 50,
-                                          width: 50,
-                                          decoration: BoxDecoration(
-                                              color: AppColors.grey,
-                                              borderRadius:
-                                                  BorderRadius.circular(100)),
-                                        ),
+                                leading: ClipOval(child: UtilityHelper.image(dp)),
                                 title: Text(widget.likes![index].user.username),
                               ),
                               sizedBox(hei: 5),
@@ -287,7 +265,7 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
   }
 
   void showMyCommentBottomSheet(String username) {
-    if (username == null || username.isEmpty) return;
+    if (username.isEmpty) return;
     showModalBottomSheet(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(

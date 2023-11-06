@@ -25,7 +25,7 @@ class PostViewApiResponseProvider extends ChangeNotifier {
 
   static final PostRepository postRepository = PostRepository();
 
-  static Future<APIResponseCommentModel?> getCommentsList(String id) async {
+  Future<APIResponseCommentModel?> getCommentsList(String id) async {
     APIResponseCommentModel? res;
     await postRepository.getListComments(id).then((value) {
       // debugPrint("These are the comments$value of post:$id");
@@ -36,7 +36,7 @@ class PostViewApiResponseProvider extends ChangeNotifier {
     return res;
   }
 
-  static Future<ApiResponseLikesData?> getLikesList(String id) async {
+  Future<ApiResponseLikesData?> getLikesList(String id) async {
     ApiResponseLikesData? res;
     await postRepository.getListLikes(id).then((value) {
       res = value;

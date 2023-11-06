@@ -95,7 +95,7 @@ class _PostCardState extends State<PostCard> {
                             );
                           }
                           else if (snapshot.connectionState == ConnectionState.waiting) {
-                            return const CommentLikeShareBar(
+                            return CommentLikeShareBar(
                               postId: "",
                             );
                           }

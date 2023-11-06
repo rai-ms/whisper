@@ -89,20 +89,20 @@ class PostDetailsProvider extends ChangeNotifier {
   }
 
   ApiResponseLikesData? likesData;
-  Future getLikeList(String postId) async {
-    String? id = await UserData.getUserId();
+  Future<ApiResponseLikesData?> getLikeList(String postId) async {
     await postRepository.getListLikes(postId).then((value) {
       likesData = value;
-      // for(int i = 0; i < likesData!.data.likes.length; ++i) {
-      //   if(likesData!.data.likes[i].user.id == id){
-      //     isLiked = true;
-      //     break;
-      //   }
-      // }
     }).onError((error, stackTrace) {
       throw AppError("Error in PostDetailsProvider getLikeList $error");
     });
     return likesData;
+  }
+  ApiResponseUserDataModel? user;
+  Future<ApiResponseUserDataModel?> getProfileDetails(String id) async {
+    await ProfileRepository.getProfile(id: id).then((value){
+      user = value;
+    }).onError((error, stackTrace){});
+    return user;
   }
 
   APIResponseCommentModel? resCommentSpecificPost;

@@ -3,8 +3,9 @@ import '../global/global.dart';
 import '../utils/app_helper/app_color.dart';
 
 class LoadingWidgetTile extends StatelessWidget {
-  const LoadingWidgetTile({super.key, this.count = 1});
+  const LoadingWidgetTile({super.key, this.count = 1, this.width});
   final int count;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class LoadingWidgetTile extends StatelessWidget {
               const CircleAvatar(radius: 30,backgroundColor: AppColors.greyShade,),
               sizedBox(wid: 4),
               Container(
-                width: getFullWidth(context)*.8,
+                width: width ?? getFullWidth(context)*.8,
                 height: 70,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),

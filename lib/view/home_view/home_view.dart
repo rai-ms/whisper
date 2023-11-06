@@ -169,21 +169,15 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                         allowImplicitScrolling: false,
                         physics: const NeverScrollableScrollPhysics(),
                         children: const [
-                          PostView(
-                            key: PageStorageKey('page0'),
-                          ),
-                          NotificationView(
-                            key: PageStorageKey('page1'),
-                          ),
-                          SearchUser(
-                            key: PageStorageKey('page2'),
-                          ),
+                          PostView(key: PageStorageKey('page0')),
+                          NotificationView(key: PageStorageKey('page1'),),
+                          SearchUser(key: PageStorageKey('page2'),),
                           ProfileView(key: PageStorageKey('page3')),
                         ],
                       ),
                     );
                   }),
-                )
+                ),
                 // const Flexible(
                 //   flex: 1,
                 //   child: AppBottomNavigationBar()),

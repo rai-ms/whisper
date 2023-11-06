@@ -25,8 +25,7 @@ class _FollowersState extends State<Followers>
       },
       child: SizedBox(
         height: 500,
-        child:
-            Consumer<PostViewApiResponseProvider>(builder: (context, pr, ch) {
+        child: Consumer<PostViewApiResponseProvider>(builder: (context, pr, ch) {
           return FutureBuilder<GetFollowerApiRes?>(
               future: pr.getFollowers(),
               builder: (context, snapshot) {
