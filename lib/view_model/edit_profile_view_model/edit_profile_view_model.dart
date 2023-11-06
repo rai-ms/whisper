@@ -11,9 +11,9 @@ import '../../repository/edit_profile_repo/edit_profile_repo.dart';
 
 class EditProfileViewModel extends ChangeNotifier {
   TextEditingController usernameController = TextEditingController();
+  TextEditingController fullNameController = TextEditingController();
   TextEditingController bioController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey();
-
   EditProfileRepository repository = EditProfileRepository();
 
   bool _loading = false;
@@ -79,9 +79,11 @@ class EditProfileViewModel extends ChangeNotifier {
   Future ediProfile() async {
     String? username = await UserData.getUserUsername();
     String? bio = await UserData.getBio();
+    String? fullName = await UserData.getFullName();
     String? newUsername = usernameController.text.toString().trim();
     String? newBio = bioController.text.toString().trim();
-    if (newUsername.isEmpty && newBio.isEmpty && !isPicked) return;
+    String? newFullName = fullNameController.text.toString().trim();
+    if (newUsername.isEmpty && newBio.isEmpty && !isPicked && newFullName.isEmpty) return;
     if (isPicked) {
       await uploadImage();
       ifUploadProfileUrl = _imgUrl;
@@ -90,10 +92,11 @@ class EditProfileViewModel extends ChangeNotifier {
     }
     if (newBio == bio) newBio = null;
     if (newUsername == username) newUsername = null;
-    await repository.editProfile(ProfileEditPayload(username: newUsername, profileBio: newBio, profilePic: ifUploadProfileUrl))
+    if (newFullName == fullName) newFullName = null;
+    await repository.editProfile(ProfileEditPayload(username: newUsername, profileBio: newBio, profilePic: ifUploadProfileUrl, fullName: newFullName))
         .then((value) async {
       // debugPrint("Profile Updated Successfully in view model response is:$value");
-      await UserData.updateBioUsernameProfilePic(newUsername: newUsername, newProfileBio: newBio, newProfilePic: ifUploadProfileUrl).then((value){}).onError((error, stackTrace){});
+      await UserData.updateBioUsernameProfilePicFullName(newUsername: newUsername, newProfileBio: newBio, newProfilePic: ifUploadProfileUrl, newFullName: newFullName).then((value){}).onError((error, stackTrace){});
       pickedImage = null;
       isPicked = false;
     }).onError((error, stackTrace) {
@@ -108,6 +111,7 @@ class EditProfileViewModel extends ChangeNotifier {
   void dispose() {
     usernameController.dispose();
     bioController.dispose();
+    fullNameController.dispose();
     super.dispose();
   }
 }

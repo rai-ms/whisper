@@ -30,4 +30,5 @@ class AppUrl {
   static const editCommentEndPoint = '$baseUrl/editComment';
   static const notificationEndPoint = '$baseUrlNotification/notification';
   static const addNotificationEndPoint = 'https://harshitsocial.appskeeper.in/api/v1/AddNotification';
+  static const deleteNotificationEndPoint = 'https://harshitsocial.appskeeper.in/api/v1/deleteNotification';
 }

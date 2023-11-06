@@ -106,6 +106,24 @@ class _EditProfileViewState extends State<EditProfileView> {
                       ),
                       sizedBox(hei: 10),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const Expanded(flex: 2, child: Text("Full Name")),
+                          sizedBox(wid: 10),
+                          Expanded(
+                            flex: 6,
+                            child: AppTextFormField(
+                              obscureText: false,
+                              cont: provider.fullNameController,
+                              isPrefixIconExist: false,
+                              contentPadding: 10,
+                            ),
+                          ),
+                        ],
+                      ),
+                      sizedBox(hei: 10),
+                      Row(
                         children: [
                           const Expanded(flex: 2, child: Text("Bio")),
                           sizedBox(wid: 10),

@@ -6,6 +6,7 @@ import 'package:whisper/repository/post_repo/edit_post_repo.dart';
 import 'package:whisper/repository/post_repo/post_repo.dart';
 import 'package:whisper/repository/profile_repo/profile_repo.dart';
 import 'package:whisper/utils/app_helper/user_data_preferences/user_data.dart';
+import 'package:whisper/utils/deBouncer/deBouncer.dart';
 import '../../model/comment.dart';
 import '../../model/post_api_res.dart';
 
@@ -59,11 +60,20 @@ class PostDetailsProvider extends ChangeNotifier {
     }).onError((error, stackTrace) {
       throw AppError("Error in PostDetailsProvider editPostCaption $error");
     });
+    editPostController.clear();
+  }
+
+  DeBouncer _bouncer = DeBouncer(milliseconds: 1000);
+
+  likeThisPost() {
+    _bouncer.run(() async {await likePost();});
   }
 
   Future likePost() async {
-    isLiked = !isLiked;
-    if (!isLiked) {
+    // isLiked = !isLiked;
+    apiResponsePostModel!.data[0].isLiked = !apiResponsePostModel!.data[0].isLiked;
+    notifyListeners();
+    if (apiResponsePostModel!.data[0].isLiked) {
       await postRepository.likePost(postId, userId!).then((value) {
         // debugPrint("Post Liked! api res");
       }).onError((error, stackTrace) {

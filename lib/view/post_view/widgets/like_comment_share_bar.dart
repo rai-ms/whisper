@@ -262,8 +262,7 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                             children: [
                               sizedBox(hei: 5),
                               ListTile(
-                                leading:
-                                    ClipOval(child: UtilityHelper.image(dp)) ??
+                                leading: ClipOval(child: UtilityHelper.image(dp)) ??
                                         Container(
                                           height: 50,
                                           width: 50,

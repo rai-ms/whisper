@@ -21,7 +21,7 @@ class NotificationRepo {
     try {
       String? token = await UserData.getUserAccessToken();
       header[ApiKeys.authorization] = token!;
-      debugPrint(header.toString());
+      // debugPrint(header.toString());
       await _baseAPIServices.getAPI("${AppUrl.notificationEndPoint}?pageNo=1&limit=10000", header).then((value){
         // debugPrint("Notification received$value");
         res = ApiResponseNotificationsModel.fromJson(value);
@@ -49,6 +49,16 @@ class NotificationRepo {
     } catch (error){
       debugPrint("Error in sending notification $error");
     }
+  }
+
+  Future deleteNotification({required String notificationId}) async {
+    String? token = await UserData.getUserAccessToken();
+    Map<String, String> headers = {ApiKeys.authorization : token!, ApiKeys.contentType : ApiKeys.applicationJson};
+    await _baseAPIServices.deleteAPI("${AppUrl.deleteNotificationEndPoint}?notificationId=$notificationId", {}, headers).then((value){
+      debugPrint("Notification Deleted response is:$value");
+    }).onError((error, stackTrace){
+      debugPrint("Notification Deletion error is:$error");
+    });
   }
 
 }

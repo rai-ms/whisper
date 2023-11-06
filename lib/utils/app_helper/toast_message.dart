@@ -2,6 +2,7 @@ class ToastMsg {
   static const String noInternetConnection = 'No Internet Connection';
   static const String alreadyExistEmail = 'Already Exist Email';
   static const String alreadyExistUsername = 'Already Exist Username';
+  static const String typeNotFound = 'Type Not Found';
   static const String successfullyProfileUpdate =
       'Your profile is successfully updated';
   static const String provideRequiredInfo =

@@ -135,10 +135,10 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                               decoration:
                                   const BoxDecoration(color: AppColors.grey),
                               child: Text(
-                                  "${snapshot.data!.data!.followers![index].user.username}"),
+                                  "${pr1.response!.data!.followers![index].user.username}"),
                             );
                           },
-                          itemCount: snapshot.data!.data!.followers!.length,
+                          itemCount: pr1.response!.data!.followers!.length ?? 0,
                         );
                       } else if (!snapshot.hasData ||
                           snapshot.connectionState == ConnectionState.waiting) {

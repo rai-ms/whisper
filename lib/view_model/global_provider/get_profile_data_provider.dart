@@ -5,9 +5,14 @@ class GetProfileData extends ChangeNotifier {
   String? accessToken;
   String? username;
   String? createdAt;
+  String? fullName;
 
   Future<String?> getUsername() async {
     return username ?? await UserData.getUserUsername();
+  }
+
+  Future<String?> getFullName() async {
+    return fullName ?? await UserData.getFullName();
   }
 
   Future<String?> getAccessToken() async {
@@ -22,9 +27,6 @@ class GetProfileData extends ChangeNotifier {
     return createdAt ?? await UserData.getBio();
   }
 
-  Future<String?> getFullName() async {
-    return createdAt ?? await UserData.getFullName();
-  }
 
   Future<String?> getProfilePic() async {
     return createdAt ?? await UserData.getProfilePic();

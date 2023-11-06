@@ -30,7 +30,8 @@ class ApiResponsePost {
   String caption;
   final int likeCount;
   final int commentCount;
-  final DateTime createdAt;
+  final String createdAt;
+  bool isLiked;
 
   ApiResponsePost({
     required this.id,
@@ -40,6 +41,7 @@ class ApiResponsePost {
     required this.likeCount,
     required this.commentCount,
     required this.createdAt,
+    required this.isLiked,
   });
 
   factory ApiResponsePost.fromJson(Map<String, dynamic> json) {
@@ -47,10 +49,11 @@ class ApiResponsePost {
       id: json['_id'],
       userId: json['userId'],
       url: json['url'],
+      isLiked: json['isLiked'],
       caption: json['caption'],
       likeCount: json['likeCount'],
       commentCount: json['commentCount'],
-      createdAt: DateTime.parse(json['createdAt']),
+      createdAt: json['createdAt'],
     );
   }
 }

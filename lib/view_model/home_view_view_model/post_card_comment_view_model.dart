@@ -50,8 +50,7 @@ class PostCardCommentViewModel extends ChangeNotifier {
 
   final PostRepository postRepository = PostRepository();
 
-  Future<void> sendComment(
-      {required String postID, required BuildContext context, required String postedById}) async {
+  Future<void> sendComment({required String postID, required BuildContext context, required String postedById}) async {
     String commentText = commentCont.text.toString().trim();
     if (commentText.isNotEmpty && !isReply) {
       await postRepository
@@ -88,7 +87,6 @@ class PostCardCommentViewModel extends ChangeNotifier {
 
   APIResponseCommentModel? res;
   Future<APIResponseCommentModel?> getAllComment(String postId) async {
-
     postRepository.getListComments(postId).then((value){
       debugPrint("Comment Received!");
       res = APIResponseCommentModel.fromJson(value!);

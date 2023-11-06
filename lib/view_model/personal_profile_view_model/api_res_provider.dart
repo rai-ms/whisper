@@ -44,11 +44,11 @@ class PostViewApiResponseProvider extends ChangeNotifier {
     return res;
   }
 
-  static LikeAndCommentOfApiResponse? likeAndCommentOfApiResponse;
-  static APIResponseCommentModel? comment;
-  static ApiResponseLikesData? likes;
+  LikeAndCommentOfApiResponse? likeAndCommentOfApiResponse;
+  APIResponseCommentModel? comment;
+  ApiResponseLikesData? likes;
 
-  static Future<LikeAndCommentOfApiResponse?> getLikesAndComments(String id) async {
+  Future<LikeAndCommentOfApiResponse?> getLikesAndComments(String id) async {
     await getCommentsList(id).then((value) {
       comment = value;
     }).onError((error, stackTrace) {});
@@ -56,6 +56,7 @@ class PostViewApiResponseProvider extends ChangeNotifier {
       likes = value;
     }).onError((error, stackTrace) {});
     likeAndCommentOfApiResponse = LikeAndCommentOfApiResponse(comments: comment, likes: likes);
+    notifyListeners();
     return likeAndCommentOfApiResponse;
   }
 
@@ -81,7 +82,7 @@ class PostViewApiResponseProvider extends ChangeNotifier {
     }).onError((error, stackTrace) {
       debugPrint("Error is $error");
     });
-
+    notifyListeners();
     return getFollowingApiRes;
   }
 }

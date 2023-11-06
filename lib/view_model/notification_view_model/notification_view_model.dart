@@ -15,7 +15,7 @@ class NotificationViewModel extends ChangeNotifier
       notificationsModel = value;
       Future.delayed(const Duration(seconds: 1));
     }).onError((error, stackTrace){});
-    // notifyListeners();
+    notifyListeners();
     return notificationsModel;
   }
 }

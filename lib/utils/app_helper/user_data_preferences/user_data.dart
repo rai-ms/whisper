@@ -40,8 +40,19 @@ class UserData {
     return userDataString;
   }
 
+
+
   static Future<String?> updateUsername(String newUsername) async {
     await _preferences?.setString('username', newUsername).then((value) {
+      return true;
+    }).onError((error, stackTrace) {
+      throw AppError(error.toString());
+    });
+    return null;
+  }
+
+  static Future<String?> updateFullName(String newFullName) async {
+    await _preferences?.setString('fullName', newFullName).then((value) {
       return true;
     }).onError((error, stackTrace) {
       throw AppError(error.toString());
@@ -67,13 +78,20 @@ class UserData {
     return null;
   }
 
-  static Future<bool?> updateBioUsernameProfilePic(
+  static Future<bool?> updateBioUsernameProfilePicFullName(
       {String? newProfileBio,
       String? newUsername,
+      String? newFullName,
       String? newProfilePic}) async {
     bool res = true;
     if (newUsername != null && newUsername.isNotEmpty) {
       await updateUsername(newUsername).onError((error, stackTrace) {
+        res = false;
+        return null;
+      });
+    }
+    if (newFullName != null && newFullName.isNotEmpty) {
+      await updateFullName(newFullName).onError((error, stackTrace) {
         res = false;
         return null;
       });

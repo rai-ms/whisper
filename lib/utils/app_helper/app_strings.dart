@@ -82,6 +82,9 @@ class AppStrings {
   static const String errorLogout = "$error Logout";
   static const String createAnAccount = "Create an account to continue";
   static const String emptyString = "";
+  static const String yes = "Yes";
+  static const String no = "No";
+  static const String deleteNotification = "Do you want to delete notification!";
   static const String seeYourAbout = "See your About Info";
   static const String follow = "Follow";
   static const String enterValidOTP = "Enter a Valid OTP";

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:whisper/global/global.dart';
-import 'package:whisper/model/user_profile_response.dart';
 import 'package:whisper/repository/profile_repo/profile_repo.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
 import 'package:whisper/utils/app_helper/app_strings.dart';
@@ -36,7 +35,7 @@ class _ProfileViewState extends State<ProfileView>
     debugPrint("Dp is $dp");
     // await GetProfileData.getJoinedDate();
     // await GetProfileData.getBio();
-    // await GetProfileData.getUsername();
+    await GetProfileData().getFullName();
   }
 
   @override
@@ -46,8 +45,7 @@ class _ProfileViewState extends State<ProfileView>
       providers: [
         ChangeNotifierProvider(create: (context) => PersonalProfileViewModel()),
         ChangeNotifierProvider(create: (context) => GetProfileData()),
-        ChangeNotifierProvider(
-            create: (context) => PostViewApiResponseProvider()),
+        ChangeNotifierProvider(create: (context) => PostViewApiResponseProvider()),
       ],
       child: RefreshIndicator(
         onRefresh: () async {
@@ -102,7 +100,7 @@ class _ProfileViewState extends State<ProfileView>
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 const SizedBox(
-                                  width: 10,
+                                  width: 12,
                                 ),
                                 Text(
                                   "$username",
@@ -142,16 +140,20 @@ class _ProfileViewState extends State<ProfileView>
                       child: Container(
                         height: 50,
                         decoration: BoxDecoration(
-                          color: AppColors.blueSplashScreen,
+                          color: AppColors.black,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Row(
                           children: [
-                            sizedBox(wid: 5),
-                            const Icon(Icons.add, color: AppColors.white),
-                            Text(
-                              AppStrings.addToStory,
-                              style: AppStyle.whiteBold16,
+                            sizedBox(wid: 15),
+                            FutureBuilder(
+                              future: UserData.getFullName(),
+                              builder: (context, snap) {
+                                return Text(
+                                  snap.data ?? "Ashish",
+                                  style: AppStyle.whiteBold16,
+                                );
+                              }
                             ),
                           ],
                         ),
