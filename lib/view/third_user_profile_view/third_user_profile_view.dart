@@ -27,7 +27,6 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
         appBar: AppBar(
           leading: InkWell(
             onTap: () {
-              // Navigator.pushNamedAndRemoveUntil(context, RouteName.homeView, (route)=> false);
               Navigator.pop(context);
             },
             child: const Icon(FontAwesomeIcons.arrowLeft),
@@ -71,14 +70,15 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                                         ),
                                       ) :
                                   Expanded(
-                                        flex: 3,
-                                        child: AppRoundedButton(
-                                            height: 50,
-                                            onTap: () async {
-                                              pr1.followUser(widget.id);
-                                            },
-                                            title: AppStrings.follow),
-                                      ),
+                                    flex: 3,
+                                    child: AppRoundedButton(
+                                      height: 50,
+                                      onTap: () async {
+                                        pr1.followUser(widget.id);
+                                      },
+                                      title: AppStrings.follow,
+                                    ),
+                                  ),
                                 sizedBox(wid: 20),
                               ],
                             ),
@@ -170,10 +170,8 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                           itemBuilder: (context, index) {
                             return Container(
                               width: getFullWidth(context),
-                              decoration:
-                                  const BoxDecoration(color: AppColors.grey),
-                              child: Text(
-                                  "${pr1.response!.data!.followers![index].user.username}"),
+                              decoration: const BoxDecoration(color: AppColors.grey),
+                              child: Text("${pr1.response!.data!.followers![index].user.username}"),
                             );
                           },
                           itemCount: pr1.response!.data!.followers!.length ?? 0,
