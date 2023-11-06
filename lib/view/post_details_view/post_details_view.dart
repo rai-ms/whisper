@@ -9,6 +9,7 @@ import 'package:whisper/global/global.dart';
 import 'package:whisper/res/components/app_rounded_button.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
 import 'package:whisper/utils/app_helper/app_strings.dart';
+import 'package:whisper/utils/utils.dart';
 import 'package:whisper/view_model/post_details_provider/post_details_provider.dart';
 import '../../components/app_dialog.dart';
 import '../../utils/app_helper/app_style.dart';
@@ -83,7 +84,7 @@ class _PostDetailsViewState extends State<PostDetailsView> {
                                             if (pr.apiResponsePostModel == null) const Text("Loading..."),
                                             if (pr.apiResponsePostModel != null) Text(pr.apiResponseUserDataModel!.data[0].username.toString() ?? "Loading..."),
                                             if (pr.apiResponsePostModel == null) const Text("Loading..."),
-                                            if (snap.hasData) Text(pr.apiResponsePostModel!.data[0].createdAt.toString()),
+                                            if (pr.apiResponsePostModel != null) Text(Utils.formatDateTime(pr.apiResponsePostModel!.data[0].createdAt.toString())),
                                           ],
                                         ),
                                         Expanded(child: sizedBox()),

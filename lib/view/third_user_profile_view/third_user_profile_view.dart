@@ -43,21 +43,25 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                       if (pr1.apiResponseUserModel != null) {
                         return Column(
                           children: [
+                            sizedBox(hei: 20),
                             Row(
                               children: [
+                                sizedBox(wid: 5),
+                                ClipOval(
+                                  child: UtilityHelper.image(
+                                    snapshot.data?.data[0].profilePic ?? dp,
+                                    fit: BoxFit.fill, height: 70, width: 70)),
+                                sizedBox(wid: 10),
                                 Expanded(
-                                    flex: 3,
-                                    child: ClipOval(
-                                        child: UtilityHelper.image(
-                                            snapshot.data?.data[0].profilePic ??
-                                                dp,
-                                            fit: BoxFit.fitHeight))),
-                                Expanded(
-                                    flex: 4,
-                                    child: Text(
-                                        snapshot.data?.data[0].username ?? "")),
-                                snapshot.data?.data[0].isFollowing == true
-                                    ? Expanded(
+                                  flex: 4,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(pr1.apiResponseUserModel!.data[0].fullName.toString()),
+                                      Text(pr1.apiResponseUserModel!.data[0].username ?? ""),
+                                    ],
+                                  )),
+                                snapshot.data?.data[0].isFollowing == true ? Expanded(
                                         flex: 3,
                                         child: AppRoundedButton(
                                           onTap: () {
@@ -65,8 +69,8 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                                           },
                                           title: AppStrings.unfollow,
                                         ),
-                                      )
-                                    : Expanded(
+                                      ) :
+                                  Expanded(
                                         flex: 3,
                                         child: AppRoundedButton(
                                             height: 50,
@@ -78,6 +82,39 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                                 sizedBox(wid: 20),
                               ],
                             ),
+                            sizedBox(hei: 10),
+                            Row(
+                              children: [
+                                sizedBox(wid: 5),
+                                Text(pr1.apiResponseUserModel!.data[0].profileBio.toString()),
+                              ],
+                            ),
+                            sizedBox(hei: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Column(
+                                  children: [
+                                    const Text("Following"),
+                                    Text(pr1.apiResponseUserModel!.data[0].followingCount.toString()),
+                                  ],
+                                ),
+                                sizedBox(wid: 10),
+                                Column(
+                                  children: [
+                                    const Text("Follower"),
+                                    Text(pr1.apiResponseUserModel!.data[0].followerCount.toString()),
+                                  ],
+                                ),
+                                sizedBox(wid: 10),
+                                Column(
+                                  children: [
+                                    const Text("Post"),
+                                    Text(pr1.apiResponseUserModel!.data[0].postCount.toString()),
+                                  ],
+                                ),
+                              ],
+                            )
                           ],
                         );
                       } else if (pr1.apiResponseUserModel == null) {
@@ -108,6 +145,7 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                                 ],
                               ),
                             ),
+                            sizedBox(hei: 20),
                           ],
                         );
                       } else {
@@ -118,7 +156,7 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(AppStrings.followers, style: AppStyle.primaryColorDarkMedium25(context),
+                    Text(AppStrings.followers, style: AppStyle.primaryColorDarkMedium14(context),
                     ),
                   ],
                 ),
@@ -140,15 +178,13 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                           },
                           itemCount: pr1.response!.data!.followers!.length ?? 0,
                         );
-                      } else if (!snapshot.hasData ||
-                          snapshot.connectionState == ConnectionState.waiting) {
+                      } else if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting) {
                         return ListView.builder(
                           itemBuilder: (context, index) {
                             return Container(
                               height: 100,
                               width: 350,
-                              decoration:
-                                  const BoxDecoration(color: AppColors.grey),
+                              decoration: const BoxDecoration(color: AppColors.grey),
                             );
                           },
                           itemCount: 10,
