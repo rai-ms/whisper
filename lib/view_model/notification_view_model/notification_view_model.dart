@@ -7,15 +7,15 @@ class NotificationViewModel extends ChangeNotifier
 {
   final NotificationRepo notificationRepo = NotificationRepo();
   int pageNo = 1;
-  int limit = 10;
+  int limit = 100;
 
   ApiResponseNotificationsModel? notificationsModel;
   Future<ApiResponseNotificationsModel?> getAllNotification() async {
     await notificationRepo.getAllNotification(limit: limit, pageNo: pageNo,).then((value){
       notificationsModel = value;
       Future.delayed(const Duration(seconds: 1));
-      notifyListeners();
     }).onError((error, stackTrace){});
+    // notifyListeners();
     return notificationsModel;
   }
 }

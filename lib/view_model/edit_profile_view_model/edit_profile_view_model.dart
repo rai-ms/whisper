@@ -90,17 +90,10 @@ class EditProfileViewModel extends ChangeNotifier {
     }
     if (newBio == bio) newBio = null;
     if (newUsername == username) newUsername = null;
-    await repository
-        .editProfile(ProfileEditPayload(
-            username: newUsername,
-            profileBio: newBio,
-            profilePic: ifUploadProfileUrl))
+    await repository.editProfile(ProfileEditPayload(username: newUsername, profileBio: newBio, profilePic: ifUploadProfileUrl))
         .then((value) async {
       // debugPrint("Profile Updated Successfully in view model response is:$value");
-      await UserData.updateBioUsernameProfilePic(
-          newUsername: newUsername,
-          newProfileBio: newBio,
-          newProfilePic: ifUploadProfileUrl);
+      await UserData.updateBioUsernameProfilePic(newUsername: newUsername, newProfileBio: newBio, newProfilePic: ifUploadProfileUrl).then((value){}).onError((error, stackTrace){});
       pickedImage = null;
       isPicked = false;
     }).onError((error, stackTrace) {

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whisper/components/loading_tile.dart';
 import 'package:whisper/global/global.dart';
-import 'package:whisper/utils/app_helper/app_color.dart';
+import 'package:whisper/res/components/custom_toast.dart';
 import 'package:whisper/utils/app_helper/app_strings.dart';
 import 'package:whisper/utils/app_helper/app_style.dart';
-import 'package:whisper/utils/routes/route_name.dart';
 import 'package:whisper/view_model/notification_view_model/notification_view_model.dart';
 import '../../components/utility_helper.dart';
-import '../../model/notification_model.dart';
+import '../../utils/app_helper/app_enum.dart';
 import '../../utils/app_helper/app_keys.dart';
+import '../../utils/routes/route_name.dart';
 
 class NotificationView extends StatefulWidget {
   const NotificationView({super.key});
@@ -20,6 +20,7 @@ class NotificationView extends StatefulWidget {
 class _NotificationViewState extends State<NotificationView> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return MultiProvider(providers: [ChangeNotifierProvider(create: (context) => NotificationViewModel())],
       child: RefreshIndicator(
         onRefresh: () async {
@@ -44,40 +45,59 @@ class _NotificationViewState extends State<NotificationView> with AutomaticKeepA
               sizedBox(hei: 10),
               Consumer<NotificationViewModel>(
                 builder: (context, pr ,ch) {
-                  return Column(
-                    children: [
-                      if(pr.notificationsModel != null) Expanded(
-                      flex: 90,
-                      child: ListView.builder(
-                        key: const PageStorageKey<String>(
-                            StoragePathKey.notificationPath),
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4.0),
-                            child: ListTile(
-                              onTap: (){
-                                Map arguments = {
-                                  'postId': pr.notificationsModel!.data[index].activityId ?? "",
-                                  'isLiked': false
-                                };
-                                Navigator.pushNamed(context, RouteName.postDetailsView, arguments: arguments);
-                              },
-                              title: Text(pr.notificationsModel!.data[index].message.toString() ?? ""),
-                              leading: ClipRRect(
-                                  borderRadius: BorderRadius.circular(100),
-                                  child: UtilityHelper.image(pr.notificationsModel!.data[index].image)),
-                            ),
-                          );
-                        },
-                        itemCount: pr.notificationsModel!.data.length ?? 10,
-                      ),
-                    ),
-                      if(pr.notificationsModel == null) Expanded(
+                  return FutureBuilder(
+                    future: pr.getAllNotification(),
+                    builder: (context , snap) {
+                      if(snap.hasData){
+                        return Expanded(
+                          flex: 90,
+                          child: ListView.builder(
+                            key: const PageStorageKey<String>(StoragePathKey.notificationPath),
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                                child: ListTile(
+                                  onTap: (){
+                                    Map arguments = {
+                                      'postId': pr.notificationsModel!.data[index].activityId ?? "",
+                                      'isLiked': false
+                                    };
+                                    // Navigator.pushNamed(context, RouteName.postDetailsView, arguments: arguments);
+                                    if(pr.notificationsModel!.data[index].type == AppNotificationType.FOLLOW){
+                                      CustomToast(context: context, message: "Notification FOLLOW found!",);
+                                      Navigator.pushNamed(context, RouteName.thirdUserProfileView ,arguments: {'id' : pr.notificationsModel!.data[index].senderId});
+                                    }
+                                    else if(pr.notificationsModel!.data[index].type == AppNotificationType.LIKE){
+                                      CustomToast(context: context, message: "Notification LIKE found! ${{'postId': pr.notificationsModel!.data[index].activityId}}",);
+                                      Navigator.pushNamed(context, RouteName.postDetailsView ,arguments: {'postId' : pr.notificationsModel!.data[index].activityId, 'isLiked' : true});
+                                    }
+                                    else if(pr.notificationsModel!.data[index].type == AppNotificationType.COMMENT){
+                                      CustomToast(context: context, message: "Notification COMMENT found!",);
+                                      Navigator.pushNamed(context, RouteName.postDetailsView ,arguments: {'postId' : pr.notificationsModel!.data[index].activityId, 'isLiked' : true});
+                                    }
+                                    else {
+                                      CustomToast(context: context, message: "Notification type not found!",);
+                                    }
+                                  },
+                                  title: Text(pr.notificationsModel!.data[index].message.toString() ?? ""),
+                                  leading: ClipRRect(
+                                    borderRadius: BorderRadius.circular(100),
+                                    child: UtilityHelper.image(pr.notificationsModel!.data[index].image, width: 60, height: 60, fit: BoxFit.fill),
+                                  ),
+                                ),
+                              );
+                            },
+                            itemCount: pr.notificationsModel!.data.length ?? 10,
+                          ),
+                        );
+                      }
+                      else {
+                        return const Expanded(
                           flex: 90,
                           child: LoadingWidgetTile(count: 5,),
-                        )
-
-                    ],
+                        );
+                      }
+                    },
                   );
                 }
               ),

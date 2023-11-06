@@ -7,7 +7,7 @@ import '../../model/notification_model.dart';
 import '../../utils/app_helper/app_keys.dart';
 import '../../utils/app_helper/app_url.dart';
 
-class NotificationRepo extends ChangeNotifier {
+class NotificationRepo {
 
   final BaseApiServices _baseAPIServices = NetworkApiServices();
 
@@ -22,7 +22,7 @@ class NotificationRepo extends ChangeNotifier {
       String? token = await UserData.getUserAccessToken();
       header[ApiKeys.authorization] = token!;
       debugPrint(header.toString());
-      await _baseAPIServices.getAPI("${AppUrl.notificationEndPoint}?pageNo=$pageNo&limit=$limit", header).then((value){
+      await _baseAPIServices.getAPI("${AppUrl.notificationEndPoint}?pageNo=1&limit=10000", header).then((value){
         // debugPrint("Notification received$value");
         res = ApiResponseNotificationsModel.fromJson(value);
       }).onError((error, stackTrace){
@@ -35,10 +35,14 @@ class NotificationRepo extends ChangeNotifier {
     return res;
   }
 
-  Future<void> addPushNotification(String receiverId, String myId, String type) async {
+  Future<void> addPushNotification(String receiverId, String activityId, String type) async {
+    String? token = await UserData.getUserAccessToken();
+    Map<String, String> headers = {ApiKeys.authorization : token!, ApiKeys.contentType : ApiKeys.applicationJson};
+
+    debugPrint("Receiver id is $receiverId and ");
     try {
-      await _baseAPIServices.postAPIWithHeader(AppUrl.addNotificationEndPoint,{ "receiverId": receiverId, "activityId": myId, "type": type}, header,).then((value){
-        debugPrint("Notification sent of type $type");
+      await _baseAPIServices.postAPIWithHeader(AppUrl.addNotificationEndPoint,{ "receiverId": receiverId, "activityId": activityId, "type": "LIKE"}, headers,).then((value){
+        debugPrint("Notification sent of type $value");
       }).onError((error, stackTrace){
         debugPrint("Error in sending notification $error");
       });

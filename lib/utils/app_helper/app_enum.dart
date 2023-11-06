@@ -1,6 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
-class NotificationType
+class AppNotificationType
 {
   static const String COMMENT = "COMMENT";
   static const String LIKE = "LIKE";

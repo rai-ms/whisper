@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:whisper/components/app_text_form_field.dart';
 import 'package:whisper/components/loading_tile.dart';
@@ -8,6 +9,7 @@ import 'package:whisper/global/global.dart';
 import 'package:whisper/res/components/app_rounded_button.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
 import 'package:whisper/utils/app_helper/app_strings.dart';
+import 'package:whisper/utils/utils.dart';
 import 'package:whisper/view_model/post_details_provider/post_details_provider.dart';
 import '../../components/app_dialog.dart';
 import '../../utils/app_helper/app_style.dart';
@@ -28,6 +30,7 @@ class _PostDetailsViewState extends State<PostDetailsView> {
     super.initState();
     loadLocal();
     debugPrint("Like status is${widget.isLiked}");
+    debugPrint("Post Id is${widget.postId}");
   }
 
   loadLocal () async {
@@ -58,7 +61,7 @@ class _PostDetailsViewState extends State<PostDetailsView> {
                         child: FutureBuilder(
                           future: pr.getPostDetails(),
                           builder: (context, snap) {
-                            return Column(
+                              return Column(
                               children: [
                                 Column(
                                   children: [
@@ -81,7 +84,7 @@ class _PostDetailsViewState extends State<PostDetailsView> {
                                             if (pr.apiResponsePostModel == null) const Text("Loading..."),
                                             if (pr.apiResponsePostModel != null) Text(pr.apiResponseUserDataModel!.data[0].username.toString() ?? "Loading..."),
                                             if (pr.apiResponsePostModel == null) const Text("Loading..."),
-                                            if (pr.apiResponsePostModel != null) Text(pr.apiResponsePostModel!.data[0].createdAt.toString() ?? "Loading..."),
+                                            if (snap.hasData && pr.apiResponsePostModel!.data[0].createdAt.toString() != null) Text( formatDateTime(pr.apiResponsePostModel!.data[0].createdAt.toString())),
                                           ],
                                         ),
                                         Expanded(child: sizedBox()),
@@ -208,7 +211,8 @@ class _PostDetailsViewState extends State<PostDetailsView> {
                                           boxShadow: [
                                               BoxShadow(
                                                   color: Theme.of(context).primaryColorDark, blurRadius: 5, spreadRadius: 0)
-                                            ]),
+                                            ],
+                                        ),
                                         child: Padding(
                                           padding:
                                           const EdgeInsets.all(10.0),
@@ -302,14 +306,12 @@ class _PostDetailsViewState extends State<PostDetailsView> {
                                                                       borderRadius: BorderRadius.circular(10),
                                                                     ),
                                                                     child: Column(
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.start,
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.center,
-                                                                        children: [
-                                                                          Text(pr.resCommentSpecificPost!.data!.comments![index].comment, style: AppStyle.blackMedium16,),
-                                                                        ],
-                                                                      )),
+                                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                                      children: [
+                                                                        Text(pr.resCommentSpecificPost!.data!.comments![index].comment, style: AppStyle.blackMedium16,),
+                                                                      ],
+                                                                    )),
                                                                   sizedBox(hei: 4),
                                                                 ],
                                                               ),
@@ -324,8 +326,7 @@ class _PostDetailsViewState extends State<PostDetailsView> {
                                                 Expanded(
                                                   flex: 10,
                                                   child: PopupMenuButton(
-                                                    icon: const Icon(
-                                                        Icons.more_vert),
+                                                    icon: const Icon(Icons.more_vert),
                                                     itemBuilder: (BuildContext context) {
                                                       return [
                                                         // if(pr.res!.data!.comments?[index].user.username == username) PopupMenuItem(
@@ -394,5 +395,17 @@ class _PostDetailsViewState extends State<PostDetailsView> {
         ),
       ),
     );
+  }
+
+  String formatDateTime(String dateTimeString) {
+    // Parse the input date and time string
+    debugPrint("---------------$dateTimeString this is the date---------------");
+    DateTime dateTime = DateTime.parse(dateTimeString);
+
+    // Define a custom format
+    DateFormat customFormat = DateFormat("E 'at' HH:mm, d MMM, yy");
+
+    // Format the DateTime object using the custom format
+    return customFormat.format(dateTime);
   }
 }

@@ -3,6 +3,7 @@ import 'package:whisper/data/app_exceptions/app_exception.dart';
 import 'package:whisper/model/comment.dart';
 import 'package:whisper/model/login_payload.dart';
 import 'package:whisper/utils/app_helper/app_keys.dart';
+import 'package:whisper/utils/app_helper/app_strings.dart';
 import '../../data/network/base_api_service.dart';
 import '../../data/network/network_api_services.dart';
 import '../../model/feed_response_model.dart';
@@ -131,15 +132,16 @@ class PostRepository {
       debugPrint("Comment Added! $value");
       res = value.toString();
     }).onError((error, stackTrace) {
-      throw AppError("Error is:$error");
+      throw AppError("${AppStrings.error} is:$error");
     });
-    await NotificationRepo().addPushNotification(postedById, myId!, NotificationType.COMMENT);
+    await NotificationRepo().addPushNotification(postedById, postId!, AppNotificationType.COMMENT);
     return res;
   }
 
   Future<String?> likePost(String postId, String postedById) async {
     String? statusCode;
     String? token = await UserData.getUserAccessToken();
+    String? myId = await UserData.getUserId();
     // header['Authorization'] = "Bearer "+token!;
     header[ApiKeys.authorization] = token!;
     // debugPrint("$header is the header, model is ${model.toMap()}");
@@ -147,10 +149,11 @@ class PostRepository {
         .postAPIWithHeader("${AppUrl.postLikeEndPoint}$postId", {}, header)
         .then((value) {
       debugPrint(value.toString());
-      statusCode = value['statusCode'].toString();
+      statusCode = value[ApiKeys.statusCode].toString();
     }).onError((error, stackTrace) {
-      throw AppError("Error is:$error");
+      throw AppError("${AppStrings.error} is:$error");
     });
+    await NotificationRepo().addPushNotification(postedById, postId!, AppNotificationType.LIKE);
     return statusCode;
   }
 
@@ -163,9 +166,9 @@ class PostRepository {
         .deleteAPI("${AppUrl.postDislikeEndPoint}$postId", {}, header)
         .then((value) {
       // debugPrint("Post Disliked!");
-      statusCode = value['statusCode'].toString();
+      statusCode = value[ApiKeys.statusCode].toString();
     }).onError((error, stackTrace) {
-      throw AppError("Error is:$error");
+      throw AppError("${AppStrings.error} is:$error");
     });
     return statusCode;
   }
@@ -177,9 +180,9 @@ class PostRepository {
     header[ApiKeys.authorization] = token!;
     await _baseAPIServices.postAPIWithHeader("https://harshitsocial.appskeeper.in/api/v1/user/reportPost?postId=$postId", {}, header).then((value) {
       // debugPrint("Report on post :$postId status is $value");
-      statusCode = value['statusCode'].toString();
+      statusCode = value[ApiKeys.statusCode].toString();
     }).onError((error, stackTrace) {
-      throw AppError("Error is:$error");
+      throw AppError("${AppStrings.error} is:$error");
     });
     return statusCode;
   }
@@ -191,9 +194,9 @@ class PostRepository {
     header[ApiKeys.authorization] = token!;
     await _baseAPIServices.patchAPI("${AppUrl.editCommentEndPoint}?postId=$postId&commentId=$commendID", {"comment": comment,}, header).then((value) {
       // debugPrint("Edited on post :$postId comment $commendID status is $value");
-      statusCode = value['statusCode'].toString();
+      statusCode = value[ApiKeys.statusCode].toString();
     }).onError((error, stackTrace) {
-      throw AppError("Error is:$error");
+      throw AppError("${AppStrings.error} is:$error");
     });
     return statusCode;
   }
@@ -210,9 +213,9 @@ class PostRepository {
             header)
         .then((value) {
       // debugPrint("deleted on post :$postId comment $commentID status is $value");
-      statusCode = value['statusCode'].toString();
+      statusCode = value[ApiKeys.statusCode].toString();
     }).onError((error, stackTrace) {
-      throw AppError("Error is:$error");
+      throw AppError("${AppStrings.error} is:$error");
     });
     return statusCode;
   }
@@ -223,9 +226,9 @@ class PostRepository {
     header[ApiKeys.authorization] = token!;
     await _baseAPIServices.deleteAPI("${AppUrl.deletePostEndPoint}$postId", {}, header).then((value) {
       debugPrint("Post Deleted!");
-      statusCode = value['statusCode'].toString();
+      statusCode = value[ApiKeys.statusCode].toString();
     }).onError((error, stackTrace) {
-      throw AppError("Error is:$error");
+      throw AppError("${AppStrings.error} is:$error");
     });
     return statusCode;
   }

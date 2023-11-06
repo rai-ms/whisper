@@ -15,8 +15,7 @@ import '../../../view_model/home_view_view_model/post_card_comment_view_model.da
 import '../../../view_model/home_view_view_model/post_card_like_view_model.dart';
 
 class CommentLikeShareBar extends StatefulWidget {
-  const CommentLikeShareBar(
-      {super.key, this.comments, this.likes, required this.postId, this.post});
+  const CommentLikeShareBar({super.key, this.comments, this.likes, required this.postId, this.post});
   final String postId;
   final List<APIResponseComment>? comments;
   final List<ApiResponseLike>? likes;
@@ -316,228 +315,290 @@ class _CommentLikeShareBarState extends State<CommentLikeShareBar> {
                       child: ListView(
                         shrinkWrap: true,
                         children: [
-                          if (widget.comments != null)
-                            ...List.generate(widget.comments!.length, (index) {
+                          Consumer<PostCardCommentViewModel>(builder: (context, pr, ch){
+                            return FutureBuilder(future: pr.getAllComment(widget.postId), builder: (context, snap){
+                              if(snap.hasData){
+                                // debugPrint("Comment Data postId is${widget.postId}");
                               return Column(
                                 children: [
-                                  Consumer<PostCardCommentViewModel>(
-                                      builder: (context, provider, child) {
-                                    return ListTile(
-                                      title: Row(
-                                        children: [
-                                          Expanded(
-                                              flex: 10,
-                                              child: ClipOval(
-                                                child: UtilityHelper.image(
-                                                    widget.comments?[index].user
-                                                            .profilePic ??
-                                                        dp,
-                                                    height: 40,
-                                                    width: 40),
-                                              )),
-                                          sizedBox(wid: 5),
-                                          Expanded(
-                                            flex: 90,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  constraints:
-                                                      const BoxConstraints(
-                                                          minHeight: 60),
-                                                  decoration: BoxDecoration(
-                                                      color: AppColors.grey,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12)),
-                                                  child: Row(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      sizedBox(wid: 5),
-                                                      Expanded(
-                                                        flex: 90,
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      left:
-                                                                          8.0),
-                                                              child: Text(widget
-                                                                  .comments![
-                                                                      index]
-                                                                  .user
-                                                                  .username),
-                                                            ),
-                                                            Container(
-                                                                constraints:
-                                                                    const BoxConstraints(
-                                                                  maxWidth: 450,
-                                                                  minWidth: 300,
-                                                                  minHeight: 40,
-                                                                ),
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        left:
-                                                                            10),
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color:
-                                                                      AppColors
-                                                                          .white,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10),
-                                                                ),
+                                  ...List.generate(snap.data!.data!.comments!.length, (index) => Column(
+                                    children: [
+                                      Consumer<PostCardCommentViewModel>(
+                                          builder: (context, provider, child) {
+                                            return ListTile(
+                                              title: Row(
+                                                children: [
+                                                  Expanded(
+                                                    flex: 10,
+                                                    child: ClipOval(
+                                                      child: UtilityHelper.image(snap.data!.data!.comments![index].user.profilePic ?? dp, height: 40, width: 40),)),
+                                                  sizedBox(wid: 5),
+                                                  Expanded(
+                                                    flex: 90,
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Container(
+                                                          constraints: const BoxConstraints(minHeight: 60),
+                                                          decoration: BoxDecoration(
+                                                              color: AppColors.grey,
+                                                              borderRadius: BorderRadius.circular(12)),
+                                                          child: Row(
+                                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                                            children: [
+                                                              sizedBox(wid: 5),
+                                                              Expanded(
+                                                                flex: 90,
                                                                 child: Column(
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .center,
+                                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                                   children: [
-                                                                    Text(
-                                                                      widget
-                                                                          .comments![
-                                                                              index]
-                                                                          .comment,
-                                                                      style: AppStyle
-                                                                          .blackMedium16,
+                                                                    Padding(
+                                                                      padding: const EdgeInsets.only(left: 8.0),
+                                                                      child: Text(snap.data!.data!.comments![index].user.username),
                                                                     ),
+                                                                    Container(
+                                                                        constraints: const BoxConstraints(maxWidth: 450, minWidth: 300, minHeight: 40,),
+                                                                        padding: const EdgeInsets.only(left: 10),
+                                                                        decoration: BoxDecoration(
+                                                                          color: AppColors.white,
+                                                                          borderRadius: BorderRadius.circular(10),
+                                                                        ),
+                                                                        child: Column(
+                                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                                          children: [
+                                                                            Text(snap.data!.data!.comments![index].comment, style: AppStyle.blackMedium16,
+                                                                            ),
+                                                                          ],
+                                                                        )),
+                                                                    sizedBox(hei: 4),
                                                                   ],
-                                                                )),
-                                                            sizedBox(hei: 4),
-                                                            // InkWell(
-                                                            //   onTap:()
-                                                            //   {
-                                                            //       provider.gotoReply(context, widget.comments![index].comment);
-                                                            //   },
-                                                            //   child: Text("Reply", style: AppStyle.blueNormal16,)),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      Expanded(
-                                                        flex: 10,
-                                                        child: PopupMenuButton(
-                                                          icon: const Icon(
-                                                              Icons.more_vert),
-                                                          itemBuilder:
-                                                              (BuildContext
-                                                                  context) {
-                                                            return [
-                                                              if (widget
-                                                                      .comments![
-                                                                          index]
-                                                                      .user
-                                                                      .username ==
-                                                                  username)
-                                                                PopupMenuItem(
-                                                                  value: "edit",
-                                                                  child: const Text(
-                                                                      "Edit comment"),
-                                                                  onTap: () {
-                                                                    provider.editMyComment(
-                                                                        context:
-                                                                            context,
-                                                                        editOn: widget
-                                                                            .comments![
-                                                                                index]
-                                                                            .comment,
-                                                                        commentID: widget
-                                                                            .comments![index]
-                                                                            .id);
+                                                                ),
+                                                              ),
+                                                              Expanded(
+                                                                flex: 10,
+                                                                child: PopupMenuButton(
+                                                                  icon: const Icon(Icons.more_vert),
+                                                                  itemBuilder: (BuildContext context) {
+                                                                    return [
+                                                                      if (snap.data!.data!.comments![index].user.username == username) PopupMenuItem(
+                                                                          value: "edit",
+                                                                          child: const Text("Edit comment"),
+                                                                          onTap: () {
+                                                                            provider.editMyComment(
+                                                                              context: context,
+                                                                              editOn: snap.data!.data!.comments![index].comment,
+                                                                              commentID: snap.data!.data!.comments![index].id);
+                                                                          },
+                                                                        ),
+                                                                      if (snap.data!.data!.comments![index].user.username == username) PopupMenuItem(
+                                                                          value: "delete",
+                                                                          child: const Text("Delete comment"),
+                                                                          onTap: () {
+                                                                            provider.deleteMyComment(postId: widget.postId, commentId: snap.data!.data!.comments![index].id,context: context);
+                                                                          },
+                                                                        ),
+                                                                      if (snap.data!.data!.comments![index].user.username != username) PopupMenuItem(
+                                                                          value: "Report",
+                                                                          child: const Text("Report comment"),
+                                                                          onTap: () {},
+                                                                        ),
+                                                                    ];
                                                                   },
                                                                 ),
-                                                              if (widget
-                                                                      .comments![
-                                                                          index]
-                                                                      .user
-                                                                      .username ==
-                                                                  username)
-                                                                PopupMenuItem(
-                                                                  value:
-                                                                      "delete",
-                                                                  child: const Text(
-                                                                      "Delete comment"),
-                                                                  onTap: () {
-                                                                    provider.deleteMyComment(
-                                                                        postId: widget
-                                                                            .postId,
-                                                                        commentId: widget
-                                                                            .comments![
-                                                                                index]
-                                                                            .id,
-                                                                        context:
-                                                                            context);
-                                                                  },
-                                                                ),
-                                                              if (widget
-                                                                      .comments![
-                                                                          index]
-                                                                      .user
-                                                                      .username !=
-                                                                  username)
-                                                                PopupMenuItem(
-                                                                  value:
-                                                                      "Report",
-                                                                  child: const Text(
-                                                                      "Report comment"),
-                                                                  onTap: () {},
-                                                                ),
-                                                            ];
-                                                          },
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Text(widget.comments![index]
-                                                    .user.email),
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      // subtitle: Padding(
-                                      //   padding: const EdgeInsets.only(left: 25.0, top: 20),
-                                      //   child: Column(
-                                      //     children:
-                                      //     [
-                                      //       if(widget.comments![index].reply.isNotEmpty) ...List.generate(widget.comments![index].reply.length, (i){
-                                      //         return ListTile(
-                                      //           title: Row(
-                                      //             crossAxisAlignment: CrossAxisAlignment.start,
-                                      //             children: [
-                                      //               ClipOval(child: UtilityHelper.image("https://scontent.fdel72-1.fna.fbcdn.net/v/t39.30808-6/355482789_3551846318425242_4960182591060623934_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=AnRkGOVWizoAX-O4dEW&_nc_ht=scontent.fdel72-1.fna&oh=00_AfDmo8PgOQL52u6ewobm5mrTzYq-aIdjC4_LjLOfup1SnA&oe=65326460", height: 40, width: 40),),
-                                      //               sizedBox(wid: 5),
-                                      //               Text(widget.comments![index].reply[i].content),
-                                      //               const Expanded(child: SizedBox()),
-                                      //               const Icon(Icons.more_vert),
-                                      //             ],
-                                      //           ),
-                                      //         );
-                                      //       })
-                                      //     ],
-                                      //   ),
-                                      // ),
-                                    );
-                                  }),
+                                                        Text(snap.data!.data!.comments![index].user.email),
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                              // subtitle: Padding(
+                                              //   padding: const EdgeInsets.only(left: 25.0, top: 20),
+                                              //   child: Column(
+                                              //     children:
+                                              //     [
+                                              //       if(widget.comments![index].reply.isNotEmpty) ...List.generate(widget.comments![index].reply.length, (i){
+                                              //         return ListTile(
+                                              //           title: Row(
+                                              //             crossAxisAlignment: CrossAxisAlignment.start,
+                                              //             children: [
+                                              //               ClipOval(child: UtilityHelper.image("https://scontent.fdel72-1.fna.fbcdn.net/v/t39.30808-6/355482789_3551846318425242_4960182591060623934_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=AnRkGOVWizoAX-O4dEW&_nc_ht=scontent.fdel72-1.fna&oh=00_AfDmo8PgOQL52u6ewobm5mrTzYq-aIdjC4_LjLOfup1SnA&oe=65326460", height: 40, width: 40),),
+                                              //               sizedBox(wid: 5),
+                                              //               Text(widget.comments![index].reply[i].content),
+                                              //               const Expanded(child: SizedBox()),
+                                              //               const Icon(Icons.more_vert),
+                                              //             ],
+                                              //           ),
+                                              //         );
+                                              //       })
+                                              //     ],
+                                              //   ),
+                                              // ),
+                                            );
+                                          }),
+                                    ],
+                                  ))
                                 ],
                               );
-                            }),
+                              }
+                              else {
+                                return const Center(child: CircularProgressIndicator());
+                              }
+                            });
+                          },)
+                          // if (widget.comments != null)
+                          //   ...List.generate(widget.comments!.length, (index) {
+                          //     return Column(
+                          //       children: [
+                          //         Consumer<PostCardCommentViewModel>(
+                          //             builder: (context, provider, child) {
+                          //           return ListTile(
+                          //             title: Row(
+                          //               children: [
+                          //                 Expanded(
+                          //                     flex: 10,
+                          //                     child: ClipOval(
+                          //                       child: UtilityHelper.image( widget.comments?[index].user.profilePic ?? dp, height: 40, width: 40),)),
+                          //                 sizedBox(wid: 5),
+                          //                 Expanded(
+                          //                   flex: 90,
+                          //                   child: Column(
+                          //                     crossAxisAlignment: CrossAxisAlignment.start,
+                          //                     children: [
+                          //                       Container(
+                          //                         constraints: const BoxConstraints(minHeight: 60),
+                          //                         decoration: BoxDecoration(
+                          //                             color: AppColors.grey,
+                          //                             borderRadius: BorderRadius.circular(12)),
+                          //                         child: Row(
+                          //                           crossAxisAlignment: CrossAxisAlignment.center,
+                          //                           children: [
+                          //                             sizedBox(wid: 5),
+                          //                             Expanded(
+                          //                               flex: 90,
+                          //                               child: Column(
+                          //                                 mainAxisAlignment: MainAxisAlignment.start,
+                          //                                 crossAxisAlignment: CrossAxisAlignment.start,
+                          //                                 children: [
+                          //                                   Padding(
+                          //                                     padding: const EdgeInsets.only(left: 8.0),
+                          //                                     child: Text(widget.comments![index].user.username),
+                          //                                   ),
+                          //                                   Container(
+                          //                                       constraints: const BoxConstraints(maxWidth: 450, minWidth: 300, minHeight: 40,),
+                          //                                       padding: const EdgeInsets.only(left: 10),
+                          //                                       decoration: BoxDecoration(
+                          //                                         color: AppColors.white,
+                          //                                         borderRadius: BorderRadius.circular(10),
+                          //                                       ),
+                          //                                       child: Column(
+                          //                                         crossAxisAlignment: CrossAxisAlignment.start,
+                          //                                         mainAxisAlignment: MainAxisAlignment.center,
+                          //                                         children: [
+                          //                                           Text(widget.comments![index].comment, style: AppStyle.blackMedium16,
+                          //                                           ),
+                          //                                         ],
+                          //                                       )),
+                          //                                   sizedBox(hei: 4),
+                          //                                   // InkWell(
+                          //                                   //   onTap:()
+                          //                                   //   {
+                          //                                   //       provider.gotoReply(context, widget.comments![index].comment);
+                          //                                   //   },
+                          //                                   //   child: Text("Reply", style: AppStyle.blueNormal16,)),
+                          //                                 ],
+                          //                               ),
+                          //                             ),
+                          //                             Expanded(
+                          //                               flex: 10,
+                          //                               child: PopupMenuButton(
+                          //                                 icon: const Icon(Icons.more_vert),
+                          //                                 itemBuilder: (BuildContext context) {
+                          //                                   return [
+                          //                                     if (widget
+                          //                                             .comments![
+                          //                                                 index]
+                          //                                             .user
+                          //                                             .username ==
+                          //                                         username)
+                          //                                       PopupMenuItem(
+                          //                                         value: "edit",
+                          //                                         child: const Text(
+                          //                                             "Edit comment"),
+                          //                                         onTap: () {
+                          //                                           provider.editMyComment(
+                          //                                               context:
+                          //                                                   context,
+                          //                                               editOn: widget
+                          //                                                   .comments![
+                          //                                                       index]
+                          //                                                   .comment,
+                          //                                               commentID: widget
+                          //                                                   .comments![index]
+                          //                                                   .id);
+                          //                                         },
+                          //                                       ),
+                          //                                     if (widget.comments![index].user.username == username)
+                          //                                       PopupMenuItem(
+                          //                                         value:
+                          //                                             "delete",
+                          //                                         child: const Text(
+                          //                                             "Delete comment"),
+                          //                                         onTap: () {
+                          //                                           provider.deleteMyComment(postId: widget.postId, commentId: widget.comments![index].id,context: context);
+                          //                                         },
+                          //                                       ),
+                          //                                     if (widget.comments![index].user.username != username)
+                          //                                       PopupMenuItem(
+                          //                                         value: "Report",
+                          //                                         child: const Text("Report comment"),
+                          //                                         onTap: () {},
+                          //                                       ),
+                          //                                   ];
+                          //                                 },
+                          //                               ),
+                          //                             ),
+                          //                           ],
+                          //                         ),
+                          //                       ),
+                          //                       Text(widget.comments![index].user.email),
+                          //                     ],
+                          //                   ),
+                          //                 )
+                          //               ],
+                          //             ),
+                          //             // subtitle: Padding(
+                          //             //   padding: const EdgeInsets.only(left: 25.0, top: 20),
+                          //             //   child: Column(
+                          //             //     children:
+                          //             //     [
+                          //             //       if(widget.comments![index].reply.isNotEmpty) ...List.generate(widget.comments![index].reply.length, (i){
+                          //             //         return ListTile(
+                          //             //           title: Row(
+                          //             //             crossAxisAlignment: CrossAxisAlignment.start,
+                          //             //             children: [
+                          //             //               ClipOval(child: UtilityHelper.image("https://scontent.fdel72-1.fna.fbcdn.net/v/t39.30808-6/355482789_3551846318425242_4960182591060623934_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=AnRkGOVWizoAX-O4dEW&_nc_ht=scontent.fdel72-1.fna&oh=00_AfDmo8PgOQL52u6ewobm5mrTzYq-aIdjC4_LjLOfup1SnA&oe=65326460", height: 40, width: 40),),
+                          //             //               sizedBox(wid: 5),
+                          //             //               Text(widget.comments![index].reply[i].content),
+                          //             //               const Expanded(child: SizedBox()),
+                          //             //               const Icon(Icons.more_vert),
+                          //             //             ],
+                          //             //           ),
+                          //             //         );
+                          //             //       })
+                          //             //     ],
+                          //             //   ),
+                          //             // ),
+                          //           );
+                          //         }),
+                          //       ],
+                          //     );
+                          //   }),
                         ],
                       ),
                     ),

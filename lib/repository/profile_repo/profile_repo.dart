@@ -95,7 +95,7 @@ class ProfileRepository {
       // debugPrint("Error in follow user $error");
       throw AppError("${AppStrings.error}$error");
     });
-    await NotificationRepo().addPushNotification(followingId, myId!, NotificationType.FOLLOW);
+    await NotificationRepo().addPushNotification(followingId, myId!, AppNotificationType.FOLLOW);
     return apiRes;
   }
 

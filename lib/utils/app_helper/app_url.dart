@@ -29,5 +29,5 @@ class AppUrl {
   static const editProfileEndPoint = '$baseUrl/editProfile';
   static const editCommentEndPoint = '$baseUrl/editComment';
   static const notificationEndPoint = '$baseUrlNotification/notification';
-  static const addNotificationEndPoint = '$baseUrlNotification/AddNotification';
+  static const addNotificationEndPoint = 'https://harshitsocial.appskeeper.in/api/v1/AddNotification';
 }

@@ -6,7 +6,7 @@ class CustomToast {
     final overlay = Overlay.of(context);
     final overlayEntry = OverlayEntry(
       builder: (context) => Padding(
-        padding: const EdgeInsets.only(bottom: 30),
+        padding: const EdgeInsets.only(bottom: 130),
         child: Align(
           alignment: Alignment.bottomCenter,
           child: Container(

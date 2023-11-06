@@ -10,6 +10,8 @@ import 'package:whisper/utils/app_helper/app_color.dart';
 import 'package:whisper/view_model/add_post_view_model/add_post_view_model.dart';
 import 'package:whisper/view_model/global_provider/get_profile_data_provider.dart';
 
+import '../../utils/app_helper/app_strings.dart';
+
 class AddPostView extends StatefulWidget {
   const AddPostView({super.key});
 
@@ -78,7 +80,7 @@ class _AddPostViewState extends State<AddPostView> {
                                 );
                               } else if (!asyncData.hasData ||
                                   asyncData.hasError) {
-                                return const Text("Error");
+                                return const Text(AppStrings.error);
                               }
                               return Text("${asyncData.data}");
                             });
@@ -127,7 +129,28 @@ class _AddPostViewState extends State<AddPostView> {
                 if (!provider.isPicked) {
                   return sizedBox();
                 }
-                return Image.file(provider.pickedImage!);
+                return Stack(
+                  children: [
+                    AspectRatio(aspectRatio: 1,
+                    child: Image.file(provider.pickedImage!, fit: BoxFit.fill,)),
+                    if(provider.isPicked) Align(
+                      alignment: Alignment.topRight,
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        decoration:BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        border: Border.all(color: AppColors.black, width: 1.0),
+                        color: AppColors.white,
+                      ),
+                      child: IconButton(tooltip:"Remove", padding: EdgeInsets.zero, alignment: Alignment.center, onPressed: (){
+                        provider.isPicked = false;
+                        provider.pickedImage = null;
+                        provider.notifyListeners();
+                      }, icon: const Icon(FontAwesomeIcons.xmark, color: AppColors.black,size: 20,))),
+                    )
+                  ],
+                );
               }),
               sizedBox(
                 hei: 10,

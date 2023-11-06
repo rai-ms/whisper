@@ -47,7 +47,7 @@ class SearchUserViewModel extends ChangeNotifier {
 
   Future followUser(String id) async {
     await ProfileRepository.followUser(followingId: id).then((value) {
-      debugPrint("User is Followed =========$value===============");
+      // debugPrint("User is Followed =========$value===============");
     }).onError((error, stackTrace) {});
   }
 

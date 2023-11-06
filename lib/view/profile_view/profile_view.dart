@@ -14,7 +14,6 @@ import 'package:whisper/view/profile_view/widgets/posts_follower_following.dart'
 import 'package:whisper/view/profile_view/widgets/profile_top_view.dart';
 import 'package:whisper/view_model/personal_profile_view_model/personal_profile_view_model.dart';
 import '../../model/my_profile_api_response.dart';
-import '../../utils/app_helper/app_keys.dart';
 import '../../view_model/global_provider/get_profile_data_provider.dart';
 import '../../view_model/personal_profile_view_model/api_res_provider.dart';
 
@@ -315,11 +314,8 @@ class _ProfileViewState extends State<ProfileView>
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         // debugPrint("***************Data Received******************");
-                        debugPrint(
-                            snapshot.data!.data[0].userPosts.length.toString());
-                        return PostFollowerFollowing(
-                          res: snapshot.data!,
-                        );
+                        debugPrint(snapshot.data!.data[0].userPosts.length.toString());
+                        return PostFollowerFollowing( res: snapshot.data!,);
                       } else {
                         return sizedBox();
                       }

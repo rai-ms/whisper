@@ -85,4 +85,17 @@ class PostCardCommentViewModel extends ChangeNotifier {
     commentFocus.dispose();
     super.dispose();
   }
+
+  APIResponseCommentModel? res;
+  Future<APIResponseCommentModel?> getAllComment(String postId) async {
+
+    postRepository.getListComments(postId).then((value){
+      debugPrint("Comment Received!");
+      res = APIResponseCommentModel.fromJson(value!);
+      notifyListeners();
+    }).onError((error, stackTrace){});
+    return res;
+  }
+
+
 }
