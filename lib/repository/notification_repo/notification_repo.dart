@@ -35,13 +35,6 @@ class NotificationRepo {
     return res;
   }
 
-  // 6549ca790032a183db41ff2d
-  // 6549ca790032a183db41ff2d
-  // 6549ca790032a183db41ff2d
-  // 6549ca790032a183db41ff2d
-  // 6549ca790032a183db41ff2d
-  // 6549ca790032a183db41ff2d
-
   Future<void> addPushNotification(String receiverId, String activityId, String type) async {
     debugPrint("Received type is $type");
     String? token = await UserData.getUserAccessToken();

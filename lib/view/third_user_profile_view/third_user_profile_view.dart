@@ -137,47 +137,50 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                                     child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
                                       itemCount: snapshot.data?.data[0].postCount, itemBuilder: (context, index){
-                                      return Column(
-                                        children: [
-                                          Expanded(
-                                            child: InkWell(
-                                              onTap: (){
-                                                Navigator.pushNamed(context, RouteName.postDetailsView, arguments: {"postId": snapshot.data?.data[0].userPosts[index].id ?? '', 'isLiked' : false});
-                                              },
-                                              child: Stack(
-                                                children: [
-                                                  ClipRRect(
-                                                    borderRadius: BorderRadius.circular(10),
-                                                    child: UtilityHelper.image(snapshot.data?.data[0].userPosts[index].url ?? dp)),
-                                                  // Text(snapshot.data?.data[0].userPosts[index].caption.substring(0, 3) ?? "", style: AppStyle.whiteBold16,),
-                                                  SizedBox(
-                                                    width: 100,
-                                                    child: Align(alignment: Alignment.bottomCenter,
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                      children: [
-                                                        Row(
-                                                          children: [
-                                                            const Icon(FontAwesomeIcons.commentDots, size: 18,),
-                                                            sizedBox(wid: 4),
-                                                            Text(snapshot.data?.data[0].userPosts[index].commentCount.toString() ?? "", style: AppStyle.blackBold17,),
-                                                          ],
-                                                        ),
-                                                        Row(
-                                                          children: [
-                                                            const Icon(FontAwesomeIcons.thumbsUp, size: 18,),
-                                                            sizedBox(wid: 4),
-                                                            Text(snapshot.data?.data[0].userPosts[index].likeCount.toString() ?? "", style: AppStyle.blackBold17),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),),
-                                                  )
-                                                ],
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                                        child: Column(
+                                          children: [
+                                            Expanded(
+                                              child: InkWell(
+                                                onTap: (){
+                                                  Navigator.pushNamed(context, RouteName.postDetailsView, arguments: {"postId": snapshot.data?.data[0].userPosts[index].id ?? '', 'isLiked' : false});
+                                                },
+                                                child: Stack(
+                                                  children: [
+                                                    ClipRRect(
+                                                      borderRadius: BorderRadius.circular(10),
+                                                      child: UtilityHelper.image(snapshot.data?.data[0].userPosts[index].url ?? dp)),
+                                                    // Text(snapshot.data?.data[0].userPosts[index].caption.substring(0, 3) ?? "", style: AppStyle.whiteBold16,),
+                                                    SizedBox(
+                                                      width: 100,
+                                                      child: Align(alignment: Alignment.bottomCenter,
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                        children: [
+                                                          Row(
+                                                            children: [
+                                                              const Icon(FontAwesomeIcons.commentDots, size: 18,),
+                                                              sizedBox(wid: 4),
+                                                              Text(snapshot.data?.data[0].userPosts[index].commentCount.toString() ?? "", style: AppStyle.blackBold17,),
+                                                            ],
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              const Icon(FontAwesomeIcons.thumbsUp, size: 18,),
+                                                              sizedBox(wid: 4),
+                                                              Text(snapshot.data?.data[0].userPosts[index].likeCount.toString() ?? "", style: AppStyle.blackBold17),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),),
+                                                    )
+                                                  ],
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       );
                                     }),
                                   ),
@@ -229,7 +232,7 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                     ),
                   ],
                 ),
-                sizedBox(hei: 15),
+                sizedBox(hei: 10),
                 Expanded(
                   flex: 2,
                   child: FutureBuilder(
@@ -257,9 +260,10 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                                         child: ClipOval(
                                           child: UtilityHelper.image(pr1.response!.data!.followers![index].user.profilePic, height: 50, width: 50, fit: BoxFit.fill)),
                                       ),
-                                      sizedBox(wid: 10),
+                                      sizedBox(wid: 5),
                                       Text("${pr1.response!.data!.followers![index].user.username}", style: AppStyle.primaryColorDarkMedium16(context),),
                                       Text("${pr1.response!.data!.followers![index].user.email}", style: AppStyle.primaryColorDarkMedium14(context),),
+                                      sizedBox(hei: 5),
                                     ],
                                   ),
                                 ),
@@ -326,9 +330,10 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                                         child: ClipOval(
                                             child: UtilityHelper.image(pr1.followingApiRes!.data!.following![index].user.profilePic, height: 50, width: 50, fit: BoxFit.fill)),
                                       ),
-                                      sizedBox(wid: 10),
+                                      sizedBox(wid: 5),
                                       Text("${pr1.followingApiRes!.data!.following![index].user.username}", style: AppStyle.primaryColorDarkMedium16(context),),
                                       Text("${pr1.followingApiRes!.data!.following![index].user.email}", style: AppStyle.primaryColorDarkMedium14(context),),
+                                      sizedBox(hei: 5),
                                     ],
                                   ),
                                 ),
