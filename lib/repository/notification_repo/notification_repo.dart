@@ -35,20 +35,24 @@ class NotificationRepo {
     return res;
   }
 
+  // 6549ca790032a183db41ff2d
+  // 6549ca790032a183db41ff2d
+  // 6549ca790032a183db41ff2d
+  // 6549ca790032a183db41ff2d
+  // 6549ca790032a183db41ff2d
+  // 6549ca790032a183db41ff2d
+
   Future<void> addPushNotification(String receiverId, String activityId, String type) async {
+    debugPrint("Received type is $type");
     String? token = await UserData.getUserAccessToken();
     Map<String, String> headers = {ApiKeys.authorization : token!, ApiKeys.contentType : ApiKeys.applicationJson};
-
-    debugPrint("Receiver id is $receiverId and ");
-    try {
-      await _baseAPIServices.postAPIWithHeader(AppUrl.addNotificationEndPoint,{ "receiverId": receiverId, "activityId": activityId, "type": "LIKE"}, headers,).then((value){
+    debugPrint("Receiver id is $receiverId and header is $headers");
+      await _baseAPIServices.postAPIWithHeader(AppUrl.addNotificationEndPoint,{ "receiverId": receiverId, "activityId": activityId, "type": type}, headers,).then((value){
         debugPrint("Notification sent of type $value");
       }).onError((error, stackTrace){
         debugPrint("Error in sending notification $error");
       });
-    } catch (error){
-      debugPrint("Error in sending notification $error");
-    }
+      return;
   }
 
   Future deleteNotification({required String notificationId}) async {

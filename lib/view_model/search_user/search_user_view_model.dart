@@ -6,6 +6,7 @@ import 'package:whisper/repository/profile_repo/profile_repo.dart';
 import 'package:whisper/repository/search_repo/search_repo.dart';
 import 'package:whisper/utils/app_helper/user_data_preferences/user_data.dart';
 import '../../model/follower_response.dart';
+import '../../model/following_response_model.dart';
 import '../../utils/deBouncer/deBouncer.dart';
 
 class SearchUserViewModel extends ChangeNotifier {
@@ -51,6 +52,11 @@ class SearchUserViewModel extends ChangeNotifier {
     String? username = await UserData.getUserUsername();
     String? email = await UserData.getUserEmail();
     String? profilePic = await UserData.getProfilePic();
+    for(int i = 0; i < response!.data!.followers!.length; ++i){
+      if(response!.data!.followers![i].user.id == ids){
+        break;
+      }
+    }
     response!.data!.followers!.add(GetFollower(user: GetUser(id: ids, profilePic: profilePic, username: username, email: email, accountVerify: 1)));
     notifyListeners();
     await ProfileRepository.followUser(followingId: id).then((value) {
@@ -101,5 +107,17 @@ class SearchUserViewModel extends ChangeNotifier {
     });
     notifyListeners();
     return response;
+  }
+
+  GetFollowingApiRes? followingApiRes;
+  Future<GetFollowingApiRes?> getFollowing({String? id}) async {
+    await ProfileRepository.getFollowing(id: id).then((value) {
+      followingApiRes = value;
+      // debugPrint("Response Received ${followingApiRes!.data.following.length}");
+    }).onError((error, stackTrace) {
+      throw AppError("Get Followers Error:$error");
+    });
+    // notifyListeners();
+    return followingApiRes;
   }
 }

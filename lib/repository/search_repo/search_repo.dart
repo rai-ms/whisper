@@ -26,6 +26,7 @@ class SearchRepository {
         .then((value) {
       debugPrint("Search Response is $value");
       res = SearchResponseUserData.fromJson(value);
+      debugPrint("${res!.data[0].id} is the id");
     }).onError((error, stackTrace) {
       // debugPrint("Error in Search User $error");
       throw AppError("Error $error");

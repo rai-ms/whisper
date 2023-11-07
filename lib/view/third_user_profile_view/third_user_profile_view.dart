@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:whisper/components/loading_tile.dart';
 import 'package:whisper/components/utility_helper.dart';
 import 'package:whisper/global/global.dart';
+import 'package:whisper/model/following_response_model.dart';
 import 'package:whisper/res/components/app_rounded_button.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
 import 'package:whisper/utils/app_helper/app_strings.dart';
 import 'package:whisper/utils/app_helper/app_style.dart';
+import 'package:whisper/utils/routes/route_name.dart';
 import 'package:whisper/view_model/search_user/search_user_view_model.dart';
 
 class ThirdUserProfileView extends StatefulWidget {
@@ -116,7 +119,71 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                                   ],
                                 ),
                               ],
-                            )
+                            ),
+                            sizedBox(hei: 10),
+                            Row(
+                              children: [
+                                sizedBox(wid: 4),
+                                Text("Post", style: AppStyle.primaryColorDarkMedium14(context),),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 100,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  sizedBox(wid: 4),
+                                  Expanded(
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: snapshot.data?.data[0].postCount, itemBuilder: (context, index){
+                                      return Column(
+                                        children: [
+                                          Expanded(
+                                            child: InkWell(
+                                              onTap: (){
+                                                Navigator.pushNamed(context, RouteName.postDetailsView, arguments: {"postId": snapshot.data?.data[0].userPosts[index].id ?? '', 'isLiked' : false});
+                                              },
+                                              child: Stack(
+                                                children: [
+                                                  ClipRRect(
+                                                    borderRadius: BorderRadius.circular(10),
+                                                    child: UtilityHelper.image(snapshot.data?.data[0].userPosts[index].url ?? dp)),
+                                                  // Text(snapshot.data?.data[0].userPosts[index].caption.substring(0, 3) ?? "", style: AppStyle.whiteBold16,),
+                                                  SizedBox(
+                                                    width: 100,
+                                                    child: Align(alignment: Alignment.bottomCenter,
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            const Icon(FontAwesomeIcons.commentDots, size: 18,),
+                                                            sizedBox(wid: 4),
+                                                            Text(snapshot.data?.data[0].userPosts[index].commentCount.toString() ?? "", style: AppStyle.blackBold17,),
+                                                          ],
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            const Icon(FontAwesomeIcons.thumbsUp, size: 18,),
+                                                            sizedBox(wid: 4),
+                                                            Text(snapshot.data?.data[0].userPosts[index].likeCount.toString() ?? "", style: AppStyle.blackBold17),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    }),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         );
                       } else if (pr1.apiResponseUserModel == null) {
@@ -164,33 +231,37 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                 ),
                 sizedBox(hei: 15),
                 Expanded(
+                  flex: 2,
                   child: FutureBuilder(
                     future: pr1.getFollowers(id: widget.id),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return ListView.builder(
+                          scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
-                            return SizedBox(
-                              width: getFullWidth(context),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: [
-                                    CircleAvatar(
-                                      radius: 27,
-                                      backgroundColor: Theme.of(context).primaryColorDark,
-                                      child: ClipOval(
-                                        child: UtilityHelper.image(pr1.response!.data!.followers![index].user.profilePic, height: 50, width: 50, fit: BoxFit.fill)),
-                                    ),
-                                    sizedBox(wid: 10),
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text("${pr1.response!.data!.followers![index].user.username}", style: AppStyle.primaryColorDarkMedium16(context),),
-                                        Text("${pr1.response!.data!.followers![index].user.email}", style: AppStyle.primaryColorDarkMedium14(context),),
-                                      ],
-                                    ),
-                                  ],
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(color: Theme.of(context).primaryColorDark)
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 27,
+                                        backgroundColor: Theme.of(context).primaryColorDark,
+                                        child: ClipOval(
+                                          child: UtilityHelper.image(pr1.response!.data!.followers![index].user.profilePic, height: 50, width: 50, fit: BoxFit.fill)),
+                                      ),
+                                      sizedBox(wid: 10),
+                                      Text("${pr1.response!.data!.followers![index].user.username}", style: AppStyle.primaryColorDarkMedium16(context),),
+                                      Text("${pr1.response!.data!.followers![index].user.email}", style: AppStyle.primaryColorDarkMedium14(context),),
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
@@ -219,6 +290,79 @@ class _ThirdUserProfileViewState extends State<ThirdUserProfileView> {
                     },
                   ),
                 ),
+                sizedBox(hei: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    sizedBox(wid: 4),
+                    Text("Following", style: AppStyle.primaryColorDarkMedium14(context),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  flex: 2,
+                  child: FutureBuilder<GetFollowingApiRes?>(
+                    future: pr1.getFollowing(id: widget.id),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(color: Theme.of(context).primaryColorDark)
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 27,
+                                        backgroundColor: Theme.of(context).primaryColorDark,
+                                        child: ClipOval(
+                                            child: UtilityHelper.image(pr1.followingApiRes!.data!.following![index].user.profilePic, height: 50, width: 50, fit: BoxFit.fill)),
+                                      ),
+                                      sizedBox(wid: 10),
+                                      Text("${pr1.followingApiRes!.data!.following![index].user.username}", style: AppStyle.primaryColorDarkMedium16(context),),
+                                      Text("${pr1.followingApiRes!.data!.following![index].user.email}", style: AppStyle.primaryColorDarkMedium14(context),),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                          itemCount: pr1.followingApiRes!.data!.following!.length ?? 0,
+                        );
+                      }
+                      else if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting) {
+                        return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return Container();
+                          },
+                          itemCount: 10,
+                        );
+                      }
+                      else if (snapshot.hasError) {
+                        return const Center(
+                          child: Text(AppStrings.errorOccured),
+                        );
+                      }
+                      else {
+                        return const Center(
+                          child: Text(AppStrings.noDataFound),
+                        );
+                      }
+                    },
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: sizedBox())
               ],
             );
           }),
