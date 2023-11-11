@@ -40,7 +40,6 @@ dependencies:
   cached_network_image: ^3.3.0
   lottie: ^2.6.0
   dots_indicator: ^3.0.0
-
   http: ^1.1.0
   font_awesome_flutter: ^10.6.0
   provider: ^6.0.5
@@ -51,6 +50,9 @@ dependencies:
   shimmer: ^3.0.0
   amazon_cognito_identity_dart_2: ^3.5.0
   intl: ^0.18.1
+  firebase_core: ^2.22.0
+  firebase_messaging: ^14.7.3
+  flutter_local_notifications: ^16.1.0
 
 dev_dependencies:
   flutter_test:

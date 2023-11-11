@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:whisper/components/app_dialog.dart';
 import 'package:whisper/components/utility_helper.dart';
 import 'package:whisper/global/global.dart';
+import 'package:whisper/utils/app_helper/user_data_preferences/user_data.dart';
 import '../../../utils/app_helper/app_color.dart';
 
 class ProfileTopView extends StatelessWidget {
@@ -57,8 +58,13 @@ class ProfileTopView extends StatelessWidget {
                                 );
                               });
                         },
-                        child: ClipOval(
-                          child: dpImage,
+                        child: FutureBuilder(
+                          future: UserData.getProfilePic(),
+                          builder: (context, snap) {
+                            return ClipOval(
+                              child: UtilityHelper.image(snap.data ?? dp, fit: BoxFit.fill),
+                            );
+                          }
                         ),
                       ),
                     ),

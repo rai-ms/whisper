@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:whisper/global/global.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
+import 'package:whisper/utils/routes/navigate_route.dart';
 import 'package:whisper/utils/routes/route_name.dart';
 import 'package:whisper/view/home_view/widgets/bottom_navigation.dart';
 import 'package:whisper/view/post_view/post_view.dart';
@@ -27,6 +28,11 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin {
   List<Post> postList = [];
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
 
   // Future<bool> _willPopCallback() async {
   //   if (pageViewNumber != 0) {

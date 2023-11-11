@@ -1,3 +1,7 @@
+import 'dart:html';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whisper/utils/app_helper/app_color.dart';
@@ -15,6 +19,10 @@ import 'package:whisper/view_model/post_details_provider/post_details_provider.d
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await UserData().init();
+  await Firebase.initializeApp();
+  FirebaseMessaging.instance.getToken().then((token){
+    debugPrint("Token is $token");
+  });
   runApp(const MyApp());
 }
 
